@@ -35,9 +35,23 @@ git diff -- src/frontend/Index.html
 git diff -- src/backend/Code.gs
 ```
 
-## Controlli frontend (`Index.html`)
+## Controlli frontend standard (`src/frontend/Index.html`)
 
-Estrazione script e sintassi (richiede `node`):
+Questi sono i controlli canonici da eseguire ogni volta che viene modificato `src/frontend/Index.html`.
+
+Nei prompt Cursor l'orchestratore puo scrivere semplicemente:
+
+> Esegui i controlli frontend standard da `docs/COMMANDS.md`.
+
+L'implementatore deve allora eseguire almeno questo blocco, senza chiedere all'utente di lanciarlo manualmente.
+
+Spazi finali / diff sporchi:
+
+```bash
+git diff --check
+```
+
+Estrazione script inline e controllo sintassi JavaScript (richiede `node`):
 
 ```bash
 python3 -c "
@@ -49,17 +63,19 @@ open('/tmp/alina-inline.js','w').write(m.group(1))
 node --check /tmp/alina-inline.js
 ```
 
-Operatori moderni da evitare su WebView vecchie (nessun match atteso):
+Operatori moderni da evitare su WebView vecchie (nessun match atteso, salvo commenti o casi motivati):
 
 ```bash
 grep -E '\?\?|\|\|=|\?\.[^/]' src/frontend/Index.html || true
 ```
 
-Navbar (4 tab):
+Navbar / tab disponibili:
 
 ```bash
 grep -o 'data-page="[^"]*"' src/frontend/Index.html | sort -u
 ```
+
+Se `python3` non e disponibile, usare comando equivalente disponibile nell'ambiente. Se un controllo fallisce o produce match inattesi, l'implementatore deve fermarsi o motivare chiaramente nel riepilogo finale.
 
 ## Controlli Apps Script (locale)
 
