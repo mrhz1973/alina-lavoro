@@ -171,6 +171,28 @@ Test manuali V1.6:
 - modale "Modifica orari" con tastiera aperta;
 - pagina Mesi con molti mesi/righe.
 
+## V1.8 — Performance pagina Mesi / smartphone (senza nuove feature)
+
+Obiettivo: ridurre il costo di rendering della pagina **Mesi** su smartphone, in particolare **Android vecchio**, senza calendario, grafici, librerie esterne, service worker, né modifiche a struttura Sheet o logica dati.
+
+Contesto: su V1.6.2 la lista mesi era costruita con un **unico `innerHTML`** molto grande; su WebView lente questo impatta parsing e layout.
+
+Vincoli (uguali a V1.6 dove applicabile):
+- nessun calendario, grafici, refactor generale;
+- modifiche prevalentemente in `src/frontend/Index.html`;
+- backend solo se emergenza dimostrata.
+
+### V1.8A (avvio su `dev`)
+
+- Formalizzazione roadmap e doc di stato.
+- Intervento **minimo** su Mesi: costruzione della **lista mesi** tramite **DOM API** (`createElement`, `DocumentFragment`, `textContent` per i testi) al posto della stringa HTML unica per le righe; intestazione pagina anch’essa via DOM (nessun mega-template string per l’intero `#content`).
+- Nessun deploy automatico; merge verso `main` solo a fase successiva concordata.
+
+### Evoluzioni possibili (V1.8B+)
+
+- Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
+- Riduzione ulteriore di re-render se i dati non cambiano.
+
 ## V2 — Rinviato
 
 Nuove funzionalita:

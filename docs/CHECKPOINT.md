@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 — stabilizzazione finale V1.6.2 (deploy clasp + tag `v1.6.2-stable`).
+Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (roadmap V1.8 + Mesi via DOM); produzione stabile resta V1.6.2 (`v1.6.2-stable` / `main`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -34,6 +34,7 @@ Stack:
 - Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
 - Nota documentale post-merge allineata su `main` tramite PR GitHub #2.
 - Dopo il merge, `dev` resta il branch operativo per i prossimi sviluppi.
+- **V1.8A:** lavoro attivo su `dev` per performance pagina Mesi (senza deploy obbligatorio in questa fase).
 - V1.5 resta disponibile come rollback storico tramite tag `v1.5-stable`.
 
 ## Stato Apps Script / deploy

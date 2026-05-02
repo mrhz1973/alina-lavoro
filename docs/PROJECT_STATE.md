@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02 (stabilizzazione finale V1.6.2)
+Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 
 ## Stato reale
 
@@ -18,6 +18,7 @@ Ultimo aggiornamento: 2026-05-02 (stabilizzazione finale V1.6.2)
 - Il test finale sull'URL ufficiale `/exec` e stato confermato OK dall'utente.
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
+- **V1.8A (in corso su `dev`):** alleggerimento iniziale pagina Mesi — lista costruita con DOM invece di un solo `innerHTML` per tutte le righe; vedi `docs/roadmap.md` sezione V1.8. Riferimento produzione resta **`v1.6.2-stable`** / `main` fino a nuova release.
 
 ## Stack
 
@@ -67,14 +68,15 @@ Ultimo aggiornamento: 2026-05-02 (stabilizzazione finale V1.6.2)
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
 - V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto; promossa su `main` tramite PR #1.
+- V1.8A: avvio su `dev` — performance Mesi (primo step: DOM per lista righe).
 
 ## Rischi aperti
 
-- La pagina Mesi usa ancora `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
+- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni (virtualizzazione, meno re-render); misurare su Android vecchio reale.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
 
 ## Prossimo passo consigliato
 
-1. Tenere `dev` allineato a `main` dopo ogni stabilizzazione (merge o rebase a scelta del team).
-2. Usare `dev` per i prossimi sviluppi; riferimento stabile V1.6.2: tag `v1.6.2-stable` e branch `main`.
-3. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
+1. Test manuale su `dev`: tab Mesi, stipendio da riga, cambio lingua, molti mesi in lista.
+2. Continuare V1.8 su `dev` (eventuale V1.8B) prima di merge verso `main`.
+3. Riferimento stabile produzione: `v1.6.2-stable` / `main` fino a nuova release concordata.
