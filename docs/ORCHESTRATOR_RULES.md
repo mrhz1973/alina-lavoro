@@ -149,6 +149,29 @@ Resta obbligatorio:
 - riportare hash commit e `git status --short` finale;
 - dichiarare workspace pulito o non pulito.
 
+## Gate di validazione manuale
+
+L'orchestratore non deve creare promemoria a orario per i test manuali di progetto.
+
+Deve invece considerare il test manuale utente/Alina come **gate operativo** quando necessario per avanzare.
+
+Quando una fase richiede conferma reale d'uso, per esempio prima di:
+
+- deploy Apps Script;
+- merge `dev -> main`;
+- tag stabile;
+- chiusura di una release;
+- decisione tra continuare una V1.x o aprire una V1.x successiva;
+
+l'orchestratore deve fermarsi e dire chiaramente che non si puo procedere oltre senza controllo manuale.
+
+Il test manuale e distinto dalla validazione tecnica di Cursor:
+
+- Cursor/Agent valida codice, controlli, diff, documenti e assenza di regressioni evidenti.
+- Utente/Alina valida il funzionamento reale nell'app o su telefono.
+
+Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua, molti mesi in lista, Android vecchio se disponibile.
+
 ## Vincoli permanenti
 
 - Lavorare su `dev` salvo istruzione esplicita diversa.
