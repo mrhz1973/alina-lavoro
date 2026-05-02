@@ -4,7 +4,10 @@
   "description": "APP per lavoro di Alina",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sync": "mkdir -p .gas && cp src/backend/Code.gs .gas/Code.gs && cp src/frontend/Index.html .gas/Index.html && cp appsscript.json .gas/appsscript.json",
+    "push": "npm run sync && clasp push",
+    "deploy": "npm run sync && clasp push && clasp deploy"
   },
   "repository": {
     "type": "git",
