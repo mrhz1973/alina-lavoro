@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02 — validazione **tecnica** V1.8A chiusa su `dev` (documentazione GitHub); gate validazione **manuale** utente ancora **aperto**.
+Ultimo aggiornamento: 2026-05-02 — `npm run push` V1.8A su Apps Script (HEAD); gate validazione **manuale** Alina ancora **aperto**; produzione ufficiale invariata.
 
 ## Stato reale
 
@@ -20,7 +20,8 @@ Ultimo aggiornamento: 2026-05-02 — validazione **tecnica** V1.8A chiusa su `de
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 - `docs/ORCHESTRATOR_RULES.md` contiene le regole prioritarie per questa chat e per le nuove chat che leggono GitHub.
 - **V1.8A su `dev`:** lista pagina Mesi costruita via DOM (`buildMonthsListSection_`, `renderMonths`); `package.json` **1.8.0-a.1**. **Validazione tecnica** registrata (2026-05-02): controlli frontend standard `docs/COMMANDS.md`, assenza diff su `src/backend/Code.gs` tra `main` e `dev`, navbar `data-page` ok; **non** include test manuale Alina.
-- **Gate manuale:** da pianificare dall’orchestratore; finché non superato, produzione resta **`v1.6.2-stable`** / `main` senza merge/deploy/tag V1.8.
+- **Apps Script (2026-05-02):** eseguito **`npm run push`** su `dev` con autorizzazione in `docs/sessions/2026-05-02-v18a-push-head-autorizzato.md` — caricati `Code.gs`, `Index.html`, `appsscript.json` sul progetto collegato a clasp; **nessun** `npm run deploy` / `clasp deploy`; HEAD/test segue ora il codice **V1.8A** da repo `dev`.
+- **Gate manuale:** test Alina su URL Web App di test / `@HEAD` (non è validazione tecnica); finché non superato, produzione resta **`v1.6.2-stable`** / `main` senza merge/tag/deploy ufficiale V1.8.
 
 ## Stack
 

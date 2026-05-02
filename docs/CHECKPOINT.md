@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A su `dev`: **validazione tecnica chiusa** e tracciata su GitHub; validazione **manuale** Alina è gate separato e ancora da fare quando l’orchestratore lo imposta.
+Ultimo aggiornamento: 2026-05-02 — V1.8A: validazione tecnica chiusa; **`npm run push`** eseguito (codice su Apps Script/HEAD); gate **manuale** Alina ancora da fare; nessun deploy ufficiale.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
