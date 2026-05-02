@@ -1,0 +1,24 @@
+{
+  "name": "alina-lavoro",
+  "version": "1.0.0",
+  "description": "APP per lavoro di Alina",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrhz1973/alina-lavoro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mrhz1973/alina-lavoro/issues"
+  },
+  "homepage": "https://github.com/mrhz1973/alina-lavoro#readme",
+  "devDependencies": {
+    "@google/clasp": "^3.3.0"
+  }
+}
