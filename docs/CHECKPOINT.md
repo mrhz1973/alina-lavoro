@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A: validazione tecnica chiusa; **`npm run push`** eseguito (codice su Apps Script/HEAD); gate **manuale** Alina ancora da fare; nessun deploy ufficiale.
+Ultimo aggiornamento: 2026-05-02 — V1.8A: validazione tecnica chiusa, `npm run push` eseguito su Apps Script/HEAD, **test manuale utente OK**; nessun deploy ufficiale V1.8 ancora eseguito.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -45,13 +45,17 @@ Stack:
 - Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
 - Nota documentale post-merge allineata su `main` tramite PR GitHub #2.
 - Dopo il merge, `dev` resta il branch operativo per i prossimi sviluppi.
-- **V1.8A:** su `dev`; implementazione Mesi via DOM; **validazione tecnica** completata dall’implementatore (vedi `docs/sessions/2026-05-02-v18a-validazione-tecnica-chiusa.md`). Deploy/merge/tag non eseguiti.
+- **V1.8A:** su `dev`; implementazione Mesi via DOM; **validazione tecnica** completata dall’implementatore (vedi `docs/sessions/2026-05-02-v18a-validazione-tecnica-chiusa.md`).
+- **V1.8A Apps Script/HEAD:** `npm run push` eseguito e documentato in `docs/sessions/2026-05-02-v18a-push-head-esito.md`.
+- **V1.8A test manuale:** superato; l'utente ha comunicato `test V1.8A ok`; vedi `docs/sessions/2026-05-02-v18a-test-manuale-ok.md`.
+- Deploy ufficiale V1.8, merge `dev -> main` e tag V1.8 non ancora eseguiti.
 - V1.5 resta disponibile come rollback storico tramite tag `v1.5-stable`.
 
 ## Stato Apps Script / deploy
 
-- **Deploy finale di stabilizzazione:** eseguito con `npm run deploy` su `main` (2026-05-02), dopo autorizzazione esplicita utente; `clasp push` + `clasp deploy` completati (revisione deployment segnalata da clasp come `@6` in output locale).
-- V1.6.2 era gia stata validata in precedenza su URL di test e `/exec` dall'utente.
+- **Deploy finale di stabilizzazione V1.6.2:** eseguito con `npm run deploy` su `main` (2026-05-02), dopo autorizzazione esplicita utente; `clasp push` + `clasp deploy` completati (revisione deployment segnalata da clasp come `@6` in output locale).
+- **V1.8A:** caricata su Apps Script/HEAD con `npm run push`, senza `npm run deploy`.
+- Produzione ufficiale resta `v1.6.2-stable` / `main` finche non viene autorizzato il deploy ufficiale V1.8.
 - `gas-current/` non è stato modificato (solo lettura, come da regole).
 
 ## Struttura importante
@@ -116,12 +120,12 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Rischi aperti
 
-- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni (virtualizzazione, meno re-render); misurare su Android vecchio reale.
-- Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
+- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni future (virtualizzazione, meno re-render), ma non sono bloccanti se il test manuale resta OK.
+- Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test manuale.
 
 ## Prossimo passo raccomandato
 
-1. Gate **validazione manuale** Alina (non parte della validazione tecnica): quando l’orchestratore lo attiva, test su ambiente di prova allineato a `dev`.
-2. Solo dopo OK manuale: concertare deploy, merge verso `main`, nuovo tag.
-3. Opzionale: V1.8B su `dev` prima del merge.
-4. Produzione: resta `v1.6.2-stable` / `main`.
+1. Stabilizzazione V1.8A: preparare deploy ufficiale Apps Script solo con autorizzazione esplicita.
+2. Dopo deploy ufficiale OK: valutare merge `dev` → `main` e nuovo tag stabile V1.8.
+3. Issue aperta #3: aggiungere versione visibile nell'app in un prossimo micro-step.
+4. Produzione fino ad autorizzazione deploy ufficiale: `v1.6.2-stable` / `main`.
