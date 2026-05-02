@@ -186,6 +186,8 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - Formalizzazione roadmap e doc di stato.
 - Intervento **minimo** su Mesi: costruzione della **lista mesi** tramite **DOM API** (`createElement`, `DocumentFragment`, `textContent` per i testi) al posto della stringa HTML unica per le righe; intestazione pagina anch’essa via DOM (nessun mega-template string per l’intero `#content`).
+- **Validazione tecnica (implementatore / GitHub, 2026-05-02):** chiusa e documentata in `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md` e `docs/sessions/2026-05-02-v18a-validazione-tecnica-chiusa.md`. Controlli: `docs/COMMANDS.md` (frontend standard) + diff `main..dev` senza backend; **nessun** deploy, merge o tag.
+- **Gate successivo:** validazione **manuale** utente/Alina (non parte della validazione tecnica); l’orchestratore la imposta come gate operativo quando pronto.
 - Nessun deploy automatico; merge verso `main` solo a fase successiva concordata.
 
 ### Evoluzioni possibili (V1.8B+)

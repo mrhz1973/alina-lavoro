@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
+Ultimo aggiornamento: 2026-05-02 — validazione **tecnica** V1.8A chiusa su `dev` (documentazione GitHub); gate validazione **manuale** utente ancora **aperto**.
 
 ## Stato reale
 
@@ -19,7 +19,8 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 - `docs/ORCHESTRATOR_RULES.md` contiene le regole prioritarie per questa chat e per le nuove chat che leggono GitHub.
-- **V1.8A (in corso su `dev`):** alleggerimento iniziale pagina Mesi — lista costruita con DOM invece di un solo `innerHTML` per tutte le righe; vedi `docs/roadmap.md` sezione V1.8. Riferimento produzione resta **`v1.6.2-stable`** / `main` fino a nuova release.
+- **V1.8A su `dev`:** lista pagina Mesi costruita via DOM (`buildMonthsListSection_`, `renderMonths`); `package.json` **1.8.0-a.1**. **Validazione tecnica** registrata (2026-05-02): controlli frontend standard `docs/COMMANDS.md`, assenza diff su `src/backend/Code.gs` tra `main` e `dev`, navbar `data-page` ok; **non** include test manuale Alina.
+- **Gate manuale:** da pianificare dall’orchestratore; finché non superato, produzione resta **`v1.6.2-stable`** / `main` senza merge/deploy/tag V1.8.
 
 ## Stack
 
@@ -71,7 +72,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
 - V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto; promossa su `main` tramite PR #1.
-- V1.8A: avvio su `dev` — performance Mesi (primo step: DOM per lista righe).
+- V1.8A: su `dev` — performance Mesi (DOM lista righe); **validazione tecnica chiusa**; validazione manuale utente pendente.
 
 ## Rischi aperti
 
@@ -80,6 +81,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 
 ## Prossimo passo consigliato
 
-1. Test manuale su `dev`: tab Mesi, stipendio da riga, cambio lingua, molti mesi in lista.
-2. Continuare V1.8 su `dev` (eventuale V1.8B) prima di merge verso `main`.
-3. Riferimento stabile produzione: `v1.6.2-stable` / `main` fino a nuova release concordata.
+1. **Orchestratore:** aprire gate **validazione manuale** Alina su build di test `dev` (dopo eventuale `npm run push` concordato), separato dalla validazione tecnica già registrata.
+2. Dopo OK manuale: valutare deploy, merge `dev` → `main`, nuovo tag (fuori scope finché il gate non è superato).
+3. Opzionale su `dev`: V1.8B (virtualizzazione / meno re-render) prima del merge.
+4. Produzione fino ad allora: `v1.6.2-stable` / `main`.

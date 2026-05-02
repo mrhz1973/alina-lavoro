@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (roadmap V1.8 + Mesi via DOM); produzione stabile resta V1.6.2 (`v1.6.2-stable` / `main`).
+Ultimo aggiornamento: 2026-05-02 — V1.8A su `dev`: **validazione tecnica chiusa** e tracciata su GitHub; validazione **manuale** Alina è gate separato e ancora da fare quando l’orchestratore lo imposta.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -45,7 +45,7 @@ Stack:
 - Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
 - Nota documentale post-merge allineata su `main` tramite PR GitHub #2.
 - Dopo il merge, `dev` resta il branch operativo per i prossimi sviluppi.
-- **V1.8A:** lavoro attivo su `dev` per performance pagina Mesi (senza deploy obbligatorio in questa fase).
+- **V1.8A:** su `dev`; implementazione Mesi via DOM; **validazione tecnica** completata dall’implementatore (vedi `docs/sessions/2026-05-02-v18a-validazione-tecnica-chiusa.md`). Deploy/merge/tag non eseguiti.
 - V1.5 resta disponibile come rollback storico tramite tag `v1.5-stable`.
 
 ## Stato Apps Script / deploy
@@ -121,6 +121,7 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Test manuale su `dev`: tab Mesi, stipendio da riga, cambio lingua, molti mesi in lista.
-2. Continuare V1.8 su `dev` (eventuale V1.8B) prima di merge verso `main`.
-3. Riferimento stabile produzione: `v1.6.2-stable` / `main` fino a nuova release concordata.
+1. Gate **validazione manuale** Alina (non parte della validazione tecnica): quando l’orchestratore lo attiva, test su ambiente di prova allineato a `dev`.
+2. Solo dopo OK manuale: concertare deploy, merge verso `main`, nuovo tag.
+3. Opzionale: V1.8B su `dev` prima del merge.
+4. Produzione: resta `v1.6.2-stable` / `main`.
