@@ -1,79 +1,30 @@
-# Alina Lavoro - Checkpoint
+# Alina Lavoro — Checkpoint (ripartenza)
 
-Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
+Ultimo aggiornamento generato da `tools/checkpoint.sh` il **2026-05-02T15:33:20+0000**.
 
-## Contesto sintetico
+## Sessione
 
-Progetto: Alina Lavoro.
+- File creato: `docs/sessions/2026-05-02-checkpoint-153320.md`
 
-App personale per registrazione ore di lavoro, turni, stipendi e note di Alina.
+## Branch
 
-Stack:
-- Google Apps Script come backend.
-- Google Sheet come database.
-- HTML/CSS/JavaScript come frontend.
-- GitHub per versionamento.
-- Cursor come ambiente operativo.
-- `clasp` per sincronizzare il codice con Apps Script.
+`dev`
 
-## Repository
+## HEAD
 
-- Repository: `mrhz1973/alina-lavoro`.
-- Branch operativo: `dev`.
-- Branch stabile: `main`.
-- Tag rollback: `v1.5-stable`.
+`5aa8a38`
 
-## Struttura importante
+## Ultimo commit
 
-- `src/backend/Code.gs`: backend reale da modificare.
-- `src/frontend/Index.html`: frontend reale da modificare.
-- `appsscript.json`: manifest.
-- `gas-current/`: snapshot read-only, non modificare.
-- `.gas/`: cartella locale generata da `npm run sync`, ignorata da Git.
-- `.clasp.json`: configurazione locale, ignorata da Git.
+5aa8a38 docs: workflow orchestratore (AI_RULES, WORKFLOW, COMMANDS, tools, README)
 
-## Stato ultimo noto
+## Working tree (git status --short)
 
-- V1.5 stabile e taggata come `v1.5-stable`.
-- V1.6, V1.6.1 e V1.6.2 sono su `dev`.
-- V1.6.2 corregge il viewport mobile in Apps Script tramite `HtmlService.addMetaTag` e fallback CSS portrait.
-- V1.6.2 e stata caricata in Apps Script con `npm run push`.
-- Il deployment ufficiale V1.6.2 e stato aggiornato dall'utente.
-- Layout mobile su URL di test: confermato corretto.
-- Verificare/registrare sempre se il test finale su URL ufficiale `/exec` e stato completato.
-
-## Regole fondamentali
-
-- Non inventare lo stato: controllare Git, GitHub e documenti.
-- Prima di modifiche: `git status`.
-- Non modificare `gas-current/`.
-- Non fare deploy senza conferma esplicita.
-- Non usare `git add .` salvo autorizzazione esplicita.
-- Preferire commit piccoli e selettivi.
-- Separare sempre piano, implementazione, test e riepilogo.
-
-## Comandi rapidi
-
-Stato:
-
-```bash
-git status
-git branch --show-current
-git log --oneline -5
+```
+(pulito)
 ```
 
-Push Apps Script senza deploy:
+## Note operative
 
-```bash
-npm run push
-```
-
-Deploy solo con conferma:
-
-```bash
-npm run deploy
-```
-
-## Prossimo passo raccomandato
-
-Usare `aggio` per ricostruire lo stato reale, oppure `finito` per chiudere una sessione aggiornando documenti, commit e push.
+- `npm run aggio` — fotografia repo.
+- `npm run finito` — chiusura blocco con commit selettivo (vedi `docs/WORKFLOW.md`).
