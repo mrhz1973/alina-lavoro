@@ -1,9 +1,16 @@
 /**
- * Alina Lavoro - V1.4
+ * Alina Lavoro - V1.5
  * Backend Google Apps Script
  * Realizzata da Tuso Martino
  *
- * Versione con importazione storico veloce in blocco.
+ * Changelog V1.5:
+ * 1. Fix newShift lato client (data: date) — vedi Index.html
+ * 2. eliminaTurniFuturi: confronto Date/Date invece di stringhe
+ * 3. backupSheet_ prima di operazioni distruttive su TURNI + max 5 backup
+ * 4. LockService (waitLock 10s) su saveShift e syncBatch
+ * 5. Rimossa importaStoricoDaFoglio1
+ * 6. importaStoricoSoloFinoAOggi: salta righe 00:00/00:00 senza minuti
+ * 7. pulisciTurniVuoti() manuale (editor) per righe fantasma
  */
 
 const DEFAULT_ACCESS_CODE = '1234';
@@ -183,9 +190,18 @@ function saveShift(accessCode, shift) {
   setupAlinaLavoro();
   requireAccess_(accessCode);
 
-  saveShiftDirect_(shift);
-
-  return getBootstrap(accessCode);
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+  } catch (e) {
+    throw new Error('Operazione in corso, riprova tra qualche secondo');
+  }
+  try {
+    saveShiftDirect_(shift);
+    return getBootstrap(accessCode);
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function saveSalary(accessCode, salary) {
@@ -225,47 +241,57 @@ function syncBatch(accessCode, actions) {
     return getBootstrap(accessCode);
   }
 
-  actions.forEach(function (action) {
-    if (!action || !action.type) {
-      log_('syncBatch_action', 'skip', 'Azione vuota');
-      return;
-    }
-
-    log_('syncBatch_action', 'start', action.type);
-
-    if (action.type === 'saveShift') {
-      saveShiftDirect_(action.payload);
-    }
-
-    if (action.type === 'saveSalary') {
-      saveSalaryDirect_(action.payload);
-    }
-
-    if (action.type === 'saveNote') {
-      saveNoteDirect_(action.payload);
-    }
-
-    if (action.type === 'deleteNote') {
-      if (action.payload && action.payload.id) {
-        deleteRecord_(SHEETS.NOTE, String(action.payload.id));
-        log_('deleteNote_direct', 'ok', String(action.payload.id));
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+  } catch (e) {
+    throw new Error('Operazione in corso, riprova tra qualche secondo');
+  }
+  try {
+    actions.forEach(function (action) {
+      if (!action || !action.type) {
+        log_('syncBatch_action', 'skip', 'Azione vuota');
+        return;
       }
-    }
 
-    if (action.type === 'saveConfig') {
-      const patch = action.payload || {};
-      Object.keys(patch).forEach(function (key) {
-        setConfigValue_(key, String(patch[key]));
-      });
-      log_('saveConfig_direct', 'ok', 'Configurazione aggiornata');
-    }
+      log_('syncBatch_action', 'start', action.type);
 
-    log_('syncBatch_action', 'end', action.type);
-  });
+      if (action.type === 'saveShift') {
+        saveShiftDirect_(action.payload);
+      }
 
-  log_('syncBatch', 'ok', String(actions.length) + ' azioni');
+      if (action.type === 'saveSalary') {
+        saveSalaryDirect_(action.payload);
+      }
 
-  return getBootstrap(accessCode);
+      if (action.type === 'saveNote') {
+        saveNoteDirect_(action.payload);
+      }
+
+      if (action.type === 'deleteNote') {
+        if (action.payload && action.payload.id) {
+          deleteRecord_(SHEETS.NOTE, String(action.payload.id));
+          log_('deleteNote_direct', 'ok', String(action.payload.id));
+        }
+      }
+
+      if (action.type === 'saveConfig') {
+        const patch = action.payload || {};
+        Object.keys(patch).forEach(function (key) {
+          setConfigValue_(key, String(patch[key]));
+        });
+        log_('saveConfig_direct', 'ok', 'Configurazione aggiornata');
+      }
+
+      log_('syncBatch_action', 'end', action.type);
+    });
+
+    log_('syncBatch', 'ok', String(actions.length) + ' azioni');
+
+    return getBootstrap(accessCode);
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function saveShiftDirect_(shift) {
@@ -387,114 +413,6 @@ function testSaveShiftManuale() {
     success: true,
     message: 'Test turno salvato',
     shift: shift
-  };
-}
-
-/**
- * IMPORTAZIONE VELOCE STORICO
- *
- * Legge da Foglio1:
- * A = Data
- * B = Inizio
- * C = Fine
- * D = Ore lavorate
- *
- * Scrive in TURNI in blocco con setValues().
- * Molto più veloce della vecchia versione riga-per-riga.
- */
-function importaStoricoDaFoglio1() {
-  setupAlinaLavoro();
-
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const source = ss.getSheetByName('Foglio1');
-  const target = ss.getSheetByName('TURNI');
-
-  if (!source) {
-    throw new Error('Non trovo il foglio sorgente Foglio1');
-  }
-
-  if (!target) {
-    throw new Error('Non trovo il foglio destinazione TURNI');
-  }
-
-  const sourceValues = source.getDataRange().getValues();
-
-  if (!sourceValues || sourceValues.length < 2) {
-    throw new Error('Foglio1 non contiene righe da importare');
-  }
-
-  // Pulisce TURNI lasciando solo intestazione.
-  const lastTargetRow = target.getLastRow();
-  if (lastTargetRow > 1) {
-    target.getRange(2, 1, lastTargetRow - 1, HEADERS.TURNI.length).clearContent();
-  }
-
-  const now = new Date().toISOString();
-  const output = [];
-  let importati = 0;
-  let saltati = 0;
-
-  for (let i = 1; i < sourceValues.length; i++) {
-    const row = sourceValues[i];
-
-    const dataRaw = row[0];     // A
-    const inizioRaw = row[1];   // B
-    const fineRaw = row[2];     // C
-    const oreRaw = row[3];      // D
-
-    const dataIso = formatDateForImport_(dataRaw);
-    const inizioTxt = formatTimeForImport_(inizioRaw);
-    const fineTxt = formatTimeForImport_(fineRaw);
-    const minuti = minutesFromImport_(inizioTxt, fineTxt, oreRaw);
-
-    if (!dataIso) {
-      saltati++;
-      continue;
-    }
-
-    if (!inizioTxt && !fineTxt && !minuti) {
-      saltati++;
-      continue;
-    }
-
-    const id = 'storico_' + dataIso + '_' + String(i + 1);
-
-    output.push([
-      id,
-      dataIso,
-      inizioTxt,
-      fineTxt,
-      0,
-      minuti,
-      'importato da storico',
-      'true',
-      now,
-      now,
-      now
-    ]);
-
-    importati++;
-  }
-
-  if (output.length > 0) {
-    target
-      .getRange(2, 1, output.length, HEADERS.TURNI.length)
-      .setValues(output);
-  }
-
-  log_(
-    'importaStoricoDaFoglio1',
-    'ok',
-    'Importati: ' + importati + ' - Saltati: ' + saltati
-  );
-
-  SpreadsheetApp.flush();
-
-  return {
-    success: true,
-    message: 'Importazione completata',
-    importati: importati,
-    saltati: saltati
   };
 }
 
@@ -997,8 +915,54 @@ function log_(action, status, message) {
   }
 }
 
+/**
+ * Duplica un foglio come NAME_BACKUP_yyyyMMdd_HHmmss, poi mantiene al massimo 5 backup.
+ * Registra su SYNC_LOG.
+ */
+function backupSheet_(sourceName) {
+  const ss = getSpreadsheet_();
+  const source = ss.getSheetByName(sourceName);
+
+  if (!source) {
+    throw new Error('Non trovo il foglio ' + sourceName);
+  }
+
+  const tz = Session.getScriptTimeZone();
+  const suffix = Utilities.formatDate(new Date(), tz, 'yyyyMMdd_HHmmss');
+  const backupName = sourceName + '_BACKUP_' + suffix;
+  const copy = source.copyTo(ss);
+  copy.setName(backupName);
+
+  pruneBackupsForSheet_(ss, sourceName);
+
+  log_('backupSheet_', 'ok', 'Backup creato: ' + backupName);
+}
+
+function pruneBackupsForSheet_(ss, sourceName) {
+  const prefix = sourceName + '_BACKUP_';
+  const sheets = ss.getSheets();
+  const backups = [];
+
+  sheets.forEach(function (sheet) {
+    const name = sheet.getName();
+    if (name.indexOf(prefix) === 0) {
+      backups.push({ name: name, sheet: sheet });
+    }
+  });
+
+  backups.sort(function (a, b) {
+    return b.name.localeCompare(a.name);
+  });
+
+  for (let i = 5; i < backups.length; i++) {
+    ss.deleteSheet(backups[i].sheet);
+    log_('backupSheet_', 'ok', 'Rimosso backup vecchio: ' + backups[i].name);
+  }
+}
+
 function eliminaTurniFuturi() {
   setupAlinaLavoro();
+  backupSheet_('TURNI');
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sh = ss.getSheetByName('TURNI');
@@ -1017,16 +981,20 @@ function eliminaTurniFuturi() {
     };
   }
 
-  const today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  const todayEnd = new Date();
+  todayEnd.setHours(23, 59, 59, 999);
+  const todayStr = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+
+  // TODO(eliminaTurniFuturi): verificare possibile off-by-one su lastRow-1 nelle getRange (ultima riga dati).
   const values = sh.getRange(2, 1, lastRow - 1, sh.getLastColumn()).getValues();
 
   const rowsToKeep = [];
   let eliminati = 0;
 
-  values.forEach(function(row) {
-    const data = String(row[1] || '').trim(); // colonna B = data
+  values.forEach(function (row) {
+    const dataObj = dateObjectForImport_(row[1]);
 
-    if (data && data > today) {
+    if (dataObj && dataObj > todayEnd) {
       eliminati++;
     } else {
       rowsToKeep.push(row);
@@ -1045,12 +1013,13 @@ function eliminaTurniFuturi() {
     success: true,
     message: 'Turni futuri eliminati',
     eliminati: eliminati,
-    oggi: today
+    oggi: todayStr
   };
 }
 
 function importaStoricoSoloFinoAOggi() {
   setupAlinaLavoro();
+  backupSheet_('TURNI');
 
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const source = ss.getSheetByName('Foglio1');
@@ -1095,7 +1064,12 @@ function importaStoricoSoloFinoAOggi() {
     const fineTxt = formatTimeForImport_(fineRaw);
     const minuti = minutesFromImport_(inizioTxt, fineTxt, oreRaw);
 
-    if (!inizioTxt && !fineTxt && !minuti) {
+    const isVuoto =
+      (inizioTxt === '00:00' || !inizioTxt) &&
+      (fineTxt === '00:00' || !fineTxt) &&
+      !minuti;
+
+    if (isVuoto) {
       saltati++;
       continue;
     }
@@ -1138,6 +1112,65 @@ function importaStoricoSoloFinoAOggi() {
     importati: importati,
     futuri_esclusi: futuri,
     saltati: saltati
+  };
+}
+
+/**
+ * Operazione manuale una tantum dall'editor Apps Script (dopo deploy V1.5).
+ * Rimuove righe TURNI fantasma (00:00 / vuoti / 0 minuti). Backup TURNI prima dell'azione.
+ */
+function pulisciTurniVuoti() {
+  setupAlinaLavoro();
+  backupSheet_('TURNI');
+
+  const ss = getSpreadsheet_();
+  const sh = ss.getSheetByName('TURNI');
+
+  if (!sh) {
+    throw new Error('Non trovo il foglio TURNI');
+  }
+
+  const lastRow = sh.getLastRow();
+
+  if (lastRow < 2) {
+    log_('pulisciTurniVuoti', 'ok', 'Nessuna riga da pulire: 0');
+    return {
+      success: true,
+      rimossi: 0
+    };
+  }
+
+  const numCols = Math.max(sh.getLastColumn(), HEADERS.TURNI.length);
+  const values = sh.getRange(2, 1, lastRow - 1, numCols).getValues();
+  const kept = [];
+  let rimossi = 0;
+
+  values.forEach(function (row) {
+    const inizio = String(row[2] || '').trim();
+    const fine = String(row[3] || '').trim();
+    const minuti = toNumber_(row[5], 0);
+    const inizioVuoto = !inizio || inizio === '00:00';
+    const fineVuoto = !fine || fine === '00:00';
+
+    if (inizioVuoto && fineVuoto && minuti === 0) {
+      rimossi++;
+    } else {
+      kept.push(row);
+    }
+  });
+
+  sh.getRange(2, 1, lastRow - 1, numCols).clearContent();
+
+  if (kept.length > 0) {
+    sh.getRange(2, 1, kept.length, numCols).setValues(kept);
+  }
+
+  log_('pulisciTurniVuoti', 'ok', 'Righe vuote rimosse: ' + rimossi);
+  SpreadsheetApp.flush();
+
+  return {
+    success: true,
+    rimossi: rimossi
   };
 }
 
