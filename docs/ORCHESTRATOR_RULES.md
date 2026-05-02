@@ -11,6 +11,7 @@ Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per quals
 - Cursor/Agent e l'implementatore operativo: modifica file, esegue controlli, commit e push.
 - L'utente non deve essere usato come ponte manuale tra Cursor e ChatGPT, salvo errore locale non pushato.
 - Le procedure ripetitive devono stare nei documenti del repository, non essere riscritte ogni volta nei prompt.
+- Se una procedura non e ancora documentata in `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`, l'orchestratore deve inserirla direttamente nel prompt Cursor, in un unico blocco copiabile. Non deve lasciarla fuori dal prompt come istruzioni separate per l'utente.
 
 ## Regola `aggio`
 
@@ -80,6 +81,8 @@ Se il task tocca backend, includere anche:
 @src/backend/Code.gs
 ```
 
+Ogni prompt operativo per Cursor deve essere autosufficiente per Cursor: tutto cio che non e gia documentato nel repo deve stare dentro il prompt stesso. L'utente non deve dover copiare pezzi esterni separati.
+
 ## Richiamo sintetico delle procedure standard
 
 L'orchestratore non deve riscrivere ogni volta procedure standard gia documentate, come controlli frontend, commit selettivo o push.
@@ -95,6 +98,28 @@ Chiudi il blocco secondo docs/WORKFLOW.md e docs/AI_RULES.md, con commit seletti
 ```
 
 Cursor deve leggere i documenti e applicare le procedure canoniche. Se un comando fallisce o non e disponibile, deve usare un equivalente e dichiararlo nel riepilogo finale.
+
+## Procedure non documentate
+
+Se servono comandi, criteri, checklist o sequenze che non risultano gia presenti nei documenti del repository:
+
+- inserirli direttamente dentro il prompt Cursor;
+- non fornirli come blocco separato fuori dal prompt;
+- dopo l'esecuzione, valutare se renderli canonici aggiornando `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`.
+
+Esempio corretto:
+
+```text
+Esegui i controlli frontend standard da docs/COMMANDS.md.
+In aggiunta, per questo blocco specifico, verifica anche <comando/criterio specifico>.
+```
+
+Esempio scorretto:
+
+```text
+Prompt Cursor: ...
+Fuori dal prompt, esegui anche questo comando...
+```
 
 ## Controlli standard
 
