@@ -7,14 +7,15 @@ Ultimo aggiornamento: 2026-05-02
 - Branch operativo: `dev`.
 - Branch stabile: `main`.
 - Tag rollback disponibile: `v1.5-stable`.
-- `dev` e avanti rispetto a `main`.
-- `dev` contiene la serie V1.6, V1.6.1 e V1.6.2.
+- V1.6.2 e stata validata dall'utente con test dichiarato perfetto.
+- Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
+- `main` contiene ora la V1.6.2 come stato stabile corrente.
+- Dopo il merge, `dev` resta branch operativo per i prossimi sviluppi.
 - V1.6.2 e stata pushata su Apps Script.
 - Il deployment ufficiale V1.6.2 e stato aggiornato dall'utente.
 - Il test su URL di test V1.6.2 e risultato corretto per il layout mobile verticale.
 - Il test finale sull'URL ufficiale `/exec` e stato confermato OK dall'utente.
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
-- V1.6.2 e candidata alla stabilizzazione su `main`, ma il merge `dev -> main` resta da eseguire solo su richiesta esplicita dell'utente.
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 
 ## Stack
@@ -61,20 +62,20 @@ Ultimo aggiornamento: 2026-05-02
 
 ## Stato versioni
 
-- V1.5: stabile, taggata come `v1.5-stable`.
+- V1.5: stabile storica, taggata come `v1.5-stable`.
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
-- V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto.
+- V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto; promossa su `main` tramite PR #1.
 
 ## Rischi aperti
 
 - La pagina Mesi usa ancora `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
-- Valutare merge `dev -> main` solo dopo richiesta esplicita dell'utente.
+- Dopo il merge, valutare se creare un tag stabile dedicato alla V1.6.2; `v1.5-stable` resta rollback storico.
 
 ## Prossimo passo consigliato
 
-1. Preparare il blocco di stabilizzazione V1.6.2.
-2. Se l'utente conferma esplicitamente, procedere con merge controllato `dev -> main`.
-3. Dopo il merge, taggare eventualmente una release stabile V1.6.2 o equivalente, mantenendo `v1.5-stable` come rollback storico.
+1. Eseguire un `aggio` finale per confermare che `main` contiene V1.6.2.
+2. Valutare se creare un tag stabile dedicato alla V1.6.2, ad esempio `v1.6.2-stable`, solo su richiesta esplicita dell'utente.
+3. Usare `dev` per i prossimi sviluppi.
 4. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
