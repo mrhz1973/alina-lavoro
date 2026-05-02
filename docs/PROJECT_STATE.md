@@ -18,6 +18,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 - Il test finale sull'URL ufficiale `/exec` e stato confermato OK dall'utente.
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
+- `docs/ORCHESTRATOR_RULES.md` contiene le regole prioritarie per questa chat e per le nuove chat che leggono GitHub.
 - **V1.8A (in corso su `dev`):** alleggerimento iniziale pagina Mesi — lista costruita con DOM invece di un solo `innerHTML` per tutte le righe; vedi `docs/roadmap.md` sezione V1.8. Riferimento produzione resta **`v1.6.2-stable`** / `main` fino a nuova release.
 
 ## Stack
@@ -31,6 +32,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 
 ## File principali
 
+- `docs/ORCHESTRATOR_RULES.md`: regole prioritarie orchestratore / nuove chat.
 - `src/backend/Code.gs`: backend Apps Script.
 - `src/frontend/Index.html`: frontend Web App.
 - `appsscript.json`: manifest Apps Script.
@@ -53,6 +55,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (Mesi via DOM)
 ## Regole operative correnti
 
 - **Implementatore:** all'inizio di un blocco `git pull` poi `npm run aggio`; a fine blocco aggiornare i doc se serve, commit selettivo e **sempre** push (l'orchestratore legge solo GitHub).
+- Per `aggio` e ripartenze di nuove chat, leggere prima `docs/ORCHESTRATOR_RULES.md`.
 - Lavorare su `dev`.
 - Non modificare `gas-current/`.
 - Modificare i sorgenti reali in `src/`.
