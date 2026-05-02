@@ -1,71 +1,94 @@
-# Alina Lavoro — Workflow operativo (comandi convenzionali)
+# Alina Lavoro — Workflow operativo (orchestratore / implementatore)
 
-Comandi orchestrati da `package.json` e script in `tools/`. Obiettivo: meno copia/incolla manuale, stessi passaggi ripetibili.
+Obiettivo: ridurre il copia/incolla manuale e mantenere sempre GitHub come fonte di verita condivisa.
 
-| Comando | npm |
-|---------|-----|
-| Aggiornamento lettura stato | `npm run aggio` |
-| Checkpoint sessione | `npm run checkpoint` |
-| Chiusura blocco con commit + push | `npm run finito -- "Messaggio" file1 file2 …` |
+## Ruoli
 
----
+- **Utente**: parla con l'orchestratore e con Cursor quando serve, ma non deve gestire normalmente i comandi terminale.
+- **Orchestratore**: questa chat di coordinamento. Quando riceve `aggio`, legge GitHub e documenti per ricostruire lo stato reale.
+- **Implementatore**: Cursor / Agent. Esegue i comandi terminale, modifica file, aggiorna documenti, fa commit e push.
+- **GitHub**: memoria condivisa. Deve essere aggiornato dall'implementatore a fine blocco, anche se l'utente non scrive esplicitamente `finito`.
 
-## `aggio` (`npm run aggio`)
+## Regola principale
 
-**Scopo:** fotografia **sola lettura** del repository: branch, modifiche, ultimi commit, tag, presenza documentazione operativa.
+L'implementatore deve sempre aggiornare GitHub quando conclude un blocco operativo o una sessione.
 
-**Legge:** `git`, elenco file in `docs/`, eventuale `git diff --stat` se working tree sporco.
+Questo e obbligatorio perche l'orchestratore non legge il filesystem locale di Cursor: legge GitHub. Se Cursor non aggiorna GitHub, l'orchestratore resta fuori dal loop.
 
-**Modifica:** nessun file.
+A fine blocco l'implementatore deve:
 
-**Comandi eseguiti:** vedi `tools/aggio.sh` (in sintesi: `git branch`, `git status`, `git log`, `git tag`, `git rev-parse`, verifica esistenza doc).
+1. aggiornare documenti di stato/checkpoint se lo stato e cambiato;
+2. eseguire controlli minimi;
+3. fare commit selettivo;
+4. fare push su GitHub;
+5. riportare hash commit;
+6. riportare `git status --short` finale.
 
-**Non deve:** modificare file, `git add`, `commit`, `push`, `clasp`.
+## Comandi convenzionali
 
-**Output atteso:** report leggibile in terminale; exit 0 se i comandi git hanno successo.
+| Comando conversazionale | Chi lo riceve | Effetto |
+|-------------------------|---------------|---------|
+| `aggio` | Orchestratore | L'orchestratore legge GitHub e fa il punto reale. Nessun comando locale richiesto all'utente. |
+| `checkpoint` | Orchestratore o Cursor | Se serve, Cursor genera checkpoint, commit e push; l'orchestratore lo usa per ripartenza. |
+| `finito` | Normalmente Cursor | Cursor chiude la sessione/blocco con documenti, commit, push e stato pulito. |
 
----
+## Comandi npm disponibili per Cursor
 
-## `checkpoint` (`npm run checkpoint`)
+| Comando npm | Uso |
+|-------------|-----|
+| `npm run aggio` | Fotografia locale sola lettura del repository. |
+| `npm run checkpoint` | Genera `docs/CHECKPOINT.md` e una sessione in `docs/sessions/`. |
+| `npm run finito -- "Messaggio" file1 file2 ...` | Commit e push selettivo dei file indicati. |
 
-**Scopo:** creare **memoria di ripartenza** per la sessione: file datato in `docs/sessions/` e aggiornamento sintetico di `docs/CHECKPOINT.md`.
+## `aggio` per l'orchestratore
 
-**Legge:** stato git (branch, HEAD, ultimo commit, `git status --short`).
+Quando l'utente scrive `aggio` in chat orchestratore:
 
-**Modifica:** crea `docs/sessions/` se manca; crea `docs/sessions/YYYY-MM-DD-checkpoint.md` (con suffisso orario se il file giornaliero esiste già); riscrive/aggiorna `docs/CHECKPOINT.md`.
+- l'orchestratore non chiede terminale;
+- legge GitHub;
+- legge `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/roadmap.md`, `docs/AI_RULES.md` e `docs/WORKFLOW.md` se utili;
+- confronta `dev`, `main` e tag disponibili;
+- segnala eventuali incongruenze;
+- propone il prossimo passo.
 
-**Comandi eseguiti:** vedi `tools/checkpoint.sh`.
+`aggio` non crea checkpoint automaticamente.
 
-**Non deve:** `commit`, `push`, `deploy`, `clasp`.
+## `checkpoint`
 
-**Output atteso:** percorso del file sessione creato; sommario in `CHECKPOINT.md`.
+Checkpoint serve solo quando:
 
----
+- il contesto sta diventando lungo;
+- si chiude una fase importante;
+- si vuole garantire ripartenza in nuova chat;
+- l'orchestratore lo richiede esplicitamente.
 
-## `finito` (`npm run finito -- "Messaggio" file1 file2 …`)
+Se Cursor esegue `checkpoint`, deve normalmente chiuderlo con commit e push, altrimenti GitHub non viene aggiornato.
 
-**Scopo:** chiudere un **blocco** di lavoro: controlli, `git add` **solo** dei file elencati, `commit`, `push`, riepilogo hash e stato finale.
+## `finito`
 
-**Legge:** working tree; per ogni path passato verifica esistenza; se tra i file c’è `src/frontend/Index.html`, esegue controlli frontend aggiuntivi (vedi script).
+`finito` e il comando di chiusura blocco/sessione usato soprattutto da Cursor.
 
-**Modifica:** solo i file passati esplicitamente (staging + commit); **push** su `origin` del branch corrente.
+Deve:
 
-**Comandi eseguiti:** vedi `tools/finito.sh` (`git diff --check`, controlli opzionali su Index, `git add` selettivo, `git commit`, `git push`).
+1. verificare stato reale;
+2. aggiornare `docs/PROJECT_STATE.md` e/o `docs/CHECKPOINT.md` se necessario;
+3. creare riepilogo in `docs/sessions/` se utile;
+4. eseguire controlli minimi;
+5. fare commit selettivo;
+6. fare push;
+7. riportare hash commit;
+8. confermare workspace pulito.
 
-**Non deve:** `git add .`, `clasp push`, deploy, merge verso `main` senza ordine separato.
+Non deve:
 
-**Output atteso:** stat diff, esito controlli, hash commit, `git status --short` finale.
-
-**Uso:**
-
-```bash
-npm run finito -- "docs: aggiorna workflow" README.md docs/WORKFLOW.md
-```
-
----
+- usare `git add .`;
+- fare `clasp push` senza richiesta;
+- fare deploy senza conferma;
+- fare merge verso `main` senza ordine separato.
 
 ## Relazione con branch e release
 
 - Branch operativo: **`dev`**.
-- Branch stabile: **`main`** (merge solo quando stabile).
-- Rollback concettuale: tag **`v1.5-stable`** — vedi `docs/COMMANDS.md` per comandi manuali, non automatizzati qui.
+- Branch stabile: **`main`**.
+- Rollback concettuale: tag **`v1.5-stable`**.
+- Merge `dev -> main` solo quando la versione e considerata stabile.
