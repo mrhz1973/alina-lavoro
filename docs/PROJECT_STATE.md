@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02 — `npm run push` V1.8A su Apps Script (HEAD); gate validazione **manuale** Alina ancora **aperto**; produzione ufficiale invariata.
+Ultimo aggiornamento: 2026-05-02 — V1.8A validata tecnicamente e manualmente su `dev`; produzione ufficiale invariata.
 
 ## Stato reale
 
@@ -19,9 +19,10 @@ Ultimo aggiornamento: 2026-05-02 — `npm run push` V1.8A su Apps Script (HEAD);
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 - `docs/ORCHESTRATOR_RULES.md` contiene le regole prioritarie per questa chat e per le nuove chat che leggono GitHub.
-- **V1.8A su `dev`:** lista pagina Mesi costruita via DOM (`buildMonthsListSection_`, `renderMonths`); `package.json` **1.8.0-a.1**. **Validazione tecnica** registrata (2026-05-02): controlli frontend standard `docs/COMMANDS.md`, assenza diff su `src/backend/Code.gs` tra `main` e `dev`, navbar `data-page` ok; **non** include test manuale Alina.
+- **V1.8A su `dev`:** lista pagina Mesi costruita via DOM (`buildMonthsListSection_`, `renderMonths`); `package.json` **1.8.0-a.1**. **Validazione tecnica** registrata (2026-05-02): controlli frontend standard `docs/COMMANDS.md`, assenza diff su `src/backend/Code.gs` tra `main` e `dev`, navbar `data-page` ok.
 - **Apps Script (2026-05-02):** eseguito **`npm run push`** su `dev` con autorizzazione in `docs/sessions/2026-05-02-v18a-push-head-autorizzato.md` — caricati `Code.gs`, `Index.html`, `appsscript.json` sul progetto collegato a clasp; **nessun** `npm run deploy` / `clasp deploy`; HEAD/test segue ora il codice **V1.8A** da repo `dev`.
-- **Gate manuale:** test Alina su URL Web App di test / `@HEAD` (non è validazione tecnica); finché non superato, produzione resta **`v1.6.2-stable`** / `main` senza merge/tag/deploy ufficiale V1.8.
+- **Gate manuale V1.8A:** superato. L'utente ha comunicato `test V1.8A ok`; vedi `docs/sessions/2026-05-02-v18a-test-manuale-ok.md`.
+- Produzione ufficiale resta **`v1.6.2-stable`** / `main` finche non vengono autorizzati deploy ufficiale, merge e tag V1.8.
 
 ## Stack
 
@@ -73,16 +74,16 @@ Ultimo aggiornamento: 2026-05-02 — `npm run push` V1.8A su Apps Script (HEAD);
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
 - V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto; promossa su `main` tramite PR #1.
-- V1.8A: su `dev` — performance Mesi (DOM lista righe); **validazione tecnica chiusa**; validazione manuale utente pendente.
+- V1.8A: su `dev` — performance Mesi (DOM lista righe); **validazione tecnica chiusa**; **validazione manuale superata**.
 
 ## Rischi aperti
 
-- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni (virtualizzazione, meno re-render); misurare su Android vecchio reale.
-- Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
+- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni future (virtualizzazione, meno re-render), ma non sono bloccanti se il test manuale rimane OK.
+- Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test manuale.
 
 ## Prossimo passo consigliato
 
-1. **Orchestratore:** aprire gate **validazione manuale** Alina su build di test `dev` (dopo eventuale `npm run push` concordato), separato dalla validazione tecnica già registrata.
-2. Dopo OK manuale: valutare deploy, merge `dev` → `main`, nuovo tag (fuori scope finché il gate non è superato).
-3. Opzionale su `dev`: V1.8B (virtualizzazione / meno re-render) prima del merge.
-4. Produzione fino ad allora: `v1.6.2-stable` / `main`.
+1. Stabilizzazione V1.8A: preparare deploy ufficiale Apps Script solo con autorizzazione esplicita.
+2. Dopo deploy ufficiale OK: valutare merge `dev` → `main` e nuovo tag stabile V1.8.
+3. Issue aperta #3: aggiungere versione visibile nell'app in un prossimo micro-step.
+4. Produzione fino ad autorizzazione deploy ufficiale: `v1.6.2-stable` / `main`.
