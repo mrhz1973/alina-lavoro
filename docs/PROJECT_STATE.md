@@ -9,9 +9,11 @@ Ultimo aggiornamento: 2026-05-02
 - Tag rollback disponibile: `v1.5-stable`.
 - `dev` e avanti rispetto a `main`.
 - `dev` contiene la serie V1.6, V1.6.1 e V1.6.2.
-- V1.6.2 e stata pushata su Apps Script e il deployment ufficiale e stato aggiornato dall'utente.
+- V1.6.2 e stata pushata su Apps Script.
+- Il deployment ufficiale V1.6.2 e stato aggiornato dall'utente.
 - Il test su URL di test V1.6.2 e risultato corretto per il layout mobile verticale.
-- Test finale sull'URL ufficiale `/exec`: da confermare esplicitamente se non gia fatto.
+- Il test finale sull'URL ufficiale `/exec` e stato confermato OK dall'utente.
+- Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 
 ## Stack
 
@@ -39,6 +41,9 @@ Ultimo aggiornamento: 2026-05-02
 - `npm run sync`: copia i sorgenti in `.gas/`.
 - `npm run push`: esegue sync e `clasp push`.
 - `npm run deploy`: esegue sync, `clasp push` e `clasp deploy`.
+- `npm run aggio`: fotografia locale del repository, usata dall'implementatore.
+- `npm run checkpoint`: genera checkpoint locale, da chiudere con commit/push se usato.
+- `npm run finito -- "Messaggio" file1 file2`: chiude un blocco con commit e push selettivo.
 
 ## Regole operative correnti
 
@@ -48,22 +53,24 @@ Ultimo aggiornamento: 2026-05-02
 - Non fare deploy senza test e conferma esplicita.
 - Evitare `git add .`; usare sempre `git add <file specifici>`.
 - Ogni blocco deve avere piano, implementazione, test e riepilogo.
+- GitHub e la fonte di verita dell'orchestratore.
+- Cursor/Agent, come implementatore, deve aggiornare GitHub a fine blocco o sessione anche se l'utente non scrive esplicitamente `finito`.
 
 ## Stato versioni
 
 - V1.5: stabile, taggata come `v1.5-stable`.
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
-- V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait.
+- V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK.
 
 ## Rischi aperti
 
 - La pagina Mesi usa ancora `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
-- Verificare il comportamento reale su Android vecchio.
-- Confermare esplicitamente il test finale su URL ufficiale `/exec` dopo deploy V1.6.2.
+- Verificare il comportamento reale su Android vecchio quando disponibile.
+- Valutare merge `dev -> main` solo dopo ulteriore conferma di stabilita.
 
 ## Prossimo passo consigliato
 
-1. Confermare test sull'URL ufficiale `/exec`.
-2. Usare il comando conversazionale `finito` per chiudere il blocco e aggiornare checkpoint/sessione.
-3. In seguito valutare merge `dev -> main` solo quando V1.6.2 e considerata stabile.
+1. Usare `aggio` dall'orchestratore per ricostruire lo stato da GitHub.
+2. Quando Cursor conclude blocchi futuri, deve aggiornare documenti/checkpoint se necessario, fare commit e push.
+3. Valutare merge `dev -> main` solo quando V1.6.2 e considerata stabile.
