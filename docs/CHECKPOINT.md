@@ -64,9 +64,10 @@ Stack:
 
 ## Comandi rapidi per Cursor
 
-Stato locale:
+Allineamento con GitHub e stato locale:
 
 ```bash
+git pull
 git status
 git branch --show-current
 git log --oneline -5

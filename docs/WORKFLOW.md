@@ -7,22 +7,33 @@ Obiettivo: ridurre il copia/incolla manuale e mantenere sempre GitHub come fonte
 - **Utente**: parla con l'orchestratore e con Cursor quando serve, ma non deve gestire normalmente i comandi terminale.
 - **Orchestratore**: questa chat di coordinamento. Quando riceve `aggio`, legge GitHub e documenti per ricostruire lo stato reale.
 - **Implementatore**: Cursor / Agent. Esegue i comandi terminale, modifica file, aggiorna documenti, fa commit e push.
-- **GitHub**: memoria condivisa. Deve essere aggiornato dall'implementatore a fine blocco, anche se l'utente non scrive esplicitamente `finito`.
+- **GitHub**: memoria condivisa e **unica fonte di verità che l'orchestratore può leggere** (non il filesystem locale di Cursor). Deve essere aggiornato dall'implementatore a fine blocco, anche se l'utente non scrive esplicitamente `finito`.
+
+## Prima di lavorare (implementatore)
+
+All'inizio di un blocco sul branch operativo (`dev`):
+
+```bash
+git pull
+npm run aggio
+```
+
+Poi leggere i documenti pertinenti (`PROJECT_STATE`, `CHECKPOINT`, `roadmap`, ecc.).
 
 ## Regola principale
 
 L'implementatore deve sempre aggiornare GitHub quando conclude un blocco operativo o una sessione.
 
-Questo e obbligatorio perche l'orchestratore non legge il filesystem locale di Cursor: legge GitHub. Se Cursor non aggiorna GitHub, l'orchestratore resta fuori dal loop.
+È obbligatorio perché l'orchestratore non legge il filesystem locale di Cursor: legge GitHub. Se Cursor non aggiorna GitHub, l'orchestratore resta fuori dal loop.
 
-A fine blocco l'implementatore deve:
+A fine blocco l'implementatore deve, in ordine:
 
-1. aggiornare documenti di stato/checkpoint se lo stato e cambiato;
-2. eseguire controlli minimi;
-3. fare commit selettivo;
-4. fare push su GitHub;
-5. riportare hash commit;
-6. riportare `git status --short` finale.
+1. **Stato reale:** `git status`, `git branch --show-current`, `git log --oneline -5`.
+2. **Documentazione** se lo stato è cambiato: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, eventuale `docs/sessions/YYYY-MM-DD-*.md` (o `npm run checkpoint` se si genera una sessione datata).
+3. **Controlli minimi** pertinenti al blocco.
+4. **Commit selettivo** — mai `git add .`.
+5. **Push** su GitHub.
+6. **Riepilogo** con: file modificati; test/check eseguiti; errori o rischi residui; hash commit; `git status --short` finale; dichiarazione **workspace pulito** o **non pulito**.
 
 ## Comandi convenzionali
 
@@ -68,16 +79,15 @@ Se Cursor esegue `checkpoint`, deve normalmente chiuderlo con commit e push, alt
 
 `finito` e il comando di chiusura blocco/sessione usato soprattutto da Cursor.
 
-Deve:
+Deve (allineato alla checklist a fine blocco in `docs/AI_RULES.md`):
 
-1. verificare stato reale;
+1. verificare stato reale (`git status`, branch, `git log --oneline -5`);
 2. aggiornare `docs/PROJECT_STATE.md` e/o `docs/CHECKPOINT.md` se necessario;
-3. creare riepilogo in `docs/sessions/` se utile;
+3. creare o aggiornare un file in `docs/sessions/` se utile;
 4. eseguire controlli minimi;
 5. fare commit selettivo;
 6. fare push;
-7. riportare hash commit;
-8. confermare workspace pulito.
+7. riportare hash commit, `git status --short` finale, e se il workspace è pulito o meno.
 
 Non deve:
 

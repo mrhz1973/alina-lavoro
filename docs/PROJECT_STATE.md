@@ -47,6 +47,7 @@ Ultimo aggiornamento: 2026-05-02
 
 ## Regole operative correnti
 
+- **Implementatore:** all'inizio di un blocco `git pull` poi `npm run aggio`; a fine blocco aggiornare i doc se serve, commit selettivo e **sempre** push (l'orchestratore legge solo GitHub).
 - Lavorare su `dev`.
 - Non modificare `gas-current/`.
 - Modificare i sorgenti reali in `src/`.

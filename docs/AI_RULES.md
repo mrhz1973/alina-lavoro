@@ -4,12 +4,19 @@ Queste regole integrano i vincoli del repository e riducono ambiguita operative.
 
 ## Ruoli operativi
 
-- **Orchestratore**: la chat di coordinamento. Legge GitHub e documenti per ricostruire lo stato reale del progetto.
-- **Implementatore**: Cursor / Agent. Esegue modifiche, controlli, commit, push e aggiornamento documenti.
-- **GitHub**: fonte di verita condivisa tra orchestratore e implementatore.
+- **Orchestratore**: la chat di coordinamento. **Non legge il filesystem locale di Cursor**: ricostruisce lo stato da **GitHub** (e da quanto l’utente incolla in chat).
+- **Implementatore**: Cursor / Agent. Esegue modifiche, controlli, commit, push e aggiornamento documenti su GitHub.
+- **GitHub**: **fonte di verita per l’orchestratore** e memoria condivisa con l’implementatore.
 - **Terminale**: normalmente usato dall'implementatore. L'utente non deve essere costretto a eseguire comandi manuali salvo casi eccezionali.
 
 ## Prima di agire
+
+0. **Sincronizzarsi con GitHub** prima di un nuovo blocco di lavoro sul branch corrente (di norma `dev`):
+
+   ```bash
+   git pull
+   npm run aggio
+   ```
 
 1. **Non inventare stato** del progetto, del deploy o del branch: verificare con `git status`, `git branch`, documenti in `docs/` e, se utile, `npm run aggio`.
 2. **Leggere** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md` quando esistono e sono pertinenti al task.
@@ -19,18 +26,37 @@ Queste regole integrano i vincoli del repository e riducono ambiguita operative.
 
 ## Regola obbligatoria: GitHub sempre aggiornato
 
-L'implementatore deve sempre mantenere GitHub aggiornato, anche quando l'utente non scrive esplicitamente `finito`.
+L'implementatore deve sempre mantenere GitHub aggiornato a **fine blocco operativo o sessione**, anche quando l'utente **non** scrive esplicitamente `finito`.
 
-Motivo: l'orchestratore ricostruisce lo stato leggendo GitHub. Se Cursor lavora localmente ma non aggiorna GitHub, l'orchestratore resta fuori dal loop.
+Motivo: l'orchestratore **non** legge il workspace locale; se GitHub non è aggiornato, l'orchestratore resta fuori dal loop.
 
-A fine blocco operativo l'implementatore deve quindi:
+A fine blocco l'implementatore deve **sempre**, in ordine:
 
-1. aggiornare almeno un documento di stato o checkpoint quando cambia contesto, stato, deploy, test o decisione;
-2. fare commit selettivo dei file modificati;
-3. fare push su GitHub;
-4. riportare hash commit e `git status --short` finale.
+1. **Controllare lo stato reale** (locale, prima di documentare e committare):
 
-Eccezione: durante una fase intermedia di sviluppo non ancora revisionata, l'implementatore puo lasciare modifiche locali solo se lo dichiara esplicitamente e non considera il blocco concluso.
+   ```bash
+   git status
+   git branch --show-current
+   git log --oneline -5
+   ```
+
+2. **Aggiornare la documentazione** se lo stato è cambiato: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, e se utile un file in `docs/sessions/YYYY-MM-DD-*.md` (o `npm run checkpoint` se si usa quello schema).
+
+3. **Eseguire i controlli minimi** pertinenti al blocco (lint, script di progetto, `git diff --check`, controlli su `Index.html` se toccato, ecc.).
+
+4. **Commit selettivo** — mai `git add .`; elenco file esplicito o `npm run finito -- "msg" file1 file2 …`.
+
+5. **Push su GitHub** (`git push` sul branch di lavoro, di norma `origin dev`).
+
+6. **Riepilogo finale** in risposta all'utente con:
+   - file modificati;
+   - test/check eseguiti;
+   - errori o rischi residui;
+   - **hash** del commit;
+   - output di **`git status --short`** finale;
+   - **conferma esplicita**: workspace **pulito** oppure **non pulito** (e perche).
+
+Eccezione: durante una fase intermedia non ancora considerata conclusa, l'implementatore può lasciare modifiche locali **solo** se lo dichiara esplicitamente nel riepilogo e non presenta il blocco come chiuso.
 
 ## Modalita di lavoro
 
@@ -42,12 +68,7 @@ Eccezione: durante una fase intermedia di sviluppo non ancora revisionata, l'imp
 ## Qualita e output
 
 - Preferire **piccoli blocchi** di modifiche revisionabili.
-- **Output finale** (fine turno o fine task) includere quando possibile:
-  - file modificati;
-  - test eseguiti o da eseguire manualmente;
-  - errori o rischi noti;
-  - hash commit e conferma push se il blocco e concluso;
-  - **prossimo passo** suggerito (una riga).
+- **Output finale** (fine turno o fine task / fine blocco) allineato al punto 6 sopra: file modificati, test/check, errori/rischi, hash commit, `git status --short`, workspace pulito o meno, **prossimo passo** (una riga).
 
 ## Comandi sensibili
 
