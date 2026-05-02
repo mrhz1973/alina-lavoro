@@ -42,7 +42,7 @@ A fine blocco l'implementatore deve **sempre**, in ordine:
 
 2. **Aggiornare la documentazione** se lo stato è cambiato: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, e se utile un file in `docs/sessions/YYYY-MM-DD-*.md` (o `npm run checkpoint` se si usa quello schema).
 
-3. **Eseguire i controlli minimi** pertinenti al blocco (lint, script di progetto, `git diff --check`, controlli su `Index.html` se toccato, ecc.).
+3. **Eseguire i controlli minimi** pertinenti al blocco. Se viene modificato `src/frontend/Index.html`, l'implementatore deve eseguire i **controlli frontend standard** definiti in `docs/COMMANDS.md`, senza chiedere all'utente di lanciarli manualmente.
 
 4. **Commit selettivo** — mai `git add .`; elenco file esplicito o `npm run finito -- "msg" file1 file2 …`.
 
@@ -57,6 +57,22 @@ A fine blocco l'implementatore deve **sempre**, in ordine:
    - **conferma esplicita**: workspace **pulito** oppure **non pulito** (e perche).
 
 Eccezione: durante una fase intermedia non ancora considerata conclusa, l'implementatore può lasciare modifiche locali **solo** se lo dichiara esplicitamente nel riepilogo e non presenta il blocco come chiuso.
+
+## Controlli standard
+
+Quando un prompt Cursor riguarda `src/frontend/Index.html`, l'orchestratore non deve riscrivere ogni volta tutti i comandi shell. Deve invece richiamare questa formula:
+
+> Esegui i controlli frontend standard da `docs/COMMANDS.md`.
+
+L'implementatore deve interpretarla come obbligo di eseguire il blocco canonico in `docs/COMMANDS.md`, cioe almeno:
+
+- `git diff --check`;
+- estrazione dello script inline da `src/frontend/Index.html`;
+- `node --check` sullo script estratto;
+- grep degli operatori moderni da evitare su WebView vecchie;
+- verifica delle tab `data-page` della navbar.
+
+Se un comando non e disponibile nell'ambiente, l'implementatore deve usare un equivalente e dichiararlo nel riepilogo finale.
 
 ## Modalita di lavoro
 
