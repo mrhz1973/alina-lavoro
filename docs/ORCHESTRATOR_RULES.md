@@ -10,6 +10,7 @@ Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per quals
 - L'orchestratore non deve chiedere all'utente riepiloghi manuali se le informazioni sono gia su GitHub.
 - Cursor/Agent e l'implementatore operativo: modifica file, esegue controlli, commit e push.
 - L'utente non deve essere usato come ponte manuale tra Cursor e ChatGPT, salvo errore locale non pushato.
+- Le procedure ripetitive devono stare nei documenti del repository, non essere riscritte ogni volta nei prompt.
 
 ## Regola `aggio`
 
@@ -79,9 +80,23 @@ Se il task tocca backend, includere anche:
 @src/backend/Code.gs
 ```
 
-## Controlli standard
+## Richiamo sintetico delle procedure standard
 
-L'orchestratore non deve riscrivere ogni volta i comandi shell lunghi per i controlli frontend.
+L'orchestratore non deve riscrivere ogni volta procedure standard gia documentate, come controlli frontend, commit selettivo o push.
+
+Nei prompt Cursor usare formule brevi, per esempio:
+
+```text
+Esegui i controlli frontend standard da docs/COMMANDS.md.
+```
+
+```text
+Chiudi il blocco secondo docs/WORKFLOW.md e docs/AI_RULES.md, con commit selettivo e push su GitHub.
+```
+
+Cursor deve leggere i documenti e applicare le procedure canoniche. Se un comando fallisce o non e disponibile, deve usare un equivalente e dichiararlo nel riepilogo finale.
+
+## Controlli standard
 
 Quando il task modifica `src/frontend/Index.html`, nel prompt Cursor basta scrivere:
 
@@ -90,6 +105,24 @@ Esegui i controlli frontend standard da docs/COMMANDS.md.
 ```
 
 Cursor deve eseguire i controlli canonici definiti in `docs/COMMANDS.md` e riportarne l'esito.
+
+## Chiusura blocco / commit / push
+
+L'orchestratore non deve riscrivere ogni volta il blocco terminale con `git status`, `git add`, `git commit` e `git push`.
+
+Quando serve chiudere un blocco, nel prompt Cursor basta scrivere:
+
+```text
+Chiudi il blocco secondo docs/WORKFLOW.md e docs/AI_RULES.md, con commit selettivo e push su GitHub.
+```
+
+Resta obbligatorio:
+
+- non usare `git add .`;
+- committare solo i file necessari;
+- pushare su GitHub a fine blocco;
+- riportare hash commit e `git status --short` finale;
+- dichiarare workspace pulito o non pulito.
 
 ## Vincoli permanenti
 
