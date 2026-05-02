@@ -11,6 +11,8 @@
  * 5. Rimossa importaStoricoDaFoglio1
  * 6. importaStoricoSoloFinoAOggi: salta righe 00:00/00:00 senza minuti
  * 7. pulisciTurniVuoti() manuale (editor) per righe fantasma
+ *
+ * V1.6.2: add HtmlService viewport meta tag for mobile layout.
  */
 
 const DEFAULT_ACCESS_CODE = '1234';
@@ -89,6 +91,7 @@ function doGet(e) {
   return HtmlService
     .createHtmlOutputFromFile('Index')
     .setTitle('Alina Lavoro')
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
