@@ -2,6 +2,8 @@
 
 ## Stato attuale
 
+**V1.6.2 (2026-05-02):** versione stabile corrente su `main`; test utente dichiarato perfetto; merge `dev` → `main` completato; **deploy Apps Script finale** eseguito dall’implementatore; tag Git **`v1.6.2-stable`**. Rollback storico pre-V1.6: tag `v1.5-stable`.
+
 App personale per registrazione ore di lavoro di Alina.
 
 Stack:

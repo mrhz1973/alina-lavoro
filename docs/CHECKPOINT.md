@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 post-merge V1.6.2.
+Ultimo aggiornamento: 2026-05-02 — stabilizzazione finale V1.6.2 (deploy clasp + tag `v1.6.2-stable`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -24,6 +24,7 @@ Stack:
 - Branch operativo per nuovi sviluppi: `dev`.
 - Branch stabile: `main`.
 - Tag rollback storico: `v1.5-stable`.
+- Tag stabile V1.6.2: `v1.6.2-stable` (commit di documentazione/deploy su `main`).
 - GitHub e fonte di verita per l'orchestratore.
 
 ## Stato stabile corrente
@@ -37,11 +38,9 @@ Stack:
 
 ## Stato Apps Script / deploy
 
-- V1.6.2 risulta gia pushata su Apps Script secondo documentazione precedente.
-- Il deployment ufficiale V1.6.2 risulta gia aggiornato dall'utente.
-- URL di test V1.6.2: confermato OK.
-- URL ufficiale `/exec`: confermato OK.
-- Nessun deploy Apps Script e stato eseguito durante il merge GitHub.
+- **Deploy finale di stabilizzazione:** eseguito con `npm run deploy` su `main` (2026-05-02), dopo autorizzazione esplicita utente; `clasp push` + `clasp deploy` completati (revisione deployment segnalata da clasp come `@6` in output locale).
+- V1.6.2 era gia stata validata in precedenza su URL di test e `/exec` dall'utente.
+- `gas-current/` non è stato modificato (solo lettura, come da regole).
 
 ## Struttura importante
 
@@ -105,11 +104,9 @@ npm run finito -- "Messaggio commit" file1 file2
 
 - La pagina Mesi usa ancora rendering `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
-- Valutare se creare un tag stabile dedicato alla V1.6.2, ad esempio `v1.6.2-stable`, solo su richiesta esplicita dell'utente.
 
 ## Prossimo passo raccomandato
 
-1. Allineare `dev` a `main` dopo questo checkpoint, se non gia fatto.
-2. Usare `dev` per i prossimi sviluppi.
-3. Creare eventuale tag stabile V1.6.2 solo su richiesta esplicita.
-4. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
+1. Allineare `dev` a `main` se non gia allineato dopo questa stabilizzazione.
+2. Usare `dev` per i prossimi sviluppi; riferimento release: tag `v1.6.2-stable`.
+3. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.

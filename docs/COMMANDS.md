@@ -112,3 +112,13 @@ git show v1.5-stable:src/backend/Code.gs | head -20
 ```
 
 Non eseguire `reset --hard` su branch condivisi senza coordinamento.
+
+## Tag stabile `v1.6.2-stable`
+
+Punta al commit di stabilizzazione V1.6.2 su `main` (documentazione + allineamento release). Ispezione / rollback concettuale (non automatico):
+
+```bash
+git fetch origin
+git log -1 --oneline v1.6.2-stable
+git show v1.6.2-stable:src/backend/Code.gs | head -20
+```

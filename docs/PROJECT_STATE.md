@@ -1,18 +1,19 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02
+Ultimo aggiornamento: 2026-05-02 (stabilizzazione finale V1.6.2)
 
 ## Stato reale
 
 - Branch operativo: `dev`.
 - Branch stabile: `main`.
-- Tag rollback disponibile: `v1.5-stable`.
+- Tag rollback disponibile: `v1.5-stable` (storico V1.5).
+- Riferimento Git stabile V1.6.2: tag annotato **`v1.6.2-stable`** (stesso commit di questo aggiornamento documentale su `main`, dopo deploy finale).
 - V1.6.2 e stata validata dall'utente con test dichiarato perfetto.
 - Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
 - `main` contiene ora la V1.6.2 come stato stabile corrente.
 - Dopo il merge, `dev` resta branch operativo per i prossimi sviluppi.
-- V1.6.2 e stata pushata su Apps Script.
-- Il deployment ufficiale V1.6.2 e stato aggiornato dall'utente.
+- V1.6.2 e su Google Apps Script; **deploy finale** eseguito dall'implementatore con `npm run deploy` (2026-05-02, autorizzazione esplicita utente), allineato a `main`.
+- Deployment Web App precedente era gia stato aggiornato dall'utente; questo passaggio registra il deploy ufficiale di chiusura stabilizzazione da repo `main`.
 - Il test su URL di test V1.6.2 e risultato corretto per il layout mobile verticale.
 - Il test finale sull'URL ufficiale `/exec` e stato confermato OK dall'utente.
 - Ulteriore validazione utente successiva: test V1.6.2 dichiarato perfetto; nessun problema segnalato nel test eseguito.
@@ -71,11 +72,9 @@ Ultimo aggiornamento: 2026-05-02
 
 - La pagina Mesi usa ancora `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
-- Dopo il merge, valutare se creare un tag stabile dedicato alla V1.6.2; `v1.5-stable` resta rollback storico.
 
 ## Prossimo passo consigliato
 
-1. Eseguire un `aggio` finale per confermare che `main` contiene V1.6.2.
-2. Valutare se creare un tag stabile dedicato alla V1.6.2, ad esempio `v1.6.2-stable`, solo su richiesta esplicita dell'utente.
-3. Usare `dev` per i prossimi sviluppi.
-4. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
+1. Tenere `dev` allineato a `main` dopo ogni stabilizzazione (merge o rebase a scelta del team).
+2. Usare `dev` per i prossimi sviluppi; riferimento stabile V1.6.2: tag `v1.6.2-stable` e branch `main`.
+3. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
