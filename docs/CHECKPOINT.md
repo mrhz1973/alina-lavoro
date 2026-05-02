@@ -1,30 +1,115 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento generato da `tools/checkpoint.sh` il **2026-05-02T16:49:32+0000**.
+Ultimo aggiornamento: 2026-05-02 post-merge V1.6.2.
 
-## Sessione
+Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
-- File creato: `docs/sessions/2026-05-02-checkpoint-164932.md`
+## Contesto sintetico
 
-## Branch
+Progetto: `Alina Lavoro`.
 
-`dev`
+App personale per registrazione ore di lavoro, turni, stipendi e note di Alina.
 
-## HEAD
+Stack:
+- Google Apps Script come backend;
+- Google Sheet come database;
+- HTML/CSS/JavaScript come frontend;
+- GitHub per versionamento;
+- Cursor come implementatore operativo;
+- `clasp` per sincronizzare il codice con Apps Script.
 
-`4ab14ff`
+## Repository
 
-## Ultimo commit
+- Repository: `mrhz1973/alina-lavoro`.
+- Branch operativo per nuovi sviluppi: `dev`.
+- Branch stabile: `main`.
+- Tag rollback storico: `v1.5-stable`.
+- GitHub e fonte di verita per l'orchestratore.
 
-4ab14ff docs: allinea implementatore a checklist fine blocco e git pull+aggio
+## Stato stabile corrente
 
-## Working tree (git status --short)
+- V1.6.2 e la versione stabile corrente su `main`.
+- V1.6.2 e stata validata dall'utente con test dichiarato perfetto.
+- Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
+- Nota documentale post-merge allineata su `main` tramite PR GitHub #2.
+- Dopo il merge, `dev` resta il branch operativo per i prossimi sviluppi.
+- V1.5 resta disponibile come rollback storico tramite tag `v1.5-stable`.
 
+## Stato Apps Script / deploy
+
+- V1.6.2 risulta gia pushata su Apps Script secondo documentazione precedente.
+- Il deployment ufficiale V1.6.2 risulta gia aggiornato dall'utente.
+- URL di test V1.6.2: confermato OK.
+- URL ufficiale `/exec`: confermato OK.
+- Nessun deploy Apps Script e stato eseguito durante il merge GitHub.
+
+## Struttura importante
+
+- `src/backend/Code.gs`: backend reale da modificare.
+- `src/frontend/Index.html`: frontend reale da modificare.
+- `appsscript.json`: manifest Apps Script.
+- `gas-current/`: snapshot read-only, non modificare.
+- `.gas/`: cartella locale generata da `npm run sync`, ignorata da Git.
+- `.clasp.json`: configurazione locale, ignorata da Git.
+- `docs/PROJECT_STATE.md`: stato reale del progetto.
+- `docs/AI_RULES.md`: regole permanenti per AI/Cursor.
+- `docs/WORKFLOW.md`: workflow orchestratore/implementatore.
+- `docs/COMMANDS.md`: comandi standard.
+
+## Regole fondamentali
+
+- Non inventare lo stato: controllare GitHub, Git e documenti.
+- Orchestratore: legge GitHub e fa il punto quando l'utente scrive `aggio`.
+- Implementatore: Cursor/Agent esegue modifiche, controlli, commit e push.
+- Lavorare su `dev` per nuovi sviluppi salvo istruzione esplicita diversa.
+- Prima di nuovi sviluppi, assicurarsi che `dev` sia allineato a `main`.
+- Non modificare `gas-current/`.
+- Non fare deploy Apps Script senza conferma esplicita.
+- Non usare `git add .` salvo autorizzazione esplicita.
+- Preferire commit piccoli e selettivi.
+- Separare sempre piano, implementazione, test e riepilogo.
+- L'implementatore deve aggiornare GitHub a fine blocco anche se l'utente non scrive esplicitamente `finito`.
+
+## Comandi rapidi per Cursor
+
+Allineamento con GitHub e stato locale:
+
+```bash
+git pull
+git status
+git branch --show-current
+git log --oneline -5
+npm run aggio
 ```
-(pulito)
+
+Push Apps Script senza deploy:
+
+```bash
+npm run push
 ```
 
-## Note operative
+Deploy solo con conferma:
 
-- `npm run aggio` — fotografia repo.
-- `npm run finito` — chiusura blocco con commit selettivo (vedi `docs/WORKFLOW.md`).
+```bash
+npm run deploy
+```
+
+Checkpoint/chiusura blocco:
+
+```bash
+npm run checkpoint
+npm run finito -- "Messaggio commit" file1 file2
+```
+
+## Rischi aperti
+
+- La pagina Mesi usa ancora rendering `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
+- Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
+- Valutare se creare un tag stabile dedicato alla V1.6.2, ad esempio `v1.6.2-stable`, solo su richiesta esplicita dell'utente.
+
+## Prossimo passo raccomandato
+
+1. Allineare `dev` a `main` dopo questo checkpoint, se non gia fatto.
+2. Usare `dev` per i prossimi sviluppi.
+3. Creare eventuale tag stabile V1.6.2 solo su richiesta esplicita.
+4. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
