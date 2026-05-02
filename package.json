@@ -1,0 +1,30 @@
+{
+  "name": "alina-lavoro",
+  "version": "1.0.0",
+  "description": "APP per lavoro di Alina",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sync": "mkdir -p .gas && cp src/backend/Code.gs .gas/Code.gs && cp src/frontend/Index.html .gas/Index.html && cp appsscript.json .gas/appsscript.json",
+    "push": "npm run sync && clasp push",
+    "deploy": "npm run sync && clasp push && clasp deploy",
+    "aggio": "bash tools/aggio.sh",
+    "checkpoint": "bash tools/checkpoint.sh",
+    "finito": "bash tools/finito.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrhz1973/alina-lavoro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mrhz1973/alina-lavoro/issues"
+  },
+  "homepage": "https://github.com/mrhz1973/alina-lavoro#readme",
+  "devDependencies": {
+    "@google/clasp": "^3.3.0"
+  }
+}
