@@ -4,6 +4,17 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A avviata su `dev` (roadmap V1.8 + Mesi
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
+## Regola prioritaria per nuove chat
+
+Prima di ricostruire lo stato del progetto, leggere `docs/ORCHESTRATOR_RULES.md`.
+
+Quel file definisce:
+- ordine di lettura dopo `aggio`;
+- ruoli ChatGPT/Cursor/GitHub;
+- regola anti-copia/incolla manuale quando GitHub e aggiornato;
+- obbligo di usare `docs/COMMANDS.md` per i controlli frontend standard;
+- vincoli permanenti come `dev`, niente `gas-current/`, niente `git add .`, deploy solo su conferma.
+
 ## Contesto sintetico
 
 Progetto: `Alina Lavoro`.
@@ -45,6 +56,7 @@ Stack:
 
 ## Struttura importante
 
+- `docs/ORCHESTRATOR_RULES.md`: regole prioritarie orchestratore / nuove chat.
 - `src/backend/Code.gs`: backend reale da modificare.
 - `src/frontend/Index.html`: frontend reale da modificare.
 - `appsscript.json`: manifest Apps Script.
@@ -60,6 +72,7 @@ Stack:
 
 - Non inventare lo stato: controllare GitHub, Git e documenti.
 - Orchestratore: legge GitHub e fa il punto quando l'utente scrive `aggio`.
+- Per `aggio`, leggere prima `docs/ORCHESTRATOR_RULES.md`.
 - Implementatore: Cursor/Agent esegue modifiche, controlli, commit e push.
 - Lavorare su `dev` per nuovi sviluppi salvo istruzione esplicita diversa.
 - Prima di nuovi sviluppi, assicurarsi che `dev` sia allineato a `main`.
@@ -103,11 +116,11 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Rischi aperti
 
-- La pagina Mesi usa ancora rendering `innerHTML` completo: se resta lenta, trattare in V1.8 con strategia rendering diversa.
+- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni (virtualizzazione, meno re-render); misurare su Android vecchio reale.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test utente dichiarato perfetto.
 
 ## Prossimo passo raccomandato
 
-1. Allineare `dev` a `main` se non gia allineato dopo questa stabilizzazione.
-2. Usare `dev` per i prossimi sviluppi; riferimento release: tag `v1.6.2-stable`.
-3. Se la pagina Mesi resta lenta su dispositivi vecchi, trattare il rendering in V1.8.
+1. Test manuale su `dev`: tab Mesi, stipendio da riga, cambio lingua, molti mesi in lista.
+2. Continuare V1.8 su `dev` (eventuale V1.8B) prima di merge verso `main`.
+3. Riferimento stabile produzione: `v1.6.2-stable` / `main` fino a nuova release concordata.
