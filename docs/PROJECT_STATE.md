@@ -67,5 +67,5 @@ Ultimo aggiornamento: 2026-05-03 — issue **#3** (versione in UI) su **`dev`**:
 
 ## Prossimo passo consigliato
 
-1. Issue **#3** su `dev`: verifica manuale in Impostazioni; poi merge verso `main` / deploy se pianificato dall’orchestratore.
+1. Verifica manuale in Impostazioni su build da `dev`; chiudere issue **#3** su GitHub; merge `dev` → `main` e deploy se pianificato dall’orchestratore.
 2. Eventuale V1.8B (roadmap) su `dev` prima della prossima release maggiore.

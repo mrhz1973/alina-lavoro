@@ -22,4 +22,4 @@ Mostrare all’utente quale versione dell’app sta usando, in modo discreto.
 
 ## Issue GitHub
 
-Chiusura issue: tentare `gh issue close 3` da ambiente autenticato; in alternativa chiudere manualmente su GitHub con link a questo file.
+Chiusura: `gh` non disponibile nell’ambiente implementatore; **chiudere manualmente** la issue #3 su GitHub (opzionale: commento con link a questo file e commit `4274aff`).
