@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.0 / V1.8A (2026-05-03):** versione stabile corrente su `main` e `dev`; merge `dev` → `main` completato (fast-forward); tag Git **`v1.8.0-stable`**; **deploy Apps Script ufficiale** clasp **`@8`** (vedi `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`). Tag precedenti: **`v1.6.2-stable`** (V1.6.2), **`v1.5-stable`** (rollback storico).
+**V1.8.1 (2026-05-03):** micro-release su `main` e `dev` (issue **#3** versione in Impostazioni); `package.json` / `APP_VERSION` **1.8.1**; tag Git **`v1.8.1-stable`**; **deploy Apps Script ufficiale** clasp **`@9`** (`docs/sessions/2026-05-03-v181-versione-ui-release.md`). Precedente: **V1.8.0** tag **`v1.8.0-stable`**, deploy **`@8`**. Tag storici: **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -193,11 +193,11 @@ Vincoli (uguali a V1.6 dove applicabile):
 - **Requisito UI da mantenere:** durante lo scroll della lista Mesi, i pulsanti inferiori di navigazione devono restare sempre visibili, fissi, attivi e cliccabili.
 - Merge Git `dev` → `main` e tag stabile V1.8 solo a fase successiva **autorizzata** (non eseguiti con il deploy).
 
-### Issue #3 — versione in UI (2026-05-03, `dev`)
+### Issue #3 — versione in UI
 
 - Versione mostrata in **Impostazioni** sotto «Salva»: testo localizzato `Versione` / `Версия`, costante **`APP_VERSION`** in `src/frontend/Index.html` (allineare a `package.json` ad ogni release), suffisso «· Apps Script».
-- Dettaglio sessione: `docs/sessions/2026-05-03-issue-3-versione-ui.md`.
-- Deploy Apps Script non incluso in questo blocco (produzione resta **@8** fino a nuovo deploy).
+- Sessione implementazione: `docs/sessions/2026-05-03-issue-3-versione-ui.md`.
+- **Produzione (2026-05-03):** merge `dev` → `main`, `npm run deploy` → clasp **`@9`**, tag **`v1.8.1-stable`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
 
 ### Evoluzioni possibili (V1.8B+)
 

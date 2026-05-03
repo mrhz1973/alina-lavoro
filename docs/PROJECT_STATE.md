@@ -1,21 +1,20 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-03 — issue **#3** (versione in UI) su **`dev`**: riga versione in Impostazioni; `APP_VERSION` in frontend; deploy **@8** invariato fino a nuovo rilascio.
+Ultimo aggiornamento: 2026-05-03 — micro-release **V1.8.1** (issue **#3** versione in UI): `main`/`dev` allineati; deploy Apps Script **`@9`**; tag **`v1.8.1-stable`**; `gas-current/` snapshot post-deploy.
 
 ## Stato reale
 
-- **Branch stabile `main`:** contiene la release **V1.8.0** (V1.8A: Mesi via DOM, stesso albero di `src` del deploy **@8**).
-- **Branch operativo `dev`:** può contenere micro-step dopo **`main`** (es. issue **#3** versione in UI); verificare `git log main..dev` prima del merge.
-- **Tag Git stabili:** **`v1.8.0-stable`** (release corrente); **`v1.6.2-stable`** (V1.6.2); **`v1.5-stable`** (rollback storico pre-V1.6).
-- **`package.json`:** **1.8.0** (allineato alla release Git stabile).
-- **Apps Script:** deployment ufficiale **V1.8A** clasp **`@8`** — dettagli in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`.
-- **`gas-current/`:** snapshot aggiornato in questo blocco da `src/backend/Code.gs` → `Codice.js`, `src/frontend/Index.html`, `appsscript.json`, coerente con codice V1.8.0 / deploy @8 (solo documentazione archivistica; non è la fonte di sviluppo).
+- **Branch stabile `main`:** release **V1.8.1** (`package.json` **1.8.1**, `APP_VERSION` **1.8.1** in Impostazioni).
+- **Branch operativo `dev`:** allineato a **`main`** (stesso commit dopo chiusura blocco).
+- **Tag Git stabili:** **`v1.8.1-stable`** (release corrente); **`v1.8.0-stable`** (V1.8.0 / V1.8A); **`v1.6.2-stable`**; **`v1.5-stable`** (rollback storico).
+- **Apps Script:** deployment ufficiale clasp **`@9`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md` (precedente produzione V1.8A: **`@8`** in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`).
+- **`gas-current/`:** snapshot aggiornato in questo blocco da `src/` dopo deploy **@9** (archivio; non fonte di sviluppo).
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
 
-- V1.6.2: stabile su `main`, poi tag `v1.6.2-stable`; test utente perfetto; deploy finale documentato.
-- V1.8A: sviluppo su `dev`; validazione tecnica e manuale OK; `npm run push` + `npm run deploy` → **@8**; merge `dev` → `main` (fast-forward, 2026-05-03); tag **`v1.8.0-stable`**.
+- V1.6.2 → V1.8.0 (V1.8A): Mesi via DOM, deploy **@8**, tag `v1.8.0-stable`.
+- **V1.8.1:** issue **#3** (riga versione in Impostazioni); merge `dev` → `main`; `npm run deploy` → **`@9`**; tag **`v1.8.1-stable`**; snapshot `gas-current/`.
 
 ## Stack
 
@@ -57,8 +56,9 @@ Ultimo aggiornamento: 2026-05-03 — issue **#3** (versione in UI) su **`dev`**:
 ## Stato versioni
 
 - V1.5: storica, tag `v1.5-stable`.
-- V1.6.x: mobile verticale; V1.6.2 tag `v1.6.2-stable`.
-- **V1.8.0 (V1.8A):** release corrente su `main`/`dev`, tag **`v1.8.0-stable`**; deploy Apps Script **@8**.
+- V1.6.x: tag `v1.6.2-stable`.
+- V1.8.0 (V1.8A): tag `v1.8.0-stable`; deploy storico **@8**.
+- **V1.8.1:** release corrente su `main`/`dev`, tag **`v1.8.1-stable`**; deploy **@9**; issue **#3** in produzione.
 
 ## Rischi aperti
 
@@ -67,5 +67,5 @@ Ultimo aggiornamento: 2026-05-03 — issue **#3** (versione in UI) su **`dev`**:
 
 ## Prossimo passo consigliato
 
-1. Verifica manuale in Impostazioni su build da `dev`; chiudere issue **#3** su GitHub; merge `dev` → `main` e deploy se pianificato dall’orchestratore.
-2. Eventuale V1.8B (roadmap) su `dev` prima della prossima release maggiore.
+1. Verifica manuale URL **`/exec`** del deployment **@9** e riga versione in Impostazioni.
+2. Lavoro nuovo su **`dev`** dopo `git pull` (es. roadmap V1.8B).

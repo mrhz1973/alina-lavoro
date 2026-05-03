@@ -23,3 +23,7 @@ Mostrare all’utente quale versione dell’app sta usando, in modo discreto.
 ## Issue GitHub
 
 Chiusura: `gh` non disponibile nell’ambiente implementatore; **chiudere manualmente** la issue #3 su GitHub (opzionale: commento con link a questo file e commit `4274aff`).
+
+## Produzione (post blocco)
+
+Micro-release **V1.8.1**: merge su `main`, `npm run deploy` → clasp **`@9`**, tag **`v1.8.1-stable`** — dettaglio in `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
