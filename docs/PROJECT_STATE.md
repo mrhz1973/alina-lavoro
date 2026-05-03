@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A validata tecnicamente e manualmente su `dev`; produzione ufficiale invariata.
+Ultimo aggiornamento: 2026-05-02 — deploy **ufficiale** Apps Script V1.8A eseguito (`npm run deploy`, deployment **@8**); Git `main` ancora V1.6.2 fino a merge autorizzato.
 
 ## Stato reale
 
@@ -20,9 +20,9 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A validata tecnicamente e manualmente s
 - Il workflow orchestratore/implementatore e stato formalizzato: l'orchestratore legge GitHub, Cursor/Agent aggiorna GitHub a fine blocco.
 - `docs/ORCHESTRATOR_RULES.md` contiene le regole prioritarie per questa chat e per le nuove chat che leggono GitHub.
 - **V1.8A su `dev`:** lista pagina Mesi costruita via DOM (`buildMonthsListSection_`, `renderMonths`); `package.json` **1.8.0-a.1**. **Validazione tecnica** registrata (2026-05-02): controlli frontend standard `docs/COMMANDS.md`, assenza diff su `src/backend/Code.gs` tra `main` e `dev`, navbar `data-page` ok.
-- **Apps Script (2026-05-02):** eseguito **`npm run push`** su `dev` con autorizzazione in `docs/sessions/2026-05-02-v18a-push-head-autorizzato.md` — caricati `Code.gs`, `Index.html`, `appsscript.json` sul progetto collegato a clasp; **nessun** `npm run deploy` / `clasp deploy`; HEAD/test segue ora il codice **V1.8A** da repo `dev`.
-- **Gate manuale V1.8A:** superato. L'utente ha comunicato `test V1.8A ok`; vedi `docs/sessions/2026-05-02-v18a-test-manuale-ok.md`.
-- Produzione ufficiale resta **`v1.6.2-stable`** / `main` finche non vengono autorizzati deploy ufficiale, merge e tag V1.8.
+- **Apps Script V1.8A (2026-05-02):** prima **`npm run push`** (autorizzazione `docs/sessions/2026-05-02-v18a-push-head-autorizzato.md`), poi **`npm run deploy`** (autorizzazione `docs/sessions/2026-05-02-v18a-deploy-ufficiale-autorizzato.md`). Nuovo deployment ufficiale clasp: **`@8`**, ID `AKfycbzq7DhRw7XwTlNbfoLPt0Fo1B0bdCotdfLw6p8AH1Wl--FhJUqjJI7z4i_xZzkAOWDUag` — esito in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`.
+- **Gate manuale V1.8A:** superato (`docs/sessions/2026-05-02-v18a-test-manuale-ok.md`).
+- **Git:** branch **`main`** e tag **`v1.6.2-stable`** restano riferimento codice V1.6.2 **fino a merge** `dev` → `main` e nuovo tag concordato. **Nessun** merge e **nessun** tag V1.8 eseguiti in questo blocco.
 
 ## Stack
 
@@ -74,7 +74,7 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A validata tecnicamente e manualmente s
 - V1.6: ottimizzazione mobile verticale e performance iniziale.
 - V1.6.1: forzatura layout verticale sotto 900px.
 - V1.6.2: fix viewport Apps Script con `HtmlService.addMetaTag` e fallback portrait; test URL di test OK; deployment ufficiale `/exec` OK; ulteriore test utente dichiarato perfetto; promossa su `main` tramite PR #1.
-- V1.8A: su `dev` — performance Mesi (DOM lista righe); **validazione tecnica chiusa**; **validazione manuale superata**.
+- V1.8A: su `dev` — performance Mesi (DOM lista righe); validazioni tecniche e manuali OK; **deploy ufficiale Apps Script** `@8` eseguito da `dev` (2026-05-02).
 
 ## Rischi aperti
 
@@ -83,7 +83,6 @@ Ultimo aggiornamento: 2026-05-02 — V1.8A validata tecnicamente e manualmente s
 
 ## Prossimo passo consigliato
 
-1. Stabilizzazione V1.8A: preparare deploy ufficiale Apps Script solo con autorizzazione esplicita.
-2. Dopo deploy ufficiale OK: valutare merge `dev` → `main` e nuovo tag stabile V1.8.
-3. Issue aperta #3: aggiungere versione visibile nell'app in un prossimo micro-step.
-4. Produzione fino ad autorizzazione deploy ufficiale: `v1.6.2-stable` / `main`.
+1. Verificare in Google Apps Script che l’implementazione **@8** sia quella collegata all’URL `/exec` usato da Alina (se serve aggiornare collegamenti o preferiti).
+2. Con autorizzazione separata: merge `dev` → `main`, tag Git stabile V1.8.x, eventuale aggiornamento `gas-current/`.
+3. Issue #3: versione visibile in app (micro-step).
