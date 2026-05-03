@@ -1,11 +1,11 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-03 — release Git **V1.8.0** (`v1.8.0-stable`): `main` e `dev` allineati; Apps Script **@8**; snapshot `gas-current/` aggiornato.
+Ultimo aggiornamento: 2026-05-03 — issue **#3** (versione in UI) su **`dev`**: riga versione in Impostazioni; `APP_VERSION` in frontend; deploy **@8** invariato fino a nuovo rilascio.
 
 ## Stato reale
 
 - **Branch stabile `main`:** contiene la release **V1.8.0** (V1.8A: Mesi via DOM, stesso albero di `src` del deploy **@8**).
-- **Branch operativo `dev`:** allineato a `main` (stesso commit dopo merge/chiusura release).
+- **Branch operativo `dev`:** può contenere micro-step dopo **`main`** (es. issue **#3** versione in UI); verificare `git log main..dev` prima del merge.
 - **Tag Git stabili:** **`v1.8.0-stable`** (release corrente); **`v1.6.2-stable`** (V1.6.2); **`v1.5-stable`** (rollback storico pre-V1.6).
 - **`package.json`:** **1.8.0** (allineato alla release Git stabile).
 - **Apps Script:** deployment ufficiale **V1.8A** clasp **`@8`** — dettagli in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`.
@@ -67,6 +67,5 @@ Ultimo aggiornamento: 2026-05-03 — release Git **V1.8.0** (`v1.8.0-stable`): `
 
 ## Prossimo passo consigliato
 
-1. Lavoro nuovo: partire da `dev` dopo `git pull`.
-2. Issue #3: versione visibile in app (micro-step).
-3. Eventuale V1.8B (roadmap) su `dev` prima della prossima release maggiore.
+1. Issue **#3** su `dev`: verifica manuale in Impostazioni; poi merge verso `main` / deploy se pianificato dall’orchestratore.
+2. Eventuale V1.8B (roadmap) su `dev` prima della prossima release maggiore.

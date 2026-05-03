@@ -193,11 +193,16 @@ Vincoli (uguali a V1.6 dove applicabile):
 - **Requisito UI da mantenere:** durante lo scroll della lista Mesi, i pulsanti inferiori di navigazione devono restare sempre visibili, fissi, attivi e cliccabili.
 - Merge Git `dev` → `main` e tag stabile V1.8 solo a fase successiva **autorizzata** (non eseguiti con il deploy).
 
+### Issue #3 — versione in UI (2026-05-03, `dev`)
+
+- Versione mostrata in **Impostazioni** sotto «Salva»: testo localizzato `Versione` / `Версия`, costante **`APP_VERSION`** in `src/frontend/Index.html` (allineare a `package.json` ad ogni release), suffisso «· Apps Script».
+- Dettaglio sessione: `docs/sessions/2026-05-03-issue-3-versione-ui.md`.
+- Deploy Apps Script non incluso in questo blocco (produzione resta **@8** fino a nuovo deploy).
+
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
 - Riduzione ulteriore di re-render se i dati non cambiano.
-- Mostrare la versione app nell’interfaccia, come da issue GitHub #3.
 
 ## V2 — Rinviato
 

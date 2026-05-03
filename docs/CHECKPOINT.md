@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-03 — release Git **V1.8.0** chiusa: merge `dev` → `main`, tag **`v1.8.0-stable`**, `dev` allineato; deploy Apps Script **@8**; snapshot `gas-current/` aggiornato.
+Ultimo aggiornamento: 2026-05-03 — issue **GitHub #3** (versione in UI) implementata su **`dev`**; `main` invariato fino a merge; deploy **@8** invariato (nessun deploy in questo blocco).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -42,7 +42,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.0** è la versione stabile corrente su **`main`** (merge `dev` → `main` fast-forward, 2026-05-03); tag Git **`v1.8.0-stable`**.
-- **`dev`** è allineato a **`main`** (stesso commit).
+- **`dev`** può essere **avanti** rispetto a **`main`** dopo micro-step (es. issue **#3** versione in Impostazioni); verificare `git log main..dev`.
 - V1.8A (Mesi via DOM): validazione tecnica e test manuale OK; deploy **@8** documentato nelle sessioni 2026-05-02.
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
 - V1.5 resta rollback storico tramite tag **`v1.5-stable`**.
@@ -121,5 +121,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Nuovi sviluppi: `git checkout dev`, `git pull`, poi feature/issue (es. #3 versione visibile).
+1. Verifica manuale issue **#3** in Impostazioni; chiudere issue #3 su GitHub se OK; pianificare merge `dev` → `main` / deploy con orchestratore se si vuole versione in produzione.
 2. Verifica occasionale URL `/exec` e deployment **@8** in console Apps Script se serve audit.
