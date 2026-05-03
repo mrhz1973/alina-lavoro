@@ -11,16 +11,17 @@ Queste regole integrano i vincoli del repository e riducono ambiguita operative.
 
 ## Prima di agire
 
-0. **Sincronizzarsi con GitHub** prima di un nuovo blocco di lavoro sul branch corrente (di norma `dev`):
+0. **Sincronizzarsi con GitHub** prima di un nuovo blocco di lavoro sul branch operativo (**`main`**):
 
    ```bash
-   git pull
+   git checkout main
+   git pull origin main
    npm run aggio
    ```
 
 1. **Non inventare stato** del progetto, del deploy o del branch: verificare con `git status`, `git branch`, documenti in `docs/` e, se utile, `npm run aggio`.
-2. **Leggere** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md` quando esistono e sono pertinenti al task.
-3. **Branch operativo:** lavorare su **`dev`** salvo istruzioni esplicite diverse.
+2. **Leggere** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/STREAMLINED_WORKFLOW.md` quando pertinenti al task.
+3. **Branch operativo:** lavorare su **`main`**. **`dev`** è **legacy/inattivo** — non usarlo per nuovi sviluppi.
 4. **`gas-current/`** e **solo lettura**: mai modificare, mai usarlo come sorgente di patch.
 5. **Modifiche applicative** solo sotto **`src/`** (backend `src/backend/`, frontend `src/frontend/`), salvo workflow/documentazione/tool esplicitamente richiesti.
 
@@ -46,7 +47,7 @@ A fine blocco l'implementatore deve **sempre**, in ordine:
 
 4. **Commit selettivo** — mai `git add .`; elenco file esplicito o `npm run finito -- "msg" file1 file2 …`.
 
-5. **Push su GitHub** (`git push` sul branch di lavoro, di norma `origin dev`).
+5. **Push su GitHub** (`git push origin main`).
 
 6. **Riepilogo finale** in risposta all'utente con:
    - file modificati;
@@ -77,7 +78,7 @@ Se un comando non e disponibile nell'ambiente, l'implementatore deve usare un eq
 ## Modalita di lavoro
 
 - Per modifiche **importanti o ambigue**: **Plan** prima di **Agent**, con piano approvato dall'utente.
-- **Deploy** Apps Script / aggiornamento deployment **solo** dopo conferma esplicita dell'utente.
+- **Deploy** Apps Script / aggiornamento deployment quando il blocco lo prevede (`docs/STREAMLINED_WORKFLOW.md` + istruzioni nel prompt), senza deploy «casuali» fuori contesto.
 - **Niente `git add .`**: usare elenco file selettivo o `npm run finito` con lista esplicita.
 - **Commit piccoli e mirati**; messaggi chiari in italiano o inglese coerente con il repo.
 
@@ -89,4 +90,4 @@ Se un comando non e disponibile nell'ambiente, l'implementatore deve usare un eq
 ## Comandi sensibili
 
 - **`npm run push`** / **`clasp push`**: solo dopo verifica locale e consenso utente sullo stato.
-- **Rollback**: riferimento al tag `v1.5-stable` come ancora di sicurezza concettuale; non eseguire reset/merge automatici senza ordine esplicito.
+- **Rollback**: principale meccanismo = **tag stabili** su `main` (es. `v1.8.1-stable`, `v1.8.0-stable`, …; storico `v1.5-stable`); non eseguire reset/merge distruttivi senza ordine esplicito.

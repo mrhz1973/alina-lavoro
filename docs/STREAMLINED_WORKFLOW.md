@@ -1,8 +1,15 @@
 # Alina Lavoro — Workflow snello orchestratore
 
-Ultimo aggiornamento: 2026-05-03.
+Ultimo aggiornamento: 2026-05-03 — workflow **main-only** (vedi `docs/sessions/2026-05-03-main-only-workflow.md`).
 
 Questo file chiarisce come ridurre passaggi inutili tra utente, orchestratore e Cursor.
+
+## Branch operativo
+
+- **`main`** è l’**unico branch operativo**: nuovi sviluppi, fix, micro-release e documentazione partono da **`main`**; Cursor committa e pusha su **`main`**.
+- **`dev`** resta nel repository come branch **legacy/inattivo** (non va più usato per sviluppo né citato come branch di lavoro nei prompt ordinari).
+- Nel flusso normale **non** è previsto merge `dev` → `main`; il rollback si affida ai **tag stabili** e alla cronologia Git su **`main`**.
+- **`gas-current/`** resta solo **snapshot** post-deploy quando aggiornato in sede di release; non è sorgente primaria.
 
 ## Regola principale
 
@@ -18,7 +25,7 @@ Sono considerate sempre incluse nel blocco di lavoro corrente, senza chiedere co
 - creare note in `docs/sessions/`;
 - aprire issue GitHub per TODO/miglioramenti richiesti;
 - aggiornare roadmap, checkpoint, project state e regole operative;
-- far chiudere Cursor con commit selettivo e push sul branch operativo.
+- far chiudere Cursor con commit selettivo e push su **`main`**.
 
 ## Autorizzazione permanente utente
 
@@ -31,7 +38,7 @@ Sono quindi autorizzate in modo permanente, quando coerenti con il task corrente
 - rollback;
 - modifiche struttura Google Sheet;
 - modifiche a `gas-current/`;
-- merge o allineamento branch quando serve alla chiusura release.
+- merge o allineamento branch solo se eccezionale (es. manutenzione branch legacy); la release ordinaria avviene su **`main`** con tag stabile.
 
 Questa autorizzazione non significa che Cursor debba eseguire queste azioni automaticamente o senza criterio. Significa che l'orchestratore non deve fermarsi per chiedere conferma ulteriore se l'azione e chiaramente parte del prossimo step di lavoro.
 

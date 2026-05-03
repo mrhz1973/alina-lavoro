@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-02.
+Ultimo aggiornamento: 2026-05-03 — policy **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -33,7 +33,7 @@ Ordine consigliato di lettura:
 Risposta attesa dopo `aggio`:
 
 1. stato reale del progetto;
-2. branch e relazione `dev/main`;
+2. branch **`main`** (operativo) e, se rilevante, presenza legacy di **`dev`** senza uso operativo;
 3. versione attuale dell'app;
 4. stato deploy Apps Script se documentato;
 5. ultimo checkpoint utile;
@@ -158,8 +158,7 @@ Deve invece considerare il test manuale utente/Alina come **gate operativo** qua
 Quando una fase richiede conferma reale d'uso, per esempio prima di:
 
 - deploy Apps Script;
-- merge `dev -> main`;
-- tag stabile;
+- release su **`main`** con **tag stabile** (micro-release importante);
 - chiusura di una release;
 - decisione tra continuare una V1.x o aprire una V1.x successiva;
 
@@ -174,18 +173,17 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 
 ## Vincoli permanenti
 
-- Lavorare su `dev` salvo istruzione esplicita diversa.
-- Merge `dev -> main` solo quando richiesto esplicitamente.
-- Deploy Apps Script solo con conferma esplicita.
+- Lavorare su **`main`** (branch operativo unico). **`dev`** è **legacy/inattivo**: non usarlo per nuovi sviluppi; non prescrivere merge `dev` → `main` nel flusso normale.
+- Dopo release o micro-release importante, usare **tag stabile** su `main` e, se serve rollback, riferirsi al **tag precedente** (es. `v1.8.0-stable` rispetto a `v1.8.1-stable`).
+- Deploy Apps Script solo con conferma esplicita (o coerente con `docs/STREAMLINED_WORKFLOW.md` se il blocco lo include).
 - Non modificare `gas-current/`.
 - Non usare `git add .`.
 - Non cambiare struttura Google Sheet salvo richiesta esplicita.
 - Non introdurre librerie esterne o service worker senza approvazione.
 - Preferire blocchi piccoli, testabili e committabili.
 
-## Stato stabile corrente
+## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
-- Produzione stabile: V1.6.2 su `main`.
-- Tag stabile V1.6.2: `v1.6.2-stable`.
-- Rollback storico: `v1.5-stable`.
-- Sviluppo corrente: V1.8A su `dev` per performance pagina Mesi.
+- Produzione Git/Apps Script: **V1.8.1** su **`main`**, tag **`v1.8.1-stable`**, deploy clasp **`@9`**.
+- Tag utili per rollback: **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, storico **`v1.5-stable`**.
+- Branch **`dev`:** legacy, non operativo.

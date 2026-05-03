@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-03 — micro-release **V1.8.1** (issue **#3**): merge `dev` → `main`, deploy **`@9`**, tag **`v1.8.1-stable`**, `gas-current/` snapshot; `dev` allineato a `main`.
+Ultimo aggiornamento: 2026-05-03 — workflow **main-only** adottato (`docs/sessions/2026-05-03-main-only-workflow.md`). Produzione: **V1.8.1**, deploy **`@9`**, tag **`v1.8.1-stable`**.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -13,7 +13,7 @@ Quel file definisce:
 - ruoli ChatGPT/Cursor/GitHub;
 - regola anti-copia/incolla manuale quando GitHub e aggiornato;
 - obbligo di usare `docs/COMMANDS.md` per i controlli frontend standard;
-- vincoli permanenti come `dev`, niente `gas-current/`, niente `git add .`, deploy solo su conferma.
+- vincoli permanenti: branch **`main`** operativo, **`gas-current/`** solo snapshot, niente `git add .`, deploy coerente col blocco (`docs/STREAMLINED_WORKFLOW.md`).
 
 ## Contesto sintetico
 
@@ -32,8 +32,8 @@ Stack:
 ## Repository
 
 - Repository: `mrhz1973/alina-lavoro`.
-- Branch operativo per nuovi sviluppi: `dev`.
-- Branch stabile: `main`.
+- Branch operativo unico: **`main`** (sviluppi, fix, documentazione, release).
+- Branch **`dev`:** **legacy/inattivo** (non usato per nuovi lavori; può restare sul remoto).
 - Tag rollback storico: `v1.5-stable`.
 - Tag stabile V1.6.2: `v1.6.2-stable`.
 - Tag stabile **V1.8.1:** **`v1.8.1-stable`** (release corrente su `main`).
@@ -43,7 +43,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.1** è la versione stabile corrente su **`main`**; tag Git **`v1.8.1-stable`**; issue **#3** (versione in Impostazioni) in produzione.
-- **`dev`** allineato a **`main`** (stesso commit dopo chiusura blocco).
+- **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
 - V1.5 resta rollback storico tramite tag **`v1.5-stable`**.
@@ -76,8 +76,8 @@ Stack:
 - Orchestratore: legge GitHub e fa il punto quando l'utente scrive `aggio`.
 - Per `aggio`, leggere prima `docs/ORCHESTRATOR_RULES.md`.
 - Implementatore: Cursor/Agent esegue modifiche, controlli, commit e push.
-- Lavorare su `dev` per nuovi sviluppi salvo istruzione esplicita diversa.
-- Prima di nuovi sviluppi, assicurarsi che `dev` sia allineato a `main`.
+- Lavorare su **`main`** per tutti i nuovi sviluppi.
+- Non pianificare merge `dev` → `main` nel flusso normale.
 - Non modificare `gas-current/`.
 - Non fare deploy Apps Script senza conferma esplicita.
 - Non usare `git add .` salvo autorizzazione esplicita.
@@ -124,4 +124,4 @@ npm run finito -- "Messaggio commit" file1 file2
 ## Prossimo passo raccomandato
 
 1. Verifica manuale URL `/exec` del deployment **@9** e riga versione **1.8.1** in Impostazioni.
-2. Nuovi sviluppi: `git checkout dev`, `git pull`, roadmap V1.8B o micro-step successivi.
+2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B o micro-step su **`main`**.

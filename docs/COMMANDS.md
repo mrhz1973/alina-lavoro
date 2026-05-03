@@ -101,8 +101,10 @@ git commit -m "docs: descrizione breve"
 
 ## Push
 
+Branch operativo: **`main`** (`dev` è legacy/inattivo — non usare per nuovi push di lavoro).
+
 ```bash
-git push origin dev
+git push origin main
 ```
 
 ## Deploy (solo con conferma)
@@ -138,3 +140,15 @@ git fetch origin
 git log -1 --oneline v1.6.2-stable
 git show v1.6.2-stable:src/backend/Code.gs | head -20
 ```
+
+## Tag stabile `v1.8.1-stable` (release corrente al 2026-05-03)
+
+Micro-release issue **#3** (versione in UI), deploy documentato **`@9`**:
+
+```bash
+git fetch origin
+git log -1 --oneline v1.8.1-stable
+git show v1.8.1-stable:src/frontend/Index.html | grep -n APP_VERSION | head -5
+```
+
+Per rollback concettuale verso la release precedente: **`v1.8.0-stable`** (deploy storico `@8`).

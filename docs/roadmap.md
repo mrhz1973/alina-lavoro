@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.1 (2026-05-03):** micro-release su `main` e `dev` (issue **#3** versione in Impostazioni); `package.json` / `APP_VERSION` **1.8.1**; tag Git **`v1.8.1-stable`**; **deploy Apps Script ufficiale** clasp **`@9`** (`docs/sessions/2026-05-03-v181-versione-ui-release.md`). Precedente: **V1.8.0** tag **`v1.8.0-stable`**, deploy **`@8`**. Tag storici: **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.1 (2026-05-03):** micro-release su **`main`** (issue **#3** versione in Impostazioni); `package.json` / `APP_VERSION` **1.8.1**; tag **`v1.8.1-stable`**; deploy Apps Script **`@9`** (`docs/sessions/2026-05-03-v181-versione-ui-release.md`). Workflow repository: **`main` operativo unico**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Precedente: **V1.8.0** tag **`v1.8.0-stable`**, deploy **`@8`**. Tag storici: **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -41,14 +41,14 @@ Tutte le modifiche devono essere fatte in `src/`.
 
 ## Workflow operativo
 
-1. Lavorare sempre su `dev`.
-2. Usare Cursor in Plan Mode per analisi e piano.
-3. Passare ad Agent Mode solo dopo approvazione.
+1. Lavorare sempre su **`main`** (`git pull origin main` all’inizio del blocco).
+2. Usare Cursor in Plan Mode per analisi e piano quando serve.
+3. Passare ad Agent Mode solo dopo approvazione (se il task lo richiede).
 4. Controllare il diff prima di commit.
-5. Fare commit e push su GitHub.
-6. Usare `npm run push` solo dopo verifica locale.
-7. Aggiornare il deployment Apps Script solo dopo test.
-8. Fare merge `dev -> main` solo quando la versione e stabile.
+5. Commit selettivo e **`git push origin main`** a fine blocco.
+6. Usare `npm run push` / `npm run deploy` solo quando il task e `docs/STREAMLINED_WORKFLOW.md` lo prevedono, dopo verifica locale.
+7. Dopo release o micro-release importante: **tag stabile** su `main` e documentazione / eventuale snapshot **`gas-current/`**.
+8. **Rollback:** tramite **tag stabili** precedenti, non tramite flusso `dev` → `main` ( **`dev`** non è più branch operativo ).
 
 ## V1.5 — Obiettivo
 
@@ -197,7 +197,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - Versione mostrata in **Impostazioni** sotto «Salva»: testo localizzato `Versione` / `Версия`, costante **`APP_VERSION`** in `src/frontend/Index.html` (allineare a `package.json` ad ogni release), suffisso «· Apps Script».
 - Sessione implementazione: `docs/sessions/2026-05-03-issue-3-versione-ui.md`.
-- **Produzione (2026-05-03):** merge `dev` → `main`, `npm run deploy` → clasp **`@9`**, tag **`v1.8.1-stable`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
+- **Produzione (2026-05-03):** codice su `main`, `npm run deploy` → clasp **`@9`**, tag **`v1.8.1-stable`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md` (storico: prima del main-only era previsto merge da `dev`).
 
 ### Evoluzioni possibili (V1.8B+)
 

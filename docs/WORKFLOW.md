@@ -11,14 +11,15 @@ Obiettivo: ridurre il copia/incolla manuale e mantenere sempre GitHub come fonte
 
 ## Prima di lavorare (implementatore)
 
-All'inizio di un blocco sul branch operativo (`dev`):
+All'inizio di un blocco sul branch operativo (**`main`**):
 
 ```bash
-git pull
+git checkout main
+git pull origin main
 npm run aggio
 ```
 
-Poi leggere i documenti pertinenti (`PROJECT_STATE`, `CHECKPOINT`, `roadmap`, ecc.).
+Poi leggere i documenti pertinenti (`PROJECT_STATE`, `CHECKPOINT`, `roadmap`, `STREAMLINED_WORKFLOW`, ecc.).
 
 ## Regola principale
 
@@ -57,8 +58,8 @@ Quando l'utente scrive `aggio` in chat orchestratore:
 
 - l'orchestratore non chiede terminale;
 - legge GitHub;
-- legge `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/roadmap.md`, `docs/AI_RULES.md` e `docs/WORKFLOW.md` se utili;
-- confronta `dev`, `main` e tag disponibili;
+- legge `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/roadmap.md`, `docs/AI_RULES.md`, `docs/STREAMLINED_WORKFLOW.md` e `docs/WORKFLOW.md` se utili;
+- verifica **`main`**, **tag stabili** e (solo se serve audit storico) eventuale branch **`dev`** legacy;
 - segnala eventuali incongruenze;
 - propone il prossimo passo.
 
@@ -92,13 +93,14 @@ Deve (allineato alla checklist a fine blocco in `docs/AI_RULES.md`):
 Non deve:
 
 - usare `git add .`;
-- fare `clasp push` senza richiesta;
-- fare deploy senza conferma;
-- fare merge verso `main` senza ordine separato.
+- fare `clasp push` senza richiesta coerente col task;
+- fare deploy senza che il blocco lo preveda (`docs/STREAMLINED_WORKFLOW.md` + istruzioni nel prompt);
+- prescrivere merge **`dev` → `main`** nel flusso normale (**`dev`** è legacy/inattivo).
 
 ## Relazione con branch e release
 
-- Branch operativo: **`dev`**.
-- Branch stabile: **`main`**.
-- Rollback concettuale: tag **`v1.5-stable`**.
-- Merge `dev -> main` solo quando la versione e considerata stabile.
+- Branch operativo unico: **`main`** (sviluppi, fix, doc, release).
+- **`dev`:** legacy, **non** usato per nuovi lavori; può restare sul remoto allineato a `main` senza ruolo operativo.
+- Produzione reale: **Apps Script** (deployment corrente documentato in `docs/PROJECT_STATE.md` / sessioni).
+- **Tag stabili** su `main` (es. **`v1.8.1-stable`**) sono il principale meccanismo di **rollback** e di ancoraggio release; tag storici (`v1.8.0-stable`, `v1.6.2-stable`, `v1.5-stable`) restano disponibili.
+- Dopo una release o micro-release importante: aggiornare documentazione, eventualmente **`gas-current/`** come snapshot del deploy, creare **tag stabile** quando richiesto dal blocco.
