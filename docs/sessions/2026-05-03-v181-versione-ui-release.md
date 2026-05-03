@@ -35,11 +35,7 @@ Output clasp (rilevante):
 
 ## Snapshot `gas-current/`
 
-Aggiornato **dopo** il deploy, copiando da sorgenti autoritative:
-
-- `src/backend/Code.gs` → `gas-current/Codice.js`
-- `src/frontend/Index.html` → `gas-current/Index.html`
-- `appsscript.json` → `gas-current/appsscript.json`
+Aggiornato **dopo** il deploy, copiando da sorgenti autoritative (`cp` da `src/` / radice). Nel commit di release risulta diff solo su **`gas-current/Index.html`** (frontend con `APP_VERSION` 1.8.1); **`Codice.js`** e **`appsscript.json`** erano già identici al repository e non hanno prodotto delta.
 
 Coerente con produzione **@9** e tag **`v1.8.1-stable`** (solo archivio; non è area di sviluppo).
 

@@ -8,7 +8,7 @@ Ultimo aggiornamento: 2026-05-03 — micro-release **V1.8.1** (issue **#3** vers
 - **Branch operativo `dev`:** allineato a **`main`** (stesso commit dopo chiusura blocco).
 - **Tag Git stabili:** **`v1.8.1-stable`** (release corrente); **`v1.8.0-stable`** (V1.8.0 / V1.8A); **`v1.6.2-stable`**; **`v1.5-stable`** (rollback storico).
 - **Apps Script:** deployment ufficiale clasp **`@9`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md` (precedente produzione V1.8A: **`@8`** in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`).
-- **`gas-current/`:** snapshot aggiornato in questo blocco da `src/` dopo deploy **@9** (archivio; non fonte di sviluppo).
+- **`gas-current/`:** snapshot aggiornato dopo deploy **@9** (diff Git su `Index.html` rispetto allo snapshot precedente; `Codice.js` / `appsscript.json` già allineati).
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
