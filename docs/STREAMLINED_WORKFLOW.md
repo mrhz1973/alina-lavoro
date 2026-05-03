@@ -1,6 +1,6 @@
 # Alina Lavoro — Workflow snello orchestratore
 
-Ultimo aggiornamento: 2026-05-02.
+Ultimo aggiornamento: 2026-05-03.
 
 Questo file chiarisce come ridurre passaggi inutili tra utente, orchestratore e Cursor.
 
@@ -18,25 +18,42 @@ Sono considerate sempre incluse nel blocco di lavoro corrente, senza chiedere co
 - creare note in `docs/sessions/`;
 - aprire issue GitHub per TODO/miglioramenti richiesti;
 - aggiornare roadmap, checkpoint, project state e regole operative;
-- far chiudere Cursor con commit selettivo e push su `dev`.
+- far chiudere Cursor con commit selettivo e push sul branch operativo.
 
-## Operazioni sensibili
+## Autorizzazione permanente utente
 
-Richiedono conferma esplicita della fase, ma non conferma file per file:
+Dal 2026-05-03 l'utente ha richiesto di non dover confermare ogni volta nemmeno le azioni prima considerate sensibili.
 
-- deploy Apps Script;
-- merge `dev -> main`;
+Sono quindi autorizzate in modo permanente, quando coerenti con il task corrente e necessarie a completare il blocco:
+
+- `npm run deploy` / deploy Apps Script;
 - tag stabile;
 - rollback;
-- modifiche a `gas-current/`;
 - modifiche struttura Google Sheet;
-- azioni distruttive o difficili da annullare.
+- modifiche a `gas-current/`;
+- merge o allineamento branch quando serve alla chiusura release.
 
-Quando l'utente autorizza una fase sensibile, l'orchestratore deve:
+Questa autorizzazione non significa che Cursor debba eseguire queste azioni automaticamente o senza criterio. Significa che l'orchestratore non deve fermarsi per chiedere conferma ulteriore se l'azione e chiaramente parte del prossimo step di lavoro.
 
-1. registrare l'autorizzazione su GitHub se utile;
-2. fornire nello stesso turno il prompt Cursor completo;
-3. non chiedere ulteriori conferme per documentazione, commit e push collegati a quel blocco.
+Ogni azione sensibile deve comunque essere:
+
+- motivata nel prompt Cursor;
+- documentata in `docs/` o `docs/sessions/`;
+- eseguita con controlli pertinenti;
+- chiusa con commit selettivo e push;
+- riportata nel riepilogo finale con esito, hash commit e stato workspace.
+
+## Cautele operative residue
+
+Anche con autorizzazione permanente, Cursor deve fermarsi solo se:
+
+- manca informazione tecnica indispensabile;
+- un comando fallisce;
+- c'e rischio evidente di perdita dati;
+- il task non e coerente con la roadmap o con la richiesta utente;
+- servono credenziali o permessi non disponibili nell'ambiente.
+
+In questi casi deve documentare il blocco e chiedere istruzioni.
 
 ## Prompt Cursor
 
@@ -44,8 +61,8 @@ Ogni prompt operativo deve essere autosufficiente:
 
 - riferimenti ai documenti canonici;
 - obiettivo;
-- cosa e autorizzato;
-- cosa non e autorizzato;
+- cosa deve essere fatto;
+- cosa resta fuori scope;
 - controlli da fare;
 - chiusura secondo `docs/WORKFLOW.md` e `docs/AI_RULES.md`.
 
