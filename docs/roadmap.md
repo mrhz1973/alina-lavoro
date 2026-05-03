@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.6.2 (2026-05-02):** versione stabile corrente su `main`; test utente dichiarato perfetto; merge `dev` → `main` completato; **deploy Apps Script finale** eseguito dall’implementatore; tag Git **`v1.6.2-stable`**. Rollback storico pre-V1.6: tag `v1.5-stable`.
+**V1.8.0 / V1.8A (2026-05-03):** versione stabile corrente su `main` e `dev`; merge `dev` → `main` completato (fast-forward); tag Git **`v1.8.0-stable`**; **deploy Apps Script ufficiale** clasp **`@8`** (vedi `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`). Tag precedenti: **`v1.6.2-stable`** (V1.6.2), **`v1.5-stable`** (rollback storico).
 
 App personale per registrazione ore di lavoro di Alina.
 

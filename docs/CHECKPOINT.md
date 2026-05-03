@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-02 — V1.8A: deploy **ufficiale** Apps Script eseguito (`npm run deploy`, **@8**); merge/tag Git non eseguiti; `main` resta V1.6.2 fino a merge.
+Ultimo aggiornamento: 2026-05-03 — release Git **V1.8.0** chiusa: merge `dev` → `main`, tag **`v1.8.0-stable`**, `dev` allineato; deploy Apps Script **@8**; snapshot `gas-current/` aggiornato.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -35,29 +35,24 @@ Stack:
 - Branch operativo per nuovi sviluppi: `dev`.
 - Branch stabile: `main`.
 - Tag rollback storico: `v1.5-stable`.
-- Tag stabile V1.6.2: `v1.6.2-stable` (commit di documentazione/deploy su `main`).
+- Tag stabile V1.6.2: `v1.6.2-stable`.
+- Tag stabile **V1.8.0:** **`v1.8.0-stable`** (release corrente su `main`).
 - GitHub e fonte di verita per l'orchestratore.
 
 ## Stato stabile corrente
 
-- V1.6.2 e la versione stabile corrente su `main`.
-- V1.6.2 e stata validata dall'utente con test dichiarato perfetto.
-- Merge controllato `dev -> main` eseguito tramite PR GitHub #1.
-- Nota documentale post-merge allineata su `main` tramite PR GitHub #2.
-- Dopo il merge, `dev` resta il branch operativo per i prossimi sviluppi.
-- **V1.8A:** su `dev`; implementazione Mesi via DOM; **validazione tecnica** completata dall’implementatore (vedi `docs/sessions/2026-05-02-v18a-validazione-tecnica-chiusa.md`).
-- **V1.8A Apps Script/HEAD:** `npm run push` eseguito e documentato in `docs/sessions/2026-05-02-v18a-push-head-esito.md`.
-- **V1.8A test manuale:** superato; l'utente ha comunicato `test V1.8A ok`; vedi `docs/sessions/2026-05-02-v18a-test-manuale-ok.md`.
-- **Deploy ufficiale V1.8A:** eseguito; vedi `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`.
-- Merge `dev -> main` e tag stabile V1.8 **non** eseguiti.
-- V1.5 resta disponibile come rollback storico tramite tag `v1.5-stable`.
+- **V1.8.0** è la versione stabile corrente su **`main`** (merge `dev` → `main` fast-forward, 2026-05-03); tag Git **`v1.8.0-stable`**.
+- **`dev`** è allineato a **`main`** (stesso commit).
+- V1.8A (Mesi via DOM): validazione tecnica e test manuale OK; deploy **@8** documentato nelle sessioni 2026-05-02.
+- V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
+- V1.5 resta rollback storico tramite tag **`v1.5-stable`**.
 
 ## Stato Apps Script / deploy
 
-- **Deploy finale di stabilizzazione V1.6.2:** eseguito con `npm run deploy` su `main` (2026-05-02), dopo autorizzazione esplicita utente; `clasp push` + `clasp deploy` completati (revisione deployment segnalata da clasp come `@6` in output locale).
-- **V1.8A:** `npm run push` su HEAD; poi **`npm run deploy`** — nuovo deployment ufficiale clasp **`@8`** (ID in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`).
-- **Git `main`:** ancora codice V1.6.2 / `v1.6.2-stable` fino a merge autorizzato.
-- `gas-current/` non è stato modificato in questo blocco (solo lettura, come da regole).
+- **Deploy finale di stabilizzazione V1.6.2:** documentato (deployment clasp `@6` in output locale dell’epoca).
+- **V1.8A:** deployment ufficiale clasp **`@8`** — ID e URL in `docs/sessions/2026-05-02-v18a-deploy-ufficiale-eseguito.md`.
+- **Git `main`:** codice **V1.8.0**, tag **`v1.8.0-stable`**.
+- **`gas-current/`:** snapshot aggiornato al codice V1.8.0 in chiusura release (coerente con `src` / deploy @8); non è area di sviluppo.
 
 ## Struttura importante
 
@@ -126,6 +121,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Verificare URL `/exec` e implementazione **@8** in console Apps Script.
-2. Con autorizzazione separata: merge `dev` → `main`, tag Git, eventuale `gas-current/`.
-3. Issue #3: versione visibile in app.
+1. Nuovi sviluppi: `git checkout dev`, `git pull`, poi feature/issue (es. #3 versione visibile).
+2. Verifica occasionale URL `/exec` e deployment **@8** in console Apps Script se serve audit.

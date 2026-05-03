@@ -32,7 +32,7 @@ Non autorizzato automaticamente:
 ## Requisiti UI da preservare
 
 - Pagina Mesi: card/righe devono occupare tutto lo spazio orizzontale disponibile, senza zone vuote laterali o colonne morte.
-- Durante lo scroll lista Mesi, i 3 pulsanti inferiori di navigazione devono restare sempre visibili, fissi, attivi e cliccabili.
+- Durante lo scroll lista Mesi, i **4** tab/pulsanti inferiori di navigazione (Home, Mesi, Note, Imp.) devono restare sempre visibili, fissi, attivi e cliccabili.
 
 ## Prossimo passo atteso da Cursor
 

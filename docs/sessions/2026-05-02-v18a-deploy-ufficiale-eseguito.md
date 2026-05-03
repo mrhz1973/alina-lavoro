@@ -26,20 +26,23 @@ Equivalente a: `npm run sync` + `clasp push` + `clasp deploy`.
   `https://script.google.com/macros/s/AKfycbzq7DhRw7XwTlNbfoLPt0Fo1B0bdCotdfLw6p8AH1Wl--FhJUqjJI7z4i_xZzkAOWDUag/exec`
 - **Warning/errori:** nessuno riportato in output.
 
-## Conferme vincoli
+## Conferme vincoli (al momento del deploy 2026-05-02)
 
 - **Deploy ufficiale:** **riuscito** (vedi sopra).
-- **Merge `dev` → `main`:** **non eseguito**.
-- **Tag stabile V1.8:** **non creato**.
-- **`gas-current/`:** **non modificato** (nessun commit nel repo su quella directory).
+- **Merge `dev` → `main`:** **non eseguito** in quel blocco (completato in data successiva; vedi sezione «Stato successivo»).
+- **Tag stabile V1.8:** **non creato** in quel blocco (`v1.8.0-stable` creato il 2026-05-03).
+- **`gas-current/`:** **non modificato** in quel blocco (aggiornato nella chiusura release 2026-05-03).
 
 ## Requisiti UI (preservati in sorgente, senza modifiche funzionali in questo blocco)
 
 - Mesi: classi `.list-item--month` / `.list` come in `src/frontend/Index.html`.
-- Nav inferiore: `.nav` `position:fixed` (mobile) come in sorgente; in HTML sono **4** tab (Home, Mesi, Note, Imp.); il documento di autorizzazione menziona «3 pulsanti» — verificare terminologia vs UI reale al prossimo affinamento doc.
+- Nav inferiore: `.nav` `position:fixed` (mobile) come in sorgente; in HTML sono **4** tab (Home, Mesi, Note, Imp.); `docs/sessions/2026-05-02-v18a-deploy-ufficiale-autorizzato.md` allineato a questa UI (terminologia 4 tab).
 
-## Prossimo passo consigliato
+## Stato successivo (2026-05-03)
 
-1. Orchestratore/utente: verificare l’URL `/exec` del deployment **@8** in produzione Google (gestione implementazioni in Apps Script).
-2. Pianificare merge `dev` → `main` e tag Git stabile V1.8 **solo** con autorizzazione separata.
-3. Opzionale: aggiornare snapshot `gas-current/` in un blocco dedicato (fuori da questo deploy).
+Chiusura release Git: merge `dev` → `main`, tag **`v1.8.0-stable`**, allineamento `dev`, aggiornamento snapshot `gas-current/` e documentazione — `docs/sessions/2026-05-03-v18a-stabilizzazione-finale.md`.
+
+## Prossimo passo consigliato (post-chiusura release)
+
+1. Verifica occasionale URL `/exec` del deployment **@8** in console Apps Script.
+2. Nuovi sviluppi su `dev` (es. issue #3).
