@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-03 — adozione workflow **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`). Produzione invariata: **V1.8.1**, deploy **`@9`**, tag **`v1.8.1-stable`**.
+Ultimo aggiornamento: 2026-05-05 — issue **#5** (arrotondamento Inizio/Fine) integrata su **`main`** in `src/frontend/Index.html` (vedi `docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`). Produzione Apps Script **ancora** quella documentata per **V1.8.1** fino a nuovo deploy: **`@9`**, tag **`v1.8.1-stable`**. Workflow **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`).
 
 ## Stato reale
 

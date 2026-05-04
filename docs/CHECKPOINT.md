@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-05 — script npm **`aggio:win`** per Windows senza `bash` nel PATH (`docs/sessions/2026-05-05-windows-aggio-script.md`). Produzione invariata: **V1.8.1**, deploy **`@9`**, tag **`v1.8.1-stable`**; workflow **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`).
+Ultimo aggiornamento: 2026-05-05 — issue **#5** (scelta orari Inizio/Fine arrotondati a 5 min) in `src/frontend/Index.html` su **`main`** (`docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`); script **`aggio:win`** (`docs/sessions/2026-05-05-windows-aggio-script.md`). Produzione documentata invariata fino a deploy: **V1.8.1**, **`@9`**, **`v1.8.1-stable`**; workflow **main-only**.
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 

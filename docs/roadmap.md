@@ -199,6 +199,12 @@ Vincoli (uguali a V1.6 dove applicabile):
 - Sessione implementazione: `docs/sessions/2026-05-03-issue-3-versione-ui.md`.
 - **Produzione (2026-05-03):** codice su `main`, `npm run deploy` → clasp **`@9`**, tag **`v1.8.1-stable`** — `docs/sessions/2026-05-03-v181-versione-ui-release.md` (storico: prima del main-only era previsto merge da `dev`).
 
+### Issue #5 — arrotondamento Inizio/Fine a 5 minuti (scelta rapida)
+
+- **Stato:** implementata in `src/frontend/Index.html` su **`main`** (2026-05-05): alla pressione di **INIZIO LAVORO** / **FINE LAVORO**, se l’orario rilevato non è multiplo di 5 minuti, modale con **due pulsanti** che mostrano direttamente gli orari (floor/ceil a 5 min); se è già multiplo di 5, salvataggio **senza modale** (stesso flusso di prima).
+- Sessione: `docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`.
+- **Deploy / tag:** da allineare al workflow di release quando il blocco utente lo richiede (produzione documentata resta V1.8.1 **`@9`** fino a nuovo deploy).
+
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
