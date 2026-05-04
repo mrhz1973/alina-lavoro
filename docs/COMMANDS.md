@@ -2,19 +2,41 @@
 
 Percorsi relativi alla radice del repository. Eseguire da macchina con repo clonato.
 
-## Orchestratore (consigliato)
+## Orchestratore / aggio locale
+
+Cursor deve scegliere automaticamente il comando corretto in base all'ambiente, senza chiedere all'utente quale usare.
+
+Regola:
+
+- **Mac / Linux / shell con `bash` nel PATH:** usare `npm run aggio`.
+- **Windows / PowerShell senza `bash` nel PATH:** usare `npm.cmd run aggio:win`.
+
+Comando standard Mac/Linux:
 
 ```bash
 npm run aggio
 ```
 
-Su **Windows**, se `npm run aggio` fallisce perché `bash` non è nel `PATH` (installazione Git senza `Git\bin` nel PATH), usare Git Bash esplicito:
+Comando Windows consigliato quando `bash` non e nel `PATH`:
 
 ```bash
 npm.cmd run aggio:win
 ```
 
-Lo script usa il percorso breve Windows **`C:\\Progra~1\\Git\\bin\\bash.exe`** (equivalente a *Program Files*\\Git, senza spazi così `cmd` non spezza il comando). Se Git è installato altrove, usare manualmente il percorso completo a `bash.exe` con `tools/aggio.sh`.
+Lo script Windows usa il percorso breve **`C:\\Progra~1\\Git\\bin\\bash.exe`** (equivalente a *Program Files*\\Git, senza spazi così `cmd` non spezza il comando). Se Git è installato altrove, usare manualmente il percorso completo a `bash.exe` con `tools/aggio.sh`.
+
+Nei prompt Cursor, l'orchestratore deve scrivere formule del tipo:
+
+> Esegui `aggio` usando il comando corretto per l'ambiente corrente, come documentato in `docs/COMMANDS.md`.
+
+Cursor deve rilevare l'ambiente dal terminale:
+
+- prompt tipo `PS C:\\...` = Windows / PowerShell → `npm.cmd run aggio:win`;
+- shell `bash` / `zsh` / percorso `/Users/...` o Linux = Mac/Linux → `npm run aggio`.
+
+Non chiedere all'utente di scegliere il comando.
+
+## Checkpoint e finito
 
 ```bash
 npm run checkpoint
