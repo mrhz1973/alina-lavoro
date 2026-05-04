@@ -8,6 +8,14 @@ Percorsi relativi alla radice del repository. Eseguire da macchina con repo clon
 npm run aggio
 ```
 
+Su **Windows**, se `npm run aggio` fallisce perché `bash` non è nel `PATH` (installazione Git senza `Git\bin` nel PATH), usare Git Bash esplicito:
+
+```bash
+npm.cmd run aggio:win
+```
+
+Lo script usa il percorso breve Windows **`C:\\Progra~1\\Git\\bin\\bash.exe`** (equivalente a *Program Files*\\Git, senza spazi così `cmd` non spezza il comando). Se Git è installato altrove, usare manualmente il percorso completo a `bash.exe` con `tools/aggio.sh`.
+
 ```bash
 npm run checkpoint
 ```

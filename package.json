@@ -9,6 +9,7 @@
     "push": "npm run sync && clasp push",
     "deploy": "npm run sync && clasp push && clasp deploy",
     "aggio": "bash tools/aggio.sh",
+    "aggio:win": "C:\\Progra~1\\Git\\bin\\bash.exe tools/aggio.sh",
     "checkpoint": "bash tools/checkpoint.sh",
     "finito": "bash tools/finito.sh"
   },

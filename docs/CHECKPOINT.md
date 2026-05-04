@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-03 — workflow **main-only** adottato (`docs/sessions/2026-05-03-main-only-workflow.md`). Produzione: **V1.8.1**, deploy **`@9`**, tag **`v1.8.1-stable`**.
+Ultimo aggiornamento: 2026-05-05 — script npm **`aggio:win`** per Windows senza `bash` nel PATH (`docs/sessions/2026-05-05-windows-aggio-script.md`). Produzione invariata: **V1.8.1**, deploy **`@9`**, tag **`v1.8.1-stable`**; workflow **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
