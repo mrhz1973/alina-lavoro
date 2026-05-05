@@ -115,6 +115,8 @@ Sincronizzazione verso `.gas/` (non push):
 npm run sync
 ```
 
+Su **Windows**, se `npm run sync` fallisce (`cp` / `mkdir -p` non trovati), la shell predefinita di npm è spesso `cmd`: usare **Git Bash** per `npm run sync`, oppure impostare `npm config set script-shell "C:\\Program Files\\Git\\bin\\bash.exe"`, oppure copiare manualmente in `.gas/` come in `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md` (blocco PowerShell).
+
 Push verso Google (solo dopo verifica):
 
 ```bash

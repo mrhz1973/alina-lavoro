@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-05 — issue **#5** (scelta orari Inizio/Fine arrotondati a 5 min) in `src/frontend/Index.html` su **`main`** (`docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`); script **`aggio:win`** (`docs/sessions/2026-05-05-windows-aggio-script.md`). Produzione documentata invariata fino a deploy: **V1.8.1**, **`@9`**, **`v1.8.1-stable`**; workflow **main-only**.
+Ultimo aggiornamento: 2026-05-05 — micro-release **V1.8.2** (issue **#5** + `APP_VERSION` **1.8.2**, snapshot `gas-current/`, tag **`v1.8.2-stable`**) — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Deploy clasp **@9** → nuovo ID **da eseguire** su macchina con `.clasp.json`. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
