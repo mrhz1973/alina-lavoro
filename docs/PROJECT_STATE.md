@@ -1,13 +1,13 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-05 — micro-release **V1.8.2** su **`main`** (issue **#5** + bump versione + snapshot `gas-current/` + tag **`v1.8.2-stable`**). Sessione: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. **Deploy clasp** in questa sessione **non** eseguito dall’ambiente automatizzato (manca `.clasp.json` / credenziali): l’ultimo deployment **registrato** in produzione resta **`@9`** (V1.8.1) **fino a** `clasp deploy` da macchina configurata; dopo il deploy aggiornare questo file con il nuovo ID (es. `@10`). Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue **#5** in produzione); Apps Script **clasp revision `@10`**; tag stabile **`v1.8.2-stable`**. Deploy eseguito manualmente su **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Sessione: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**.
 
 ## Stato reale
 
 - **Branch operativo unico `main`:** release codice **V1.8.2** (`package.json` **1.8.2**, `APP_VERSION` **1.8.2** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
 - **Tag Git stabili:** **`v1.8.2-stable`** (release corrente codice / snapshot); **`v1.8.1-stable`** (V1.8.1 / deploy **@9**); **`v1.8.0-stable`**; **`v1.6.2-stable`**; **`v1.5-stable`** (rollback storico).
-- **Apps Script (live):** ultimo ID **documentato** in produzione **`@9`** (V1.8.1) — `docs/sessions/2026-05-03-v181-versione-ui-release.md`. Dopo deploy V1.8.2 da macchina locale, sostituire con il nuovo deployment ID e URL **/exec** (vedi sessione V1.8.2).
+- **Apps Script (live):** deployment **clasp `@10`** (V1.8.2) — ID: `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`. Dettagli ed esito deploy: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. URL Web App **/exec**: aprire da Apps Script o dall’output clasp per il deployment corrente.
 - **`gas-current/`:** snapshot allineato a **V1.8.2** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
@@ -15,7 +15,7 @@ Ultimo aggiornamento: 2026-05-05 — micro-release **V1.8.2** su **`main`** (iss
 
 - V1.6.2 → V1.8.0 (V1.8A): Mesi via DOM, deploy **@8**, tag `v1.8.0-stable`.
 - **V1.8.1:** issue **#3** (riga versione in Impostazioni); integrazione su `main`, `npm run deploy` → **`@9`**, tag **`v1.8.1-stable`**, snapshot `gas-current/` (storico include anche merge da branch `dev` prima del passaggio main-only).
-- **V1.8.2:** issue **#5** (arrotondamento Inizio/Fine a 5 min); tag **`v1.8.2-stable`**; snapshot `gas-current/`; deploy clasp **da completare** su macchina con `.clasp.json` (vedi `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`).
+- **V1.8.2:** issue **#5** (arrotondamento Inizio/Fine a 5 min); tag **`v1.8.2-stable`**; snapshot `gas-current/`; deploy clasp **`@10`** su Windows (vedi `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`).
 
 ## Stack
 
@@ -61,16 +61,15 @@ Ultimo aggiornamento: 2026-05-05 — micro-release **V1.8.2** su **`main`** (iss
 - V1.6.x: tag `v1.6.2-stable`.
 - V1.8.0 (V1.8A): tag `v1.8.0-stable`; deploy storico **@8**.
 - **V1.8.1:** tag **`v1.8.1-stable`**; deploy **@9**; issue **#3**.
-- **V1.8.2:** tag **`v1.8.2-stable`**; issue **#5** nel codice su **`main`**; **aggiornare** questa sezione con il nuovo deployment dopo `clasp deploy`.
+- **V1.8.2:** tag **`v1.8.2-stable`**; issue **#5** in produzione; deploy clasp **`@10`** (ID sopra).
 
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
 - Android vecchio: monitorare su dispositivo reale se necessario.
-- Finché il deploy V1.8.2 non è eseguito, **/exec** può restare sul deployment **@9** (V1.8.1).
+- Rollback a **@9** (V1.8.1) possibile solo tramite gestione deployment in Apps Script se necessario.
 
 ## Prossimo passo consigliato
 
-1. **`clasp deploy`** da macchina con `.clasp.json` e credenziali; aggiornare `PROJECT_STATE` con il nuovo deployment ID e URL **/exec**.
-2. Test manuale su **/exec**: issue **#5** + versione **1.8.2** in Impostazioni.
-3. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. roadmap V1.8B).
+1. **Test manuale su `/exec`** del deployment **`@10`**: issue **#5** + versione **1.8.2** in Impostazioni.
+2. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. roadmap V1.8B).

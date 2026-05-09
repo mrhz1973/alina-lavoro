@@ -2,6 +2,8 @@
 
 **Data:** 2026-05-05
 
+**Aggiornamento deploy produzione:** 2026-05-10 — eseguito su **Windows**: `npx.cmd clasp push` e `npx.cmd clasp deploy` riusciti; revisione **`@10`**; deployment ID registrato sotto.
+
 ## Obiettivo release
 
 Portare in produzione (codice Git + snapshot) la **issue #5**: modale con **due orari** a multipli di 5 minuti per **INIZIO** / **FINE**, salvataggio diretto se l’orario è già multiplo di 5.
@@ -20,30 +22,37 @@ Portare in produzione (codice Git + snapshot) la **issue #5**: modale con **due 
 
 ## Comando deploy eseguito
 
-**`npm run deploy`** (equivalente: `npm run sync` + `clasp push` + `clasp deploy`) **non completato** dall’implementatore in questo ambiente:
+**Deploy manuale su Windows** (macchina con `.clasp.json` e credenziali clasp), dopo allineamento `.gas/` ai sorgenti:
 
-- `npm run sync` su Windows con shell predefinita: `cp` / `mkdir -p` non disponibili in `cmd`.
-- Esecuzione tramite `npx clasp push` / `npx clasp deploy`: **`Project settings not found`** / **`No credentials found`** — in questa sessione **non** è presente `.clasp.json` (file gitignored, tipicamente solo sulla macchina dello sviluppatore) né login clasp.
+| Step | Comando | Esito |
+|------|---------|--------|
+| Push | `npx.cmd clasp push` | **Riuscito** — **3 file** caricati su Apps Script |
+| Deploy | `npx.cmd clasp deploy` | **Riuscito** — nuova revisione deployment |
 
-### Cosa fare sulla macchina con clasp configurato
+Note storiche (sessione automatizzata precedente): in ambienti senza `.clasp.json` / login clasp, `npm run deploy` non era completabile; su Windows senza bash, `npm run sync` può richiedere PowerShell o Git Bash (vedi `docs/COMMANDS.md`).
 
-1. `git pull origin main` (dopo push del commit di release).
-2. Sincronizzare `.gas/` (scegliere **un** metodo):
-   - **Git Bash:** `npm run sync` (se `script-shell` usa bash), oppure  
-   - **PowerShell** dalla radice repo:
-     ```powershell
-     New-Item -ItemType Directory -Force -Path .gas | Out-Null
-     Copy-Item -Force src\backend\Code.gs .gas\Code.gs
-     Copy-Item -Force src\frontend\Index.html .gas\Index.html
-     Copy-Item -Force appsscript.json .gas\appsscript.json
-     ```
-3. `npx clasp push` poi `npx clasp deploy` (o `npm run push` / `npm run deploy` se lo script `sync` funziona).
-4. Annotare **deployment ID** (es. `@10`), eventuale **revision**, URL **/exec** dall’output di `clasp`.
-5. Aggiornare `docs/PROJECT_STATE.md` (e questa nota se serve) con il nuovo ID deploy.
+### Riferimento rapido `.gas/` (PowerShell)
+
+```powershell
+New-Item -ItemType Directory -Force -Path .gas | Out-Null
+Copy-Item -Force src\backend\Code.gs .gas\Code.gs
+Copy-Item -Force src\frontend\Index.html .gas\Index.html
+Copy-Item -Force appsscript.json .gas\appsscript.json
+```
 
 ## Output deploy (ID / revisione / URL)
 
-**Non acquisito** — vedi sezione precedente.
+| | |
+|--|--|
+| **Revisione clasp** | **`@10`** |
+| **Deployment ID** | `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q` |
+| **URL `/exec`** | Aprire dalla console Apps Script o dall’output `clasp deploy` per il deployment corrente (test manuale richiesto). |
+
+Documentazione repo aggiornata: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, questa sessione (commit documentazione post-deploy).
+
+## Prossimo passo operativo
+
+**Test manuale su `/exec`** del deployment **`@10`**: issue **#5**, versione **1.8.2** in Impostazioni, flussi Home / Mesi / Note.
 
 ## Tag stabile creato
 
@@ -75,14 +84,14 @@ Portare in produzione (codice Git + snapshot) la **issue #5**: modale con **due 
 
 ## Rischi residui
 
-- Fino al **`clasp deploy`** su macchina autorizzata, l’URL **/exec** può ancora servire il deployment precedente (**@9** / V1.8.1).
-- Dopo deploy, verificare in **Impostazioni** che la versione mostri **1.8.2**.
+- Verifica che gli utenti / segnalibri puntino al deployment **`@10`** (o all’URL **/exec** aggiornato da Apps Script) e non a un deployment precedente (**@9**).
+- Confermare in **Impostazioni** che la versione mostri **1.8.2** dopo il test su **`/exec`**.
 
 ## Test manuale richiesto su `/exec`
 
-Dopo deploy:
+Deployment **`@10`** attivo; **prossimo passo:** test manuale.
 
-1. Aprire la Web App **/exec** del nuovo deployment.
+1. Aprire la Web App **/exec** del deployment **`@10`**.
 2. **INIZIO** con orario non multiplo di 5: modale con **due pulsanti** solo `HH:MM`, titolo «Scegli orario…», riga rilevato.
 3. **FINE** stesso comportamento.
 4. Orario già multiplo di 5: nessuna modale, salvataggio immediato.
