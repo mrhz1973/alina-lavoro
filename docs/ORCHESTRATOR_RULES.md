@@ -1,8 +1,26 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-03 — policy **main-only** (`docs/sessions/2026-05-03-main-only-workflow.md`).
+Ultimo aggiornamento: 2026-05-05 — priorità **passo-passo** per l’orchestratore.
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
+
+## PRIORITÀ 0 — Passo passo operativo
+
+Quando l’utente deve eseguire azioni pratiche su computer, Cursor, terminale, GitHub, Google Apps Script, clasp, file locali o browser, l’orchestratore deve procedere **passo passo**.
+
+Regola obbligatoria:
+
+- dare **un solo passo operativo alla volta**;
+- aspettare l’esito dell’utente prima di passare al passo successivo;
+- non scaricare procedure lunghe se l’utente ha chiesto o il contesto richiede guida assistita;
+- non mescolare più obiettivi nello stesso messaggio;
+- evidenziare subito blocchi, warning, errori locali o configurazioni anomale;
+- se serve un prompt Cursor, fornirlo solo quando è il passo corrente;
+- se il passo è “incolla questo in Cursor”, il prompt deve essere completo e autosufficiente;
+- se il passo è terminale, dare pochi comandi e spiegare cosa deve uscire;
+- se l’utente scrive “passo passo”, “andiamo avanti”, “ok”, “vai”, o mostra confusione, tornare automaticamente alla modalità guidata a singolo passo.
+
+Questa priorità prevale sulle altre regole di sintesi, automazione e workflow snello. Il workflow snello deve ridurre passaggi inutili, ma non deve trasformarsi in blocchi lunghi difficili da seguire per l’utente.
 
 ## Principio principale
 
@@ -11,7 +29,7 @@ Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per quals
 - Cursor/Agent e l'implementatore operativo: modifica file, esegue controlli, commit e push.
 - L'utente non deve essere usato come ponte manuale tra Cursor e ChatGPT, salvo errore locale non pushato.
 - Le procedure ripetitive devono stare nei documenti del repository, non essere riscritte ogni volta nei prompt.
-- Se una procedura non e ancora documentata in `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`, l'orchestratore deve inserirla direttamente nel prompt Cursor, in un unico blocco copiabile. Non deve lasciarla fuori dal prompt come istruzioni separate per l'utente.
+- Se una procedura non e ancora documentata in `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`, l'orchestratore deve inserirla direttamente nel prompt Cursor, in un unico blocco copiabile quando quello è il passo corrente. Non deve lasciarla fuori dal prompt come istruzioni separate per l'utente.
 
 ## Regola `aggio`
 
@@ -38,7 +56,8 @@ Risposta attesa dopo `aggio`:
 4. stato deploy Apps Script se documentato;
 5. ultimo checkpoint utile;
 6. rischi aperti;
-7. prossimo passo consigliato.
+7. prossimo passo consigliato;
+8. se il prossimo passo richiede azione utente, guidare con un solo passo alla volta.
 
 ## Cursor / Agent
 
@@ -103,7 +122,7 @@ Cursor deve leggere i documenti e applicare le procedure canoniche. Se un comand
 
 Se servono comandi, criteri, checklist o sequenze che non risultano gia presenti nei documenti del repository:
 
-- inserirli direttamente dentro il prompt Cursor;
+- inserirli direttamente dentro il prompt Cursor se il prompt è il passo corrente;
 - non fornirli come blocco separato fuori dal prompt;
 - dopo l'esecuzione, valutare se renderli canonici aggiornando `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`.
 
