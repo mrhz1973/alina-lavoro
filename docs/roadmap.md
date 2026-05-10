@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.9.0** — release **2026-05-10** su **`main`** (**Dettaglio mese** MVP lista: pagina **`monthDetail`**, pulsante **«Dettaglio»** su ogni card **Mesi**, solo **giorni con turni**, stime **«stimato»**, stipendio reale solo **riepilogo mensile**); **in produzione** Apps Script **`@22`** (`package.json` / `APP_VERSION` **1.9.0**); tag **`v1.9.0-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Test manuale utente su `/exec` @22:** **OK** (2026-05-10; incluso **Xiaomi Redmi 9C NFC**): Dettaglio mese MVP **valido**; dati corretti; **Indietro** e **Stipendio** OK; due **miglioramenti futuri** in coda (Stipendio solo mesi maturi; Dettaglio mese più grafico) — vedi sotto sezione V1.9. **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
+**V1.9.1** — release **2026-05-10** su **`main`** (lista **Mesi**: **«Stipendio»** nascosto sul **mese corrente** / futuri; **«Dettaglio»** sempre visibile; firma **`buildMonthsViewSig_`** con **`currentMonth()`**); **in produzione** Apps Script **`@23`** (`package.json` / `APP_VERSION` **1.9.1**); tag **`v1.9.1-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. **Test manuale utente su `/exec` @23:** **da fare**. Include **V1.9.0** (Dettaglio mese MVP, deploy **`@22`**, test **OK**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -230,7 +230,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.9.0**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.9.1**).
 
 ## V1.9 — Dettaglio mese (MVP lista)
 
@@ -239,7 +239,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 **Consegnato in V1.9.0:**
 
 - Pagina interna **`monthDetail`** con **`state.detailMonth`** (`YYYY-MM`); **«Indietro»** → pagina **Mesi**; tab **Mesi** evidenziata quando si è sul dettaglio.
-- Su **Mesi**, per ogni mese: pulsante dedicato **«Dettaglio»** (ghost) + **«Stipendio»** (secondary) — card non interamente cliccabile per evitare conflitti.
+- Su **Mesi**, per ogni mese: pulsante dedicato **«Dettaglio»** (ghost); dalla **V1.9.1** il pulsante **«Stipendio»** compare solo sui **mesi precedenti** al mese corrente — card non interamente cliccabile per evitare conflitti.
 - Lista giorni: **solo giorni con minuti > 0** (nessun elenco completo dei giorni vuoti del mese in questa versione).
 - Calcolo minuti allineato a **`recomputeLocalSummaries`**: `minuti_lavorati` oppure `computeMinutes(inizio, fine, pausa)`.
 - Tariffa per stime giornaliere: **`tariffa_media`** del summary del mese se presente; altrimenti **`localAverageRate`**.
@@ -251,9 +251,19 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ### Feedback post-test V1.9.0 / `@22` (prossimi passi prodotto)
 
-- **Test manuale:** **OK** (2026-05-10). Conferma: funzionalità **Dettaglio mese** corretta; **Indietro** OK; **Stipendio** in lista Mesi ancora operativo; **MVP** considerato **adeguato** per la fase attuale.
-- **Miglioramento raccomandato (prossima release / iterazione):** mostrare il pulsante **«Stipendio»** su ogni card **Mesi** solo per mesi **chiusi** / **già maturi** / **liquidabili** (stipendio reale realisticamente inseribile), e **non** per il **mese corrente** ancora in corso o per cui la busta arriverebbe solo nel mese successivo (es. maggio con busta a giugno). *Regola esatta da definire in implementazione (es. confronto `mese` vs mese calendario corrente, oltre a eventuali promemoria esistenti).*
+- **Test manuale:** **OK** (2026-05-10). Conferma: funzionalità **Dettaglio mese** corretta; **Indietro** OK; **Stipendio** in lista Mesi ancora operativo sui mesi precedenti; **MVP** considerato **adeguato** per la fase attuale.
+- **Miglioramento «Stipendio solo mesi maturi»:** **implementato in V1.9.1** (`@23`) — regola MVP: niente pulsante **Stipendio** sul **mese corrente** né su mesi **futuri**; visibile solo per **mesi precedenti** (confronto `YYYY-MM` vs `currentMonth()`). Dettaglio sessione: `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`.
 - **Evoluzione futura (non difetto del MVP attuale):** rendere la vista **Dettaglio mese** più **grafica** / **visiva** / curata esteticamente rispetto alla lista compatta V1.9.0.
+
+## V1.9.1 — Stipendio nascosto sul mese corrente (**Mesi**)
+
+**Stato:** **implementato** (**2026-05-10**); deploy **`@23`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati.
+
+**Consegnato:**
+
+- Helper **`isSalaryMonthEditable_(monthKey)`**: stipendio modificabile solo se il mese della card è **strettamente precedente** al mese calendario corrente (stringhe ISO `YYYY-MM`).
+- **`buildMonthsListSection_`**: renderizza **«Stipendio»** solo se la helper è vera; **«Dettaglio»** sempre.
+- **`buildMonthsViewSig_`**: include **`currentMonth()`** nella firma per invalidare la cache **`renderMonths`** quando cambia il mese solare.
 
 ## V2 — Rinviato (oltre il MVP V1.9)
 
