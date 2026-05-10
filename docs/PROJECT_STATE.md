@@ -1,16 +1,16 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi» — **`shouldShowSalaryReminder_`**, **`LS_SALARY_REMINDER_SNOOZE`**) su **`main`**; Apps Script deployment **`@21`**; tag **`v1.8.10-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@20`** / **`v1.8.9-stable`** oppure **`@19`** / **`v1.8.8-stable`**. **Test manuale utente su `/exec` @21:** **OK** (incluso dispositivo reale target **Xiaomi Redmi 9C NFC**). Sessione: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** MVP lista — pagina interna **`monthDetail`**, ingresso da **Mesi** con **«Dettaglio»**; solo giorni con lavoro; stime giornaliere etichettate **stimato**; stipendio reale solo riepilogo mensile) su **`main`**; Apps Script deployment **`@22`**; tag **`v1.9.0-stable`**. Deploy **Windows:** **Git Bash** + `npx clasp …` se `npm run deploy` fallisce su **cmd** (`mkdir -p` / `cp`). **Rollback immediato:** **`v1.8.10-stable`** / **`@21`** (`AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`). **Test manuale utente su `/exec` @22:** **da fare** (incluso **Xiaomi Redmi 9C NFC**). Sessione: `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Limitazione nota UI:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** alla app (piattaforma GAS), non bug frontend — vedi sessione. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.10** (`package.json` **1.8.10**, `APP_VERSION` **1.8.10** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.9.0** (`package.json` **1.9.0**, `APP_VERSION` **1.9.0** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.10-stable`** (release corrente codice / snapshot); **`v1.8.9-stable`** (V1.8.9 / deploy **`@20`**); **`v1.8.8-stable`** (V1.8.8 / deploy **`@19`**); **`v1.8.7-stable`** … **`v1.5-stable`** (storico).
-- **Apps Script (live):** deployment **clasp `@21`** (V1.8.10) — ID: `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`. Dettagli: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Rollback precedente documentato: **`@20`** (V1.8.9) — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; **`@19`** (V1.8.8) — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **Tag Git stabili:** **`v1.9.0-stable`** (release corrente codice / snapshot); **`v1.8.10-stable`** (V1.8.10 / deploy **`@21`**); **`v1.8.9-stable`** (V1.8.9 / deploy **`@20`**); **`v1.8.8-stable`** … **`v1.5-stable`** (storico).
+- **Apps Script (live):** deployment **clasp `@22`** (V1.9.0) — ID: `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`. Dettagli: `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. Rollback precedente documentato: **`@21`** (V1.8.10) — `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`; **`@20`** (V1.8.9) — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
 - **Uso sul telefono (Alina):** per l’uso quotidiano va usato il link della **Web App** con suffisso **`/exec`** (deployment documentato sopra). Il link diretto al **Google Sheet** è solo **database / amministrazione** del foglio; **non** sostituisce l’interfaccia dell’app.
-- **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.8.10** / **`@21`** verificato **OK** su quel dispositivo (nessun problema evidente di performance in uso reale). Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
-- **`gas-current/`:** snapshot allineato a **V1.8.10** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.9.0** / **`@22`**: test manuale **da fare** su quel dispositivo dopo aggiornamento bookmark **`/exec`**. Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
+- **`gas-current/`:** snapshot allineato a **V1.9.0** (`Codice.js` ← `Code.gs`, `Index.html`, `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
@@ -24,6 +24,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendi
 - **V1.8.7:** Mesi per anno (heading + sezioni); bump **1.8.7**; deploy **`@18`**; tag **`v1.8.7-stable`** — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`.
 - **V1.8.8:** anni Mesi collassabili (disclosure custom); bump **1.8.8**; deploy **`@19`**; tag **`v1.8.8-stable`** — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`.
 - **V1.8.9:** fix toggle anni Mesi (classe collapsed + `toggleMonthsYear_`); bump **1.8.9**; deploy **`@20`**; tag **`v1.8.9-stable`** — `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`.
+- **V1.9.0:** **Dettaglio mese** MVP (lista giorni con lavoro, stime **stimato**, pagina **`monthDetail`**); bump **1.9.0**; deploy **`@22`**; tag **`v1.9.0-stable`** — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
 - **V1.8.10:** snooze **24 ore** promemoria stipendio (locale); bump **1.8.10**; deploy **`@21`**; tag **`v1.8.10-stable`** — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`.
 
 ## Stack
@@ -76,16 +77,17 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendi
 - **V1.8.5:** tag **`v1.8.5-stable`**; righe Mesi compatte su mobile (CSS); deploy clasp **`@15`** (`AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`).
 - **V1.8.6:** tag **`v1.8.6-stable`**; fix Mesi mobile (griglia + navbar); deploy clasp **`@17`** (`AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`).
 - **V1.8.7:** tag **`v1.8.7-stable`**; Mesi per anno; deploy clasp **`@18`** (`AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`).
+- **V1.9.0:** tag **`v1.9.0-stable`**; Dettaglio mese MVP lista; deploy clasp **`@22`** (`AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`).
 - **V1.8.10:** tag **`v1.8.10-stable`**; snooze 24 h promemoria stipendio; deploy clasp **`@21`** (`AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`).
 - **V1.8.9:** tag **`v1.8.9-stable`**; fix toggle anni Mesi; deploy clasp **`@20`** (`AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`).
 - **V1.8.8:** tag **`v1.8.8-stable`**; anni collassabili (bug toggle su alcuni client); deploy clasp **`@19`** (`AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`).
 
 ## Rischi aperti
 
-- Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**; il dispositivo target **Redmi 9C NFC** ha già dato esito **OK** su **V1.8.10** / **`@21`**.
-- Rollback: **`@20`** (V1.8.9) / tag **`v1.8.9-stable`**, **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, **`@17`** / **`v1.8.6-stable`**, o gestione deployment in Apps Script.
+- Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**; test **V1.9.0** su **Redmi 9C NFC** — **da fare**.
+- Rollback: **`@21`** (V1.8.10) / tag **`v1.8.10-stable`**, **`@20`** (V1.8.9) / tag **`v1.8.9-stable`**, **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
 1. Lavoro nuovo su **`main`** dopo `git pull origin main`.
-2. Evoluzione pianificata (documentazione): **V1.9 — Dettaglio mese (MVP lista)** — vedi `docs/roadmap.md` e `docs/sessions/2026-05-10-v19-month-detail-planning.md` (implementazione futura: frontend-only da `state.shifts`, senza nuova tab navbar in prima fase).
+2. Test manuale utente su **`/exec` @22** (Dettaglio mese, IT/RU, Redmi 9C NFC) — gate prima di considerare la release chiusa in uso reale.
