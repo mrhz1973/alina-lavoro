@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.5** — release **2026-05-10** su **`main`** (CSS mobile righe **Mesi** più compatte); **in produzione** Apps Script **`@15`** (`package.json` / `APP_VERSION` **1.8.5**); tag **`v1.8.5-stable`**; snapshot **`gas-current/`**; deploy Windows (Git Bash se `npm run sync` fallisce); sessione `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Include ancora V1.8.4 (promemoria «Più tardi»), V1.8B (**`fc9ac43`**) e issue **#5**. **Test manuale utente su `/exec` @15:** da fare. **Precedente V1.8.4:** deploy **`@14`**, tag **`v1.8.4-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.6** — release **2026-05-10** su **`main`** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più padding contenuto); **in produzione** Apps Script **`@16`** (`package.json` / `APP_VERSION` **1.8.6**); tag **`v1.8.6-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Corregge regressione **V1.8.5** (Mesi una colonna + navbar coperta). **Test manuale utente su `/exec` @16:** da fare. **Precedente V1.8.5:** deploy **`@15`**, tag **`v1.8.5-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -212,12 +212,16 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ### V1.8.5 — righe Mesi compatte (solo CSS mobile)
 
-- Righe/card **Mesi** più compatte in **`@media (max-width: 899px)`** (`.list-item--month`); bump **1.8.5**; deploy **`@15`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. **Test manuale utente su `/exec` @15:** da fare.
+- Righe/card **Mesi** più compatte in **`@media (max-width: 899px)`** (`.list-item--month`); bump **1.8.5**; deploy **`@15`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. **Test utente su `/exec` @15:** **NON OK** — lista ancora monocolonna; navbar coperta / non sempre visibile durante scroll.
+
+### V1.8.6 — fix griglia Mesi + navbar mobile
+
+- Griglia **2 colonne** per `.list--months` su mobile (fallback **1 colonna** sotto ~360px); più **`padding-bottom`** su `.app`, **`z-index`** navbar e toast; classe **`list--months`** in JS — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Deploy **`@16`**. **Test manuale utente su `/exec` @16:** da fare.
 
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.5**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.6**).
 
 ## V2 — Rinviato
 

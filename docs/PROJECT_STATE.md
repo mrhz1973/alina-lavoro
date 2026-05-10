@@ -1,14 +1,14 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.5** (CSS mobile righe **Mesi** più compatte) su **`main`**; Apps Script deployment **`@15`**; tag **`v1.8.5-stable`**. Deploy **Windows** (Git Bash consigliato se `npm run sync` fallisce su `cmd`: `mkdir -p` / `cp` — vedi `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`). **Rollback immediato:** **`@14`** / **`v1.8.4-stable`**. **Test manuale utente su `/exec` @15:** da fare. Sessione deploy: `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più spazio sotto contenuto) su **`main`**; Apps Script deployment **`@16`**; tag **`v1.8.6-stable`**. Deploy **Windows** (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`@15`** / **`v1.8.5-stable`** (V1.8.5 con bug Mesi/navbar). **Test manuale utente su `/exec` @16:** da fare. Sessione: `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.5** (`package.json` **1.8.5**, `APP_VERSION` **1.8.5** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.8.6** (`package.json` **1.8.6**, `APP_VERSION` **1.8.6** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.5-stable`** (release corrente codice / snapshot); **`v1.8.4-stable`** (V1.8.4 / deploy **`@14`** rollback immediato precedente); **`v1.8.3-stable`** … **`v1.5-stable`** (storico).
-- **Apps Script (live):** deployment **clasp `@15`** (V1.8.5) — ID: `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`. Dettagli: `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Rollback precedente documentato: **`@14`** (V1.8.4) — `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
-- **`gas-current/`:** snapshot allineato a **V1.8.5** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Tag Git stabili:** **`v1.8.6-stable`** (release corrente codice / snapshot); **`v1.8.5-stable`** (V1.8.5 / deploy **`@15`** rollback immediato precedente); **`v1.8.4-stable`** … **`v1.5-stable`** (storico).
+- **Apps Script (live):** deployment **clasp `@16`** (V1.8.6) — ID: `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg`. Dettagli: `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Rollback precedente documentato: **`@15`** (V1.8.5) — `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **`gas-current/`:** snapshot allineato a **V1.8.6** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
@@ -19,6 +19,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.5** (CSS mobile righe **M
 - **V1.8.3:** V1.8B — firma/cache `renderMonths()` (**`fc9ac43`**) + bump **1.8.3**; deploy **`@12`**; tag **`v1.8.3-stable`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
 - **V1.8.4:** fix **`dismissSalaryReminder`** (**`beb277a`**) + bump **1.8.4**; deploy **`@14`**; tag **`v1.8.4-stable`** — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
 - **V1.8.5:** CSS mobile righe Mesi più compatte; bump **1.8.5**; deploy **`@15`**; tag **`v1.8.5-stable`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
+- **V1.8.6:** fix griglia Mesi mobile + navbar/stacking + padding contenuto; bump **1.8.6**; deploy **`@16`**; tag **`v1.8.6-stable`** — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`.
 
 ## Stack
 
@@ -68,14 +69,15 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.5** (CSS mobile righe **M
 - **V1.8.3:** tag **`v1.8.3-stable`**; V1.8B (re-render Mesi); deploy clasp **`@12`**.
 - **V1.8.4:** tag **`v1.8.4-stable`**; fix promemoria stipendio «Più tardi»; deploy clasp **`@14`** (`AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`).
 - **V1.8.5:** tag **`v1.8.5-stable`**; righe Mesi compatte su mobile (CSS); deploy clasp **`@15`** (`AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`).
+- **V1.8.6:** tag **`v1.8.6-stable`**; fix Mesi mobile (griglia + navbar); deploy clasp **`@16`** (`AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg`).
 
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
 - Android vecchio: monitorare su dispositivo reale quando disponibile.
-- Rollback: **`@14`** (V1.8.4) / tag **`v1.8.4-stable`** o gestione deployment in Apps Script.
+- Rollback: **`@15`** (V1.8.5) / tag **`v1.8.5-stable`** o **`@14`** / **`v1.8.4-stable`** o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
-1. **Test manuale utente su `/exec`** del deployment **`@15`** (V1.8.5): Mesi su mobile, versione **1.8.5**, navbar OK.
+1. **Test manuale utente su `/exec`** del deployment **`@16`** (V1.8.6): Mesi griglia + navbar sempre visibile, versione **1.8.6**.
 2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
