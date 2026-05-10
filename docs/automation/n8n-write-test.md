@@ -1,0 +1,1 @@
+# n8n write test  Questo file è stato creato da n8n come test di scrittura GitHub.  - Repository: mrhz1973/alina-lavoro - Workflow: TEST - GitHub write automation marker - Scopo: verificare che n8n possa creare file Markdown innocui nel repository - Impatto applicativo: nessuno - Deploy: no
