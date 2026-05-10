@@ -154,3 +154,4 @@ npm run finito -- "Messaggio commit" file1 file2
 ## Prossimo passo raccomandato
 
 1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
+2. **Implementazione prevista:** **V1.9 — Dettaglio mese (MVP lista)** secondo [docs/roadmap.md](roadmap.md) e [docs/sessions/2026-05-10-v19-month-detail-planning.md](sessions/2026-05-10-v19-month-detail-planning.md) (solo frontend, ingresso da **Mesi**, lista giorni, stime etichettate; nessuna quinta tab in prima fase).

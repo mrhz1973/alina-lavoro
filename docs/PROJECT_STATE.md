@@ -88,3 +88,4 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendi
 ## Prossimo passo consigliato
 
 1. Lavoro nuovo su **`main`** dopo `git pull origin main`.
+2. Evoluzione pianificata (documentazione): **V1.9 — Dettaglio mese (MVP lista)** — vedi `docs/roadmap.md` e `docs/sessions/2026-05-10-v19-month-detail-planning.md` (implementazione futura: frontend-only da `state.shifts`, senza nuova tab navbar in prima fase).

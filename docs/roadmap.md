@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.10** — release **2026-05-10** su **`main`** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi», **`shouldShowSalaryReminder_`** / **`LS_SALARY_REMINDER_SNOOZE`**); **in produzione** Apps Script **`@21`** (`package.json` / `APP_VERSION` **1.8.10**); tag **`v1.8.10-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale utente su `/exec` @21:** **OK** (incluso **Xiaomi Redmi 9C NFC**, dispositivo target reale). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive, non urgenti. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. **Precedente V1.8.8:** deploy **`@19`**, tag **`v1.8.8-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.9-stable`**, **`v1.8.8-stable`**, **`v1.8.7-stable`**, **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.10** — release **2026-05-10** su **`main`** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi», **`shouldShowSalaryReminder_`** / **`LS_SALARY_REMINDER_SNOOZE`**); **in produzione** Apps Script **`@21`** (`package.json` / `APP_VERSION` **1.8.10**); tag **`v1.8.10-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale utente su `/exec` @21:** **OK** (incluso **Xiaomi Redmi 9C NFC**, dispositivo target reale). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive, non urgenti. **Prossima evoluzione pianificata (solo doc):** **V1.9 — Dettaglio mese (MVP lista)** — `docs/sessions/2026-05-10-v19-month-detail-planning.md`. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. **Precedente V1.8.8:** deploy **`@19`**, tag **`v1.8.8-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.9-stable`**, **`v1.8.8-stable`**, **`v1.8.7-stable`**, **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -232,11 +232,54 @@ Vincoli (uguali a V1.6 dove applicabile):
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
 - Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.10**).
 
-## V2 — Rinviato
+## V1.9 — Dettaglio mese (MVP lista)
 
-Nuove funzionalita:
-- vista calendario;
-- report testuali;
-- grafici ore/giorni/stipendi;
-- riepilogo annuale;
-- miglioramento UI avanzato.
+**Stato:** pianificato (documentazione **2026-05-10**); **non** ancora implementato in codice. Decisione: derivare dalla roadmap **V2** (vista calendario) un MVP **leggero** realizzabile come **micro-step solo frontend**, senza calendario grafico a 7 colonne nella prima fase.
+
+**Obiettivo MVP:** permettere ad Alina di vedere, per un mese scelto, **giorno per giorno** ore lavorate e una **stima euro giornaliera**, più totali di mese e riferimento allo stipendio reale mensile se presente.
+
+**Vincoli (allineati al progetto):**
+
+- Nessuna modifica a **`src/backend/Code.gs`** salvo emergenza dimostrata.
+- Nessuna modifica struttura **Google Sheet**.
+- Nessuna **libreria** esterna.
+- Nessun **grafico** in questa fase.
+- Compatibilità **mobile first** e **Xiaomi Redmi 9C NFC** (lista compatta, niente quinta tab navbar in MVP).
+- Etichettatura chiara: importi giornalieri come **«stimato»**, non come guadagno reale giornaliero.
+
+**Ingresso (MVP):**
+
+- **Preferito:** dalla pagina **Mesi**, per ogni mese — tap sulla riga e/o pulsante **«Dettaglio»** (testo definito in implementazione).
+- **Opzionale in seguito:** link rapido in **Home** verso il dettaglio del **mese corrente**.
+
+**Contenuto vista dettaglio mese:**
+
+- Intestazione con **mese selezionato**.
+- **Elenco giorni del mese** (lista scrollabile): per ogni giorno con attività (o tutti i giorni del mese, da definire in implementazione) — **data/giorno**, **ore lavorate**, **stima euro** giornaliera.
+- **Totali:** ore totali mese; totale **stimato** mese (coerente con la logica di stima già usata nell’app).
+- **Stipendio reale** mensile: solo come **riepilogo** in fondo se disponibile in `state.salaries` / summary del mese, senza presentarlo come somma dei giorni.
+
+**Calcolo:**
+
+- Fonte: **`state.shifts`** già caricato (bootstrap/cache).
+- Aggregare **minuti per `data`** (YYYY-MM-DD) nel mese selezionato.
+- Stima euro giorno: **stessa filosofia** del guadagno stimato mensile (tariffa media / logica esistente in `recomputeLocalSummaries` / summary del mese); non inventare nuovi campi Sheet.
+
+**UX:**
+
+- Lista **semplice, compatta, leggibile**; **nessun calendario grafico** (griglia 7 colonne) in V1.9 MVP.
+- **Nessuna quinta icona** nella navbar in prima fase (navigazione da Mesi o stato pagina interno con pulsante indietro).
+- Evitare DOM/CSS pesanti per non regressare su **Redmi 9C NFC**.
+
+**Documentazione decisionale:** `docs/sessions/2026-05-10-v19-month-detail-planning.md`.
+
+## V2 — Rinviato (oltre il MVP V1.9)
+
+Funzionalità da affrontare **dopo** il MVP lista V1.9, quando deciso esplicitamente:
+
+- **Vista calendario** (griglia settimanale / 7 colonne), se ancora desiderata dopo la lista V1.9.
+- Report testuali.
+- Grafici ore/giorni/stipendi.
+- Riepilogo annuale.
+- Eventuale **ripartizione indicativa** dello stipendio reale mensile sui singoli giorni — solo se richiesta e con **etichettatura** molto chiara (non confondere con euro «realmente guadagnati» quel giorno).
+- Miglioramento UI avanzato.
