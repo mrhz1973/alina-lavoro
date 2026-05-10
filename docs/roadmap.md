@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.3** — release **2026-05-10** su **`main`** (V1.8B: cache/firma **`renderMonths`** — commit **`fc9ac43`**); **in produzione** Apps Script **`@12`** (`package.json` / `APP_VERSION` **1.8.3**); tag **`v1.8.3-stable`**; snapshot **`gas-current/`**; deploy Windows (`npx.cmd clasp push` / `npx.cmd clasp deploy`); sessioni `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`, `docs/sessions/2026-05-10-v18b-months-rerender-cache.md`. **Precedente V1.8.2:** issue **#5**, tag **`v1.8.2-stable`**, deploy **`@10`**, test **`/exec` OK**. **Precedente V1.8.1:** issue **#3**, tag **`v1.8.1-stable`**, deploy **`@9`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.4** — release **2026-05-10** su **`main`** (fix promemoria stipendio **«Più tardi»**, commit **`beb277a`**); **in produzione** Apps Script **`@14`** (`package.json` / `APP_VERSION` **1.8.4**); tag **`v1.8.4-stable`**; snapshot **`gas-current/`**; deploy Windows; sessione `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Include ancora V1.8B (**`fc9ac43`**) e issue **#5**. **Precedente V1.8.3:** deploy **`@12`**, tag **`v1.8.3-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -204,12 +204,16 @@ Vincoli (uguali a V1.6 dove applicabile):
 - **Stato:** implementata in `src/frontend/Index.html` su **`main`** (2026-05-05): alla pressione di **INIZIO LAVORO** / **FINE LAVORO**, se l’orario rilevato non è multiplo di 5 minuti, modale con **due pulsanti** che mostrano direttamente gli orari (floor/ceil a 5 min); se è già multiplo di 5, salvataggio **senza modale** (stesso flusso di prima).
 - Sessione: `docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`.
 - **Release Git V1.8.2:** tag **`v1.8.2-stable`**, snapshot `gas-current/` — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. **Produzione storica Apps Script:** clasp **`@10`** (Windows); **test manuale utente OK**. Produzione precedente documentata: V1.8.1 **`@9`**.
-- **V1.8.3 / V1.8B:** bump **1.8.3**, deploy clasp **`@12`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`; commit funzionale **`fc9ac43`** (firma/cache **`renderMonths`**); tag **`v1.8.3-stable`**. **Test `/exec` su `@12`:** da fare.
+- **V1.8.3 / V1.8B:** bump **1.8.3**, deploy clasp **`@12`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`; commit funzionale **`fc9ac43`** (firma/cache **`renderMonths`**); tag **`v1.8.3-stable`**.
+
+### Promemoria stipendio (Home)
+
+- **V1.8.4:** pulsante **«Più tardi»** chiude la notifica (`dismissSalaryReminder`) — commit **`beb277a`**; deploy **`@14`** — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`, `docs/sessions/2026-05-10-v183-fix-salary-reminder-later.md`.
 
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (ora in produzione come **V1.8.3**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.4**).
 
 ## V2 — Rinviato
 

@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.8.3** in fondo al file.
+Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.8.4** in fondo al file.
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -193,7 +193,7 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 ## Vincoli permanenti
 
 - Lavorare su **`main`** (branch operativo unico). **`dev`** è **legacy/inattivo**: non usarlo per nuovi sviluppi; non prescrivere merge `dev` → `main` nel flusso normale.
-- Dopo release o micro-release importante, usare **tag stabile** su `main` e, se serve rollback, riferirsi al **tag precedente** (es. `v1.8.2-stable` rispetto a `v1.8.3-stable`).
+- Dopo release o micro-release importante, usare **tag stabile** su `main` e, se serve rollback, riferirsi al **tag precedente** (es. `v1.8.3-stable` rispetto a `v1.8.4-stable`).
 - Deploy Apps Script solo con conferma esplicita (o coerente con `docs/STREAMLINED_WORKFLOW.md` se il blocco lo include).
 - Non modificare `gas-current/`.
 - Non usare `git add .`.
@@ -203,7 +203,7 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
-- Produzione Git/Apps Script: **V1.8.3** su **`main`**; tag stabile **`v1.8.3-stable`**; deploy clasp **`@12`** (deploy Windows: **`npx.cmd clasp push`** / **`npx.cmd clasp deploy`**); include V1.8B (cache/firma pagina **Mesi**, commit **`fc9ac43`**).
-- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` del deployment `@12`:** da fare (versione **1.8.3**).
-- Tag utili per rollback: **`v1.8.3-stable`**, **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
+- Produzione Git/Apps Script: **V1.8.4** su **`main`**; tag stabile **`v1.8.4-stable`**; deploy clasp **`@14`** (deploy Windows: **`npx.cmd clasp push`** / **`npx.cmd clasp deploy`**); include fix promemoria stipendio «Più tardi» (commit **`beb277a`**) oltre a V1.8B (**`fc9ac43`**).
+- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` del deployment `@14`:** da fare (versione **1.8.4**, promemoria).
+- Tag utili per rollback: **`v1.8.4-stable`**, **`v1.8.3-stable`** (deploy **`@12`**), **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
 - Branch **`dev`:** **legacy/inattivo**, non operativo.
