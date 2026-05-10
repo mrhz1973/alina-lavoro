@@ -5,9 +5,8 @@
 - **Versione:** **1.9.0** (`package.json`, `APP_VERSION` in `src/frontend/Index.html`).
 - **Branch:** `main`.
 - **Commit release (codice + documentazione principale):** **`1ea1da3`** (`release: v1.9.0 month detail mvp`).
-- **Commit follow-up:** **`5ea5e18`** (`docs: record v1.9.0 deploy commit hash`).
-- **Tag `v1.9.0-stable`:** **`5ea5e18`** (HEAD dopo follow-up).
-- **Tag stabile:** **`v1.9.0-stable`**.
+- **Commit documentazione sessione (post-release):** **`5ea5e18`**, **`4265aea`**, più **ammenda** finale del presente file su `main` (**stesso commit indicato da `git rev-parse v1.9.0-stable`** dopo il push del tag).
+- **Tag `v1.9.0-stable`:** posizionato sull’ultimo commit `main` che include **`docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`** allineato al tag.
 
 ## Deploy Apps Script
 
