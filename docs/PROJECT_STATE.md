@@ -1,14 +1,14 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix toggle anni — classe **`.months-year-panel--collapsed`** + **`toggleMonthsYear_`**; anno più recente aperto di default) su **`main`**; Apps Script deployment **`@20`**; tag **`v1.8.9-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@19`** / **`v1.8.8-stable`** (bug toggle V1.8.8) oppure **`@18`** / **`v1.8.7-stable`**. **Test manuale utente su `/exec` @20:** **OK**. Sessione: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi» — **`shouldShowSalaryReminder_`**, **`LS_SALARY_REMINDER_SNOOZE`**) su **`main`**; Apps Script deployment **`@21`**; tag **`v1.8.10-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@20`** / **`v1.8.9-stable`** oppure **`@19`** / **`v1.8.8-stable`**. **Test manuale su `/exec` @21:** **da fare**. Sessione: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.9** (`package.json` **1.8.9**, `APP_VERSION` **1.8.9** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.8.10** (`package.json` **1.8.10**, `APP_VERSION` **1.8.10** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.9-stable`** (release corrente codice / snapshot); **`v1.8.8-stable`** (V1.8.8 / deploy **`@19`** — toggle anni non affidabile su alcuni client); **`v1.8.7-stable`** (V1.8.7 / deploy **`@18`**); **`v1.8.6-stable`** … **`v1.5-stable`** (storico).
-- **Apps Script (live):** deployment **clasp `@20`** (V1.8.9) — ID: `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`. Dettagli: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Rollback precedente documentato: **`@19`** (V1.8.8) — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`; **`@18`** (V1.8.7) — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
-- **`gas-current/`:** snapshot allineato a **V1.8.9** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Tag Git stabili:** **`v1.8.10-stable`** (release corrente codice / snapshot); **`v1.8.9-stable`** (V1.8.9 / deploy **`@20`**); **`v1.8.8-stable`** (V1.8.8 / deploy **`@19`**); **`v1.8.7-stable`** … **`v1.5-stable`** (storico).
+- **Apps Script (live):** deployment **clasp `@21`** (V1.8.10) — ID: `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`. Dettagli: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Rollback precedente documentato: **`@20`** (V1.8.9) — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; **`@19`** (V1.8.8) — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **`gas-current/`:** snapshot allineato a **V1.8.10** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
@@ -22,6 +22,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix
 - **V1.8.7:** Mesi per anno (heading + sezioni); bump **1.8.7**; deploy **`@18`**; tag **`v1.8.7-stable`** — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`.
 - **V1.8.8:** anni Mesi collassabili (disclosure custom); bump **1.8.8**; deploy **`@19`**; tag **`v1.8.8-stable`** — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`.
 - **V1.8.9:** fix toggle anni Mesi (classe collapsed + `toggleMonthsYear_`); bump **1.8.9**; deploy **`@20`**; tag **`v1.8.9-stable`** — `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`.
+- **V1.8.10:** snooze **24 ore** promemoria stipendio (locale); bump **1.8.10**; deploy **`@21`**; tag **`v1.8.10-stable`** — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`.
 
 ## Stack
 
@@ -73,6 +74,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix
 - **V1.8.5:** tag **`v1.8.5-stable`**; righe Mesi compatte su mobile (CSS); deploy clasp **`@15`** (`AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`).
 - **V1.8.6:** tag **`v1.8.6-stable`**; fix Mesi mobile (griglia + navbar); deploy clasp **`@17`** (`AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`).
 - **V1.8.7:** tag **`v1.8.7-stable`**; Mesi per anno; deploy clasp **`@18`** (`AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`).
+- **V1.8.10:** tag **`v1.8.10-stable`**; snooze 24 h promemoria stipendio; deploy clasp **`@21`** (`AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`).
 - **V1.8.9:** tag **`v1.8.9-stable`**; fix toggle anni Mesi; deploy clasp **`@20`** (`AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`).
 - **V1.8.8:** tag **`v1.8.8-stable`**; anni collassabili (bug toggle su alcuni client); deploy clasp **`@19`** (`AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`).
 
@@ -80,7 +82,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione).
 - Android vecchio: monitorare su dispositivo reale quando disponibile.
-- Rollback: **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, **`@17`** / **`v1.8.6-stable`**, o gestione deployment in Apps Script.
+- Rollback: **`@20`** (V1.8.9) / tag **`v1.8.9-stable`**, **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, **`@17`** / **`v1.8.6-stable`**, o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
