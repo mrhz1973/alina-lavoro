@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.7** — release **2026-05-10** su **`main`** (pagina **Mesi** raggruppata **per anno**: heading + sezioni `list--months`); **in produzione** Apps Script **`@18`** (`package.json` / `APP_VERSION` **1.8.7**); tag **`v1.8.7-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`. **Test manuale utente su `/exec` @18: OK.** **Precedente V1.8.6:** deploy **`@17`**, tag **`v1.8.6-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.8** — release **2026-05-10** su **`main`** (pagina **Mesi**: anni **collassabili** con disclosure custom — bottone `type="button"`, `aria-expanded`, pannello `hidden`; anno più recente aperto di default); **in produzione** Apps Script **`@19`** (`package.json` / `APP_VERSION` **1.8.8**); tag **`v1.8.8-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`. **Test manuale utente su `/exec` @19:** da fare. **Precedente V1.8.7:** deploy **`@18`**, tag **`v1.8.7-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.7-stable`**, **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -222,10 +222,14 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - Wrapper **`months-by-year`**, **`groupMonthsByYear_`**, intestazioni anno localizzate; **`monthsDomMatches_`** aggiornata; griglia **`.list--months`** invariata — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`. Deploy **`@18`**. **Test manuale utente su `/exec` @18: OK.**
 
+### V1.8.8 — anni Mesi collassabili (disclosure custom)
+
+- Blocco per anno: **`months-year-toggle`** (`<button type="button">`) + **`months-year-panel`** con **`section.list.list--months`**; toggle senza `<details>`; **`monthsDomMatches_`** aggiornata — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`. Deploy **`@19`**. **Test manuale su `/exec` @19:** da fare.
+
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.7**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.8**).
 
 ## V2 — Rinviato
 

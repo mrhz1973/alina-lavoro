@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** ( **Mesi** raggruppati **per anno** ); `APP_VERSION` **1.8.7**; Apps Script **clasp `@18`** — ID `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`; tag **`v1.8.7-stable`**. Deploy Windows — **Git Bash** per sync/clasp se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v187-months-by-year-deploy.md`). **Rollback immediato:** **`v1.8.6-stable`** / **`@17`**. **Test manuale utente su `/exec` @18: OK**. Workflow **main-only**; **`aggio:win`** per Windows (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.8** ( **Mesi**: anni **collassabili**, disclosure custom ); `APP_VERSION` **1.8.8**; Apps Script **clasp `@19`** — ID `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`; tag **`v1.8.8-stable`**. Deploy Windows — **Git Bash** se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`). **Rollback immediato:** **`v1.8.7-stable`** / **`@18`**. **Test manuale utente su `/exec` @19:** da fare. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -36,8 +36,8 @@ Stack:
 - Branch **`dev`:** **legacy/inattivo** (non usato per nuovi lavori; può restare sul remoto).
 - Tag rollback storico: `v1.5-stable`.
 - Tag stabile V1.6.2: `v1.6.2-stable`.
-- Tag stabile **V1.8.7:** **`v1.8.7-stable`** (release corrente su `main`).
-- Tag stabile **V1.8.6:** **`v1.8.6-stable`** (rollback deploy **`@17`**).
+- Tag stabile **V1.8.8:** **`v1.8.8-stable`** (release corrente su `main`).
+- Tag stabile **V1.8.7:** **`v1.8.7-stable`** (rollback deploy **`@18`**).
 - Tag stabile **V1.8.5:** **`v1.8.5-stable`** (rollback deploy **`@15`** — bug Mesi/navbar).
 - Tag stabile **V1.8.4:** **`v1.8.4-stable`** (rollback deploy **`@14`**).
 - Tag stabile **V1.8.3:** **`v1.8.3-stable`** (rollback deploy **`@12`**).
@@ -48,9 +48,9 @@ Stack:
 
 ## Stato stabile corrente
 
-- **V1.8.7** è la versione stabile corrente su **`main`**; tag **`v1.8.7-stable`**; Apps Script **`@18`**; **Mesi** con intestazioni **per anno** + griglia mobile invariata; include V1.8.6 (navbar/griglia), V1.8.5–V1.8.4, V1.8B, issue **#5** e **#3**.
-- **Test manuale utente su `/exec` @18: OK** — versione **1.8.7**; **Mesi per anno** ok; cambio **lingua** ok; tap **mese/stipendio** ok; **Home** / **Note** / **Impostazioni** ok.
-- **Rollback immediato precedente:** **`v1.8.6-stable`** / deploy **`@17`** — `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`.
+- **V1.8.8** è la versione stabile corrente su **`main`**; tag **`v1.8.8-stable`**; Apps Script **`@19`**; **Mesi** con anni **collassabili** (bottone + pannello `hidden`; anno recente aperto di default); include V1.8.7–V1.8.6, V1.8B, issue **#5** e **#3**.
+- **Test manuale utente su `/exec` @19:** **da fare** — collasso/espansione anni, lingua, stipendio, smoke Home/Note/Impostazioni **1.8.8**.
+- **Rollback immediato precedente:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
@@ -63,12 +63,13 @@ Stack:
 - **V1.8.1:** deployment ufficiale clasp **`@9`** — ID e URL in `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
 - **V1.8.2:** deployment ufficiale clasp **`@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; esito in `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
 - **V1.8.3:** deployment ufficiale clasp **`@12`** — ID `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`; deploy **`@11`** intermedio — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
+- **V1.8.8:** deployment ufficiale clasp **`@19`** — ID `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg` — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`.
 - **V1.8.7:** deployment ufficiale clasp **`@18`** — ID `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw` — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`.
 - **V1.8.6:** deployment ufficiale clasp **`@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ` — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`.
 - **V1.8.5:** deployment ufficiale clasp **`@15`** — ID `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q` — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 - **V1.8.4:** deployment ufficiale clasp **`@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; deploy **`@13`** intermedio — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
-- **Git `main`:** codice **V1.8.7**, tag **`v1.8.7-stable`**.
-- **`gas-current/`:** snapshot codice **V1.8.7**; non è area di sviluppo.
+- **Git `main`:** codice **V1.8.8**, tag **`v1.8.8-stable`**.
+- **`gas-current/`:** snapshot codice **V1.8.8**; non è area di sviluppo.
 
 ## Struttura importante
 
@@ -137,4 +138,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
+1. **Test manuale** su **`/exec`** del deployment **`@19`** (V1.8.8).
+2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
