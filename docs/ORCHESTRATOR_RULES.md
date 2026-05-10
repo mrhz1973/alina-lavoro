@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-05 — priorità **passo-passo** per l’orchestratore.
+Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.8.2** in fondo al file.
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -193,7 +193,7 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 ## Vincoli permanenti
 
 - Lavorare su **`main`** (branch operativo unico). **`dev`** è **legacy/inattivo**: non usarlo per nuovi sviluppi; non prescrivere merge `dev` → `main` nel flusso normale.
-- Dopo release o micro-release importante, usare **tag stabile** su `main` e, se serve rollback, riferirsi al **tag precedente** (es. `v1.8.0-stable` rispetto a `v1.8.1-stable`).
+- Dopo release o micro-release importante, usare **tag stabile** su `main` e, se serve rollback, riferirsi al **tag precedente** (es. `v1.8.1-stable` rispetto a `v1.8.2-stable`).
 - Deploy Apps Script solo con conferma esplicita (o coerente con `docs/STREAMLINED_WORKFLOW.md` se il blocco lo include).
 - Non modificare `gas-current/`.
 - Non usare `git add .`.
@@ -203,6 +203,7 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
-- Produzione Git/Apps Script: **V1.8.1** su **`main`**, tag **`v1.8.1-stable`**, deploy clasp **`@9`**.
-- Tag utili per rollback: **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, storico **`v1.5-stable`**.
-- Branch **`dev`:** legacy, non operativo.
+- Produzione Git/Apps Script: **V1.8.2** su **`main`**; tag stabile **`v1.8.2-stable`**; deploy clasp **`@10`** (deploy Windows: **`npx.cmd clasp push`** / **`npx.cmd clasp deploy`**).
+- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` OK**.
+- Tag utili per rollback: **`v1.8.2-stable`**, **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
+- Branch **`dev`:** **legacy/inattivo**, non operativo.
