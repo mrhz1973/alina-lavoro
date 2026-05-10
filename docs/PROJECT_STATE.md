@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** MVP lista — pagina interna **`monthDetail`**, ingresso da **Mesi** con **«Dettaglio»**; solo giorni con lavoro; stime giornaliere etichettate **stimato**; stipendio reale solo riepilogo mensile) su **`main`**; Apps Script deployment **`@22`**; tag **`v1.9.0-stable`**. Deploy **Windows:** **Git Bash** + `npx clasp …` se `npm run deploy` fallisce su **cmd** (`mkdir -p` / `cp`). **Rollback immediato:** **`v1.8.10-stable`** / **`@21`** (`AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`). **Test manuale utente su `/exec` @22:** **da fare** (incluso **Xiaomi Redmi 9C NFC**). Sessione: `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Limitazione nota UI:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** alla app (piattaforma GAS), non bug frontend — vedi sessione. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** MVP lista — pagina interna **`monthDetail`**, ingresso da **Mesi** con **«Dettaglio»**; solo giorni con lavoro; stime giornaliere etichettate **stimato**; stipendio reale solo riepilogo mensile) su **`main`**; Apps Script deployment **`@22`**; tag **`v1.9.0-stable`**. Deploy **Windows:** **Git Bash** + `npx clasp …` se `npm run deploy` fallisce su **cmd** (`mkdir -p` / `cp`). **Rollback immediato:** **`v1.8.10-stable`** / **`@21`** (`AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`). **Test manuale utente su `/exec` @22:** **OK** (2026-05-10): Dettaglio mese MVP **valido** e funzionante; dati corretti; **Indietro** OK; **Stipendio** ancora funzionante; smoke generale OK; feedback UX futuri in **`docs/roadmap.md`**. Sessione: `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Limitazione nota UI:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** alla app (piattaforma GAS), non bug frontend — vedi sessione. Workflow **main-only**.
 
 ## Stato reale
 
@@ -9,7 +9,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** M
 - **Tag Git stabili:** **`v1.9.0-stable`** (release corrente codice / snapshot); **`v1.8.10-stable`** (V1.8.10 / deploy **`@21`**); **`v1.8.9-stable`** (V1.8.9 / deploy **`@20`**); **`v1.8.8-stable`** … **`v1.5-stable`** (storico).
 - **Apps Script (live):** deployment **clasp `@22`** (V1.9.0) — ID: `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`. Dettagli: `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. Rollback precedente documentato: **`@21`** (V1.8.10) — `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`; **`@20`** (V1.8.9) — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
 - **Uso sul telefono (Alina):** per l’uso quotidiano va usato il link della **Web App** con suffisso **`/exec`** (deployment documentato sopra). Il link diretto al **Google Sheet** è solo **database / amministrazione** del foglio; **non** sostituisce l’interfaccia dell’app.
-- **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.9.0** / **`@22`**: test manuale **da fare** su quel dispositivo dopo aggiornamento bookmark **`/exec`**. Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
+- **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.9.0** / **`@22`**: test manuale utente su **`/exec`** risultato **OK** (Dettaglio mese incluso). Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
 - **`gas-current/`:** snapshot allineato a **V1.9.0** (`Codice.js` ← `Code.gs`, `Index.html`, `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
@@ -24,7 +24,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** M
 - **V1.8.7:** Mesi per anno (heading + sezioni); bump **1.8.7**; deploy **`@18`**; tag **`v1.8.7-stable`** — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`.
 - **V1.8.8:** anni Mesi collassabili (disclosure custom); bump **1.8.8**; deploy **`@19`**; tag **`v1.8.8-stable`** — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`.
 - **V1.8.9:** fix toggle anni Mesi (classe collapsed + `toggleMonthsYear_`); bump **1.8.9**; deploy **`@20`**; tag **`v1.8.9-stable`** — `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`.
-- **V1.9.0:** **Dettaglio mese** MVP (lista giorni con lavoro, stime **stimato**, pagina **`monthDetail`**); bump **1.9.0**; deploy **`@22`**; tag **`v1.9.0-stable`** — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
+- **V1.9.0:** **Dettaglio mese** MVP (lista giorni con lavoro, stime **stimato**, pagina **`monthDetail`**); bump **1.9.0**; deploy **`@22`**; tag **`v1.9.0-stable`** — test manuale **`/exec` @22** **OK** — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
 - **V1.8.10:** snooze **24 ore** promemoria stipendio (locale); bump **1.8.10**; deploy **`@21`**; tag **`v1.8.10-stable`** — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`.
 
 ## Stack
@@ -84,10 +84,12 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** (**Dettaglio mese** M
 
 ## Rischi aperti
 
-- Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**; test **V1.9.0** su **Redmi 9C NFC** — **da fare**.
+- Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**.
+- **Prossimo miglioramento UX raccomandato (documentato in roadmap):** mostrare il pulsante **«Stipendio»** in lista **Mesi** solo per mesi **chiusi** / **liquidabili**, non per il **mese corrente** ancora in corso o non ancora maturo per lo stipendio reale (es. busta del mese successivo).
+- **Evoluzione futura (non bug):** **Dettaglio mese** più **grafico** / **visivo** — backlog dopo MVP lista.
 - Rollback: **`@21`** (V1.8.10) / tag **`v1.8.10-stable`**, **`@20`** (V1.8.9) / tag **`v1.8.9-stable`**, **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
 1. Lavoro nuovo su **`main`** dopo `git pull origin main`.
-2. Test manuale utente su **`/exec` @22** (Dettaglio mese, IT/RU, Redmi 9C NFC) — gate prima di considerare la release chiusa in uso reale.
+2. Valutare implementazione del **nascondi Stipendio** per mesi non liquidabili / mese corrente (`docs/roadmap.md`); in seguito eventuale **UI più ricca** per Dettaglio mese (evolutivo).

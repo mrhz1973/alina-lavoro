@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.9.0** — release **2026-05-10** su **`main`** (**Dettaglio mese** MVP lista: pagina **`monthDetail`**, pulsante **«Dettaglio»** su ogni card **Mesi**, solo **giorni con turni**, stime **«stimato»**, stipendio reale solo **riepilogo mensile**); **in produzione** Apps Script **`@22`** (`package.json` / `APP_VERSION` **1.9.0**); tag **`v1.9.0-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Test manuale utente su `/exec` @22:** **da fare** (incluso **Xiaomi Redmi 9C NFC**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
+**V1.9.0** — release **2026-05-10** su **`main`** (**Dettaglio mese** MVP lista: pagina **`monthDetail`**, pulsante **«Dettaglio»** su ogni card **Mesi**, solo **giorni con turni**, stime **«stimato»**, stipendio reale solo **riepilogo mensile**); **in produzione** Apps Script **`@22`** (`package.json` / `APP_VERSION` **1.9.0**); tag **`v1.9.0-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`. **Test manuale utente su `/exec` @22:** **OK** (2026-05-10; incluso **Xiaomi Redmi 9C NFC**): Dettaglio mese MVP **valido**; dati corretti; **Indietro** e **Stipendio** OK; due **miglioramenti futuri** in coda (Stipendio solo mesi maturi; Dettaglio mese più grafico) — vedi sotto sezione V1.9. **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -249,11 +249,18 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 **Limitazione infrastruttura (non bug app):** banner Google Apps Script sopra la Web App — vedi sessione deploy.
 
+### Feedback post-test V1.9.0 / `@22` (prossimi passi prodotto)
+
+- **Test manuale:** **OK** (2026-05-10). Conferma: funzionalità **Dettaglio mese** corretta; **Indietro** OK; **Stipendio** in lista Mesi ancora operativo; **MVP** considerato **adeguato** per la fase attuale.
+- **Miglioramento raccomandato (prossima release / iterazione):** mostrare il pulsante **«Stipendio»** su ogni card **Mesi** solo per mesi **chiusi** / **già maturi** / **liquidabili** (stipendio reale realisticamente inseribile), e **non** per il **mese corrente** ancora in corso o per cui la busta arriverebbe solo nel mese successivo (es. maggio con busta a giugno). *Regola esatta da definire in implementazione (es. confronto `mese` vs mese calendario corrente, oltre a eventuali promemoria esistenti).*
+- **Evoluzione futura (non difetto del MVP attuale):** rendere la vista **Dettaglio mese** più **grafica** / **visiva** / curata esteticamente rispetto alla lista compatta V1.9.0.
+
 ## V2 — Rinviato (oltre il MVP V1.9)
 
 Funzionalità da affrontare **dopo** il MVP lista V1.9, quando deciso esplicitamente:
 
 - **Vista calendario** (griglia settimanale / 7 colonne), se ancora desiderata dopo la lista V1.9.
+- **Dettaglio mese «più bello»:** arricchimento **grafico** / **layout** della pagina **Dettaglio mese** (oltre alla lista MVP) — backlog evolutivo; non bug della V1.9.0.
 - Report testuali.
 - Grafici ore/giorni/stipendi.
 - Riepilogo annuale.

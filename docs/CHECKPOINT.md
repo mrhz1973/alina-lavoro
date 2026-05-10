@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** ( **Dettaglio mese** MVP lista — `monthDetail`, pulsante **«Dettaglio»** su **Mesi** ); `APP_VERSION` **1.9.0**; Apps Script **clasp `@22`** — ID `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`; tag **`v1.9.0-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`). **Rollback immediato:** **`v1.8.10-stable`** / **`@21`**. **Test manuale utente su `/exec` @22:** **da fare**; **Xiaomi Redmi 9C NFC**: **da fare**. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.0** ( **Dettaglio mese** MVP lista — `monthDetail`, pulsante **«Dettaglio»** su **Mesi** ); `APP_VERSION` **1.9.0**; Apps Script **clasp `@22`** — ID `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`; tag **`v1.9.0-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`). **Rollback immediato:** **`v1.8.10-stable`** / **`@21`**. **Test manuale utente su `/exec` @22:** **OK** (Dettaglio mese MVP confermato; smoke generale OK); feedback UX futuri in **`docs/roadmap.md`**. **Xiaomi Redmi 9C NFC** (dispositivo target): **OK** nel test manuale della release. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -37,7 +37,7 @@ Stack:
 ## Dispositivo target (test reale)
 
 - **Xiaomi Redmi 9C NFC** è il **telefono di riferimento** per validazione su Android/WebView in fascia low-end.
-- **V1.9.0** / **`@22`**: test manuale su questo dispositivo — **da fare** dopo aggiornamento URL **`/exec`**.
+- **V1.9.0** / **`@22`**: test manuale utente — **OK** (Dettaglio mese, bookmark **`/exec`** aggiornato).
 - Ottimizzazioni future su **Mesi** / **Home** / **Note** (performance, DOM, CSS): **evolutive**, non urgenti rispetto allo stato attuale.
 
 ## Repository
@@ -63,7 +63,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.9.0** è la versione stabile corrente su **`main`**; tag **`v1.9.0-stable`**; Apps Script **`@22`**; **Dettaglio mese** MVP (lista giorni con lavoro, stime etichettate, stipendio reale solo riepilogo mese); include V1.8.10 e precedenti.
-- **Test manuale utente su `/exec` @22:** **da fare** — Dettaglio mese, Indietro, Stipendio, anni Mesi, lingua, smoke Home/Note/Impostazioni; **Redmi 9C NFC**: **da fare**.
+- **Test manuale utente su `/exec` @22:** **OK** (2026-05-10) — Dettaglio mese valido; dati corretti; Indietro OK; **Stipendio** funzionante; anni Mesi / lingue / smoke Home–Note–Impostazioni OK. **Prossimo miglioramento raccomandato:** nascondere **Stipendio** per mese corrente / mesi non ancora liquidabili (`docs/roadmap.md`). **Evoluzione futura:** Dettaglio mese più grafico/visivo — non bug MVP.
 - **Rollback immediato precedente:** **`v1.8.10-stable`** / deploy **`@21`** — `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
@@ -151,9 +151,9 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Rischi aperti
 
-- Pagina Mesi (e altre aree): ottimizzazioni future possibili; test **V1.9.0** su **Redmi 9C NFC** — **da fare**.
+- Nessun rischio bloccante post-test **V1.9.0** / **`@22`**. Miglioramenti UX pianificati in **`docs/roadmap.md`** (Stipendio solo mesi maturi; UI Dettaglio mese più ricca in futuro).
 
 ## Prossimo passo raccomandato
 
 1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
-2. **Test manuale utente:** **`/exec` @22** — Dettaglio mese, workflow Mesi, lingue, dispositivo target **Redmi 9C NFC**.
+2. Priorità prodotto documentata: **visibilità pulsante Stipendio** solo per mesi liquidabili; poi evoluzione **grafica** Dettaglio mese (`docs/roadmap.md`).

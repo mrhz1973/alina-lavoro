@@ -48,8 +48,20 @@
 
 ## Test manuale
 
-- **Gate:** test manuale su **`/exec` deployment `@22`** da eseguire da parte dell’utente (flussi Mesi → Dettaglio → Indietro, Stipendio, toggle anni, IT/RU, mese con più turni nello stesso giorno, mese con stipendio reale, mese senza turni, regressioni Home/Note/Impostazioni).
-- **Dispositivo target:** **Xiaomi Redmi 9C NFC** — verifica consigliata post-deploy.
+- **Esito (2026-05-10):** **OK** su **`/exec`** deployment **`@22`** (Web App). **Versione UI:** **1.9.0**.
+- **Verifiche confermate:**
+  - **Dettaglio mese:** funziona; dati coerenti con i turni; **MVP lista** considerato **valido** per la fase corrente.
+  - **Indietro:** torna correttamente alla pagina **Mesi**.
+  - **Stipendio:** pulsante nella lista **Mesi** ancora **funzionante** (nessuna regressione).
+  - Smoke generale dell’app coerente con l’uso reale.
+- **Dispositivo:** **Xiaomi Redmi 9C NFC** incluso nel test manuale della release (**OK**).
+
+### Feedback prodotto (non bug MVP — roadmap)
+
+1. **Stipendio vs mese corrente:** per il **mese in corso** (es. maggio mentre la busta arriverà a giugno), sarebbe preferibile **non mostrare** ancora il pulsante **«Stipendio»** sulla card del mese. **Interpretazione da implementare in futuro:** mostrare **Stipendio** solo per mesi **chiusi** / **maturi** / **liquidabili**, non per mesi ancora aperti o non ancora oggetto di busta reale.
+2. **Estetica Dettaglio mese:** in una release futura, rendere il **Dettaglio mese** più **grafico** / **visivo** / curato — **evoluzione**, non critica al MVP V1.9.0.
+
+Dettaglio anche in **`docs/roadmap.md`** e **`docs/PROJECT_STATE.md`**.
 
 ## Controlli eseguiti (implementazione)
 
