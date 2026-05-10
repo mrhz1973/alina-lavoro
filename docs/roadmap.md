@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.9.1** — release **2026-05-10** su **`main`** (lista **Mesi**: **«Stipendio»** nascosto sul **mese corrente** / futuri; **«Dettaglio»** sempre visibile; firma **`buildMonthsViewSig_`** con **`currentMonth()`**); **in produzione** Apps Script **`@23`** (`package.json` / `APP_VERSION` **1.9.1**); tag **`v1.9.1-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. **Test manuale utente su `/exec` @23:** **OK** (2026-05-10): **1.9.1**; **Stipendio** assente sul mese corrente, presente sui precedenti; **Dettaglio** su tutti i mesi; Dettaglio mese + Indietro; toggle anni; smoke Home–Note–Impostazioni. Include **V1.9.0** (Dettaglio mese MVP, deploy **`@22`**, test **OK**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
+**V1.9.2** — release **2026-05-10** su **`main`** (**Dettaglio mese** più **visivo**: riepilogo **metriche**, **card** giorno, **barre proporzionali** ore; solo frontend); **in produzione** Apps Script **`@24`** (`package.json` / `APP_VERSION` **1.9.2**); tag **`v1.9.2-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. **Test manuale utente su `/exec` @24:** **da fare** (incluso **Redmi 9C NFC**). Include **V1.9.1** (**Stipendio** nascosto sul mese corrente in **Mesi**, deploy **`@23`**, test **OK**) e **V1.9.0** (Dettaglio mese MVP, **`@22`**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.9.1:** deploy **`@23`**, tag **`v1.9.1-stable`**. **Precedente V1.9.0:** deploy **`@22`**, tag **`v1.9.0-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.9.1-stable`**, **`v1.9.0-stable`**, **`v1.8.10-stable`**, … **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -230,7 +230,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.9.1**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.9.2**).
 
 ## V1.9 — Dettaglio mese (MVP lista)
 
@@ -253,7 +253,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - **Test manuale:** **OK** (2026-05-10). Conferma: funzionalità **Dettaglio mese** corretta; **Indietro** OK; **Stipendio** in lista Mesi ancora operativo sui mesi precedenti; **MVP** considerato **adeguato** per la fase attuale.
 - **Miglioramento «Stipendio solo mesi maturi»:** **implementato in V1.9.1** (`@23`) — regola MVP: niente pulsante **Stipendio** sul **mese corrente** né su mesi **futuri**; visibile solo per **mesi precedenti** (confronto `YYYY-MM` vs `currentMonth()`). Dettaglio sessione: `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`.
-- **Evoluzione futura (non difetto del MVP attuale):** rendere la vista **Dettaglio mese** più **grafica** / **visiva** / curata esteticamente rispetto alla lista compatta V1.9.0.
+- **Evoluzione UI Dettaglio mese:** **implementata in V1.9.2** (`@24`) — riepilogo **metriche** in alto (stile Home), **card** giorno più leggibili, **barre proporzionali** ore vs giorno più lungo del mese; senza calendario 7 colonne; senza librerie; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`.
 
 ## V1.9.1 — Stipendio nascosto sul mese corrente (**Mesi**)
 
@@ -265,12 +265,22 @@ Vincoli (uguali a V1.6 dove applicabile):
 - **`buildMonthsListSection_`**: renderizza **«Stipendio»** solo se la helper è vera; **«Dettaglio»** sempre.
 - **`buildMonthsViewSig_`**: include **`currentMonth()`** nella firma per invalidare la cache **`renderMonths`** quando cambia il mese solare.
 
+## V1.9.2 — Dettaglio mese più visivo (metriche, card, barre)
+
+**Stato:** **implementato** (**2026-05-10**); deploy **`@24`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati. **Test manuale `/exec` @24:** **da fare** (incluso **Redmi 9C NFC**).
+
+**Consegnato:**
+
+- Riepilogo superiore **`grid` / `metric`**: ore mese, totale stimato mese, stipendio reale mensile se presente nei dati (nessuna metrica «vuota» se il reale non c’è).
+- Lista giorni con **card** più strutturate; stimato sempre tramite stringhe **«stimato»** esistenti.
+- **Barra** orizzontale leggera per giorno: proporzione minuti vs massimo del mese tra giorni lavorati.
+
 ## V2 — Rinviato (oltre il MVP V1.9)
 
 Funzionalità da affrontare **dopo** il MVP lista V1.9, quando deciso esplicitamente:
 
 - **Vista calendario** (griglia settimanale / 7 colonne), se ancora desiderata dopo la lista V1.9.
-- **Dettaglio mese «più bello»:** arricchimento **grafico** / **layout** della pagina **Dettaglio mese** (oltre alla lista MVP) — backlog evolutivo; non bug della V1.9.0.
+- **Dettaglio mese «più bello»:** **V1.9.2** — metriche, card, barre (deploy **`@24`**); eventuali ulteriori rifiniture restano **evolutive**.
 - Report testuali.
 - Grafici ore/giorni/stipendi.
 - Riepilogo annuale.

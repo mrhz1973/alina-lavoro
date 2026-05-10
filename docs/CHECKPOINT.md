@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.1** ( **Mesi**: **«Stipendio»** nascosto sul **mese corrente**; **«Dettaglio»** sempre ); `APP_VERSION` **1.9.1**; Apps Script **clasp `@23`** — ID `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`; tag **`v1.9.1-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`). **Rollback immediato:** **`v1.9.0-stable`** / **`@22`**. **Test manuale utente su `/exec` @23:** **OK** (2026-05-10): **1.9.1**; **Stipendio** assente sul mese corrente, presente sui precedenti; **Dettaglio** su tutti i mesi; Dettaglio mese + Indietro; toggle anni; smoke Home–Note–Impostazioni. **Xiaomi Redmi 9C NFC:** **OK** nel test della release. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **da fare** (Dettaglio mese nuovo layout + **Stipendio** mese corrente / anni / smoke). **V1.9.1** su **`@23`:** **OK** (2026-05-10). **Xiaomi Redmi 9C NFC:** test **`@24`** consigliato. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -31,13 +31,14 @@ Stack:
 
 ## Uso Web App vs Google Sheet
 
-- Per **uso quotidiano** sul telefono (Alina): salvare e aprire il link della **Web App** Apps Script con suffisso **`/exec`** (deploy **`@23`** / ID documentato sopra).
+- Per **uso quotidiano** sul telefono (Alina): salvare e aprire il link della **Web App** Apps Script con suffisso **`/exec`** (deploy **`@24`** / ID documentato sopra).
 - Il link al **Google Sheet** è solo **database e amministrazione** del foglio; **non** è l’interfaccia dell’app e non va usato al posto dell’URL **`/exec`**.
 
 ## Dispositivo target (test reale)
 
 - **Xiaomi Redmi 9C NFC** è il **telefono di riferimento** per validazione su Android/WebView in fascia low-end.
-- **V1.9.1** / **`@23`**: test manuale utente — **OK** (bookmark **`/exec`** aggiornato).
+- **V1.9.2** / **`@24`**: test manuale **`/exec`** — **da fare** (layout Dettaglio mese).
+- **V1.9.1** / **`@23`**: test manuale utente — **OK** (bookmark **`/exec`** aggiornare a **`@24`** dopo verifica).
 - Ottimizzazioni future su **Mesi** / **Home** / **Note** (performance, DOM, CSS): **evolutive**, non urgenti rispetto allo stato attuale.
 
 ## Repository
@@ -47,7 +48,8 @@ Stack:
 - Branch **`dev`:** **legacy/inattivo** (non usato per nuovi lavori; può restare sul remoto).
 - Tag rollback storico: `v1.5-stable`.
 - Tag stabile V1.6.2: `v1.6.2-stable`.
-- Tag stabile **V1.9.1:** **`v1.9.1-stable`** (release corrente su `main`).
+- Tag stabile **V1.9.2:** **`v1.9.2-stable`** (release corrente su `main`).
+- Tag stabile **V1.9.1:** **`v1.9.1-stable`** (deploy **`@23`**).
 - Tag stabile **V1.9.0:** **`v1.9.0-stable`** (deploy **`@22`**).
 - Tag stabile **V1.8.9:** **`v1.8.9-stable`** (deploy **`@20`**).
 - Tag stabile **V1.8.8:** **`v1.8.8-stable`** (deploy **`@19`** — toggle anni non affidabile).
@@ -62,9 +64,10 @@ Stack:
 
 ## Stato stabile corrente
 
-- **V1.9.1** è la versione stabile corrente su **`main`**; tag **`v1.9.1-stable`**; Apps Script **`@23`**; **Stipendio** nascosto sul **mese corrente** in lista **Mesi** (`isSalaryMonthEditable_`); **Dettaglio** sempre su tutte le card; include **V1.9.0** e precedenti.
-- **Test manuale utente su `/exec` @23:** **OK** (2026-05-10) — versione **1.9.1**; **Stipendio** solo su mesi precedenti al corrente; **Dettaglio** ovunque; Dettaglio mese + Indietro; anni Mesi; smoke Home–Note–Impostazioni. **Evoluzione futura:** Dettaglio mese più grafico (`docs/roadmap.md`).
-- **Rollback immediato precedente:** **`v1.9.0-stable`** / deploy **`@22`** — `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`.
+- **V1.9.2** è la versione stabile corrente su **`main`**; tag **`v1.9.2-stable`**; Apps Script **`@24`**; **Dettaglio mese** più **visivo** (metriche, card, barre ore); eredità **V1.9.1** (**Stipendio** nascosto sul **mese corrente** in **Mesi**); include **V1.9.0** e precedenti.
+- **Test manuale utente su `/exec` @24:** **da fare** — versione **1.9.2**; riepilogo Dettaglio mese; **Stipendio** solo su mesi precedenti al corrente; **Dettaglio** ovunque; anni Mesi; smoke Home–Note–Impostazioni.
+- **Rollback immediato precedente:** **`v1.9.1-stable`** / deploy **`@23`** — `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`.
+- **Rollback V1.9.0:** **`v1.9.0-stable`** / deploy **`@22`** — `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
@@ -78,6 +81,7 @@ Stack:
 - **V1.8.1:** deployment ufficiale clasp **`@9`** — ID e URL in `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
 - **V1.8.2:** deployment ufficiale clasp **`@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; esito in `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
 - **V1.8.3:** deployment ufficiale clasp **`@12`** — ID `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`; deploy **`@11`** intermedio — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
+- **V1.9.2:** deployment ufficiale clasp **`@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg` — `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`.
 - **V1.9.1:** deployment ufficiale clasp **`@23`** — ID `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg` — `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`.
 - **V1.9.0:** deployment ufficiale clasp **`@22`** — ID `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA` — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
 - **V1.8.10:** deployment ufficiale clasp **`@21`** — ID `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A` — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`.
@@ -87,8 +91,8 @@ Stack:
 - **V1.8.6:** deployment ufficiale clasp **`@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ` — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`.
 - **V1.8.5:** deployment ufficiale clasp **`@15`** — ID `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q` — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 - **V1.8.4:** deployment ufficiale clasp **`@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; deploy **`@13`** intermedio — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
-- **Git `main`:** codice **V1.9.1**, tag **`v1.9.1-stable`**.
-- **`gas-current/`:** snapshot codice **V1.9.1**; non è area di sviluppo.
+- **Git `main`:** codice **V1.9.2**, tag **`v1.9.2-stable`**.
+- **`gas-current/`:** snapshot codice **V1.9.2**; non è area di sviluppo.
 
 ## Struttura importante
 
