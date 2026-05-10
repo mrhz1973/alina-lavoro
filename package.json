@@ -1,6 +1,6 @@
 {
   "name": "alina-lavoro",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "description": "APP per lavoro di Alina",
   "main": "index.js",
   "scripts": {
