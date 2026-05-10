@@ -33,15 +33,14 @@
 
 ## Test manuale
 
-- **Esito:** **da fare** su **`/exec`** deployment **`@24`** (Web App). Confermare **1.9.2** in Impostazioni.
-- **Verifiche consigliate:**
-  - **Mesi** → **Dettaglio** → **Indietro**.
-  - Dettaglio con più giorni / un solo giorno / nessun turno (stato vuoto sicuro).
-  - Con e senza **stipendio reale** mensile in summary.
-  - **IT** / **RU**.
-  - **Stipendio** assente sul **mese corrente**, presente sui precedenti (**V1.9.1**).
-  - Toggle anni; smoke **Home** / **Note** / **Impostazioni**.
-- **Dispositivo:** **Xiaomi Redmi 9C NFC** — test consigliato post-deploy.
+- **Esito:** **OK** (2026-05-10) su **`/exec`** deployment **`@24`** (Web App). Versione **1.9.2** confermata in Impostazioni.
+- **Verifiche confermate:**
+  - Layout **Dettaglio mese** (metriche in alto, card giorno, barre ore proporzionali) OK.
+  - Pulsante **Indietro** OK.
+  - **Stipendio** assente sul **mese corrente** e presente sui **mesi precedenti** OK.
+  - Smoke **Home** / **Note** / **Impostazioni** OK.
+  - **Xiaomi Redmi 9C NFC:** incluso nel test — OK.
+- **Verifiche consigliate** (copertura estesa opzionale): più giorni / un giorno / mese vuoto; con e senza **stipendio reale** mensile in summary; **IT** / **RU**; toggle anni.
 
 ## Controlli eseguiti (implementazione)
 

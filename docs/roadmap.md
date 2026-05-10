@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.9.2** — release **2026-05-10** su **`main`** (**Dettaglio mese** più **visivo**: riepilogo **metriche**, **card** giorno, **barre proporzionali** ore; solo frontend); **in produzione** Apps Script **`@24`** (`package.json` / `APP_VERSION` **1.9.2**); tag **`v1.9.2-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. **Test manuale utente su `/exec` @24:** **da fare** (incluso **Redmi 9C NFC**). Include **V1.9.1** (**Stipendio** nascosto sul mese corrente in **Mesi**, deploy **`@23`**, test **OK**) e **V1.9.0** (Dettaglio mese MVP, **`@22`**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.9.1:** deploy **`@23`**, tag **`v1.9.1-stable`**. **Precedente V1.9.0:** deploy **`@22`**, tag **`v1.9.0-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.9.1-stable`**, **`v1.9.0-stable`**, **`v1.8.10-stable`**, … **`v1.5-stable`**.
+**V1.9.2** — release **2026-05-10** su **`main`** (**Dettaglio mese** più **visivo**: riepilogo **metriche**, **card** giorno, **barre proporzionali** ore; solo frontend); **in produzione** Apps Script **`@24`** (`package.json` / `APP_VERSION` **1.9.2**); tag **`v1.9.2-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. **Test manuale utente su `/exec` @24:** **OK** (2026-05-10; incluso **Redmi 9C NFC**). Include **V1.9.1** (**Stipendio** nascosto sul mese corrente in **Mesi**, deploy **`@23`**, test **OK**) e **V1.9.0** (Dettaglio mese MVP, **`@22`**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.9.1:** deploy **`@23`**, tag **`v1.9.1-stable`**. **Precedente V1.9.0:** deploy **`@22`**, tag **`v1.9.0-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.9.1-stable`**, **`v1.9.0-stable`**, **`v1.8.10-stable`**, … **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -271,7 +271,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ## V1.9.2 — Dettaglio mese più visivo (metriche, card, barre)
 
-**Stato:** **implementato** (**2026-05-10**); deploy **`@24`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati. **Test manuale `/exec` @24:** **da fare** (incluso **Redmi 9C NFC**).
+**Stato:** **implementato** (**2026-05-10**); deploy **`@24`**; sessione `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati. **Test manuale `/exec` @24:** **OK** (2026-05-10; incluso **Redmi 9C NFC**).
 
 **Consegnato:**
 

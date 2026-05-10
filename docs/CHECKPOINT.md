@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **da fare** (Dettaglio mese nuovo layout + **Stipendio** mese corrente / anni / smoke). **V1.9.1** su **`@23`:** **OK** (2026-05-10). **Xiaomi Redmi 9C NFC:** test **`@24`** consigliato. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **OK** (2026-05-10): **1.9.2**; Dettaglio mese layout visivo; metriche in alto; card giorno; barre proporzionali; **Indietro** OK; **Stipendio** assente sul mese corrente e presente sui precedenti; smoke Home–Note–Impostazioni OK; **Xiaomi Redmi 9C NFC** incluso. **V1.9.1** su **`@23`:** **OK** (2026-05-10). Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 ## Prossimo passo — automazione (pilota)
 
@@ -42,8 +42,8 @@ Stack:
 ## Dispositivo target (test reale)
 
 - **Xiaomi Redmi 9C NFC** è il **telefono di riferimento** per validazione su Android/WebView in fascia low-end.
-- **V1.9.2** / **`@24`**: test manuale **`/exec`** — **da fare** (layout Dettaglio mese).
-- **V1.9.1** / **`@23`**: test manuale utente — **OK** (bookmark **`/exec`** aggiornare a **`@24`** dopo verifica).
+- **V1.9.2** / **`@24`**: test manuale **`/exec`** — **OK** (2026-05-10).
+- **V1.9.1** / **`@23`**: test manuale utente — **OK** (2026-05-10).
 - Ottimizzazioni future su **Mesi** / **Home** / **Note** (performance, DOM, CSS): **evolutive**, non urgenti rispetto allo stato attuale.
 
 ## Repository
@@ -70,7 +70,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.9.2** è la versione stabile corrente su **`main`**; tag **`v1.9.2-stable`**; Apps Script **`@24`**; **Dettaglio mese** più **visivo** (metriche, card, barre ore); eredità **V1.9.1** (**Stipendio** nascosto sul **mese corrente** in **Mesi**); include **V1.9.0** e precedenti.
-- **Test manuale utente su `/exec` @24:** **da fare** — versione **1.9.2**; riepilogo Dettaglio mese; **Stipendio** solo su mesi precedenti al corrente; **Dettaglio** ovunque; anni Mesi; smoke Home–Note–Impostazioni.
+- **Test manuale utente su `/exec` @24:** **OK** (2026-05-10): **1.9.2**; metriche in alto; card giorno; barre proporzionali; **Indietro**; **Stipendio** solo su mesi precedenti al corrente; **Dettaglio** ovunque; anni Mesi; smoke Home–Note–Impostazioni; **Redmi 9C NFC** incluso.
 - **Rollback immediato precedente:** **`v1.9.1-stable`** / deploy **`@23`** — `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`.
 - **Rollback V1.9.0:** **`v1.9.0-stable`** / deploy **`@22`** — `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
