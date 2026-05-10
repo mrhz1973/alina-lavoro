@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix toggle anni — classe **`.months-year-panel--collapsed`** + **`toggleMonthsYear_`**; anno più recente aperto di default) su **`main`**; Apps Script deployment **`@20`**; tag **`v1.8.9-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@19`** / **`v1.8.8-stable`** (bug toggle V1.8.8) oppure **`@18`** / **`v1.8.7-stable`**. **Test manuale utente su `/exec` @20:** da fare. Sessione: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix toggle anni — classe **`.months-year-panel--collapsed`** + **`toggleMonthsYear_`**; anno più recente aperto di default) su **`main`**; Apps Script deployment **`@20`**; tag **`v1.8.9-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@19`** / **`v1.8.8-stable`** (bug toggle V1.8.8) oppure **`@18`** / **`v1.8.7-stable`**. **Test manuale utente su `/exec` @20:** **OK**. Sessione: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -84,5 +84,4 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix
 
 ## Prossimo passo consigliato
 
-1. **Test manuale utente su `/exec`** del deployment **`@20`** (V1.8.9): toggle anni Mesi + smoke generale.
-2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
+1. Lavoro nuovo su **`main`** dopo `git pull origin main`.

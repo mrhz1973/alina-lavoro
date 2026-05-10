@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** ( **Mesi**: fix **toggle anni** — classe collapsed + `toggleMonthsYear_` ); `APP_VERSION` **1.8.9**; Apps Script **clasp `@20`** — ID `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; tag **`v1.8.9-stable`**. Deploy Windows — **Git Bash** se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`). **Rollback immediato:** **`v1.8.8-stable`** / **`@19`** (bug toggle V1.8.8) oppure **`v1.8.7-stable`** / **`@18`**. **Test manuale utente su `/exec` @20:** da fare. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** ( **Mesi**: fix **toggle anni** — classe collapsed + `toggleMonthsYear_` ); `APP_VERSION` **1.8.9**; Apps Script **clasp `@20`** — ID `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; tag **`v1.8.9-stable`**. Deploy Windows — **Git Bash** se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`). **Rollback immediato:** **`v1.8.8-stable`** / **`@19`** (bug toggle V1.8.8) oppure **`v1.8.7-stable`** / **`@18`**. **Test manuale utente su `/exec` @20:** **OK**. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -50,7 +50,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.9** è la versione stabile corrente su **`main`**; tag **`v1.8.9-stable`**; Apps Script **`@20`**; **Mesi** con toggle anni affidabile (classe **collapsed** + handler dedicato; anno recente aperto di default); include V1.8.8–V1.8.6, V1.8B, issue **#5** e **#3**.
-- **Test manuale utente su `/exec` @20:** **da fare** — collasso/espansione anni, lingua, stipendio, smoke Home/Note/Impostazioni **1.8.9**.
+- **Test manuale utente su `/exec` @20:** **OK** — toggle anni (intestazione + freccia), anno più recente aperto, tap mese/stipendio, smoke generale (**1.8.9**).
 - **Rollback immediato precedente:** **`v1.8.8-stable`** / deploy **`@19`** — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
@@ -141,5 +141,4 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su **`/exec`** del deployment **`@20`** (V1.8.9).
-2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
+1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.

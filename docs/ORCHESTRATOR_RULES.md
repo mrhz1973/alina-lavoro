@@ -204,6 +204,6 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
 - Produzione Git/Apps Script: **V1.8.9** su **`main`**; tag stabile **`v1.8.9-stable`**; deploy clasp **`@20`** (ID `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; deploy Windows: **Git Bash** se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`); fix toggle anni **Mesi** (classe collapsed + `toggleMonthsYear_`) oltre a V1.8.8 / V1.8.7 / V1.8.6 / V1.8.4 (**`beb277a`**) e V1.8B (**`fc9ac43`**).
-- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` @20:** da fare (versione **1.8.9**).
+- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` @20:** **OK** (versione **1.8.9** — toggle anni Mesi, smoke generale).
 - Tag utili per rollback: **`v1.8.8-stable`** (deploy **`@19`** — bug toggle anni), **`v1.8.7-stable`** (deploy **`@18`**), **`v1.8.6-stable`** (deploy **`@17`**), **`v1.8.5-stable`** (deploy **`@15`**), **`v1.8.4-stable`** (deploy **`@14`**), **`v1.8.3-stable`** (deploy **`@12`**), **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
 - Branch **`dev`:** **legacy/inattivo**, non operativo.

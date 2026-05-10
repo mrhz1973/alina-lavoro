@@ -41,8 +41,12 @@ Allineato a **V1.8.9** post-deploy.
 
 ## Test manuale
 
-**Da fare** su **`/exec`** del deployment **`@20`**:
+**Aggiornamento post-test:** eseguito su **`/exec`** del deployment **`@20`** — **OK**.
 
-- **Mesi:** tap intestazione anno + freccia apre/chiude; anno più recente aperto di default; anni precedenti chiusi; griglia mobile e tap **Stipendio** OK.
-- Cambio **lingua** ricostruisce la vista con default corretto.
-- **Home**, **Note**, **Impostazioni**; **1.8.9** in Impostazioni; navbar usabile.
+| Voce | Esito |
+|------|--------|
+| Toggle anni (collasso/espansione) | OK |
+| Tap su freccia e su intestazione anno | OK |
+| Anno più recente aperto di default | OK |
+| Tap mese / **Stipendio** | OK |
+| Smoke generale (Home, Note, Impostazioni, navbar, lingua) | OK |
