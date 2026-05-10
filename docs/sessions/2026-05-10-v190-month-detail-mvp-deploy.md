@@ -4,7 +4,9 @@
 
 - **Versione:** **1.9.0** (`package.json`, `APP_VERSION` in `src/frontend/Index.html`).
 - **Branch:** `main`.
-- **Commit:** **`1ea1da3`** (messaggio: `release: v1.9.0 month detail mvp`).
+- **Commit release (codice + documentazione principale):** **`1ea1da3`** (`release: v1.9.0 month detail mvp`).
+- **Commit follow-up:** **`5ea5e18`** (`docs: record v1.9.0 deploy commit hash`).
+- **Tag `v1.9.0-stable`:** **`5ea5e18`** (HEAD dopo follow-up).
 - **Tag stabile:** **`v1.9.0-stable`**.
 
 ## Deploy Apps Script
