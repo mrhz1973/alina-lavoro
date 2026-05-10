@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi» — **`shouldShowSalaryReminder_`**, **`LS_SALARY_REMINDER_SNOOZE`**) su **`main`**; Apps Script deployment **`@21`**; tag **`v1.8.10-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@20`** / **`v1.8.9-stable`** oppure **`@19`** / **`v1.8.8-stable`**. **Test manuale utente su `/exec` @21:** **OK**. Sessione: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi» — **`shouldShowSalaryReminder_`**, **`LS_SALARY_REMINDER_SNOOZE`**) su **`main`**; Apps Script deployment **`@21`**; tag **`v1.8.10-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@20`** / **`v1.8.9-stable`** oppure **`@19`** / **`v1.8.8-stable`**. **Test manuale utente su `/exec` @21:** **OK** (incluso dispositivo reale target **Xiaomi Redmi 9C NFC**). Sessione: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -9,6 +9,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendi
 - **Tag Git stabili:** **`v1.8.10-stable`** (release corrente codice / snapshot); **`v1.8.9-stable`** (V1.8.9 / deploy **`@20`**); **`v1.8.8-stable`** (V1.8.8 / deploy **`@19`**); **`v1.8.7-stable`** … **`v1.5-stable`** (storico).
 - **Apps Script (live):** deployment **clasp `@21`** (V1.8.10) — ID: `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`. Dettagli: `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. Rollback precedente documentato: **`@20`** (V1.8.9) — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`; **`@19`** (V1.8.8) — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
 - **Uso sul telefono (Alina):** per l’uso quotidiano va usato il link della **Web App** con suffisso **`/exec`** (deployment documentato sopra). Il link diretto al **Google Sheet** è solo **database / amministrazione** del foglio; **non** sostituisce l’interfaccia dell’app.
+- **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.8.10** / **`@21`** verificato **OK** su quel dispositivo (nessun problema evidente di performance in uso reale). Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
 - **`gas-current/`:** snapshot allineato a **V1.8.10** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
@@ -81,8 +82,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** (promemoria stipendi
 
 ## Rischi aperti
 
-- Mesi: possibili ottimizzazioni future (virtualizzazione).
-- Android vecchio: monitorare su dispositivo reale quando disponibile.
+- Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**; il dispositivo target **Redmi 9C NFC** ha già dato esito **OK** su **V1.8.10** / **`@21`**.
 - Rollback: **`@20`** (V1.8.9) / tag **`v1.8.9-stable`**, **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, **`@17`** / **`v1.8.6-stable`**, o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato

@@ -47,12 +47,24 @@ Allineato a **V1.8.10** post-deploy.
 
 **Aggiornamento post-test:** eseguito su **`/exec`** del deployment **`@21`** — **OK**.
 
+### Xiaomi Redmi 9C NFC (dispositivo target reale)
+
+Il **Redmi 9C NFC** è il telefono di riferimento principale per validazione su Android/WebView low-end. **V1.8.10** / **`@21`** — test utente su questo dispositivo: **OK**.
+
 | Voce | Esito |
 |------|--------|
-| Web App aperta sul cellulare tramite link **`/exec`** (non il link Sheet) | OK |
+| Web App tramite link Apps Script **`/exec`** (non link Google Sheet) | OK |
 | Versione **1.8.10** in Impostazioni | OK |
-| Promemoria stipendio — «Più tardi» / snooze 24 h | OK |
 | Home | OK |
 | Mesi | OK |
+| Anni Mesi raggruppati / collassabili | OK |
+| Toggle anni | OK |
+| Navbar | OK |
+| Promemoria stipendio — «Più tardi» / snooze 24 h | OK |
 | Note / Impostazioni | OK |
+| Performance percepita sul dispositivo | OK (nessun problema evidente) |
 | Smoke generale | OK |
+
+**Nota:** eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
+
+Test precedente su Web App **`/exec`** (client mobile generico) già registrato **OK**; la tabella sopra integra la validazione sul **dispositivo target** principale.
