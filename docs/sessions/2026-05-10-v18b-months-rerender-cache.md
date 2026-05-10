@@ -16,8 +16,8 @@ Evitare la ricostruzione completa del DOM della tab **Mesi** quando `render()` v
 
 ## Deploy
 
-**Nessun** deploy Apps Script in questo blocco: produzione documentata resta **V1.8.2** / clasp **`@10`** fino a release/deploy successivo.
+Deploy ufficiale e bump **1.8.3** in sessione successiva: `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md` (produzione **`@12`**).
 
 ## Versione / tag
 
-Nessun bump `APP_VERSION` / `package.json` e nessun tag stabile in questo blocco.
+Il bump **1.8.3** e il tag **`v1.8.3-stable`** sono applicati nel commit di release documentato nella sessione deploy sopra.

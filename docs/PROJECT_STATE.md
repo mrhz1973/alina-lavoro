@@ -1,21 +1,22 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue **#5** in produzione); Apps Script **clasp revision `@10`**; tag stabile **`v1.8.2-stable`**. Deploy eseguito manualmente su **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). **Test manuale utente su `/exec`:** OK. Sessione: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.3** (V1.8B cache/firma pagina **Mesi** + bump **1.8.3**) su **`main`**; Apps Script deployment **`@12`**; tag **`v1.8.3-stable`**. Deploy **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Issue **#5** resta nel prodotto. **Test manuale utente su `/exec` del nuovo deployment:** da fare (vedi Prossimo passo). Sessione deploy: `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.2** (`package.json` **1.8.2**, `APP_VERSION` **1.8.2** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.8.3** (`package.json` **1.8.3**, `APP_VERSION` **1.8.3** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.2-stable`** (release corrente codice / snapshot); **`v1.8.1-stable`** (V1.8.1 / deploy **@9**); **`v1.8.0-stable`**; **`v1.6.2-stable`**; **`v1.5-stable`** (rollback storico).
-- **Apps Script (live):** deployment **clasp `@10`** (V1.8.2) — ID: `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`. Dettagli ed esito deploy: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. URL Web App **/exec**: aprire da Apps Script o dall’output clasp per il deployment corrente.
-- **`gas-current/`:** snapshot allineato a **V1.8.2** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Tag Git stabili:** **`v1.8.3-stable`** (release corrente codice / snapshot); **`v1.8.2-stable`** (V1.8.2 / deploy **`@10`** rollback); **`v1.8.1-stable`** (V1.8.1 / **`@9`**); **`v1.8.0-stable`**; **`v1.6.2-stable`**; **`v1.5-stable`** (rollback storico).
+- **Apps Script (live):** deployment **clasp `@12`** (V1.8.3) — ID: `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`. Dettagli: `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`. Deploy intermedio **`@11`** (stesso codice V1.8B ma UI **1.8.2**) — superseded da **`@12`**. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **`gas-current/`:** snapshot allineato a **V1.8.3** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
 
 - V1.6.2 → V1.8.0 (V1.8A): Mesi via DOM, deploy **@8**, tag `v1.8.0-stable`.
-- **V1.8.1:** issue **#3** (riga versione in Impostazioni); integrazione su `main`, `npm run deploy` → **`@9`**, tag **`v1.8.1-stable`**, snapshot `gas-current/` (storico include anche merge da branch `dev` prima del passaggio main-only).
-- **V1.8.2:** issue **#5** (arrotondamento Inizio/Fine a 5 min); tag **`v1.8.2-stable`**; snapshot `gas-current/`; deploy clasp **`@10`** su Windows (vedi `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`).
+- **V1.8.1:** issue **#3** (riga versione in Impostazioni); integrazione su `main`, deploy **`@9`**, tag **`v1.8.1-stable`**, snapshot `gas-current/` (storico include anche merge da branch `dev` prima del passaggio main-only).
+- **V1.8.2:** issue **#5** (arrotondamento Inizio/Fine a 5 min); tag **`v1.8.2-stable`**; snapshot `gas-current/`; deploy clasp **`@10`** su Windows — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
+- **V1.8.3:** V1.8B — firma/cache `renderMonths()` (commit **`fc9ac43`**) + bump **1.8.3**; deploy **`@12`**; tag **`v1.8.3-stable`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
 
 ## Stack
 
@@ -61,15 +62,16 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue 
 - V1.6.x: tag `v1.6.2-stable`.
 - V1.8.0 (V1.8A): tag `v1.8.0-stable`; deploy storico **@8**.
 - **V1.8.1:** tag **`v1.8.1-stable`**; deploy **@9**; issue **#3**.
-- **V1.8.2:** tag **`v1.8.2-stable`**; issue **#5** in produzione; deploy clasp **`@10`** (ID sopra).
+- **V1.8.2:** tag **`v1.8.2-stable`**; issue **#5**; deploy clasp **`@10`** (rollback immediato precedente).
+- **V1.8.3:** tag **`v1.8.3-stable`**; V1.8B (riduzione re-render Mesi); deploy clasp **`@12`** (ID sopra).
 
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
-- Android vecchio: monitorare su dispositivo reale se necessario.
-- Rollback a **@9** (V1.8.1) possibile solo tramite gestione deployment in Apps Script se necessario.
+- Android vecchio: monitorare su dispositivo reale quando si esegue il test su **`@12`**.
+- Rollback: **`@10`** (V1.8.2) o gestione deployment precedenti in Apps Script se necessario.
 
 ## Prossimo passo consigliato
 
-1. **Test manuale su `/exec`** del deployment **`@10`**: **superato** dall’utente (issue **#5**, versione **1.8.2** in Impostazioni).
-2. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. roadmap V1.8B / micro-step documentati).
+1. **Test manuale su `/exec`** del deployment **`@12`**: versione **1.8.3** in Impostazioni; tab **Mesi** e issue **#5** OK.
+2. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. ulteriori micro-step V1.8B / roadmap).

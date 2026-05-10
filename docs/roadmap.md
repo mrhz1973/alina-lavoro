@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.2** — micro-release **2026-05-05** su **`main`**; **in produzione** dal deploy Windows **2026-05-10** (issue **#5** arrotondamento Inizio/Fine a 5 min — **test manuale utente su `/exec` OK**); `package.json` / `APP_VERSION` **1.8.2**; tag **`v1.8.2-stable`**; snapshot **`gas-current/`** (V1.8.2, solo lettura); Apps Script deployment clasp **`@10`** (ID e dettagli in `docs/PROJECT_STATE.md` / `docs/CHECKPOINT.md`); deploy completato con **`npx.cmd clasp push`** (3 file) e **`npx.cmd clasp deploy`**; sessione `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Precedente **V1.8.1:** issue **#3**, tag **`v1.8.1-stable`**, deploy **`@9`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.3** — release **2026-05-10** su **`main`** (V1.8B: cache/firma **`renderMonths`** — commit **`fc9ac43`**); **in produzione** Apps Script **`@12`** (`package.json` / `APP_VERSION` **1.8.3**); tag **`v1.8.3-stable`**; snapshot **`gas-current/`**; deploy Windows (`npx.cmd clasp push` / `npx.cmd clasp deploy`); sessioni `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`, `docs/sessions/2026-05-10-v18b-months-rerender-cache.md`. **Precedente V1.8.2:** issue **#5**, tag **`v1.8.2-stable`**, deploy **`@10`**, test **`/exec` OK**. **Precedente V1.8.1:** issue **#3**, tag **`v1.8.1-stable`**, deploy **`@9`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -203,12 +203,13 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - **Stato:** implementata in `src/frontend/Index.html` su **`main`** (2026-05-05): alla pressione di **INIZIO LAVORO** / **FINE LAVORO**, se l’orario rilevato non è multiplo di 5 minuti, modale con **due pulsanti** che mostrano direttamente gli orari (floor/ceil a 5 min); se è già multiplo di 5, salvataggio **senza modale** (stesso flusso di prima).
 - Sessione: `docs/sessions/2026-05-05-issue-5-arrotondamento-orari.md`.
-- **Release Git V1.8.2:** tag **`v1.8.2-stable`**, snapshot `gas-current/` — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. **Produzione Apps Script:** deployment clasp **`@10`** (Windows: `npx.cmd clasp push` / `npx.cmd clasp deploy`); ID e URL **`/exec`** documentati in `docs/PROJECT_STATE.md`; **test manuale utente OK**. Produzione precedente documentata: V1.8.1 **`@9`**.
+- **Release Git V1.8.2:** tag **`v1.8.2-stable`**, snapshot `gas-current/` — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. **Produzione storica Apps Script:** clasp **`@10`** (Windows); **test manuale utente OK**. Produzione precedente documentata: V1.8.1 **`@9`**.
+- **V1.8.3 / V1.8B:** bump **1.8.3**, deploy clasp **`@12`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`; commit funzionale **`fc9ac43`** (firma/cache **`renderMonths`**); tag **`v1.8.3-stable`**. **Test `/exec` su `@12`:** da fare.
 
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Riduzione ulteriore di re-render se i dati non cambiano.
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (ora in produzione come **V1.8.3**).
 
 ## V2 — Rinviato
 
