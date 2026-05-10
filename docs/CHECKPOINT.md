@@ -2,6 +2,11 @@
 
 Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **da fare** (Dettaglio mese nuovo layout + **Stipendio** mese corrente / anni / smoke). **V1.9.1** su **`@23`:** **OK** (2026-05-10). **Xiaomi Redmi 9C NFC:** test **`@24`** consigliato. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
+## Prossimo passo — automazione (pilota)
+
+- Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
+- Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent.
+
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
 ## Regola prioritaria per nuove chat

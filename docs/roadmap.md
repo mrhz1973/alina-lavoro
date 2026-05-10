@@ -14,6 +14,10 @@ Stack:
 - Cursor come ambiente di sviluppo.
 - clasp per sincronizzazione con Google Apps Script (deploy/push quando previsto dal workflow).
 
+## Automation / Orchestrator Hub (trasversale, non applicativo)
+
+Iniziativa **documentale** per preparare il repo come **pilota** di orchestrazione esterna: **`docs/tasks/`** (code task queue + template), **`docs/automation/`** (visione piattaforma, permessi, runbook). Obiettivo futuro: **ChatGPT** → task su **GitHub** → **n8n** (VPS) → **Cursor CLI** → commit/push → session report → **aggio**. Non sostituisce il workflow manuale finché le fasi del runbook non sono implementate; **nessun effetto** sulle release app (es. **V1.9.2**) finché non compare un task operativo esplicito in `docs/tasks/queue/`. Dettaglio: `docs/sessions/2026-05-10-automation-task-framework.md`.
+
 ## Struttura repository
 
 - `gas-current/`

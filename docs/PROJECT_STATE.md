@@ -11,6 +11,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** (**Dettaglio mese** p
 - **Uso sul telefono (Alina):** per l’uso quotidiano va usato il link della **Web App** con suffisso **`/exec`** (deployment documentato sopra). Il link diretto al **Google Sheet** è solo **database / amministrazione** del foglio; **non** sostituisce l’interfaccia dell’app.
 - **Dispositivo target reale:** **Xiaomi Redmi 9C NFC** è il riferimento hardware principale per i test su cellulare; **V1.9.2** / **`@24`**: test manuale **`/exec`** — **da fare** (Dettaglio mese aggiornato + smoke). Eventuali ottimizzazioni future su **Mesi** / **Home** / **Note** restano **evolutive**, non urgenti.
 - **`gas-current/`:** snapshot allineato a **V1.9.2** (`Codice.js` ← `Code.gs`, `Index.html`, `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Automazione (preparazione pilota):** cartelle **`docs/tasks/`** (queue/done/failed, template) e **`docs/automation/`** per una futura catena ChatGPT → GitHub → n8n/VPS → Cursor CLI — **solo documentazione**; **nessun impatto** sulla produzione **V1.9.2** / deploy **`@24`**. Sessione: `docs/sessions/2026-05-10-automation-task-framework.md`.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica

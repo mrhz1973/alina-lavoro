@@ -47,6 +47,7 @@ Ordine consigliato di lettura:
 8. `docs/sessions/` solo se serve dettaglio storico.
 9. `README.md` e `package.json` solo se serve capire struttura/comandi.
 10. `src/backend/Code.gs` e `src/frontend/Index.html` solo se serve analisi tecnica del codice.
+11. `docs/tasks/README.md` e `docs/automation/README.md` — quando il blocco usa il **formato task file-based** per runner futuri (n8n/VPS/Cursor CLI); i template vivono in `docs/tasks/templates/`.
 
 Risposta attesa dopo `aggio`:
 
