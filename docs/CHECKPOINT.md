@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** ( **Mesi** raggruppati **per anno** ); `APP_VERSION` **1.8.7**; Apps Script **clasp `@18`** — ID `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`; tag **`v1.8.7-stable`**. Deploy Windows — **Git Bash** per sync/clasp se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v187-months-by-year-deploy.md`). **Rollback immediato:** **`v1.8.6-stable`** / **`@17`**. **Test manuale utente su `/exec` @18:** da fare. Workflow **main-only**; **`aggio:win`** per Windows (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** ( **Mesi** raggruppati **per anno** ); `APP_VERSION` **1.8.7**; Apps Script **clasp `@18`** — ID `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`; tag **`v1.8.7-stable`**. Deploy Windows — **Git Bash** per sync/clasp se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v187-months-by-year-deploy.md`). **Rollback immediato:** **`v1.8.6-stable`** / **`@17`**. **Test manuale utente su `/exec` @18: OK**. Workflow **main-only**; **`aggio:win`** per Windows (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -49,7 +49,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.7** è la versione stabile corrente su **`main`**; tag **`v1.8.7-stable`**; Apps Script **`@18`**; **Mesi** con intestazioni **per anno** + griglia mobile invariata; include V1.8.6 (navbar/griglia), V1.8.5–V1.8.4, V1.8B, issue **#5** e **#3**.
-- **Test manuale utente su `/exec` @18:** **da fare** — versione **1.8.7**; verificare raggruppamento anni, lingua, stipendio per mese, smoke Home/Note/Impostazioni.
+- **Test manuale utente su `/exec` @18: OK** — versione **1.8.7**; **Mesi per anno** ok; cambio **lingua** ok; tap **mese/stipendio** ok; **Home** / **Note** / **Impostazioni** ok.
 - **Rollback immediato precedente:** **`v1.8.6-stable`** / deploy **`@17`** — `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
@@ -137,5 +137,4 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su **`/exec`** del deployment **`@18`** (V1.8.7).
-2. Nuovi sviluppi: `git checkout main`, `git pull origin main`.
+1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.

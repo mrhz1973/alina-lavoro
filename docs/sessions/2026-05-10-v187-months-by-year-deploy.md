@@ -40,7 +40,6 @@ Allineato a **V1.8.7** post-deploy (frontend aggiornato; backend invariato).
 
 ## Test manuale
 
-**Da fare** su **`/exec`** del deployment **`@18`**:
+**Test manuale utente su `/exec` @18: OK.**
 
-- Pagina **Mesi**: intestazioni **anno** corrette; stessa griglia mobile (2 col / 1 col stretta); tap **Stipendio** per mese; cambio **lingua** aggiorna heading e card.
-- **Home**, **Note**, **Impostazioni** (versione **1.8.7**), **Inizio/Fine** (#5), navbar sempre usabile.
+Verificato dall’utente su deployment **`@18`**: pagina **Mesi** raggruppata **per anno** ok; **cambio lingua** ok; tap **mese** / **Stipendio** ok; **Home**, **Note**, **Impostazioni** ok; versione **1.8.7** in Impostazioni.

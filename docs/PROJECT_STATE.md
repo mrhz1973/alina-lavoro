@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** (pagina **Mesi** raggruppata **per anno**: intestazione anno + sezioni `list--months` invariate) su **`main`**; Apps Script deployment **`@18`**; tag **`v1.8.7-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd** (`mkdir -p`). **Rollback immediato:** **`@17`** / **`v1.8.6-stable`**. **Test manuale utente su `/exec` @18:** da fare. Sessione: `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** (pagina **Mesi** raggruppata **per anno**: intestazione anno + sezioni `list--months` invariate) su **`main`**; Apps Script deployment **`@18`**; tag **`v1.8.7-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd** (`mkdir -p`). **Rollback immediato:** **`@17`** / **`v1.8.6-stable`**. **Test manuale utente su `/exec` @18: OK** (Mesi per anno; cambio lingua; tap mese/stipendio; Home/Note/Impostazioni). Sessione: `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -80,5 +80,4 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.7** (pagina **Mesi** ragg
 
 ## Prossimo passo consigliato
 
-1. **Test manuale utente su `/exec`** del deployment **`@18`** (V1.8.7): Mesi per anno + smoke generale.
-2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
+1. Lavoro nuovo su **`main`** dopo `git pull origin main`.
