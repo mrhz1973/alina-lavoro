@@ -1,14 +1,14 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio **«Più tardi»** — commit **`beb277a`**) su **`main`**; Apps Script deployment **`@14`**; tag **`v1.8.4-stable`**. Deploy **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Deploy **`@13`** intermedio (fix incluso, UI **1.8.3**) superseded da **`@14`**. **Test manuale utente su `/exec` @14: OK** (versione **1.8.4** verificata; **«Più tardi»** OK; **«Inserisci»** OK; Home/Mesi OK; issue **#5** / Inizio-Fine OK). Sessione deploy: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.5** (CSS mobile righe **Mesi** più compatte) su **`main`**; Apps Script deployment **`@15`**; tag **`v1.8.5-stable`**. Deploy **Windows** (Git Bash consigliato se `npm run sync` fallisce su `cmd`: `mkdir -p` / `cp` — vedi `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`). **Rollback immediato:** **`@14`** / **`v1.8.4-stable`**. **Test manuale utente su `/exec` @15:** da fare. Sessione deploy: `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.4** (`package.json` **1.8.4**, `APP_VERSION` **1.8.4** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.8.5** (`package.json` **1.8.5**, `APP_VERSION` **1.8.5** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.4-stable`** (release corrente codice / snapshot); **`v1.8.3-stable`** (V1.8.3 / deploy **`@12`** rollback immediato precedente); **`v1.8.2-stable`** … **`v1.5-stable`** (storico).
-- **Apps Script (live):** deployment **clasp `@14`** (V1.8.4) — ID: `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`. Dettagli: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Rollback precedente documentato: **`@12`** (V1.8.3) — `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
-- **`gas-current/`:** snapshot allineato a **V1.8.4** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Tag Git stabili:** **`v1.8.5-stable`** (release corrente codice / snapshot); **`v1.8.4-stable`** (V1.8.4 / deploy **`@14`** rollback immediato precedente); **`v1.8.3-stable`** … **`v1.5-stable`** (storico).
+- **Apps Script (live):** deployment **clasp `@15`** (V1.8.5) — ID: `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`. Dettagli: `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Rollback precedente documentato: **`@14`** (V1.8.4) — `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **`gas-current/`:** snapshot allineato a **V1.8.5** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
@@ -18,6 +18,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipe
 - **V1.8.2:** issue **#5** (arrotondamento Inizio/Fine); tag **`v1.8.2-stable`**; deploy **`@10`** — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
 - **V1.8.3:** V1.8B — firma/cache `renderMonths()` (**`fc9ac43`**) + bump **1.8.3**; deploy **`@12`**; tag **`v1.8.3-stable`** — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
 - **V1.8.4:** fix **`dismissSalaryReminder`** (**`beb277a`**) + bump **1.8.4**; deploy **`@14`**; tag **`v1.8.4-stable`** — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
+- **V1.8.5:** CSS mobile righe Mesi più compatte; bump **1.8.5**; deploy **`@15`**; tag **`v1.8.5-stable`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 
 ## Stack
 
@@ -65,14 +66,16 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipe
 - **V1.8.1:** tag **`v1.8.1-stable`**; deploy **@9**; issue **#3**.
 - **V1.8.2:** tag **`v1.8.2-stable`**; issue **#5**; deploy clasp **`@10`**.
 - **V1.8.3:** tag **`v1.8.3-stable`**; V1.8B (re-render Mesi); deploy clasp **`@12`**.
-- **V1.8.4:** tag **`v1.8.4-stable`**; fix promemoria stipendio «Più tardi»; deploy clasp **`@14`** (ID sopra).
+- **V1.8.4:** tag **`v1.8.4-stable`**; fix promemoria stipendio «Più tardi»; deploy clasp **`@14`** (`AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`).
+- **V1.8.5:** tag **`v1.8.5-stable`**; righe Mesi compatte su mobile (CSS); deploy clasp **`@15`** (`AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`).
 
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
 - Android vecchio: monitorare su dispositivo reale quando disponibile.
-- Rollback: **`@12`** (V1.8.3) / tag **`v1.8.3-stable`** o gestione deployment in Apps Script.
+- Rollback: **`@14`** (V1.8.4) / tag **`v1.8.4-stable`** o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
-1. Lavoro nuovo su **`main`** dopo `git pull origin main` (roadmap / micro-step successivi).
+1. **Test manuale utente su `/exec`** del deployment **`@15`** (V1.8.5): Mesi su mobile, versione **1.8.5**, navbar OK.
+2. Lavoro nuovo su **`main`** dopo `git pull origin main`.

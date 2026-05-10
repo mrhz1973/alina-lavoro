@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio «Più tardi», commit **`beb277a`**); `APP_VERSION` **1.8.4**; Apps Script **clasp `@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; tag **`v1.8.4-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. **Test manuale utente su `/exec` @14: OK**. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.5** (CSS mobile righe **Mesi** più compatte); `APP_VERSION` **1.8.5**; Apps Script **clasp `@15`** — ID `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`; tag **`v1.8.5-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md` (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`v1.8.4-stable`** / **`@14`**. **Test manuale utente su `/exec` @15:** da fare. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -36,7 +36,8 @@ Stack:
 - Branch **`dev`:** **legacy/inattivo** (non usato per nuovi lavori; può restare sul remoto).
 - Tag rollback storico: `v1.5-stable`.
 - Tag stabile V1.6.2: `v1.6.2-stable`.
-- Tag stabile **V1.8.4:** **`v1.8.4-stable`** (release corrente su `main`).
+- Tag stabile **V1.8.5:** **`v1.8.5-stable`** (release corrente su `main`).
+- Tag stabile **V1.8.4:** **`v1.8.4-stable`** (rollback deploy **`@14`**).
 - Tag stabile **V1.8.3:** **`v1.8.3-stable`** (rollback deploy **`@12`**).
 - Tag stabile **V1.8.2:** **`v1.8.2-stable`** (rollback deploy **`@10`**).
 - Tag stabile **V1.8.1:** **`v1.8.1-stable`** (deploy storico **@9**).
@@ -45,9 +46,9 @@ Stack:
 
 ## Stato stabile corrente
 
-- **V1.8.4** è la versione stabile corrente su **`main`**; tag **`v1.8.4-stable`**; Apps Script **`@14`**; fix **`dismissSalaryReminder`** (promemoria stipendio «Più tardi»); issue **#5** e **#3** restano nel prodotto.
-- **Test manuale utente su `/exec` @14: OK** — versione **1.8.4**; **«Più tardi»** chiude il banner; **«Inserisci»** OK; Home/Mesi OK; issue **#5** / Inizio-Fine OK.
-- **Rollback immediato precedente:** **`v1.8.3-stable`** / deploy **`@12`** — `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`.
+- **V1.8.5** è la versione stabile corrente su **`main`**; tag **`v1.8.5-stable`**; Apps Script **`@15`**; CSS mobile **Mesi** più compatte; include ancora fix **`dismissSalaryReminder`** (V1.8.4), V1.8B (**`fc9ac43`**), issue **#5** e **#3**.
+- **Test manuale utente su `/exec` @15:** **da fare** — versione **1.8.5**; pagina **Mesi** su mobile (leggibilità, navbar fissa); smoke Home / Inizio-Fine.
+- **Rollback immediato precedente:** **`v1.8.4-stable`** / deploy **`@14`** — `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
@@ -60,9 +61,10 @@ Stack:
 - **V1.8.1:** deployment ufficiale clasp **`@9`** — ID e URL in `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
 - **V1.8.2:** deployment ufficiale clasp **`@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; esito in `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
 - **V1.8.3:** deployment ufficiale clasp **`@12`** — ID `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`; deploy **`@11`** intermedio — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
+- **V1.8.5:** deployment ufficiale clasp **`@15`** — ID `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q` — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 - **V1.8.4:** deployment ufficiale clasp **`@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; deploy **`@13`** intermedio — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
-- **Git `main`:** codice **V1.8.4**, tag **`v1.8.4-stable`**.
-- **`gas-current/`:** snapshot codice **V1.8.4**; non è area di sviluppo.
+- **Git `main`:** codice **V1.8.5**, tag **`v1.8.5-stable`**.
+- **`gas-current/`:** snapshot codice **V1.8.5**; non è area di sviluppo.
 
 ## Struttura importante
 
@@ -131,4 +133,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.
+1. **Test manuale** su **`/exec`** del deployment **`@15`** (V1.8.5): Mesi mobile, **1.8.5**, navbar.
+2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.

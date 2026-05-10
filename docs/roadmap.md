@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.4** — release **2026-05-10** su **`main`** (fix promemoria stipendio **«Più tardi»**, commit **`beb277a`**); **in produzione** Apps Script **`@14`** (`package.json` / `APP_VERSION` **1.8.4**); tag **`v1.8.4-stable`**; snapshot **`gas-current/`**; deploy Windows; sessione `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Include ancora V1.8B (**`fc9ac43`**) e issue **#5**. **Test manuale utente su `/exec` @14: OK.** **Precedente V1.8.3:** deploy **`@12`**, tag **`v1.8.3-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.5** — release **2026-05-10** su **`main`** (CSS mobile righe **Mesi** più compatte); **in produzione** Apps Script **`@15`** (`package.json` / `APP_VERSION` **1.8.5**); tag **`v1.8.5-stable`**; snapshot **`gas-current/`**; deploy Windows (Git Bash se `npm run sync` fallisce); sessione `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. Include ancora V1.8.4 (promemoria «Più tardi»), V1.8B (**`fc9ac43`**) e issue **#5**. **Test manuale utente su `/exec` @15:** da fare. **Precedente V1.8.4:** deploy **`@14`**, tag **`v1.8.4-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -210,10 +210,14 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 - **V1.8.4:** pulsante **«Più tardi»** chiude la notifica (`dismissSalaryReminder`) — commit **`beb277a`**; deploy **`@14`** — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`, `docs/sessions/2026-05-10-v183-fix-salary-reminder-later.md`. **Test manuale utente su `/exec` @14: OK.**
 
+### V1.8.5 — righe Mesi compatte (solo CSS mobile)
+
+- Righe/card **Mesi** più compatte in **`@media (max-width: 899px)`** (`.list-item--month`); bump **1.8.5**; deploy **`@15`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`. **Test manuale utente su `/exec` @15:** da fare.
+
 ### Evoluzioni possibili (V1.8B+)
 
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
-- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.4**).
+- Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.5**).
 
 ## V2 — Rinviato
 
