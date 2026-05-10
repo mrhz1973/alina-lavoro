@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più spazio sotto contenuto) su **`main`**; Apps Script deployment **`@17`**; tag **`v1.8.6-stable`**. Deploy **Windows** (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`@15`** / **`v1.8.5-stable`** (V1.8.5 con bug Mesi/navbar). **Test manuale utente su `/exec` @17:** da fare. Sessione: `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più spazio sotto contenuto) su **`main`**; Apps Script deployment **`@17`**; tag **`v1.8.6-stable`**. Deploy **Windows** (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`@15`** / **`v1.8.5-stable`**. **Test manuale utente su `/exec` @17: OK** (Mesi ok; resto come previsto). **Evoluzione futura desiderata (solo pianificata):** pagina **Mesi** divisa in **schede o sezioni per anno** — vedi `docs/roadmap.md`. Sessione: `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -73,11 +73,10 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile:
 
 ## Rischi aperti
 
-- Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
+- Mesi: possibili ottimizzazioni future (virtualizzazione); **miglioramento desiderato:** raggruppare i mesi **per anno** (schede/sezioni) — in roadmap, non in produzione.
 - Android vecchio: monitorare su dispositivo reale quando disponibile.
 - Rollback: **`@15`** (V1.8.5) / tag **`v1.8.5-stable`** o **`@14`** / **`v1.8.4-stable`** o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
-1. **Test manuale utente su `/exec`** del deployment **`@17`** (V1.8.6): Mesi griglia + navbar sempre visibile, versione **1.8.6**.
-2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
+1. Lavoro nuovo su **`main`** dopo `git pull origin main` (eventuale micro-step **Mesi per anno** quando autorizzato; vedi `docs/roadmap.md`).

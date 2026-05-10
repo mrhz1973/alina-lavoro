@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile griglia + **navbar**); `APP_VERSION` **1.8.6**; Apps Script **clasp `@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`; tag **`v1.8.6-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md` (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`v1.8.5-stable`** / **`@15`**. **Test manuale utente su `/exec` @17:** da fare. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile griglia + **navbar**); `APP_VERSION` **1.8.6**; Apps Script **clasp `@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`; tag **`v1.8.6-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md` (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`v1.8.5-stable`** / **`@15`**. **Test manuale utente su `/exec` @17: OK**. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -48,7 +48,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.6** è la versione stabile corrente su **`main`**; tag **`v1.8.6-stable`**; Apps Script **`@17`**; fix **Mesi** mobile (griglia + navbar/stacking); include ancora V1.8.5 (compattezza righe), V1.8.4 (**`dismissSalaryReminder`**), V1.8B (**`fc9ac43`**), issue **#5** e **#3**.
-- **Test manuale utente su `/exec` @17:** **da fare** — versione **1.8.6**; **Mesi** a 2 colonne su mobile (fallback 1 colonna stretto); **navbar** sempre visibile/cliccabile sulla tab Mesi; smoke Home / Inizio-Fine.
+- **Test manuale utente su `/exec` @17: OK** — versione **1.8.6**; **Mesi** ok; resto dell’app come previsto; evoluzione futura desiderata: **Mesi per anno** (vedi `docs/roadmap.md`).
 - **Rollback immediato precedente:** **`v1.8.5-stable`** / deploy **`@15`** — `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
@@ -130,10 +130,9 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Rischi aperti
 
-- Pagina Mesi: dopo V1.8A restano possibili ottimizzazioni future (virtualizzazione, meno re-render), ma non sono bloccanti se il test manuale resta OK.
+- Pagina Mesi: ottimizzazioni future (virtualizzazione); **idea utente:** raggruppare **per anno** (schede/sezioni) — in roadmap.
 - Verificare il comportamento reale su Android vecchio quando disponibile, se non gia incluso nel test manuale.
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su **`/exec`** del deployment **`@17`** (V1.8.6): Mesi griglia + navbar.
-2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.
+1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`; eventuale **Mesi per anno** come micro-step pianificato (`docs/roadmap.md`).

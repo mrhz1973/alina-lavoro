@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.6** — release **2026-05-10** su **`main`** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più padding contenuto); **in produzione** Apps Script **`@17`** (`package.json` / `APP_VERSION` **1.8.6**); tag **`v1.8.6-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Corregge regressione **V1.8.5** (Mesi una colonna + navbar coperta). **Test manuale utente su `/exec` @17:** da fare. **Precedente V1.8.5:** deploy **`@15`**, tag **`v1.8.5-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.6** — release **2026-05-10** su **`main`** (fix **Mesi** mobile: griglia 2 colonne + **navbar** sempre sopra / più padding contenuto); **in produzione** Apps Script **`@17`** (`package.json` / `APP_VERSION` **1.8.6**); tag **`v1.8.6-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Corregge regressione **V1.8.5**. **Test manuale utente su `/exec` @17: OK.** **Miglioramento futuro richiesto:** **Mesi raggruppati per anno** (schede/sezioni) — vedi **Evoluzioni possibili**. **Precedente V1.8.5:** deploy **`@15`**, tag **`v1.8.5-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -216,10 +216,11 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ### V1.8.6 — fix griglia Mesi + navbar mobile
 
-- Griglia **2 colonne** per `.list--months` su mobile (fallback **1 colonna** sotto ~360px); più **`padding-bottom`** su `.app`, **`z-index`** navbar e toast; classe **`list--months`** in JS — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Deploy **`@17`** (secondo push: **`modal-backdrop`** sopra navbar). **Test manuale utente su `/exec` @17:** da fare.
+- Griglia **2 colonne** per `.list--months` su mobile (fallback **1 colonna** sotto ~360px); più **`padding-bottom`** su `.app`, **`z-index`** navbar e toast; classe **`list--months`** in JS — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`. Deploy **`@17`** (secondo push: **`modal-backdrop`** sopra navbar). **Test manuale utente su `/exec` @17: OK.**
 
 ### Evoluzioni possibili (V1.8B+)
 
+- Raggruppare la pagina **Mesi** per **anno** (schede collassabili, sezioni con intestazione anno, o affini): richiesta utente post-V1.8.6; **non** è la vista calendario V2; valutare micro-step senza librerie e senza cambiare logica Sheet.
 - Virtualizzazione o “finestra” di mesi visibili + espansione progressiva.
 - Ulteriore riduzione re-render oltre alla prima slice V1.8B (in produzione da **V1.8.3**, release corrente **V1.8.6**).
 

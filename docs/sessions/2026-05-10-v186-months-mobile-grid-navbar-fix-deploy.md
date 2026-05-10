@@ -46,8 +46,8 @@ Allineato a **V1.8.6** post-deploy.
 
 ## Test manuale
 
-**Da fare** su **`/exec`** del deployment **`@17`**:
+**Test manuale utente su `/exec` @17: OK.**
 
-- **Mesi** su mobile: **due colonne** quando larghezza > 360px; **una colonna** su schermo molto stretto; nessun overflow orizzontale; leggibilità OK.
-- **Navbar** sempre **visibile e cliccabile** sulla tab Mesi **senza** dover scrollare in fondo; contenuto non finisce sotto la barra.
-- Impostazioni: **1.8.6**; smoke Home / Note / **Inizio-Fine** (#5).
+Verificato dall’utente su deployment **`@17`**: pagina **Mesi** ok (layout/navbar); resto dell’app come previsto (**Home**, **Note**, **Impostazioni**, **Inizio/Fine** / issue **#5**, ecc.). Versione **1.8.6** in Impostazioni.
+
+**Evoluzione futura desiderata (non implementata):** suddividere la pagina **Mesi** in **schede o sezioni per anno** per navigare meglio quando i mesi sono molti — tracciata in `docs/roadmap.md` (V1.8B+ / fuori calendario V2).
