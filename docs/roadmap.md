@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.9.1** — release **2026-05-10** su **`main`** (lista **Mesi**: **«Stipendio»** nascosto sul **mese corrente** / futuri; **«Dettaglio»** sempre visibile; firma **`buildMonthsViewSig_`** con **`currentMonth()`**); **in produzione** Apps Script **`@23`** (`package.json` / `APP_VERSION` **1.9.1**); tag **`v1.9.1-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. **Test manuale utente su `/exec` @23:** **da fare**. Include **V1.9.0** (Dettaglio mese MVP, deploy **`@22`**, test **OK**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
+**V1.9.1** — release **2026-05-10** su **`main`** (lista **Mesi**: **«Stipendio»** nascosto sul **mese corrente** / futuri; **«Dettaglio»** sempre visibile; firma **`buildMonthsViewSig_`** con **`currentMonth()`**); **in produzione** Apps Script **`@23`** (`package.json` / `APP_VERSION` **1.9.1**); tag **`v1.9.1-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. **Test manuale utente su `/exec` @23:** **OK** (2026-05-10): **1.9.1**; **Stipendio** assente sul mese corrente, presente sui precedenti; **Dettaglio** su tutti i mesi; Dettaglio mese + Indietro; toggle anni; smoke Home–Note–Impostazioni. Include **V1.9.0** (Dettaglio mese MVP, deploy **`@22`**, test **OK**). **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Limitazione nota:** il banner Google «Questa applicazione è stata creata da un utente di Google Apps Script» è **esterno** all’app (piattaforma GAS), non bug UI — chiudibile con X ma può riapparire; vedi sessione. **Nota roadmap:** ottimizzazioni future Mesi/Home/Note restano evolutive. **Precedente V1.8.10:** deploy **`@21`**, tag **`v1.8.10-stable`**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.10-stable`**, **`v1.8.9-stable`**, **`v1.8.8-stable`**, … **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -257,7 +257,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ## V1.9.1 — Stipendio nascosto sul mese corrente (**Mesi**)
 
-**Stato:** **implementato** (**2026-05-10**); deploy **`@23`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati.
+**Stato:** **implementato** (**2026-05-10**); deploy **`@23`**; sessione `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`. Solo **`src/frontend/Index.html`**; backend e Sheet invariati. **Test manuale `/exec` @23:** **OK** (2026-05-10).
 
 **Consegnato:**
 

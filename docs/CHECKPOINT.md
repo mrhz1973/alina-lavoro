@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.1** ( **Mesi**: **«Stipendio»** nascosto sul **mese corrente**; **«Dettaglio»** sempre ); `APP_VERSION` **1.9.1**; Apps Script **clasp `@23`** — ID `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`; tag **`v1.9.1-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`). **Rollback immediato:** **`v1.9.0-stable`** / **`@22`**. **Test manuale utente su `/exec` @23:** **da fare**. **Xiaomi Redmi 9C NFC:** da includere nel test **`/exec` @23** quando possibile. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.1** ( **Mesi**: **«Stipendio»** nascosto sul **mese corrente**; **«Dettaglio»** sempre ); `APP_VERSION` **1.9.1**; Apps Script **clasp `@23`** — ID `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`; tag **`v1.9.1-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`). **Rollback immediato:** **`v1.9.0-stable`** / **`@22`**. **Test manuale utente su `/exec` @23:** **OK** (2026-05-10): **1.9.1**; **Stipendio** assente sul mese corrente, presente sui precedenti; **Dettaglio** su tutti i mesi; Dettaglio mese + Indietro; toggle anni; smoke Home–Note–Impostazioni. **Xiaomi Redmi 9C NFC:** **OK** nel test della release. Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -37,7 +37,7 @@ Stack:
 ## Dispositivo target (test reale)
 
 - **Xiaomi Redmi 9C NFC** è il **telefono di riferimento** per validazione su Android/WebView in fascia low-end.
-- **V1.9.1** / **`@23`**: test manuale utente — **da fare** (regola Stipendio mese corrente; bookmark **`/exec`** aggiornato).
+- **V1.9.1** / **`@23`**: test manuale utente — **OK** (bookmark **`/exec`** aggiornato).
 - Ottimizzazioni future su **Mesi** / **Home** / **Note** (performance, DOM, CSS): **evolutive**, non urgenti rispetto allo stato attuale.
 
 ## Repository
@@ -63,7 +63,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.9.1** è la versione stabile corrente su **`main`**; tag **`v1.9.1-stable`**; Apps Script **`@23`**; **Stipendio** nascosto sul **mese corrente** in lista **Mesi** (`isSalaryMonthEditable_`); **Dettaglio** sempre su tutte le card; include **V1.9.0** e precedenti.
-- **Test manuale utente su `/exec` @23:** **da fare** — assenza **Stipendio** sul mese corrente; presenza sui mesi precedenti; **Dettaglio** ovunque; anni Mesi; lingue; smoke Home–Note–Impostazioni. **Evoluzione futura:** Dettaglio mese più grafico (`docs/roadmap.md`).
+- **Test manuale utente su `/exec` @23:** **OK** (2026-05-10) — versione **1.9.1**; **Stipendio** solo su mesi precedenti al corrente; **Dettaglio** ovunque; Dettaglio mese + Indietro; anni Mesi; smoke Home–Note–Impostazioni. **Evoluzione futura:** Dettaglio mese più grafico (`docs/roadmap.md`).
 - **Rollback immediato precedente:** **`v1.9.0-stable`** / deploy **`@22`** — `AKfycbyisd4Dd_8XxBU6-ZcjF6qm6K_d4x4YsIRSXCZyeBm4nNjZgfg_X34rdh_KUJ9nV2ULRA`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
@@ -152,9 +152,9 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Rischi aperti
 
-- Nessun rischio bloccante noto post-deploy **V1.9.1** / **`@23`**. Test manuale **`/exec` @23** da completare. Evoluzione **Dettaglio mese** più grafico — backlog (`docs/roadmap.md`).
+- Nessun rischio bloccante post-test **V1.9.1** / **`@23`**. Evoluzione **Dettaglio mese** più grafico — backlog (`docs/roadmap.md`).
 
 ## Prossimo passo raccomandato
 
 1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
-2. **Test manuale utente:** **`/exec` @23** — regola **Stipendio** / mese corrente; **Dettaglio**; **Redmi 9C NFC** se disponibile.
+2. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.

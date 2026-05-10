@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.9.1** (deploy **`@23`**) in fondo al file.
+Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.9.1** (deploy **`@23`**, test **`/exec` OK**) in fondo al file.
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -204,6 +204,6 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
 - Produzione Git/Apps Script: **V1.9.1** su **`main`**; tag stabile **`v1.9.1-stable`**; deploy clasp **`@23`** (ID `AKfycbxvuOGtltO32umfM4XgfL1nWTbmzWZ7mnl4f6tsFkkT5yj0qF6OXdBY9tHTDXpUj3WsRg`; deploy Windows: **Git Bash** + `npx clasp` se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v191-hide-current-month-salary-button-deploy.md`); **Stipendio** nascosto sul **mese corrente** in lista **Mesi**; **Dettaglio** sempre; eredità **V1.9.0** (**Dettaglio mese** **`monthDetail`**), V1.8.10 (snooze promemoria stipendio), V1.8.9 (toggle anni **Mesi**), issue **#5**, V1.8B.
-- Issue **#5** **in produzione**; **test manuale utente su `/exec` @23:** **da fare** (regola Stipendio / mese corrente; Dettaglio mese; anni Mesi; lingue). **V1.9.0** su **`/exec` @22:** **OK** (2026-05-10). **Xiaomi Redmi 9C NFC:** includere nel test **`@23`** quando possibile. **Evoluzione UX residua:** Dettaglio mese più **grafico** — **`docs/roadmap.md`**. Banner GAS: **limitazione piattaforma** — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
+- Issue **#5** **in produzione**; **test manuale utente su `/exec` @23:** **OK** (2026-05-10 — **1.9.1**: regola **Stipendio** / mese corrente; **Dettaglio** ovunque; Dettaglio mese; anni Mesi; smoke). **V1.9.0** su **`/exec` @22:** **OK** (2026-05-10). **Xiaomi Redmi 9C NFC** (dispositivo target): **OK** su **`@23`**. **Evoluzione UX residua:** Dettaglio mese più **grafico** — **`docs/roadmap.md`**. Banner GAS: **limitazione piattaforma** — `docs/sessions/2026-05-10-v190-month-detail-mvp-deploy.md`.
 - Tag utili per rollback: **`v1.9.0-stable`** (deploy **`@22`**), **`v1.8.10-stable`** (deploy **`@21`**), **`v1.8.9-stable`** (deploy **`@20`**), **`v1.8.8-stable`** (deploy **`@19`** — bug toggle anni), **`v1.8.7-stable`** (deploy **`@18`**), **`v1.8.6-stable`** (deploy **`@17`**), **`v1.8.5-stable`** (deploy **`@15`**), **`v1.8.4-stable`** (deploy **`@14`**), **`v1.8.3-stable`** (deploy **`@12`**), **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
 - Branch **`dev`:** **legacy/inattivo**, non operativo.

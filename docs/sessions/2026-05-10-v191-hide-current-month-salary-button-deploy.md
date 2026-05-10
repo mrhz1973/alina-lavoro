@@ -30,7 +30,14 @@
 
 ## Test manuale
 
-- **Gate:** verifica su **`/exec`** deployment **`@23`** — mese corrente senza **Stipendio**, mesi precedenti con **Stipendio**, **Dettaglio** ovunque, toggle anni, lingue, Home/Note/Impostazioni (incluso **Redmi 9C NFC** se disponibile).
+- **Esito (2026-05-10):** **OK** su **`/exec`** deployment **`@23`** (Web App). **Versione UI:** **1.9.1**.
+- **Verifiche confermate:**
+  - Sul **mese corrente** in **Mesi** il pulsante **«Stipendio»** **non** compare; sui **mesi precedenti** compare.
+  - **«Dettaglio»** compare su **tutti** i mesi.
+  - **Dettaglio mese** si apre e **Indietro** funziona.
+  - **Toggle anni** OK.
+  - Smoke **Home** / **Note** / **Impostazioni** OK.
+- **Dispositivo:** **Xiaomi Redmi 9C NFC** incluso nel test — **OK**.
 
 ## Controlli eseguiti (implementazione)
 
