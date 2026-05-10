@@ -1,14 +1,14 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.8** (pagina **Mesi**: anni **collassabili** con disclosure custom — bottone + `hidden`; anno più recente aperto di default) su **`main`**; Apps Script deployment **`@19`**; tag **`v1.8.8-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@18`** / **`v1.8.7-stable`**. **Test manuale utente su `/exec` @19:** da fare. Sessione: `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.9** (pagina **Mesi**: fix toggle anni — classe **`.months-year-panel--collapsed`** + **`toggleMonthsYear_`**; anno più recente aperto di default) su **`main`**; Apps Script deployment **`@20`**; tag **`v1.8.9-stable`**. Deploy **Windows** con **Git Bash** per `sync` + `clasp` se `npm run deploy` fallisce su **cmd**. **Rollback immediato:** **`@19`** / **`v1.8.8-stable`** (bug toggle V1.8.8) oppure **`@18`** / **`v1.8.7-stable`**. **Test manuale utente su `/exec` @20:** da fare. Sessione: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
-- **Branch operativo unico `main`:** release codice **V1.8.8** (`package.json` **1.8.8**, `APP_VERSION` **1.8.8** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
+- **Branch operativo unico `main`:** release codice **V1.8.9** (`package.json` **1.8.9**, `APP_VERSION` **1.8.9** in Impostazioni). Tutti i nuovi sviluppi partono da qui.
 - **Branch `dev`:** **legacy/inattivo** (non usato per lavoro corrente; può restare sul remoto e restare allineato a `main` senza ruolo operativo).
-- **Tag Git stabili:** **`v1.8.8-stable`** (release corrente codice / snapshot); **`v1.8.7-stable`** (V1.8.7 / deploy **`@18`** rollback immediato precedente); **`v1.8.6-stable`** … **`v1.5-stable`** (storico).
-- **Apps Script (live):** deployment **clasp `@19`** (V1.8.8) — ID: `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`. Dettagli: `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`. Rollback precedente documentato: **`@18`** (V1.8.7) — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
-- **`gas-current/`:** snapshot allineato a **V1.8.8** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
+- **Tag Git stabili:** **`v1.8.9-stable`** (release corrente codice / snapshot); **`v1.8.8-stable`** (V1.8.8 / deploy **`@19`** — toggle anni non affidabile su alcuni client); **`v1.8.7-stable`** (V1.8.7 / deploy **`@18`**); **`v1.8.6-stable`** … **`v1.5-stable`** (storico).
+- **Apps Script (live):** deployment **clasp `@20`** (V1.8.9) — ID: `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`. Dettagli: `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`. Rollback precedente documentato: **`@19`** (V1.8.8) — `AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`; **`@18`** (V1.8.7) — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`. URL Web App **`/exec`**: allineare al deployment corrente in Apps Script.
+- **`gas-current/`:** snapshot allineato a **V1.8.9** (`src` + `appsscript.json`); solo lettura / tracciamento, non sorgente primaria.
 - `docs/ORCHESTRATOR_RULES.md`, `docs/STREAMLINED_WORKFLOW.md`: workflow orchestratore/implementatore e workflow snello.
 
 ### Cronologia sintetica
@@ -21,6 +21,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.8** (pagina **Mesi**: ann
 - **V1.8.5:** CSS mobile righe Mesi più compatte; bump **1.8.5**; deploy **`@15`**; tag **`v1.8.5-stable`** — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 - **V1.8.7:** Mesi per anno (heading + sezioni); bump **1.8.7**; deploy **`@18`**; tag **`v1.8.7-stable`** — `docs/sessions/2026-05-10-v187-months-by-year-deploy.md`.
 - **V1.8.8:** anni Mesi collassabili (disclosure custom); bump **1.8.8**; deploy **`@19`**; tag **`v1.8.8-stable`** — `docs/sessions/2026-05-10-v188-months-year-collapse-deploy.md`.
+- **V1.8.9:** fix toggle anni Mesi (classe collapsed + `toggleMonthsYear_`); bump **1.8.9**; deploy **`@20`**; tag **`v1.8.9-stable`** — `docs/sessions/2026-05-10-v189-fix-months-year-toggle-deploy.md`.
 
 ## Stack
 
@@ -72,15 +73,16 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.8** (pagina **Mesi**: ann
 - **V1.8.5:** tag **`v1.8.5-stable`**; righe Mesi compatte su mobile (CSS); deploy clasp **`@15`** (`AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`).
 - **V1.8.6:** tag **`v1.8.6-stable`**; fix Mesi mobile (griglia + navbar); deploy clasp **`@17`** (`AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`).
 - **V1.8.7:** tag **`v1.8.7-stable`**; Mesi per anno; deploy clasp **`@18`** (`AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`).
-- **V1.8.8:** tag **`v1.8.8-stable`**; anni collassabili; deploy clasp **`@19`** (`AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`).
+- **V1.8.9:** tag **`v1.8.9-stable`**; fix toggle anni Mesi; deploy clasp **`@20`** (`AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`).
+- **V1.8.8:** tag **`v1.8.8-stable`**; anni collassabili (bug toggle su alcuni client); deploy clasp **`@19`** (`AKfycbyzsTI8uaRJDGyiNrmm6jQRGjNyI80kE_Z4W7qwBLcbwKt6wp-coqsmlcG-cXUAJYtKlg`).
 
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione).
 - Android vecchio: monitorare su dispositivo reale quando disponibile.
-- Rollback: **`@18`** (V1.8.7) / tag **`v1.8.7-stable`** o **`@17`** / **`v1.8.6-stable`** o gestione deployment in Apps Script.
+- Rollback: **`@19`** (V1.8.8) / tag **`v1.8.8-stable`**, **`@18`** (V1.8.7) / tag **`v1.8.7-stable`**, **`@17`** / **`v1.8.6-stable`**, o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
-1. **Test manuale utente su `/exec`** del deployment **`@19`** (V1.8.8): anni collassabili + smoke generale.
+1. **Test manuale utente su `/exec`** del deployment **`@20`** (V1.8.9): toggle anni Mesi + smoke generale.
 2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
