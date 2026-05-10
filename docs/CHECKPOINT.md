@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** (issue **#5** in produzione; `APP_VERSION` **1.8.2**); Apps Script **clasp `@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; tag **`v1.8.2-stable`**. Deploy Windows: `npx.cmd clasp push` / `npx.cmd clasp deploy` riusciti — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** (issue **#5** in produzione; **test `/exec` utente OK**); `APP_VERSION` **1.8.2**; Apps Script **clasp `@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; tag **`v1.8.2-stable`**. Deploy Windows: `npx.cmd clasp push` / `npx.cmd clasp deploy` riusciti — `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -43,7 +43,7 @@ Stack:
 
 ## Stato stabile corrente
 
-- **V1.8.2** è la versione stabile corrente su **`main`**; tag Git **`v1.8.2-stable`**; issue **#5** (arrotondamento orari) in produzione su Apps Script **`@10`**; issue **#3** resta parte del prodotto (versione in Impostazioni).
+- **V1.8.2** è la versione stabile corrente su **`main`**; tag Git **`v1.8.2-stable`**; issue **#5** (arrotondamento orari) in produzione su Apps Script **`@10`**; **test manuale utente su `/exec` OK**; issue **#3** resta parte del prodotto (versione in Impostazioni).
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
@@ -125,5 +125,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su URL **`/exec`** del deployment **`@10`** (V1.8.2): issue **#5** + versione **1.8.2** in Impostazioni.
+1. **Test manuale** su **`/exec`** (deployment **`@10`**, V1.8.2): **superato** dall’utente (issue **#5**, versione **1.8.2**).
 2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B o micro-step su **`main`**.

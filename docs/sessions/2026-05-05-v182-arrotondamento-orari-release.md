@@ -4,11 +4,11 @@
 
 **Aggiornamento deploy produzione:** 2026-05-10 — eseguito su **Windows**: `npx.cmd clasp push` e `npx.cmd clasp deploy` riusciti; revisione **`@10`**; deployment ID registrato sotto.
 
+**Aggiornamento post-test:** test manuale utente su **`/exec`** (deployment **`@10`**) **OK** — allineamento `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, questa sessione.
+
 ## Obiettivo release
 
 Portare in produzione (codice Git + snapshot) la **issue #5**: modale con **due orari** a multipli di 5 minuti per **INIZIO** / **FINE**, salvataggio diretto se l’orario è già multiplo di 5.
-
-## Issue #5 rilasciata (codice)
 
 - Logica in `src/frontend/Index.html` (commit precedente `f2d4929` + bump versione in questo blocco).
 - Issue **#5** risulta chiusa su GitHub come *completed* (lato utente).
@@ -46,13 +46,13 @@ Copy-Item -Force appsscript.json .gas\appsscript.json
 |--|--|
 | **Revisione clasp** | **`@10`** |
 | **Deployment ID** | `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q` |
-| **URL `/exec`** | Aprire dalla console Apps Script o dall’output `clasp deploy` per il deployment corrente (test manuale richiesto). |
+| **URL `/exec`** | Web App corrente (deployment **`@10`**); **test manuale utente:** OK (issue **#5**, versione **1.8.2**). |
 
 Documentazione repo aggiornata: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, questa sessione (commit documentazione post-deploy).
 
 ## Prossimo passo operativo
 
-**Test manuale su `/exec`** del deployment **`@10`**: issue **#5**, versione **1.8.2** in Impostazioni, flussi Home / Mesi / Note.
+Test **`/exec`** superato. **Prossimo:** nuovi sviluppi su **`main`** (es. roadmap V1.8B / micro-step), dopo `git pull origin main`.
 
 ## Tag stabile creato
 
@@ -85,13 +85,15 @@ Documentazione repo aggiornata: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, q
 ## Rischi residui
 
 - Verifica che gli utenti / segnalibri puntino al deployment **`@10`** (o all’URL **/exec** aggiornato da Apps Script) e non a un deployment precedente (**@9**).
-- Confermare in **Impostazioni** che la versione mostri **1.8.2** dopo il test su **`/exec`**.
+- **Test utente:** versione **1.8.2** e issue **#5** verificate OK su **`/exec`**.
 
-## Test manuale richiesto su `/exec`
+## Test manuale su `/exec` (esito)
 
-Deployment **`@10`** attivo; **prossimo passo:** test manuale.
+Deployment **`@10`** attivo; **esito:** test manuale utente **OK**.
 
-1. Aprire la Web App **/exec** del deployment **`@10`**.
+Checklist di verifica (superata):
+
+1. Web App **/exec** del deployment **`@10`**.
 2. **INIZIO** con orario non multiplo di 5: modale con **due pulsanti** solo `HH:MM`, titolo «Scegli orario…», riga rilevato.
 3. **FINE** stesso comportamento.
 4. Orario già multiplo di 5: nessuna modale, salvataggio immediato.

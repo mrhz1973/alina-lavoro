@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue **#5** in produzione); Apps Script **clasp revision `@10`**; tag stabile **`v1.8.2-stable`**. Deploy eseguito manualmente su **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Sessione: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue **#5** in produzione); Apps Script **clasp revision `@10`**; tag stabile **`v1.8.2-stable`**. Deploy eseguito manualmente su **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). **Test manuale utente su `/exec`:** OK. Sessione: `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -71,5 +71,5 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.2** su **`main`** (issue 
 
 ## Prossimo passo consigliato
 
-1. **Test manuale su `/exec`** del deployment **`@10`**: issue **#5** + versione **1.8.2** in Impostazioni.
-2. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. roadmap V1.8B).
+1. **Test manuale su `/exec`** del deployment **`@10`**: **superato** dall’utente (issue **#5**, versione **1.8.2** in Impostazioni).
+2. Lavoro nuovo su **`main`** dopo `git pull origin main` (es. roadmap V1.8B / micro-step documentati).
