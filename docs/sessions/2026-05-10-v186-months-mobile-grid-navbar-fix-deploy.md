@@ -12,7 +12,7 @@
 - **CSS mobile (`max-width: 899px`):**
   - Variabile **`--nav-stack-h`** + **`padding-bottom`** aumentato su **`.app`**: `calc(var(--nav-stack-h) + 36px + env(safe-area-inset-bottom))` per liberare spazio sotto il contenuto.
   - **`.nav`**: `z-index: 9999`, `pointer-events: auto`; toast mobile `z-index: 10001` così resta sopra la barra.
-  - **`#content`**: `padding-bottom: 12px` aggiuntivo.
+  - **`modal-backdrop`** su mobile: `z-index: 10050` così modali restano **sopra** la navbar (dopo deploy **`@16`** la modale restava sotto).
 - **Griglia Mesi (solo dove serve):**
   - Lista mesi con classi **`list list--months`** (JS); su mobile **`grid-template-columns: repeat(2, minmax(0, 1fr))`**, `min-width: 0` sulle card per evitare overflow.
   - **`@media (max-width: 360px)`**: una colonna (schermi stretti).
@@ -29,7 +29,8 @@ Stesso approccio della V1.8.5: **Git Bash** per `mkdir -p` / `cp` + `npx clasp p
 
 | Step | Note |
 |------|------|
-| Push + deploy **`@16`** | ID `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg` — **produzione documentata** (`APP_VERSION` **1.8.6**) |
+| Push + deploy **`@16`** | ID `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg` — superseded (modale sotto navbar su mobile) |
+| Push + deploy **`@17`** | ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ` — **produzione documentata** (`APP_VERSION` **1.8.6**); fix **`modal-backdrop`** `z-index` sopra la navbar |
 
 ## Rollback immediato precedente
 
@@ -45,7 +46,7 @@ Allineato a **V1.8.6** post-deploy.
 
 ## Test manuale
 
-**Da fare** su **`/exec`** del deployment **`@16`**:
+**Da fare** su **`/exec`** del deployment **`@17`**:
 
 - **Mesi** su mobile: **due colonne** quando larghezza > 360px; **una colonna** su schermo molto stretto; nessun overflow orizzontale; leggibilità OK.
 - **Navbar** sempre **visibile e cliccabile** sulla tab Mesi **senza** dover scrollare in fondo; contenuto non finisce sotto la barra.

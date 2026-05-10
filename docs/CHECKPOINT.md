@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile griglia + **navbar**); `APP_VERSION` **1.8.6**; Apps Script **clasp `@16`** — ID `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg`; tag **`v1.8.6-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md` (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`v1.8.5-stable`** / **`@15`**. **Test manuale utente su `/exec` @16:** da fare. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.6** (fix **Mesi** mobile griglia + **navbar**); `APP_VERSION` **1.8.6**; Apps Script **clasp `@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`; tag **`v1.8.6-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md` (Git Bash se `npm run sync` fallisce su `cmd`). **Rollback immediato:** **`v1.8.5-stable`** / **`@15`**. **Test manuale utente su `/exec` @17:** da fare. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -47,8 +47,8 @@ Stack:
 
 ## Stato stabile corrente
 
-- **V1.8.6** è la versione stabile corrente su **`main`**; tag **`v1.8.6-stable`**; Apps Script **`@16`**; fix **Mesi** mobile (griglia + navbar/stacking); include ancora V1.8.5 (compattezza righe), V1.8.4 (**`dismissSalaryReminder`**), V1.8B (**`fc9ac43`**), issue **#5** e **#3**.
-- **Test manuale utente su `/exec` @16:** **da fare** — versione **1.8.6**; **Mesi** a 2 colonne su mobile (fallback 1 colonna stretto); **navbar** sempre visibile/cliccabile sulla tab Mesi; smoke Home / Inizio-Fine.
+- **V1.8.6** è la versione stabile corrente su **`main`**; tag **`v1.8.6-stable`**; Apps Script **`@17`**; fix **Mesi** mobile (griglia + navbar/stacking); include ancora V1.8.5 (compattezza righe), V1.8.4 (**`dismissSalaryReminder`**), V1.8B (**`fc9ac43`**), issue **#5** e **#3**.
+- **Test manuale utente su `/exec` @17:** **da fare** — versione **1.8.6**; **Mesi** a 2 colonne su mobile (fallback 1 colonna stretto); **navbar** sempre visibile/cliccabile sulla tab Mesi; smoke Home / Inizio-Fine.
 - **Rollback immediato precedente:** **`v1.8.5-stable`** / deploy **`@15`** — `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
@@ -62,7 +62,7 @@ Stack:
 - **V1.8.1:** deployment ufficiale clasp **`@9`** — ID e URL in `docs/sessions/2026-05-03-v181-versione-ui-release.md`.
 - **V1.8.2:** deployment ufficiale clasp **`@10`** — ID `AKfycbz3TwCw8XjyUY4dfydoxDf-fztIDiq0EEPi84HBiahangwj318Sw5XULSARXSVwF38I_Q`; esito in `docs/sessions/2026-05-05-v182-arrotondamento-orari-release.md`.
 - **V1.8.3:** deployment ufficiale clasp **`@12`** — ID `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`; deploy **`@11`** intermedio — `docs/sessions/2026-05-10-v183-v18b-months-rerender-deploy.md`.
-- **V1.8.6:** deployment ufficiale clasp **`@16`** — ID `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg` — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`.
+- **V1.8.6:** deployment ufficiale clasp **`@17`** — ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ` — `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`.
 - **V1.8.5:** deployment ufficiale clasp **`@15`** — ID `AKfycbwCCxFZUQUjp8RslSt4jPMnxS1vOM7JORGkvaEn20YdSlEzoB-WnETsiR_b2RYKZ8vc9Q` — `docs/sessions/2026-05-10-v185-months-mobile-compact-deploy.md`.
 - **V1.8.4:** deployment ufficiale clasp **`@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; deploy **`@13`** intermedio — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`.
 - **Git `main`:** codice **V1.8.6**, tag **`v1.8.6-stable`**.
@@ -135,5 +135,5 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su **`/exec`** del deployment **`@16`** (V1.8.6): Mesi griglia + navbar.
+1. **Test manuale** su **`/exec`** del deployment **`@17`** (V1.8.6): Mesi griglia + navbar.
 2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.

@@ -203,7 +203,7 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
-- Produzione Git/Apps Script: **V1.8.6** su **`main`**; tag stabile **`v1.8.6-stable`**; deploy clasp **`@16`** (ID `AKfycbwkI2a_dzmrO_c8kt0KO16uOl2V_lep-WwSLDMNyvopxSpWF78hR3zew6fbmBiVx8RNRg`; deploy Windows: Git Bash se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`); include fix Mesi mobile (griglia + navbar) oltre a V1.8.5 / V1.8.4 (**`beb277a`**) e V1.8B (**`fc9ac43`**).
-- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` @16:** da fare (versione **1.8.6**, Mesi + navbar).
+- Produzione Git/Apps Script: **V1.8.6** su **`main`**; tag stabile **`v1.8.6-stable`**; deploy clasp **`@17`** (ID `AKfycbwLxc6ilqVnKxP5G7OZ0sY7AOXQVKQDeteDqNs2gJN0WygQOmPSKhr0iXiCBdwolu90IQ`; deploy Windows: Git Bash se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v186-months-mobile-grid-navbar-fix-deploy.md`); include fix Mesi mobile (griglia + navbar) oltre a V1.8.5 / V1.8.4 (**`beb277a`**) e V1.8B (**`fc9ac43`**).
+- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` @17:** da fare (versione **1.8.6**, Mesi + navbar).
 - Tag utili per rollback: **`v1.8.6-stable`**, **`v1.8.5-stable`** (deploy **`@15`**), **`v1.8.4-stable`** (deploy **`@14`**), **`v1.8.3-stable`** (deploy **`@12`**), **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
 - Branch **`dev`:** **legacy/inattivo**, non operativo.
