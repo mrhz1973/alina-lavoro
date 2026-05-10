@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio **«Più tardi»** — commit **`beb277a`**) su **`main`**; Apps Script deployment **`@14`**; tag **`v1.8.4-stable`**. Deploy **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Deploy **`@13`** intermedio (fix incluso, UI **1.8.3**) superseded da **`@14`**. **Test manuale utente su `/exec` di `@14`:** da fare. Sessione deploy: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Workflow **main-only**.
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio **«Più tardi»** — commit **`beb277a`**) su **`main`**; Apps Script deployment **`@14`**; tag **`v1.8.4-stable`**. Deploy **Windows** (`npx.cmd clasp push` / `npx.cmd clasp deploy`). Deploy **`@13`** intermedio (fix incluso, UI **1.8.3**) superseded da **`@14`**. **Test manuale utente su `/exec` @14: OK** (versione **1.8.4** verificata; **«Più tardi»** OK; **«Inserisci»** OK; Home/Mesi OK; issue **#5** / Inizio-Fine OK). Sessione deploy: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. Workflow **main-only**.
 
 ## Stato reale
 
@@ -70,10 +70,9 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipe
 ## Rischi aperti
 
 - Mesi: possibili ottimizzazioni future (virtualizzazione); non bloccanti se il test resta OK.
-- Android vecchio: monitorare su dispositivo reale al test su **`@14`**.
+- Android vecchio: monitorare su dispositivo reale quando disponibile.
 - Rollback: **`@12`** (V1.8.3) / tag **`v1.8.3-stable`** o gestione deployment in Apps Script.
 
 ## Prossimo passo consigliato
 
-1. **Test manuale su `/exec`** del deployment **`@14`**: versione **1.8.4**; promemoria stipendio — **«Più tardi»** chiude il banner; **«Inserisci`** OK; smoke Home/Mesi/issue **#5**.
-2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
+1. Lavoro nuovo su **`main`** dopo `git pull origin main` (roadmap / micro-step successivi).

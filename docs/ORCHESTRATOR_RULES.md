@@ -204,6 +204,6 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
 - Produzione Git/Apps Script: **V1.8.4** su **`main`**; tag stabile **`v1.8.4-stable`**; deploy clasp **`@14`** (deploy Windows: **`npx.cmd clasp push`** / **`npx.cmd clasp deploy`**); include fix promemoria stipendio «Più tardi» (commit **`beb277a`**) oltre a V1.8B (**`fc9ac43`**).
-- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` del deployment `@14`:** da fare (versione **1.8.4**, promemoria).
+- Issue **#5** (arrotondamento Inizio/Fine a 5 minuti) **in produzione**; **test manuale utente su `/exec` @14: OK** (versione **1.8.4**, promemoria «Più tardi», Home/Mesi).
 - Tag utili per rollback: **`v1.8.4-stable`**, **`v1.8.3-stable`** (deploy **`@12`**), **`v1.8.2-stable`** (deploy **`@10`**), **`v1.8.1-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`** (storico).
 - Branch **`dev`:** **legacy/inattivo**, non operativo.

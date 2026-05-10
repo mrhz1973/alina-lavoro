@@ -18,4 +18,4 @@ In Home, sezione promemoria stipendio (`state.reminder.active`): il pulsante **P
 
 ## Deploy / test
 
-Deploy produzione **V1.8.4** / clasp **`@14`**: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. **Test manuale utente su `/exec`** del deployment **`@14`**: da ripetere (versione **1.8.4**, «Più tardi» chiude il banner).
+Deploy produzione **V1.8.4** / clasp **`@14`**: `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. **Test manuale utente su `/exec` @14: OK.**

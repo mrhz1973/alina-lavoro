@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio «Più tardi», commit **`beb277a`**); `APP_VERSION` **1.8.4**; Apps Script **clasp `@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; tag **`v1.8.4-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. **Test `/exec` su `@14`:** da fare. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.4** (fix promemoria stipendio «Più tardi», commit **`beb277a`**); `APP_VERSION` **1.8.4**; Apps Script **clasp `@14`** — ID `AKfycbx-PVHZvRait-KwBfLzc6pWfuMltRN9s0WiJMZN9p71hoK32Bmw9N62ICQod8JIAJVV4Q`; tag **`v1.8.4-stable`**. Deploy Windows — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`. **Test manuale utente su `/exec` @14: OK**. Workflow **main-only**; **`aggio:win`** per Windows senza bash (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -46,7 +46,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.4** è la versione stabile corrente su **`main`**; tag **`v1.8.4-stable`**; Apps Script **`@14`**; fix **`dismissSalaryReminder`** (promemoria stipendio «Più tardi»); issue **#5** e **#3** restano nel prodotto.
-- **Test manuale su `/exec` del deployment `@14`:** da fare (versione **1.8.4**, promemoria + «Più tardi»).
+- **Test manuale utente su `/exec` @14: OK** — versione **1.8.4**; **«Più tardi»** chiude il banner; **«Inserisci»** OK; Home/Mesi OK; issue **#5** / Inizio-Fine OK.
 - **Rollback immediato precedente:** **`v1.8.3-stable`** / deploy **`@12`** — `AKfycbwp39AN4DPH4BXikfemvF7G6yUdObnYro63nC3fqvUcn9G5XxzWyXD91AR2H8pfV9WDaw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
@@ -131,5 +131,4 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. **Test manuale** su **`/exec`** del deployment **`@14`** (V1.8.4): versione **1.8.4**, promemoria stipendio — «Più tardi» chiude il banner.
-2. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.
+1. Nuovi sviluppi: `git checkout main`, `git pull origin main`, roadmap V1.8B+ su **`main`**.

@@ -29,4 +29,6 @@ Copia in **`.gas/`** da `src/` + `appsscript.json`, poi `npx.cmd clasp push` e `
 
 ## Test manuale
 
-**Da ripetere su `/exec`** del deployment **`@14`**: versione **1.8.4** in Impostazioni; promemoria stipendio; **«Più tardi»** chiude il banner; **«Inserisci»** apre ancora la modale.
+**Test manuale utente su `/exec` @14: OK.**
+
+Verificato dall’utente su deployment **`@14`**: versione **1.8.4** in Impostazioni; promemoria stipendio — **«Più tardi»** chiude il banner; **«Inserisci»** OK; Home/Mesi OK; Inizio/Fine e issue **#5** OK.
