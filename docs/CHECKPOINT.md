@@ -44,6 +44,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.2** è la versione stabile corrente su **`main`**; tag Git **`v1.8.2-stable`**; issue **#5** (arrotondamento orari) in produzione su Apps Script **`@10`**; **test manuale utente su `/exec` OK**; issue **#3** resta parte del prodotto (versione in Impostazioni).
+- **V1.8B (solo codice su `main`, non in produzione fino a nuovo deploy):** micro-step performance pagina **Mesi** — cache/firma in `renderMonths` per evitare rebuild DOM ridondanti — `docs/sessions/2026-05-10-v18b-months-rerender-cache.md`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
 - V1.8A / V1.8.0: tag **`v1.8.0-stable`**, deploy storico **@8** (sessioni 2026-05-02).
 - V1.6.2 resta riproducibile tramite tag **`v1.6.2-stable`**.
