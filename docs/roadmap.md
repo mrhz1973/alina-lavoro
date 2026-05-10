@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-**V1.8.10** — release **2026-05-10** su **`main`** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi», **`shouldShowSalaryReminder_`** / **`LS_SALARY_REMINDER_SNOOZE`**); **in produzione** Apps Script **`@21`** (`package.json` / `APP_VERSION` **1.8.10**); tag **`v1.8.10-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale su `/exec` @21:** **da fare**. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. **Precedente V1.8.8:** deploy **`@19`**, tag **`v1.8.8-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.9-stable`**, **`v1.8.8-stable`**, **`v1.8.7-stable`**, **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
+**V1.8.10** — release **2026-05-10** su **`main`** (promemoria stipendio: **snooze locale 24 ore** dopo «Più tardi», **`shouldShowSalaryReminder_`** / **`LS_SALARY_REMINDER_SNOOZE`**); **in produzione** Apps Script **`@21`** (`package.json` / `APP_VERSION` **1.8.10**); tag **`v1.8.10-stable`**; snapshot **`gas-current/`**; sessione `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale utente su `/exec` @21:** **OK**. **Nota uso:** sul telefono va il link Web App **`/exec`**; il Google Sheet è solo database/amministrazione. **Precedente V1.8.9:** deploy **`@20`**, tag **`v1.8.9-stable`**. **Precedente V1.8.8:** deploy **`@19`**, tag **`v1.8.8-stable`**. Workflow: **`main` operativo**, **`dev` legacy** — `docs/sessions/2026-05-03-main-only-workflow.md`. Tag storici: **`v1.8.9-stable`**, **`v1.8.8-stable`**, **`v1.8.7-stable`**, **`v1.8.6-stable`**, **`v1.8.5-stable`**, **`v1.8.4-stable`**, **`v1.8.3-stable`**, **`v1.8.2-stable`**, **`v1.8.0-stable`**, **`v1.6.2-stable`**, **`v1.5-stable`**.
 
 App personale per registrazione ore di lavoro di Alina.
 
@@ -208,7 +208,7 @@ Vincoli (uguali a V1.6 dove applicabile):
 
 ### Promemoria stipendio (Home)
 
-- **V1.8.10:** **«Più tardi»** imposta snooze **24 ore** in **localStorage** (`alina_lavoro_salary_reminder_snooze_until_v1`); **`shouldShowSalaryReminder_()`** nasconde il banner se lo snooze è valido anche quando il backend invia ancora `reminder.active`; **`dismissSalaryReminder`** aggiorna cache locale — deploy **`@21`** — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale su `/exec` @21:** da fare.
+- **V1.8.10:** **«Più tardi»** imposta snooze **24 ore** in **localStorage** (`alina_lavoro_salary_reminder_snooze_until_v1`); **`shouldShowSalaryReminder_()`** nasconde il banner se lo snooze è valido anche quando il backend invia ancora `reminder.active`; **`dismissSalaryReminder`** aggiorna cache locale — deploy **`@21`** — `docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`. **Test manuale utente su `/exec` @21:** **OK**.
 - **V1.8.4:** pulsante **«Più tardi»** chiude la notifica (`dismissSalaryReminder`) — commit **`beb277a`**; deploy **`@14`** — `docs/sessions/2026-05-10-v184-fix-salary-reminder-later-deploy.md`, `docs/sessions/2026-05-10-v183-fix-salary-reminder-later.md`. **Test manuale utente su `/exec` @14: OK.**
 
 ### V1.8.5 — righe Mesi compatte (solo CSS mobile)

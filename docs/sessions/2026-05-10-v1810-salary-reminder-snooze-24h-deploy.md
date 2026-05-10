@@ -35,18 +35,24 @@ Precedente release stabile: **V1.8.9** (deploy **`@20`**, tag **`v1.8.9-stable`*
 
 - **`v1.8.10-stable`** sul commit di release.
 
+## Web App `/exec` vs Google Sheet
+
+- Per **uso quotidiano** sul cellulare di Alina va usato il link della **Web App** Apps Script con suffisso **`/exec`** (deployment **`@21`** sopra). Il link diretto al **Google Sheet** è solo **database / amministrazione**; non sostituisce l’interfaccia dell’app.
+
 ## Snapshot `gas-current/`
 
 Allineato a **V1.8.10** post-deploy.
 
 ## Test manuale
 
-**Da fare** su Web App **`/exec`** del deployment **`@21`**:
+**Aggiornamento post-test:** eseguito su **`/exec`** del deployment **`@21`** — **OK**.
 
 | Voce | Esito |
 |------|--------|
-| Promemoria visibile se backend attivo e snooze assente/scaduto | |
-| «Più tardi»: banner chiuso, toast, nessuna riapparizione entro 24 h | |
-| Dopo 24 h (o dopo aver cancellato la chiave LS di test): se reminder ancora attivo dal server, banner di nuovo visibile | |
-| Inserimento stipendio: promemoria sparisce come prima (sync) | |
-| Smoke Home / Mesi / Note / Impostazioni | |
+| Web App aperta sul cellulare tramite link **`/exec`** (non il link Sheet) | OK |
+| Versione **1.8.10** in Impostazioni | OK |
+| Promemoria stipendio — «Più tardi» / snooze 24 h | OK |
+| Home | OK |
+| Mesi | OK |
+| Note / Impostazioni | OK |
+| Smoke generale | OK |

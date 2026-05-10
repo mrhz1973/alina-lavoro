@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** ( promemoria stipendio: **snooze 24 h** — `LS_SALARY_REMINDER_SNOOZE` + `shouldShowSalaryReminder_` ); `APP_VERSION` **1.8.10**; Apps Script **clasp `@21`** — ID `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`; tag **`v1.8.10-stable`**. Deploy Windows — **Git Bash** se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`). **Rollback immediato:** **`v1.8.9-stable`** / **`@20`** oppure **`v1.8.8-stable`** / **`@19`**. **Test manuale su `/exec` @21:** **da fare**. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-10 — produzione **V1.8.10** ( promemoria stipendio: **snooze 24 h** — `LS_SALARY_REMINDER_SNOOZE` + `shouldShowSalaryReminder_` ); `APP_VERSION` **1.8.10**; Apps Script **clasp `@21`** — ID `AKfycbz0_8bE92ATlKeb2oaOrhqOwrUgyiEnw977libqBH5Swkiv2LMwdDK0EbJyo-h7Zpjw6A`; tag **`v1.8.10-stable`**. Deploy Windows — **Git Bash** se `npm run deploy` fallisce su **cmd** (`docs/sessions/2026-05-10-v1810-salary-reminder-snooze-24h-deploy.md`). **Rollback immediato:** **`v1.8.9-stable`** / **`@20`** oppure **`v1.8.8-stable`** / **`@19`**. **Test manuale utente su `/exec` @21:** **OK**. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
@@ -29,6 +29,11 @@ Stack:
 - Cursor come implementatore operativo;
 - `clasp` per sincronizzare il codice con Apps Script.
 
+## Uso Web App vs Google Sheet
+
+- Per **uso quotidiano** sul telefono (Alina): salvare e aprire il link della **Web App** Apps Script con suffisso **`/exec`** (deploy **`@21`** / ID documentato sopra).
+- Il link al **Google Sheet** è solo **database e amministrazione** del foglio; **non** è l’interfaccia dell’app e non va usato al posto dell’URL **`/exec`**.
+
 ## Repository
 
 - Repository: `mrhz1973/alina-lavoro`.
@@ -51,7 +56,7 @@ Stack:
 ## Stato stabile corrente
 
 - **V1.8.10** è la versione stabile corrente su **`main`**; tag **`v1.8.10-stable`**; Apps Script **`@21`**; snooze locale **24 ore** per promemoria stipendio dopo «Più tardi»; include V1.8.9 e precedenti (Mesi toggle anni, V1.8B, issue **#5** e **#3**).
-- **Test manuale su `/exec` @21:** **da fare** — snooze, toast «Più tardi», reinserimento stipendio, smoke generale (**1.8.10**).
+- **Test manuale utente su `/exec` @21:** **OK** — versione **1.8.10**, snooze «Più tardi», promemoria stipendio, Home, Mesi, Note, Impostazioni, smoke generale; verifica da cellulare con link Web App **`/exec`** (non il link al foglio Google Sheet).
 - **Rollback immediato precedente:** **`v1.8.9-stable`** / deploy **`@20`** — `AKfycbxxbOtZmmcflqyrToKXo_bR6MaK4pupI-fkDrGRmZsC2vSnjQajmwMNePmg26ji-XY8og`.
 - **Rollback V1.8.7:** **`v1.8.7-stable`** / deploy **`@18`** — `AKfycbyKn_0bR-JkGIPx96cNooiEjeqxMa7Uqvn5Rsb61GhEvvDBC5lT8FPwX11egV4U0un-Uw`.
 - **`dev`** (legacy): tenuto eventualmente **identico** a `main` per storia; **non** è branch di lavoro.
