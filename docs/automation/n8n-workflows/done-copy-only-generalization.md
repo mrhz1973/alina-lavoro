@@ -2,13 +2,17 @@
 
 ## Stato
 
-**Design documentale** — **non** implementato nel workflow n8n reale **`TEST - Mark Alina task done copy-only`** finché non viene adottato esplicitamente in n8n. Non modifica codice applicativo, deploy, tag né `gas-current/`.
+**Design documentale** per la generalizzazione del flusso **done copy-only** rispetto al workflow hardcoded [`TEST - Mark Alina task done copy-only`](./done-copy-only.md) (`0003`). Il testo qui sotto resta la **specifica** dei path dinamici e dei nodi consigliati.
+
+**Validazione (2026-05-11):** il workflow n8n reale **`TEST - Mark Alina task done copy-only generalized`** ha superato la **prima validazione manuale** sul task **`0004-test-n8n-done-copy-only-generalized`** (create `done`, update sessione, `queue` intatta). Dettagli operativi e limiti residui in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
+
+Nessuna modifica a codice applicativo, deploy, tag o `gas-current/` tramite questo documento.
 
 ## Scopo
 
 Definire come passare dal workflow **hardcoded** sul task **0003** (path fissi in ogni nodo) a un flusso **riutilizzabile** per **task arbitrari**, mantenendo le garanzie attuali: **nessuna delete** da `queue`, **create/update** idempotente del file `done`, aggiornamento **sessione** coerente.
 
-Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md). Prima validazione del flusso **generalizzato** su **0004**: [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
 
 ## Baseline (workflow attuale)
 
@@ -124,11 +128,9 @@ In **futuro** si può estendere la logica di skip (es. non eleggere task se esis
 
 ## Test consigliato
 
-Creare in `docs/tasks/queue/` un task di prova:
+Il task **`0004-test-n8n-done-copy-only-generalized.md`** in `docs/tasks/queue/` è stato usato per la **prima validazione** del workflow **`TEST - Mark Alina task done copy-only generalized`** (Set manuale `task_name`, path dinamici, create `done`, update sessione). Esito: **OK** — vedi [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
 
-`0004-test-n8n-done-copy-only-generalized.md`
-
-Eseguire il workflow generalizzato (con **Set** manuale `task_name = 0004-test-n8n-done-copy-only-generalized`) e verificare `done`, `session` e integrità `queue`.
+Per regressioni future: rieseguire con lo stesso `task_name` dopo implementazione del ramo **Success** → **Update done** dinamico (idempotenza).
 
 ## Rischi
 
@@ -151,12 +153,14 @@ Eseguire il workflow generalizzato (con **Set** manuale `task_name = 0004-test-n
 
 ## Prossimo passo consigliato
 
-1. Creare il task **`0004-test-n8n-done-copy-only-generalized.md`** in `queue` **oppure**
-2. Modificare manualmente il workflow n8n aggiungendo **Set task input** + **Build dynamic paths** secondo questo documento, poi rieseguire test.
+1. **Implementare e validare** il ramo **Success** di **`Check done file exists`** verso un nodo **`Update done file`** con **path dinamico** (Expression) e update **idempotente** (es. GitHub Edit con `sha`), come tracciato in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
+2. **Ripulire** il canvas da nodi **legacy** hardcoded sul task **0003** dove ancora presenti.
+3. Valutare il **contratto dati** con il queue reader (**opzione B** in questo documento) solo dopo idempotenza stabile.
 
 ## Riferimenti
 
 - Workflow validato (0003): [`done-copy-only.md`](./done-copy-only.md)
+- Validazione generalizzata (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
 - Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)

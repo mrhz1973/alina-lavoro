@@ -6,7 +6,7 @@
 
 ## Stato
 
-Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)).
+Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)). Il workflow **`TEST - Mark Alina task done copy-only generalized`** (task **0004**, path dinamici) ha una prima validazione separata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md) — vedi anche [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).
 
 ## Scopo
 
@@ -101,11 +101,12 @@ Il file `docs/tasks/queue/0003-test-n8n-done-copy-only.md` **resta** in `queue` 
 
 ## Prossimo passo consigliato
 
-**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). Implementazione in n8n: task **0004** o Set node dinamico come da design.
+**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Stato:** prima validazione **0004** OK — [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md). Prossima implementazione in n8n: ramo **Success** → **Update done** dinamico (idempotenza).
 
 ## Riferimenti correlati
 
-- Design generalizzazione (non implementato): [`done-copy-only-generalization.md`](./done-copy-only-generalization.md)
+- Design generalizzazione (validazione 0004 documentata): [`done-copy-only-generalization.md`](./done-copy-only-generalization.md)
+- Validazione workflow generalizzato 0004: [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
 - Design lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Design done/failed (move, gate, non ancora tutto in n8n): [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)
