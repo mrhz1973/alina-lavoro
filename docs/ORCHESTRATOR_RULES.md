@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-11 — aggiunte regole **avanzamento senza “vai”** (nessuna conferma inutile se il passo successivo è già determinato), **richiesta esplicita di `aggio`** quando il passo atteso dopo Cursor è la verifica GitHub da orchestratore, e **rafforzamento** della **Regola output prompt Cursor** (tutto il contesto operativo, inclusa la richiesta di `aggio` e il messaggio commit, dentro l’unico blocco copiabile). Restano valide le regole già descritte per **post-aggio** e formato asciutto. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
+Ultimo aggiornamento: 2026-05-11 — aggiunte regole **avanzamento senza “vai”** (nessuna conferma inutile se il passo successivo è già determinato), **richiesta esplicita di `aggio`** quando il passo atteso dopo Cursor è la verifica GitHub da orchestratore, e **correzione** della **Regola output prompt Cursor**: il blocco da incollare in Cursor contiene **solo** istruzioni per Cursor (contesto operativo, vincoli, commit atteso, risposta finale obbligatoria per Cursor, ecc.); la frase per l’utente **`Quando Cursor finisce, scrivi: aggio`** va **fuori** da quel blocco (vedi sotto). Restano valide le regole già descritte per **post-aggio** e formato asciutto. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -16,7 +16,7 @@ Regola obbligatoria:
 - non mescolare più obiettivi nello stesso messaggio;
 - evidenziare subito blocchi, warning, errori locali o configurazioni anomale;
 - se serve un prompt Cursor, fornirlo solo quando è il passo corrente;
-- se il passo è “incolla questo in Cursor”, il prompt deve essere completo e autosufficiente;
+- se il passo è “incolla questo in Cursor”, il blocco da incollare deve essere completo e autosufficiente **per Cursor**; le istruzioni **solo** per l’utente (es. **`Quando Cursor finisce, scrivi: aggio`**) restano **fuori** dal blocco — vedi **Regola output prompt Cursor**;
 - se il passo è terminale, dare pochi comandi e spiegare cosa deve uscire;
 - se l’utente scrive “passo passo”, “andiamo avanti”, “ok”, “vai”, o mostra confusione, tornare automaticamente alla modalità guidata a singolo passo.
 
@@ -29,7 +29,7 @@ Questa priorità prevale sulle altre regole di sintesi, automazione e workflow s
 - Cursor/Agent e l'implementatore operativo: modifica file, esegue controlli, commit e push.
 - L'utente non deve essere usato come ponte manuale tra Cursor e ChatGPT, salvo errore locale non pushato.
 - Le procedure ripetitive devono stare nei documenti del repository, non essere riscritte ogni volta nei prompt.
-- Se una procedura non e ancora documentata in `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`, l'orchestratore deve inserirla direttamente nel prompt Cursor, in un unico blocco copiabile quando quello è il passo corrente. Non deve lasciarla fuori dal prompt come istruzioni separate per l'utente.
+- Se una procedura non e ancora documentata in `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`, l'orchestratore deve inserirla direttamente nel prompt Cursor, in un unico blocco copiabile quando quello è il passo corrente. Non deve lasciarla fuori dal prompt come istruzioni separate per l'utente, **salvo** le istruzioni che sono **solo** per l'utente (es. richiesta di `aggio` dopo Cursor), che restano **fuori** dal blocco incollabile — vedi **Regola output prompt Cursor** e **Regola richiesta esplicita di `aggio`**.
 
 ## Regola `aggio`
 
@@ -111,18 +111,27 @@ Se **non** c’è una decisione reale, l’orchestratore deve **avanzare** (coer
 
 ## Regola richiesta esplicita di `aggio`
 
-Quando il prossimo passo **atteso** è che l’utente faccia **`aggio`** (verifica GitHub / stato repo da parte dell’orchestratore) **dopo** un blocco **Cursor**, l’orchestratore deve chiederlo **esplicitamente**, ad esempio:
+Quando il prossimo passo **atteso** è che l’utente faccia **`aggio`** (verifica GitHub / stato repo da parte dell’orchestratore) **dopo** un blocco **Cursor**, l’orchestratore deve chiederlo **esplicitamente** all’utente, ad esempio con la frase:
 
-```text
-Quando Cursor finisce, scrivi: aggio
-```
+`Quando Cursor finisce, scrivi: aggio`
 
 oppure **formula equivalente** altrettanto chiara.
 
 - **Non** lasciare **implicito** che l’utente debba scrivere `aggio`.
-- **Non** aspettarsi un `aggio` **senza** averlo richiesto in modo leggibile nel flusso (idealmente **dentro** il prompt Cursor se il passo corrente è il prompt — vedi **Regola output prompt Cursor**).
+- **Non** aspettarsi un `aggio` **senza** averlo richiesto in modo leggibile nel flusso.
+- Questa frase **non** fa parte del contenuto da dare a Cursor: è **istruzione operativa per l’utente** e deve stare **fuori** dal blocco da copiare in Cursor (vedi **Regola output prompt Cursor**).
 
-Se un prompt Cursor prevede **commit** e **push**, la richiesta a Cursor di riportare **hash commit** e stato finale deve stare **nel prompt**; **fuori** dal prompt, se non ci sono decisioni o rischi, **non** aggiungere riepiloghi esterni (stessa disciplina della **Regola output prompt Cursor**).
+Forma del messaggio quando, dopo il prompt Cursor, il passo successivo atteso è la verifica da orchestratore (esempio):
+
+```text
+Incolla questo in Cursor:
+
+[UNICO BLOCCO PROMPT CURSOR]
+
+Quando Cursor finisce, scrivi: aggio
+```
+
+Se un prompt Cursor prevede **commit** e **push**, la richiesta a Cursor di riportare **hash commit** e stato finale deve stare **nel blocco** destinato a Cursor; **fuori** dal blocco Cursor, se non ci sono decisioni o rischi, **non** aggiungere riepiloghi esterni (stessa disciplina della **Regola output prompt Cursor**).
 
 ## Cursor / Agent
 
@@ -165,54 +174,59 @@ Se il task tocca backend, includere anche:
 @src/backend/Code.gs
 ```
 
-Ogni prompt operativo per Cursor deve essere autosufficiente per Cursor: tutto cio che non e gia documentato nel repo deve stare dentro il prompt stesso. L'utente non deve dover copiare pezzi esterni separati.
+Ogni prompt operativo per Cursor deve essere autosufficiente **per Cursor** nel blocco da incollare: tutto ciò che Cursor deve fare e che non è già documentato nel repo deve stare in quel blocco. L’utente non deve dover copiare **per Cursor** pezzi esterni separati da quel blocco; la richiesta di scrivere `aggio` dopo Cursor resta **fuori** dal blocco (vedi **Regola output prompt Cursor**).
 
 ## Regola output prompt Cursor
 
-Quando l’output richiesto è un **prompt Cursor**, il messaggio dell’orchestratore deve contenere **solo**:
+Quando l’output richiesto è un **prompt Cursor**:
+
+1. Il blocco da copiare in Cursor deve contenere **solo** istruzioni e contesto destinati a **Cursor** (riferimenti `@…`, obiettivo, vincoli, procedura, output atteso da Cursor, ecc.).
+2. La frase rivolta all’utente **`Quando Cursor finisce, scrivi: aggio`** (o equivalente) **non** è contenuto per Cursor: è **istruzione operativa per l’utente** e deve stare **fuori** dal blocco incollabile, **subito dopo** il blocco, quando il passo successivo atteso è la verifica GitHub da parte dell’orchestratore — vedi **Regola richiesta esplicita di `aggio`**.
+3. Il messaggio dell’orchestratore ha quindi in generale questa forma (salvo eccezioni sotto):
 
 ```text
 Incolla questo in Cursor:
 
-[UNICO BLOCCO PROMPT COMPLETO]
+[UNICO BLOCCO PROMPT CURSOR]
+
+Quando Cursor finisce, scrivi: aggio
 ```
 
-Tutto il **contesto operativo** necessario deve stare **dentro** l’unico blocco da copiare e incollare, inclusi a titolo **esemplificativo** (non esaustivo):
+L’ultima riga si omette **solo** se **non** serve un `aggio` immediato dopo Cursor; in ogni caso **non** va **dentro** il blocco incollabile.
+
+Tutto il **contesto operativo** necessario **per Cursor** deve stare **dentro** il blocco da copiare e incollare, inclusi a titolo **esemplificativo** (non esaustivo):
 
 - validazioni da eseguire;
 - file da creare o aggiornare;
 - vincoli e procedura del blocco;
 - **messaggio di commit** (ove richiesto);
-- **risposta finale obbligatoria** da riprodurre in chiusura (se prevista dal task);
-- richiesta esplicita di **`aggio`** quando è il passo successivo atteso dopo Cursor, nella forma ad esempio:
+- **risposta finale obbligatoria** da riprodurre in chiusura (se prevista dal task e destinata a Cursor).
 
-```text
-Quando Cursor finisce, scrivi: aggio
-```
+**Non** includere nel blocco incollabile la richiesta di `aggio` per l’utente (punto 2).
 
-(o equivalente **nel** blocco).
-
-Non devono comparire **fuori** dal blocco prompt:
+Non devono comparire **fuori** dal blocco prompt Cursor:
 
 - riepiloghi della validazione;
 - elenchi di file da creare o da aggiornare;
-- contenuto richiesto per sessioni o altri file se già specificato **nel** prompt;
+- contenuto richiesto per sessioni o altri file se già specificato **nel** blocco;
 - vincoli obbligatori o procedura **ripetuti** all’esterno;
 - messaggio di commit duplicato fuori blocco;
-- checklist “risposta finale obbligatoria” come testo parallelo se già inclusa nel prompt;
-- **ripetizioni** o **parafrasi** del prompt.
+- checklist “risposta finale obbligatoria” come testo parallelo se già inclusa nel blocco;
+- **ripetizioni** o **parafrasi** del blocco.
 
-Testo **fuori** dal prompt è consentito **solo** se serve **davvero**:
+Testo **fuori** dal blocco Cursor è consentito per:
 
-- una **decisione**;
-- un **rischio**;
-- un **errore**;
-- **deploy / tag / rollback**;
-- **cancellazioni**;
-- **credenziali** o dati sensibili;
-- **conferma esplicita** non riducibile a istruzioni nel prompt.
+- **istruzione esplicita all’utente** di scrivere `aggio` dopo Cursor, come sopra (non è duplicazione del prompt Cursor);
+- oppure, se serve **davvero**:
+  - una **decisione**;
+  - un **rischio**;
+  - un **errore**;
+  - **deploy / tag / rollback**;
+  - **cancellazioni**;
+  - **credenziali** o dati sensibili;
+  - **conferma esplicita** non riducibile a istruzioni nel blocco.
 
-Se **non** c’è nulla di tutto ciò, l’output dell’orchestratore deve essere **unicamente** la riga **`Incolla questo in Cursor:`** seguita dal **blocco prompt completo** (nessun altro testo esplicativo).
+Se **non** c’è nulla di tutto ciò **oltre** alla riga facoltativa **`Quando Cursor finisce, scrivi: aggio`** quando serve, l’output dell’orchestratore deve essere **unicamente** la riga **`Incolla questo in Cursor:`** seguita dal **blocco prompt Cursor** (e, se applicabile, la riga per `aggio`), senza altro testo esplicativo.
 
 ## Richiamo sintetico delle procedure standard
 
@@ -234,8 +248,8 @@ Cursor deve leggere i documenti e applicare le procedure canoniche. Se un comand
 
 Se servono comandi, criteri, checklist o sequenze che non risultano gia presenti nei documenti del repository:
 
-- inserirli direttamente dentro il prompt Cursor se il prompt è il passo corrente;
-- non fornirli come blocco separato fuori dal prompt;
+- inserirli direttamente dentro il blocco da incollare in Cursor se il prompt è il passo corrente;
+- non fornirli come blocco separato **fuori** dal blocco Cursor (non confondere con la riga per l’utente **`Quando Cursor finisce, scrivi: aggio`**, che è consentita **dopo** il blocco — vedi **Regola output prompt Cursor**);
 - dopo l'esecuzione, valutare se renderli canonici aggiornando `docs/COMMANDS.md`, `docs/WORKFLOW.md` o `docs/AI_RULES.md`.
 
 Esempio corretto:
