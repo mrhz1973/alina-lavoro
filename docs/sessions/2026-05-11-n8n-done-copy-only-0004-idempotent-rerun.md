@@ -36,7 +36,7 @@ Manual Trigger
 
 I rami **Success** (Edit) e **Error / Not Found** (Create) **convergono** verso **`Get automation session`** dopo aver assicurato che il file `done` esista e sia allineato al contenuto costruito.
 
-## Modifiche effettuate in n8n (contesto)
+*(Struttura successiva con **`Verify done file`** tra write e sessione: vedi [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](./2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).)*
 
 - Aggiunto e collegato il nodo **`Update done file`** sul ramo **Success** di **`Check done file exists`**.
 - Configurazione **`Update done file`**:
@@ -73,7 +73,7 @@ Il prompt in `docs/tasks/processing/0004-test-n8n-done-copy-only-generalized-cur
 
 - **Failed** e **Cursor** restano fuori scope.
 - **Race** tra esecuzioni concorrenti sullo stesso `task_name`: mitigare con runner unico o lock (come da `done-copy-only-generalization.md`).
-- **Verify** opzionale post-write (GET dedicato) non documentato come obbligatorio in questo rerun.
+- **Successiva evoluzione:** nodo **`Verify done file`** (GET post-write su `done_path`) aggiunto e validato — vedi [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](./2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
 
 ## Prossimo passo consigliato
 
@@ -84,3 +84,4 @@ Valutare **skip in queue reader** se esiste già `docs/tasks/done/{task}.md` (o 
 - [`done-copy-only-generalization.md`](../automation/n8n-workflows/done-copy-only-generalization.md)
 - [`done-copy-only.md`](../automation/n8n-workflows/done-copy-only.md)
 - [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](./2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
+- [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](./2026-05-11-n8n-done-copy-only-0004-verify-done-file.md) (GET post-write successivo alla fase documentata in questa sessione)

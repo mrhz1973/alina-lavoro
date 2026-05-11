@@ -8,13 +8,15 @@
 
 **Rerun idempotente (2026-05-11):** aggiunto ramo **Success** → **`Update done file`** (GitHub **File / Edit**, path e content dinamici da **`Build done copy content`**), rimosso nodo legacy **`Update done file 0003`**; seconda esecuzione sul **0004** completata senza passare da **`Create done file`**. Dettagli in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
 
+**Verify done file (2026-05-11):** dopo **Create/Edit** del `done`, aggiunto nodo GitHub **File / Get** **`Verify done file`** con **File Path** `{{ $('Build done copy content').item.json.done_path }}` su branch **`main`**; entrambi i rami convergono su **Get** prima della sessione. Validazione manuale **OK** sul **0004**: [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
+
 Nessuna modifica a codice applicativo, deploy, tag o `gas-current/` tramite questo documento.
 
 ## Scopo
 
 Definire come passare dal workflow **hardcoded** sul task **0003** (path fissi in ogni nodo) a un flusso **riutilizzabile** per **task arbitrari**, mantenendo le garanzie attuali: **nessuna delete** da `queue`, **create/update** idempotente del file `done`, aggiornamento **sessione** coerente.
 
-Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md). Prima validazione **generalizzata** su **0004**: [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md). **Rerun idempotente 0004:** [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
+Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md). Prima validazione **generalizzata** su **0004**: [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md). **Rerun idempotente 0004:** [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md). **Verify `done` post-write:** [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
 
 ## Baseline (workflow attuale)
 
@@ -100,12 +102,11 @@ Manual Trigger
 → Get queue task
 → Build done copy content
 → Check done file exists
-   ├→ Success / file esiste → Update done file   (GitHub File / Edit)
-   └→ Error / Not Found    → Create done file    (GitHub File / Create)
+   ├→ Success / file esiste → Update done file → Verify done file
+   └→ Error / Not Found    → Create done file → Verify done file
 → Get automation session
 → Build updated session
 → Update automation session
-→ Optional verify done file       (GET + confronto minimo)
 ```
 
 ## Idempotenza
@@ -117,13 +118,13 @@ Solo **Create** su path già esistente tende a **fallire** alla riesecuzione (co
 
 La policy “**create or update**” (o ramo Error → Create come nel queue reader) deve restare esplicita nei nodi GitHub.
 
-**Stato (2026-05-11):** sul workflow **`TEST - Mark Alina task done copy-only generalized`** il pattern **Check → Success/Edit** vs **Error/Create** è stato **validato** sul task **0004** (vedi [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)).
+**Stato (2026-05-11):** sul workflow **`TEST - Mark Alina task done copy-only generalized`** il pattern **Check → Success/Edit** vs **Error/Create** è stato **validato** sul task **0004** (vedi [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)). Aggiunto e validato **`Verify done file`** (GET post-write) — [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
 
 ## Regole anti-perdita dati
 
 1. **No delete** da `queue` in questa fase (principio prudente; allineato a [`done-failed-design.md`](./done-failed-design.md)).
 2. **Create/update** del file `done` solo dopo contenuto costruito in memoria (o in item n8n) verificabile.
-3. **Verify** opzionale ma consigliato: GET del `done_path` dopo write, controllo presenza sezione outcome o hash atteso.
+3. **Verify done file:** GET del `done_path` dopo **Create/Edit** — **implementato** e validato sul **0004** ([`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md)); estensioni future possibili su contenuto (sezione outcome, size).
 4. **Update session** dopo `done` stabile, con stessi riferimenti path e `source_sha` / `completed_at`.
 5. **Delete** (queue o altro) solo in **futuro** e con **gate** esplicito in documento separato / task.
 
@@ -138,6 +139,8 @@ In **futuro** si può estendere la logica di skip (es. non eleggere task se esis
 Il task **`0004-test-n8n-done-copy-only-generalized.md`** in `docs/tasks/queue/` è stato usato per la **prima validazione** del workflow **`TEST - Mark Alina task done copy-only generalized`** (Set manuale `task_name`, path dinamici, create `done`, update sessione). Esito: **OK** — vedi [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
 
 **Rerun idempotente:** dopo implementazione ramo **Success** → **`Update done file`**, seconda esecuzione sullo stesso **0004** senza **`Create done file`** — [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
+
+**Verify done file:** GET post-write su `done_path` da entrambi i rami — [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
 
 Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcome in `done` + sessione.
 
@@ -156,14 +159,14 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 - **Set node manuale** (fase A) per ridurre ambiguità.
 - **Preview path** in un nodo **Code** (log o output read-only) prima dei write.
 - **Nessuna delete** da queue in questa fase.
-- **Verify** dopo update `done` (GET opzionale).
+- **Verify done file** (GET su `done_path` dopo write) — **validato** sul **0004**; vedi [`2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md).
 - **Sessione** sempre aggiornata con gli stessi path usati per `done` e `source_sha` coerente.
 - **Un solo runner** attivo per repo (evita race su stesso `task_name`).
 
 ## Prossimo passo consigliato
 
 1. **Skip queue reader** se esiste già `docs/tasks/done/{task}.md` (o se la sessione indica chiusura copy-only), coordinando [`task-lifecycle.md`](./task-lifecycle.md) — vedi anche [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
-2. **GET di verifica** opzionale dopo `Update done file` / `Create done file` (confronto minimo su `done_path`).
+2. **Opzionale:** rafforzare `Verify done file` con controlli sul **contenuto** (presenza `## Done copy-only outcome`, vincoli di size) oltre al GET di esistenza.
 3. **Contratto dati** con il queue reader (**opzione B**) solo dopo policy di skip chiara.
 
 ## Riferimenti
@@ -171,6 +174,7 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 - Workflow validato (0003): [`done-copy-only.md`](./done-copy-only.md)
 - Validazione generalizzata (0004, prima run): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
 - Rerun idempotente (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)
+- Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md)
 - Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)

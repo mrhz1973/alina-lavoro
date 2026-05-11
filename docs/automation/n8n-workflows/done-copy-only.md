@@ -101,13 +101,14 @@ Il file `docs/tasks/queue/0003-test-n8n-done-copy-only.md` **resta** in `queue` 
 
 ## Prossimo passo consigliato
 
-**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Stato:** validazione **0004** + **rerun idempotente** OK — sessioni [`0004-generalized-validation`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md) e [`0004-idempotent-rerun`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md). **Prossima evoluzione documentata:** skip queue reader se `done` esiste; contratto dati con queue reader.
+**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Stato:** validazione **0004** + **rerun idempotente** + **Verify done file** OK — sessioni [`0004-generalized-validation`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md), [`0004-idempotent-rerun`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md), [`0004-verify-done-file`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md). **Prossima evoluzione documentata:** skip queue reader se `done` esiste; contratto dati con queue reader.
 
 ## Riferimenti correlati
 
 - Design generalizzazione: [`done-copy-only-generalization.md`](./done-copy-only-generalization.md)
 - Validazione generalizzata 0004 (prima run): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
 - Rerun idempotente 0004: [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)
+- Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md)
 - Design lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Design done/failed (move, gate, non ancora tutto in n8n): [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)
