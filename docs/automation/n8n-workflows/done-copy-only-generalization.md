@@ -1,0 +1,162 @@
+# n8n Workflow Design — Done Copy-Only Generalization
+
+## Stato
+
+**Design documentale** — **non** implementato nel workflow n8n reale **`TEST - Mark Alina task done copy-only`** finché non viene adottato esplicitamente in n8n. Non modifica codice applicativo, deploy, tag né `gas-current/`.
+
+## Scopo
+
+Definire come passare dal workflow **hardcoded** sul task **0003** (path fissi in ogni nodo) a un flusso **riutilizzabile** per **task arbitrari**, mantenendo le garanzie attuali: **nessuna delete** da `queue`, **create/update** idempotente del file `done`, aggiornamento **sessione** coerente.
+
+Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+
+## Baseline (workflow attuale)
+
+Il workflow **`TEST - Mark Alina task done copy-only`** oggi, in sintesi:
+
+- Legge `docs/tasks/queue/0003-test-n8n-done-copy-only.md`.
+- Costruisce contenuto **done** (copia + sezione `## Done copy-only outcome`).
+- **Crea/aggiorna** `docs/tasks/done/0003-test-n8n-done-copy-only.md` (GitHub Edit, idempotente dopo correzione Create→Edit).
+- Legge e **aggiorna** `docs/sessions/automation-0003-test-n8n-done-copy-only.md`.
+- **Non** rimuove il task da `queue`.
+- **Non** tocca l’app Alina.
+
+## Obiettivo di generalizzazione
+
+Derivare **dinamicamente** (da input o da upstream) almeno:
+
+| Campo | Ruolo |
+|--------|--------|
+| `task_name` | Identificatore file senza estensione o slug coerente con i path (es. `0004-test-n8n-done-copy-only-generalized`). |
+| `queue_path` | Path completo del task in coda. |
+| `done_path` | Path del file archiviato in `done`. |
+| `cursor_prompt_path` | Path del prompt in `processing` (per riferimenti nella sessione / outcome). |
+| `session_path` | Path sessione automation. |
+| `source_sha` | SHA GitHub del file sorgente usato per update sicuri dove richiesto. |
+| `completed_at` | Timestamp ISO nell’outcome. |
+
+## Input possibili
+
+### A. Input manuale (Set / Edit Fields)
+
+- Un nodo **Set** (o equivalente) imposta `task_name` e/o `queue_path` prima dei nodi GitHub.
+- **Pro:** massima prudenza, testabile con task **0004** senza accoppiare subito al queue reader.
+- **Contro:** richiede intervento umano a ogni run (accettabile per fase di validazione).
+
+### B. Lettura dal primo task eleggibile già prodotto dal queue reader
+
+- Il flusso **done copy-only** consuma l’output strutturato del queue reader (path file, metadata).
+- **Pro:** meno errori di battitura sui path.
+- **Contro:** accoppiamento forte tra workflow; va definito un contratto JSON stabile tra i due flussi.
+
+### C. Input da sessione automation o da prompt in `processing`
+
+- Parse di front matter o sezioni in `automation-{task}.md` o nel file `-cursor-prompt.md`.
+- **Pro:** single source of truth dopo la prima generazione.
+- **Contro:** parsing fragile; rischio di desincronizzazione se i file sono editati a mano.
+
+## Raccomandazione (fase prudente)
+
+Per la **prima generalizzazione** in n8n:
+
+- Preferire **opzione A**: **Set node** con `task_name` (o `queue_path` completo) valorizzati **manualmente** prima dell’esecuzione.
+- Mantenere **nessuna delete** da `queue`.
+- Mantenere **Manual Trigger** e test dedicato (es. task **0004**).
+- Dopo stabilizzazione, valutare **B** o **C** con contratto dati documentato.
+
+## Convenzione path dinamici
+
+Se il file task in coda è:
+
+`docs/tasks/queue/{task}.md`
+
+allora (allineato alla convenzione già usata nel repo):
+
+| Tipo | Path |
+|------|------|
+| **Queue** | `docs/tasks/queue/{task}.md` |
+| **Done** | `docs/tasks/done/{task}.md` |
+| **Prompt Cursor** | `docs/tasks/processing/{task}-cursor-prompt.md` |
+| **Sessione automation** | `docs/sessions/automation-{task}.md` |
+
+`{task}` è il nome file **senza** `.md` nella cartella `queue` (es. `0004-test-n8n-done-copy-only-generalized`).
+
+Un nodo **Code** `Build dynamic paths` può calcolare le quattro stringhe a partire da `task_name` e validare che non contengano `..` o separatori anomali.
+
+## Nodi futuri proposti
+
+```text
+Manual Trigger
+→ Set task input
+→ Build dynamic paths
+→ Get queue task
+→ Build done copy content
+→ Check done file exists          (opzionale ma consigliato)
+→ Create or update done file      (GitHub Edit / upsert)
+→ Get automation session
+→ Build updated session
+→ Update automation session
+→ Optional verify done file       (GET + confronto minimo)
+```
+
+## Idempotenza
+
+Solo **Create** su path già esistente tende a **fallire** alla riesecuzione (come osservato con il task 0003). Servono:
+
+- **Check** esistenza file (o gestione 404) **oppure**
+- API di **Edit** / update con **`sha`** obbligatorio quando il file esiste.
+
+La policy “**create or update**” (o ramo Error → Create come nel queue reader) deve restare esplicita nei nodi GitHub.
+
+## Regole anti-perdita dati
+
+1. **No delete** da `queue` in questa fase (principio prudente; allineato a [`done-failed-design.md`](./done-failed-design.md)).
+2. **Create/update** del file `done` solo dopo contenuto costruito in memoria (o in item n8n) verificabile.
+3. **Verify** opzionale ma consigliato: GET del `done_path` dopo write, controllo presenza sezione outcome o hash atteso.
+4. **Update session** dopo `done` stabile, con stessi riferimenti path e `source_sha` / `completed_at`.
+5. **Delete** (queue o altro) solo in **futuro** e con **gate** esplicito in documento separato / task.
+
+## Interazione con queue reader
+
+Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. Oggi il queue reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (**Opzione A**).
+
+In **futuro** si può estendere la logica di skip (es. non eleggere task se esiste già `docs/tasks/done/{task}.md`, o se la sessione riporta chiusura copy-only), coordinando [`task-lifecycle.md`](./task-lifecycle.md) e questo design **prima** di cambiare il workflow reale.
+
+## Test consigliato
+
+Creare in `docs/tasks/queue/` un task di prova:
+
+`0004-test-n8n-done-copy-only-generalized.md`
+
+Eseguire il workflow generalizzato (con **Set** manuale `task_name = 0004-test-n8n-done-copy-only-generalized`) e verificare `done`, `session` e integrità `queue`.
+
+## Rischi
+
+| Rischio | Descrizione |
+|---------|-------------|
+| Path derivati errati | Typo in `task_name` → sovrascrittura file sbagliati. |
+| Sessione aggiornata male | Riferimenti a prompt/sessione non allineati al `task` reale. |
+| Done duplicati / incoerenti | Convenzione `{task}` non rispettata tra cartelle. |
+| Chiusura “done” senza esito reale | Automazione segnala done senza gate umano o senza lavoro Cursor completato (se applicabile). |
+| Conflitti GitHub | Commit concorrenti, SHA obsoleto su update. |
+
+## Mitigazioni
+
+- **Set node manuale** (fase A) per ridurre ambiguità.
+- **Preview path** in un nodo **Code** (log o output read-only) prima dei write.
+- **Nessuna delete** da queue in questa fase.
+- **Verify** dopo update `done` (GET opzionale).
+- **Sessione** sempre aggiornata con gli stessi path usati per `done` e `source_sha` coerente.
+- **Un solo runner** attivo per repo (evita race su stesso `task_name`).
+
+## Prossimo passo consigliato
+
+1. Creare il task **`0004-test-n8n-done-copy-only-generalized.md`** in `queue` **oppure**
+2. Modificare manualmente il workflow n8n aggiungendo **Set task input** + **Build dynamic paths** secondo questo documento, poi rieseguire test.
+
+## Riferimenti
+
+- Workflow validato (0003): [`done-copy-only.md`](./done-copy-only.md)
+- Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
+- Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
+- Queue reader: [`queue-reader.md`](./queue-reader.md)

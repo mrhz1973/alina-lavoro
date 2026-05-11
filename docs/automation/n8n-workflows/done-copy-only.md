@@ -101,10 +101,11 @@ Il file `docs/tasks/queue/0003-test-n8n-done-copy-only.md` **resta** in `queue` 
 
 ## Prossimo passo consigliato
 
-Generalizzare il workflow per ricevere **task id / path queue / path done / path sessione** in modo **dinamico**, oppure introdurre un task **0004** dedicato al test di generalizzazione.
+**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). Implementazione in n8n: task **0004** o Set node dinamico come da design.
 
 ## Riferimenti correlati
 
+- Design generalizzazione (non implementato): [`done-copy-only-generalization.md`](./done-copy-only-generalization.md)
 - Design lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Design done/failed (move, gate, non ancora tutto in n8n): [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)
