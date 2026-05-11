@@ -10,7 +10,8 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **Task 0102** **completato** (tipo `docs-only`, commit `5b86b20` + cleanup `bca334d` + done `bfe85c3`, 2026-05-11): **primo test Claude Code runner docs-only** riuscito — sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
 - **n8n queue reader:** nessun task eleggibile — 0101/0102/0103 coperti da `processing/done` (`docs/tasks/done/0103-lifecycle-ownership-design.md` creato, 2026-05-11).
 - **Task 0103** **completato** (tipo `docs-only`, 2026-05-11): `docs/automation/n8n-workflows/lifecycle-ownership.md` creato — fonte canonica per ownership queue → processing → done / failed; documenti collegati aggiornati; nessuna modifica app, n8n runtime, done/, failed/, deploy, tag.
-- Prossimo passo automazione: validare pattern **failed** (task separato) oppure tornare all'app Alina — decisione orchestratore.
+- **Task 0105** **completato** (tipo `docs-only`, 2026-05-12): `CLAUDE.md` creato nella root — memoria progetto stabile per Claude Code post-compacting; sezione `Compact Instructions`; punta ai documenti canonici senza duplicarli.
+- Prossimo passo automazione: eseguire task 0104 (failed validation stub) oppure tornare all'app Alina — decisione orchestratore.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
@@ -172,6 +173,6 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Task 0103 completato. Prossimo passo automazione: validare pattern **failed** (task separato) oppure tornare all'app Alina — decisione orchestratore.
+1. Task 0105 completato: `CLAUDE.md` creato. Prossimo passo automazione: eseguire task 0104 (failed validation stub) oppure tornare all'app Alina — decisione orchestratore.
 2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
 3. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.
