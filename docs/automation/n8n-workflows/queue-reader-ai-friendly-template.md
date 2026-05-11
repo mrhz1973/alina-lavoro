@@ -67,6 +67,7 @@ Manual Trigger
     ├→ true  → Get queued task file
     │          → Decode task markdown
     │          → Classify task
+    │          → Get cursor prompt template
     │          → Build Cursor prompt
     │             ├→ Check Cursor prompt file exists
     │             │   ├→ Success → IF Cursor prompt file exists
@@ -187,18 +188,29 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Note** | Allinea chiavi a quanto già documentato in `queue-reader.md` (output strutturato). |
 | **Placeholder** | — |
 
-### 10. Build Cursor prompt
+### 10. Get cursor prompt template
+
+| Campo | Valore |
+|--------|--------|
+| **Nome** | Get cursor prompt template |
+| **Tipo n8n presumibile** | GitHub — *Get a file* |
+| **Input atteso** | Path statico template: `docs/tasks/templates/cursor-prompt-default.md` |
+| **Output atteso** | `content`, `encoding`, `name`, `path`, `sha` |
+| **Note** | Il contenuto può arrivare in base64: va decodificato prima dell’uso nel nodo successivo. |
+| **Placeholder** | `<OWNER>`, `<REPO>`, `<BRANCH>` |
+
+### 11. Build Cursor prompt
 
 | Campo | Valore |
 |--------|--------|
 | **Nome** | Build Cursor prompt |
 | **Tipo n8n presumibile** | Code |
-| **Input atteso** | Task classificato + markdown originale |
-| **Output atteso** | `content` (stringa prompt), `targetPath` sotto `<PROCESSING_PATH>`, nome file derivato dal task (es. `{basename}-cursor-prompt.md`) |
-| **Note** | Vedi pseudo-code. |
-| **Placeholder** | `<PROCESSING_PATH>` |
+| **Input atteso** | Output `Classify task` + output `Get cursor prompt template` |
+| **Output atteso** | `cursor_prompt`, `cursor_prompt_path`, `session_path`, `next_action` + metadata task (`task_name`, `task_path`, `task_sha`, `project`, `type`, `priority`, `deploy`) |
+| **Note** | Decodifica `content` (base64/utf8), split su separatore `---` e uso della sola parte operativa; poi sostituzione token template. |
+| **Placeholder** | `<PROCESSING_PATH>`, `<SESSIONS_PATH>` |
 
-### 11. Check Cursor prompt file exists
+### 12. Check Cursor prompt file exists
 
 | Campo | Valore |
 |--------|--------|
@@ -209,7 +221,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Note** | Collegare **Success** all’IF; **Error** (404) al ramo Create. |
 | **Placeholder** | — |
 
-### 12. IF Cursor prompt file exists
+### 13. IF Cursor prompt file exists
 
 | Campo | Valore |
 |--------|--------|
@@ -219,7 +231,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Output atteso** | Ramo true / false |
 | **Note** | true → Update; false → Create. |
 
-### 13. Update Cursor prompt file / Create Cursor prompt file
+### 14. Update Cursor prompt file / Create Cursor prompt file
 
 | Campo | Valore |
 |--------|--------|
@@ -229,7 +241,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Output atteso** | Commit risultato |
 | **Note** | Policy in sezione dedicata. |
 
-### 14. Build session file
+### 15. Build session file
 
 | Campo | Valore |
 |--------|--------|
@@ -239,7 +251,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Output atteso** | `content`, `targetPath` sotto `<SESSIONS_PATH>` (es. `automation-{id}.md`) |
 | **Note** | Vedi pseudo-code. |
 
-### 15. Check session file exists → IF → Update / Create session file
+### 16. Check session file exists → IF → Update / Create session file
 
 | Campo | Valore |
 |--------|--------|
@@ -363,17 +375,67 @@ return [{
 ### Build Cursor prompt
 
 ```javascript
-const classified = $input.first().json;
-var prompt = '';
-prompt += '# Cursor prompt (generated)\n\n';
-prompt += '## Objective\n' + (classified.objective || '') + '\n';
-prompt += '## Context\n…\n';
-prompt += '## Constraints\n…\n';
+const classifiedTask = $('Classify task').first().json;
+const templateFile = items[0].json;
 
-var baseName = classified.taskFileBase || 'task';
-var targetPath = '<PROCESSING_PATH>/' + baseName + '-cursor-prompt.md';
+const safeTaskName = String(classifiedTask.task_name || 'task')
+  .replace(/[^a-zA-Z0-9._-]/g, '-')
+  .replace(/-+/g, '-');
 
-return [{ json: { content: prompt, targetPath: targetPath, taskMeta: classified } }];
+const cursorPromptPath =
+  'docs/tasks/processing/' +
+  safeTaskName.replace(/\.md$/i, '-cursor-prompt.md');
+
+const sessionPath =
+  'docs/sessions/automation-' +
+  safeTaskName.replace(/\.md$/i, '.md');
+
+if (!templateFile.content) {
+  throw new Error('Missing template content from Get cursor prompt template');
+}
+
+const decodedTemplate = Buffer.from(
+  String(templateFile.content || ''),
+  String(templateFile.encoding || '').toLowerCase() === 'base64' ? 'base64' : 'utf8'
+).toString('utf8');
+
+const templateParts = decodedTemplate.split(/\n---\n/);
+const template = templateParts.length > 1
+  ? templateParts.slice(1).join('\n---\n').trim()
+  : decodedTemplate.trim();
+
+function replaceAll(text, token, value) {
+  return String(text).split(token).join(String(value || ''));
+}
+
+let prompt = template;
+
+prompt = replaceAll(prompt, '{{task_source_path}}', classifiedTask.task_path || '');
+prompt = replaceAll(prompt, '{{project}}', classifiedTask.project || '');
+prompt = replaceAll(prompt, '{{type}}', classifiedTask.type || '');
+prompt = replaceAll(prompt, '{{priority}}', classifiedTask.priority || '');
+prompt = replaceAll(prompt, '{{deploy_policy}}', classifiedTask.deploy || '');
+prompt = replaceAll(prompt, '{{objective}}', classifiedTask.objective || '');
+prompt = replaceAll(prompt, '{{requirements}}', classifiedTask.requirements || '');
+prompt = replaceAll(prompt, '{{expected_output}}', classifiedTask.expected_output || '');
+
+return [
+  {
+    json: {
+      task_name: classifiedTask.task_name || '',
+      task_path: classifiedTask.task_path || '',
+      task_sha: classifiedTask.task_sha || '',
+      project: classifiedTask.project || '',
+      type: classifiedTask.type || '',
+      priority: classifiedTask.priority || '',
+      deploy: classifiedTask.deploy || '',
+      cursor_prompt_path: cursorPromptPath,
+      session_path: sessionPath,
+      next_action: 'create_cursor_prompt_file',
+      cursor_prompt: prompt
+    }
+  }
+];
 ```
 
 ### Build session file
