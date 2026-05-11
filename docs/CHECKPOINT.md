@@ -8,7 +8,7 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **PR #7 mergiata** su `main` (2026-05-11): template `cursor-prompt-default.md` e documentazione sessione n8n in repo.
 - **Task 0101** **completato** (tipo `n8n-docs`, commit `5f602f8`, 2026-05-11): n8n legge template dal repo; nodo `Get cursor prompt template` attivo; `Build Cursor prompt` usa contenuto decodificato — marcato done.
 - **Task 0102** **completato** (tipo `docs-only`, commit `5b86b20` + cleanup `bca334d` + done `bfe85c3`, 2026-05-11): **primo test Claude Code runner docs-only** riuscito — sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
-- **n8n queue reader:** nessun task eleggibile — 0101/0102/0103 coperti da `processing/done`.
+- **n8n queue reader:** nessun task eleggibile — 0101/0102/0103 coperti da `processing/done` (`docs/tasks/done/0103-lifecycle-ownership-design.md` creato, 2026-05-11).
 - **Task 0103** **completato** (tipo `docs-only`, 2026-05-11): `docs/automation/n8n-workflows/lifecycle-ownership.md` creato — fonte canonica per ownership queue → processing → done / failed; documenti collegati aggiornati; nessuna modifica app, n8n runtime, done/, failed/, deploy, tag.
 - Prossimo passo automazione: validare pattern **failed** (task separato) oppure tornare all'app Alina — decisione orchestratore.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.

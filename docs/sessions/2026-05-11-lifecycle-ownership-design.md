@@ -72,3 +72,10 @@ Creare `docs/automation/n8n-workflows/lifecycle-ownership.md` come fonte canonic
 ## Prossimo passo suggerito
 
 Validare il pattern failed: creare un task stub es. `docs/tasks/queue/0104-failed-validation-stub.md` (tipo `n8n-docs` o `docs-only`), creare manualmente un file `docs/tasks/failed/0104-failed-validation-stub.md` con sezione `## Failed status`, verificare che il queue reader lo salti (skip `failed/{task}.md`). Non eseguire ora: è task separato successivo a decisione orchestratore.
+
+## Follow-up — Done marker (micro-fix post-commit 7f37ded)
+
+- `docs/tasks/done/0103-lifecycle-ownership-design.md` creato in modalità copy-only.
+- Queue file `docs/tasks/queue/0103-lifecycle-ownership-design.md` mantenuto intatto.
+- Completion commit di riferimento: `7f37ded` — `docs: define task lifecycle ownership`.
+- Questo follow-up impedisce la rieleggibilità di 0103 dal queue reader n8n (skip done su `done/{task}.md` validato da `lifecycle-ownership.md`).
