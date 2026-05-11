@@ -15,11 +15,12 @@ Deriva dal workflow **già testato** in repository:
 Comportamento documentato di riferimento (allineato a `docs/automation/n8n-workflows/queue-reader.md`):
 
 - Test completo OK; workflow **ri-eseguibile**.
-- Lettura primo task Markdown in `<QUEUE_PATH>`; decode; classify.
+- Lettura **queue** + **processing** + **`done`** (design 2026-05-11); primo `.md` in coda **senza** prompt in `processing` **né** file omonimo in `done`; decode; classify.
 - Generazione prompt Cursor; **create/update** sotto `<PROCESSING_PATH>`.
 - **Create/update** sessione automation sotto `<SESSIONS_PATH>`.
 - **Cursor non** è eseguito automaticamente dal workflow.
 - Nessuna modifica al codice app, nessun deploy, nessun tag, nessun tocco a `gas-current/`.
+- **Nessuna delete** da `<QUEUE_PATH>`; implementazione n8n dello skip **`done`** da completare e testare — vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
 
 ## Avvertenza sicurezza
 
@@ -38,6 +39,7 @@ Usare costanti o *Set* node in n8n; in documentazione sostituire con i valori re
 | `BRANCH` | `main` | Placeholder: `<BRANCH>` |
 | `QUEUE_PATH` | `docs/tasks/queue` | Path directory coda |
 | `PROCESSING_PATH` | `docs/tasks/processing` | Path prompt Cursor generati |
+| `DONE_PATH` | `docs/tasks/done` | Path file task archiviati in **done** (solo lettura per filtro skip) |
 | `SESSIONS_PATH` | `docs/sessions` | Path sessioni automation |
 | `TASK_FILE_PATTERN` | `*.md` | Solo markdown |
 | `IGNORE_FILES` | `.gitkeep` | Esclusi dalla selezione |
@@ -52,24 +54,30 @@ Credenziale HTTP/GitHub in n8n: nome concettuale **`<GITHUB_CREDENTIAL_NAME>`** 
 
 ```text
 Manual Trigger
-→ List files
+→ List files                    (<QUEUE_PATH>)
+→ List processing files         (<PROCESSING_PATH>)
+→ List done files               (<DONE_PATH>)
 → Filter first queued task
-→ Get queued task file
-→ Decode task markdown
-→ Classify task
-→ Build Cursor prompt
-   ├→ Check Cursor prompt file exists
-   │   ├→ Success → IF Cursor prompt file exists
-   │   │   ├→ true  → Update Cursor prompt file
-   │   │   └→ false → Create Cursor prompt file
-   │   └→ Error → Create Cursor prompt file
-   └→ Build session file
-       → Check session file exists
-           ├→ Success → IF session file exists
-           │   ├→ true  → Update session file
-           │   └→ false → Create session file
-           └→ Error → Create session file
+→ IF has queued task
+    ├→ true  → Get queued task file
+    │          → Decode task markdown
+    │          → Classify task
+    │          → Build Cursor prompt
+    │             ├→ Check Cursor prompt file exists
+    │             │   ├→ Success → IF Cursor prompt file exists
+    │             │   │   ├→ true  → Update Cursor prompt file
+    │             │   │   └→ false → Create Cursor prompt file
+    │             │   └→ Error → Create Cursor prompt file
+    │             └→ Build session file
+    │                 → Check session file exists
+    │                     ├→ Success → IF session file exists
+    │                     │   ├→ true  → Update session file
+    │                     │   └→ false → Create session file
+    │                     └→ Error → Create session file
+    └→ false → No queued task / already processing   (Code: no_action; nessun write GitHub)
 ```
+
+I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / append) prima del **Code** `Filter first queued task`, oppure il Code può leggere output aggregato da un nodo precedente che incapsula le tre liste: l’importante è che il filtro conosca **nomi file** (basenames) in `processing` e `done` per confrontarli con i candidati in coda.
 
 ---
 
@@ -86,7 +94,7 @@ Manual Trigger
 | **Note** | Trigger di test; in produzione si può sostituire con Schedule/Webhook (fuori scope questo workflow). |
 | **Placeholder** | — |
 
-### 2. List files
+### 2. List files (queue)
 
 | Campo | Valore |
 |--------|--------|
@@ -97,18 +105,51 @@ Manual Trigger
 | **Note** | Parametri: `<OWNER>`, `<REPO>`, `<BRANCH>`, path = `<QUEUE_PATH>`. Credential = `<GITHUB_CREDENTIAL_NAME>`. |
 | **Placeholder** | `<OWNER>`, `<REPO>`, `<BRANCH>`, `<QUEUE_PATH>` |
 
-### 3. Filter first queued task
+### 3. List processing files
+
+| Campo | Valore |
+|--------|--------|
+| **Nome** | List processing files |
+| **Tipo n8n presumibile** | GitHub — list directory |
+| **Input atteso** | Stessi owner/repo/branch |
+| **Output atteso** | Lista entry sotto `<PROCESSING_PATH>` |
+| **Note** | Serve per costruire l’insieme dei basename `{task}-cursor-prompt.md` presenti. |
+| **Placeholder** | `<PROCESSING_PATH>` |
+
+### 4. List done files
+
+| Campo | Valore |
+|--------|--------|
+| **Nome** | List done files |
+| **Tipo n8n presumibile** | GitHub — list directory |
+| **Input atteso** | Stessi owner/repo/branch |
+| **Output atteso** | Lista entry sotto `<DONE_PATH>` |
+| **Note** | Serve per costruire l’insieme dei file **`{task}.md`** già in **done** (skip se esiste omonimo del task in coda). **Contratto** con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). |
+| **Placeholder** | `<DONE_PATH>` |
+
+### 5. Filter first queued task
 
 | Campo | Valore |
 |--------|--------|
 | **Nome** | Filter first queued task |
 | **Tipo n8n presumibile** | Code |
-| **Input atteso** | Lista file da List files |
-| **Output atteso** | Un item con `path`, `name`, `sha` (se disponibile) del **primo** `.md` ordinato per nome; esclusi `<IGNORE_FILES>` |
-| **Note** | Vedi pseudo-code sotto. |
-| **Placeholder** | `TASK_FILE_PATTERN`, `IGNORE_FILES` |
+| **Input atteso** | Liste da **queue**, **processing** e **done** (dopo Merge o struttura equivalente) |
+| **Output atteso** | Un item con `path`, `name`, `sha` (se disponibile) del **primo** `.md` in coda eleggibile; più `has_task` (boolean) e messaggio `reason` se nessun task eleggibile |
+| **Note** | Vedi pseudo-code: escludere `<IGNORE_FILES>`, ordinare per nome, saltare se esiste `<PROCESSING_PATH>/{task}-cursor-prompt.md` **oppure** `<DONE_PATH>/{task}.md`. |
+| **Placeholder** | `TASK_FILE_PATTERN`, `IGNORE_FILES`, `<PROCESSING_PATH>`, `<DONE_PATH>` |
 
-### 4. Get queued task file
+### 6. IF has queued task
+
+| Campo | Valore |
+|--------|--------|
+| **Nome** | IF has queued task |
+| **Tipo n8n presumibile** | IF |
+| **Input atteso** | Item da Filter (`has_task` / flag coerente) |
+| **Output atteso** | Ramo `true` → catena Get/Decode/…; ramo `false` → Code terminatore **no_action** (nessun write GitHub) |
+| **Note** | Allineato a `queue-reader.md`; messaggio `reason` può citare skip per **processing** e/o **done**. |
+| **Placeholder** | — |
+
+### 7. Get queued task file
 
 | Campo | Valore |
 |--------|--------|
@@ -119,7 +160,7 @@ Manual Trigger
 | **Note** | Conservare `sha` per update futuri su altri nodi se necessario. |
 | **Placeholder** | Stessi owner/repo/branch |
 
-### 5. Decode task markdown
+### 8. Decode task markdown
 
 | Campo | Valore |
 |--------|--------|
@@ -130,7 +171,7 @@ Manual Trigger
 | **Note** | Parsing leggero (regex/split); coerente con il template task in `docs/tasks/templates/`. |
 | **Placeholder** | — |
 
-### 6. Classify task
+### 9. Classify task
 
 | Campo | Valore |
 |--------|--------|
@@ -141,7 +182,7 @@ Manual Trigger
 | **Note** | Allinea chiavi a quanto già documentato in `queue-reader.md` (output strutturato). |
 | **Placeholder** | — |
 
-### 7. Build Cursor prompt
+### 10. Build Cursor prompt
 
 | Campo | Valore |
 |--------|--------|
@@ -152,7 +193,7 @@ Manual Trigger
 | **Note** | Vedi pseudo-code. |
 | **Placeholder** | `<PROCESSING_PATH>` |
 
-### 8. Check Cursor prompt file exists
+### 11. Check Cursor prompt file exists
 
 | Campo | Valore |
 |--------|--------|
@@ -163,7 +204,7 @@ Manual Trigger
 | **Note** | Collegare **Success** all’IF; **Error** (404) al ramo Create. |
 | **Placeholder** | — |
 
-### 9. IF Cursor prompt file exists
+### 12. IF Cursor prompt file exists
 
 | Campo | Valore |
 |--------|--------|
@@ -173,7 +214,7 @@ Manual Trigger
 | **Output atteso** | Ramo true / false |
 | **Note** | true → Update; false → Create. |
 
-### 10. Update Cursor prompt file / Create Cursor prompt file
+### 13. Update Cursor prompt file / Create Cursor prompt file
 
 | Campo | Valore |
 |--------|--------|
@@ -183,7 +224,7 @@ Manual Trigger
 | **Output atteso** | Commit risultato |
 | **Note** | Policy in sezione dedicata. |
 
-### 11. Build session file
+### 14. Build session file
 
 | Campo | Valore |
 |--------|--------|
@@ -193,7 +234,7 @@ Manual Trigger
 | **Output atteso** | `content`, `targetPath` sotto `<SESSIONS_PATH>` (es. `automation-{id}.md`) |
 | **Note** | Vedi pseudo-code. |
 
-### 12. Check session file exists → IF → Update / Create session file
+### 15. Check session file exists → IF → Update / Create session file
 
 | Campo | Valore |
 |--------|--------|
@@ -209,19 +250,61 @@ Manual Trigger
 ### Filter first queued task
 
 ```javascript
-// items: output GitHub list directory
+// Input concettuale dopo Merge (o item unico con tre array):
+// queueEntries, processingEntries, doneEntries — come restituiti dalla list directory GitHub.
 const IGNORE = '.gitkeep';
-const files = items[0].json /* oppure struttura reale API */
+
+function taskSlugFromQueueName(/** string */ queueFileName) {
+  if (!queueFileName || !queueFileName.endsWith('.md')) return null;
+  return queueFileName.replace(/\.md$/i, '');
+}
+
+function processingSkipSet(entries) {
+  var set = {};
+  (entries || []).forEach(function (e) {
+    if (e.type !== 'file' || !e.name || !e.name.endsWith('-cursor-prompt.md')) return;
+    var base = e.name.replace(/-cursor-prompt\.md$/i, '');
+    set[base] = true;
+  });
+  return set;
+}
+
+function doneSkipSet(entries) {
+  var set = {};
+  (entries || []).forEach(function (e) {
+    if (e.type !== 'file' || !e.name || !e.name.endsWith('.md') || e.name === IGNORE) return;
+    var base = e.name.replace(/\.md$/i, '');
+    set[base] = true;
+  });
+  return set;
+}
+
+const queueFiles = (queueEntries || [])
   .filter(function (e) {
     return e.type === 'file' && e.name.endsWith('.md') && e.name !== IGNORE;
   })
   .sort(function (a, b) { return a.name.localeCompare(b.name); });
 
-if (!files.length) {
-  throw new Error('No queued markdown task');
+const skipProc = processingSkipSet(processingEntries);
+const skipDone = doneSkipSet(doneEntries);
+
+for (var i = 0; i < queueFiles.length; i++) {
+  var q = queueFiles[i];
+  var task = taskSlugFromQueueName(q.name);
+  if (!task) continue;
+  if (skipProc[task] || skipDone[task]) {
+    continue;
+  }
+  return [{ json: { path: q.path, name: q.name, sha: q.sha, has_task: true } }];
 }
 
-return [{ json: { path: files[0].path, name: files[0].name, sha: files[0].sha } }];
+return [{
+  json: {
+    has_task: false,
+    reason: 'No eligible queued task (skipped: processing prompt and/or done file already present)',
+    checked_at: new Date().toISOString()
+  }
+}];
 ```
 
 ### Decode task markdown
@@ -317,6 +400,7 @@ Ordine consigliato: non sovrascrivere senza `sha` quando il file esiste (evita r
 | Ruolo | Path tipo |
 |--------|-----------|
 | **Task input** | `<QUEUE_PATH>/{nome-task}.md` |
+| **Lettura skip (no write)** | `<DONE_PATH>/{task}.md` |
 | **Prompt Cursor output** | `<PROCESSING_PATH>/{nome}-cursor-prompt.md` |
 | **Session automation output** | `<SESSIONS_PATH>/automation-{id}.md` |
 
@@ -335,6 +419,7 @@ Esempi reali già usati in test (repository):
 - **Non** esegue deploy Apps Script.
 - **Non** crea tag Git.
 - **Non** sposta ancora i task da `queue` a `processing` / `done` / `failed`.
+- **Non** rimuove file da `<QUEUE_PATH>` (nessuna delete da coda in questa fase).
 - **Non** sostituisce gate manuali (review umana, test `/exec`, policy release).
 
 ---

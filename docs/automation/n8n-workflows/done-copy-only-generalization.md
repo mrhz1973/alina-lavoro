@@ -132,7 +132,7 @@ La policy “**create or update**” (o ramo Error → Create come nel queue rea
 
 Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. Oggi il queue reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (**Opzione A**).
 
-In **futuro** si può estendere la logica di skip (es. non eleggere task se esiste già `docs/tasks/done/{task}.md`, o se la sessione riporta chiusura copy-only), coordinando [`task-lifecycle.md`](./task-lifecycle.md) e questo design **prima** di cambiare il workflow reale.
+**Contratto atteso (documentato 2026-05-11, implementazione n8n da validare):** estendere lo stesso principio di skip quando esiste **`docs/tasks/done/{task}.md`**, così un task già chiuso in copy-only **done** non riceve un nuovo prompt pur restando in `queue`. Dettagli e stato lavori in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md); coordinamento con [`task-lifecycle.md`](./task-lifecycle.md).
 
 ## Test consigliato
 
@@ -165,9 +165,9 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 
 ## Prossimo passo consigliato
 
-1. **Implementare lo skip nel queue reader** quando esiste già **`docs/tasks/done/{task}.md`** (o policy equivalente su sessione), così i task già archiviati in `done` non vengono riselezionati per nuovi prompt — priorità immediata; contesto in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md) e [`task-lifecycle.md`](./task-lifecycle.md).
+1. **Implementare e testare in n8n** lo skip del queue reader quando esiste **`docs/tasks/done/{task}.md`** — specifica in [`queue-reader.md`](./queue-reader.md), template in [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md), traccia in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md); contesto anche in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md) e [`task-lifecycle.md`](./task-lifecycle.md).
 2. **Opzionale:** rafforzare `Verify done file` con controlli sul **contenuto** (presenza `## Done copy-only outcome`, vincoli di size) oltre al GET di esistenza.
-3. **Contratto dati** con il queue reader (**opzione B**) dopo che lo skip per `done` è definito e testato.
+3. **Contratto dati** con il queue reader (**opzione B**) dopo che lo skip per `done` è **implementato e testato** in n8n.
 
 ## Riferimenti
 
@@ -177,4 +177,4 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 - Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md)
 - Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
-- Queue reader: [`queue-reader.md`](./queue-reader.md)
+- Queue reader: [`queue-reader.md`](./queue-reader.md) · skip `done` (design): [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md)
