@@ -180,6 +180,30 @@ return [
 ];
 ```
 
+
+## Aggiornamento 2026-05-11 — Template prompt letto dal repository (task 0101)
+
+- Workflow modificato in n8n: **`TEST - GitHub list Alina task queue`** (solo questo workflow).
+- Nuovo nodo aggiunto: **`Get cursor prompt template`** (lettura file GitHub `docs/tasks/templates/cursor-prompt-default.md`).
+- Flusso logico finale nel ramo `has_task: true`:
+  - `Classify task` → `Get cursor prompt template` → `Build Cursor prompt`.
+- `Build Cursor prompt` ora:
+  - usa `const templateFile = items[0].json;` (fix errore precedente `item is not defined`);
+  - decodifica `templateFile.content` (`base64`/`utf8`);
+  - divide il file template sul separatore `---`;
+  - usa **solo la parte operativa dopo `---`**, evitando l’header documentativo `# Cursor prompt template — default`.
+- Validazione manuale task `0101-n8n-read-cursor-prompt-template-from-repo.md`:
+  - output coerente (`Project: Alina Lavoro`, `Type: n8n-docs`, `Priority: normal`, `Deploy policy: no`);
+  - `cursor_prompt_path`: `docs/tasks/processing/0101-n8n-read-cursor-prompt-template-from-repo-cursor-prompt.md`;
+  - `session_path`: `docs/sessions/automation-0101-n8n-read-cursor-prompt-template-from-repo.md`;
+  - `next_action: create_cursor_prompt_file`;
+  - `cursor_prompt` generato con inizio corretto: `@docs/roadmap.md`.
+- Test di idempotenza finale (secondo run):
+  - `has_task: false`;
+  - messaggio: `No queued task found or all queued tasks already have processing prompts or done files`;
+  - interpretazione: task `0101` saltato correttamente perché il prompt esiste già in `docs/tasks/processing/`.
+- Nota residua invariata: finché `Classify task` non viene esteso, i task devono mantenere metadata in **formato lista** (`- Project: ...`, `- Type: ...`, ...).
+
 ## Prossimo passo consigliato
 
 1. **Export JSON** n8n: se serve versionare il workflow, **redigere** credenziali/URL/token prima di ogni commit (mai URL raw con `token=` in documentazione).
