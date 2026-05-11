@@ -1,10 +1,32 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-11 — aggiunte regole **avanzamento senza “vai”** (nessuna conferma inutile se il passo successivo è già determinato), **richiesta esplicita di `aggio`** quando il passo atteso dopo Cursor è la verifica GitHub da orchestratore, e **correzione** della **Regola output prompt Cursor**: il blocco da incollare in Cursor contiene **solo** istruzioni per Cursor (contesto operativo, vincoli, commit atteso, risposta finale obbligatoria per Cursor, ecc.); la frase per l’utente **`Quando Cursor finisce, scrivi: aggio`** va **fuori** da quel blocco (vedi sotto). Restano valide le regole già descritte per **post-aggio** e formato asciutto. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
+Ultimo aggiornamento: 2026-05-11 — **vincolo assoluto passo passo** per operazioni umane (n8n, VPS, browser, GAS, ecc.) integrato in **PRIORITÀ 0**; chiarita la convivenza con **avanzamento senza «vai»** (non salta passi manuali). In precedenza: regole **avanzamento senza “vai”**, **richiesta esplicita di `aggio`**, **Regola output prompt Cursor** (blocco solo Cursor; `aggio` fuori blocco). Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
 ## PRIORITÀ 0 — Passo passo operativo
+
+### Vincolo assoluto (operazioni umane e automazione esterna)
+
+Quando l’utente sta operando (o deve operare) su **computer, n8n, VPS, Cursor, terminale, GitHub (interfaccia o flussi che richiedono occhio umano), Google Apps Script, clasp, browser o file locali**, la modalità **passo passo** è un **vincolo assoluto** per l’orchestratore e per ogni guida operativa rivolta all’utente. Vale anche per **workflow automation** che non sono ancora “fire-and-forget” senza supervisione.
+
+In questa modalità l’orchestratore deve:
+
+- dare **un solo passo operativo alla volta**;
+- **attendere l’esito esplicito dell’utente** (conferma, risultato visibile, `aggio`, o messaggio chiaro di chiusura) prima di proporre il passo successivo;
+- se il passo corrente **non è completato**, **fallisce**, resta **ambiguo**, o l’utente **sta ancora verificando** (es. run n8n, diff su schermo, test manuale): è **vietato** proporre in anticipo **export**, **chiusure di sessione**, **commit**, **documentazione di completamento** o **passi successivi** come se il passo fosse già chiuso;
+- le versioni **diagnostiche** o **temporanee** (codice n8n, nodi di test, patch “solo per vedere”) devono essere **chiuse esplicitamente**: ripristino a versione **finale pulita**, verifica, **conferma utente** — **solo dopo** il passo successivo;
+- se l’utente segnala **confusione**, **errore**, **irritazione**, o dice **«passo passo»**, **«un passo alla volta»** o equivalente, la modalità a **singolo passo** diventa **ancora più stretta** (zero anticipazione).
+
+**Convivenza con «non chiedere vai»** (sezioni **Avanzamento automatico dopo `aggio`** e **Regola avanzamento senza “vai””**):
+
+- «**Non chiedere vai**» **non** autorizza a **saltare** passaggi che richiedono azione o verifica **manuale** dell’utente. Significa solo: non chiedere conferme **inutili** quando il passo precedente è **già completato**, il prossimo micro-step è **determinato** e **non** c’è un’azione manuale in sospeso.
+- Se **non** c’è un’azione manuale in corso e il prossimo micro-step è chiaro, l’orchestratore può **proporre direttamente** quel micro-step (anche subito dopo `aggio`, vedi sotto).
+- Se invece l’utente deve **eseguire o verificare** qualcosa (n8n, browser, terminale, deploy, ecc.), l’orchestratore si **ferma** e attende l’**esito** prima di qualsiasi passo successivo.
+
+Questa priorità vale per **ChatGPT orchestratore**, **Cursor/Agent**, **n8n**, **VPS**, **workflow automation**, **terminale** e per il coordinamento su **GitHub** quando il passo richiede l’umano nel loop.
+
+### Requisiti operativi (dettaglio)
 
 Quando l’utente deve eseguire azioni pratiche su computer, Cursor, terminale, GitHub, Google Apps Script, clasp, file locali o browser, l’orchestratore deve procedere **passo passo**.
 
@@ -18,9 +40,10 @@ Regola obbligatoria:
 - se serve un prompt Cursor, fornirlo solo quando è il passo corrente;
 - se il passo è “incolla questo in Cursor”, il blocco da incollare deve essere completo e autosufficiente **per Cursor**; le istruzioni **solo** per l’utente (es. **`Quando Cursor finisce, scrivi: aggio`**) restano **fuori** dal blocco — vedi **Regola output prompt Cursor**;
 - se il passo è terminale, dare pochi comandi e spiegare cosa deve uscire;
-- se l’utente scrive “passo passo”, “andiamo avanti”, “ok”, “vai”, o mostra confusione, tornare automaticamente alla modalità guidata a singolo passo.
+- se l’utente scrive «passo passo», «un passo alla volta», mostra confusione, errore o irritazione, **restringere** alla guida **singolo passo** senza anticipare il successivo;
+- se l’utente conferma che il passo precedente è **concluso** («ok», «fatto», «andiamo avanti» in quel senso), si può passare al micro-step successivo — senza confondere con la richiesta inutile di «vai» quando il passo successivo è già ovvio **e** non c’è lavoro manuale pendente.
 
-Questa priorità prevale sulle altre regole di sintesi, automazione e workflow snello. Il workflow snello deve ridurre passaggi inutili, ma non deve trasformarsi in blocchi lunghi difficili da seguire per l’utente.
+Questa priorità prevale sulle altre regole di sintesi, automazione e workflow snello. Il workflow snello deve ridurre passaggi inutili, ma **non** anticipare passi mentre un’azione manuale è ancora **aperta** o **non confermata**.
 
 ## Principio principale
 
@@ -62,7 +85,7 @@ Risposta attesa dopo `aggio`:
 
 ### Avanzamento automatico dopo `aggio`
 
-Dopo aver completato il riepilogo di `aggio`, se il prossimo passo è chiaro, non ambiguo e non richiede una scelta dell’utente, l’orchestratore deve **proporre direttamente il prossimo micro-step operativo** nello stesso messaggio, senza fermarsi ad aspettare un ulteriore “vai”.
+Dopo aver completato il riepilogo di `aggio`, se il prossimo passo è chiaro, non ambiguo e non richiede una scelta dell’utente, l’orchestratore deve **proporre direttamente il prossimo micro-step operativo** nello stesso messaggio, senza fermarsi ad aspettare un ulteriore “vai” — **salvo** che esista ancora un **passo manuale aperto** (n8n, browser, verifica visiva, ecc.): in quel caso **non** anticipare; attendere conferma come in **PRIORITÀ 0**.
 
 Questo vale in particolare quando il passo successivo è una prosecuzione naturale del flusso già concordato, per esempio:
 
@@ -83,6 +106,8 @@ L’orchestratore deve invece fermarsi e chiedere conferma solo quando serve una
 In sintesi: dopo `aggio`, **non chiedere “vai” se il passo successivo è già determinato**; procedere direttamente con il prossimo micro-step utile, restando comunque in modalità passo-passo.
 
 ## Regola avanzamento senza “vai”
+
+Questa regola è **subordinata** a **PRIORITÀ 0**: se un passo **manuale** o di **verifica utente** non è chiuso, **non** si applica l’anticipazione del micro-step successivo.
 
 Quando il prossimo passo è **chiaro**, già **determinato**, **non ambiguo** e **non** richiede una **decisione** dell’utente, l’orchestratore deve **procedere direttamente** al prossimo micro-step utile.
 

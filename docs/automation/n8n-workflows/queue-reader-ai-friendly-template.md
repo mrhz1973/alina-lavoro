@@ -20,6 +20,7 @@ Comportamento documentato di riferimento (allineato a `docs/automation/n8n-workf
 - **Create/update** sessione automation sotto `<SESSIONS_PATH>`.
 - **Cursor non** è eseguito automaticamente dal workflow.
 - Nessuna modifica al codice app, nessun deploy, nessun tag, nessun tocco a `gas-current/`.
+- Modifiche al workflow reale in n8n: disciplina **passo passo** e **`n8n manual run discipline`** — [`docs/automation/README.md`](../../automation/README.md), sessione [`docs/sessions/2026-05-11-operational-step-by-step-hard-rule.md`](../../sessions/2026-05-11-operational-step-by-step-hard-rule.md).
 - **Nessuna delete** da `<QUEUE_PATH>`; implementazione n8n dello skip **`done`** da completare e testare — vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
 
 ## Avvertenza sicurezza

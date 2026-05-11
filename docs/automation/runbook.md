@@ -13,6 +13,7 @@ Roadmap interna per introdurre automazione **senza** saltare i gate di sicurezza
 - VPS con n8n installato (fuori scope repo Alina Lavoro).
 - Workflow: trigger su push GitHub che tocca `docs/tasks/queue/**` oppure polling timer.
 - Azione: notifica (email/Telegram/Slack) con titolo task e link al file.
+- Disciplina operativa sugli editor/run manuali in n8n: vedi **`n8n manual run discipline`** in `docs/automation/README.md` (passo passo, niente export finché il workflow non è pulito e verificato).
 
 ## Fase 3 — Runner documentale
 

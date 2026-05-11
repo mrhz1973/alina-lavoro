@@ -40,3 +40,18 @@ ChatGPT → definizione task → GitHub (docs/tasks/queue)
 - Nuove dipendenze, service worker, refactor massivi.
 
 Dettaglio permessi: `docs/automation/permissions.md`. Fasi operative: `docs/automation/runbook.md`.
+
+## Disciplina esecuzione manuale n8n / VPS (`n8n manual run discipline`)
+
+Allineata a **`docs/ORCHESTRATOR_RULES.md`** (**PRIORITÀ 0 — passo passo**), `docs/WORKFLOW.md` e `docs/AI_RULES.md`:
+
+- Durante modifiche a **workflow n8n reali**, l’operatore (o l’orchestratore che guida l’operatore) completa e **conferma un nodo / un test alla volta**; **non** proporre il passo successivo mentre il run corrente è ancora aperto, ambiguo o in verifica.
+- **Non esportare** il workflow (JSON o equivalente) e **non** considerare il lavoro chiuso finché:
+  - nodi **diagnostici temporanei** non sono **rimossi** o ripristinati;
+  - i nodi aggiunti non sono in stato **pulito** (naming, parametri, niente debug lasciato per sbaglio);
+  - l’**output atteso** dell’esecuzione è **verificato** dall’operatore;
+  - il workflow è in stato **finale**, non solo “diagnostico”.
+- **Non modificare** workflow già **validati** se non sono il **target esplicito** del micro-step corrente.
+- **Esempio vincolante:** mentre si lavora allo skip `done` del queue reader (`TEST - GitHub list Alina task queue`), **non** toccare il workflow **`TEST - Mark Alina task done copy-only generalized`** (già validato su 0004).
+
+Sessione motivante: [`docs/sessions/2026-05-11-operational-step-by-step-hard-rule.md`](../sessions/2026-05-11-operational-step-by-step-hard-rule.md).

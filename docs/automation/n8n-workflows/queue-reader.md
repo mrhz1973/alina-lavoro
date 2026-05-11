@@ -85,6 +85,10 @@ Manual Trigger
 - **Token o segreti** non devono essere salvati nel repository GitHub né committati in chiaro.
 - Eventuali **export JSON** del workflow n8n vanno **redatti** prima del commit se contengono riferimenti a credenziali, webhook o dati sensibili.
 
+## Disciplina modifica workflow (allineamento repo)
+
+Per modifiche manuali a **questo** workflow in n8n, applicare **`n8n manual run discipline`** in [`docs/automation/README.md`](../../automation/README.md) e **`docs/ORCHESTRATOR_RULES.md`** (PRIORITÀ 0). **Un passo / un test alla volta**; niente export o “chiusura” finché il grafo non è **pulito** e l’output è **verificato**. **Non** modificare altri workflow già validati se non sono il target del micro-step (es. **non** toccare **`TEST - Mark Alina task done copy-only generalized`** mentre si lavora allo skip `done` del queue reader). Contesto: [`docs/sessions/2026-05-11-operational-step-by-step-hard-rule.md`](../../sessions/2026-05-11-operational-step-by-step-hard-rule.md).
+
 ## Stato pubblicazione documentazione
 
 Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly** nel repo: **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un **export JSON** n8n resta opzionale e va redatto prima del commit.

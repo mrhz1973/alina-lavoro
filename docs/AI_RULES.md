@@ -75,6 +75,15 @@ L'implementatore deve interpretarla come obbligo di eseguire il blocco canonico 
 
 Se un comando non e disponibile nell'ambiente, l'implementatore deve usare un equivalente e dichiararlo nel riepilogo finale.
 
+## Passo passo e blocchi operativi (Cursor / Agent)
+
+- In task **operativi**, lavorare a **blocchi piccoli**; **non** anticipare fasi successive non richieste dal prompt o dal task corrente.
+- Se il task include **procedure manuali** o **n8n** (o altro fuori dal repo), documentare in chiusura **quali passi sono completati** e **quali restano aperti** per l’utente.
+- **Codice diagnostico temporaneo** (es. nodi Code di debug, log rumorosi, workaround “solo per provare”): o **rimuoverlo** prima della chiusura del blocco, o dichiararlo **esplicitamente temporaneo** nel riepilogo e **non** presentare il blocco come finale finché non è ripulito e confermato.
+- Nel **riepilogo finale** obbligatorio, indicare se restano **passaggi manuali** non completati (sì/no e quali).
+
+Allineamento orchestratore: `docs/ORCHESTRATOR_RULES.md` (**PRIORITÀ 0**). Disciplina n8n: `docs/automation/README.md` (**n8n manual run discipline**).
+
 ## Modalita di lavoro
 
 - Per modifiche **importanti o ambigue**: **Plan** prima di **Agent**, con piano approvato dall'utente.

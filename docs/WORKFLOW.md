@@ -9,6 +9,14 @@ Obiettivo: ridurre il copia/incolla manuale e mantenere sempre GitHub come fonte
 - **Implementatore**: Cursor / Agent. Esegue i comandi terminale, modifica file, aggiorna documenti, fa commit e push.
 - **GitHub**: memoria condivisa e **unica fonte di verità che l'orchestratore può leggere** (non il filesystem locale di Cursor). Deve essere aggiornato dall'implementatore a fine blocco, anche se l'utente non scrive esplicitamente `finito`.
 
+## Passo passo e passi manuali (vincolo)
+
+- **Nessun passaggio al passo successivo** (nuovo prompt, export, commit di chiusura, documentazione di completamento) finché il **passo corrente** non è **concluso** e, se richiesto, **confermato** dall’utente.
+- Per procedure **n8n**, **VPS**, **browser**, **test visivi** o altre azioni **manuali**: **un solo step** per messaggio o blocco; **attesa** dell’esito o conferma; poi lo step successivo.
+- **GitHub** resta fonte di verità per stato **versionato**, ma **non sostituisce** la conferma dell’utente quando il passo è **manuale e visivo** (es. esito run in n8n, schermata clasp): l’orchestratore non deve trattare un push come prova che l’umano ha già validato il passo in UI, salvo che l’utente lo dichiari.
+
+Riferimento normativo: `docs/ORCHESTRATOR_RULES.md` (**PRIORITÀ 0**), `docs/automation/README.md` (disciplina n8n).
+
 ## Prima di lavorare (implementatore)
 
 All'inizio di un blocco sul branch operativo (**`main`**):
