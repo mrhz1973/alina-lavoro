@@ -8,7 +8,7 @@ Current status: prompt generated, Cursor not executed yet.
 
 ## Timestamp
 
-2026-05-11T01:31:38.626Z
+2026-05-11T01:50:07.583Z
 
 ## Project
 
@@ -80,7 +80,7 @@ Il workflow TEST - GitHub list Alina task queue deve vedere questo file nella ca
 Mandatory constraints:
 - Work on branch main only.
 - Do not use dev.
-- Do not use git add ..
+- Do not use git add .
 - Do not modify gas-current unless explicitly authorized by a deploy/release task.
 - Do not deploy unless the task explicitly authorizes deploy.
 - Do not create tags unless the task explicitly authorizes tag creation.
