@@ -200,4 +200,4 @@ Dopo l’approvazione di questa specifica come linea guida:
 
 ---
 
-*Riferimenti correlati: `queue-reader.md`, `queue-reader-ai-friendly-template.md`, sessione audit `docs/sessions/2026-05-11-n8n-queue-reader-manual-audit.md`.*
+*Riferimenti correlati: `queue-reader.md`, `queue-reader-ai-friendly-template.md`, sessione audit `docs/sessions/2026-05-11-n8n-queue-reader-manual-audit.md`, design chiusura task [`done-failed-design.md`](./done-failed-design.md).*

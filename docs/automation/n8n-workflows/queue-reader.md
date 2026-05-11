@@ -93,4 +93,4 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
 
-**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; la parte **skip** se prompt già in `processing` è attiva nel workflow reale dal 2026-05-11).
+**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; la parte **skip** se prompt già in `processing` è attiva nel workflow reale dal 2026-05-11). **Chiusura `done`/`failed` (design, non implementato):** [`done-failed-design.md`](./done-failed-design.md).
