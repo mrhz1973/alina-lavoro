@@ -7,7 +7,7 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **n8n queue reader:** skip **`done`** su **`TEST - GitHub list Alina task queue`** — **implementato e validato** in UI (2026-05-11); **ramo `has_task: true`** con **0005**; **primo docs-only 0100** con vincolo metadata in **formato lista** per **Classify task** (stessa sessione). Restano regressioni mirate / watcher MVP per `docs/automation/runbook.md`.
 - **PR #7 mergiata** su `main` (2026-05-11): template `cursor-prompt-default.md` e documentazione sessione n8n in repo.
 - **Task 0101** in queue (tipo `n8n-docs`): aggiornare n8n per leggere template dal repo — richiede lavoro manuale n8n.
-- **Task 0102** in queue (tipo `docs-only`): **primo test Claude Code runner docs-only** — in esecuzione (2026-05-11); sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
+- **Task 0102** **completato** (tipo `docs-only`, commit `5b86b20`, 2026-05-11): **primo test Claude Code runner docs-only** — workspace pulito; push su `main` eseguito; sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
@@ -169,7 +169,6 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Completare **task 0102** (docs-only, Claude Code runner) — commit + push post-approvazione manuale.
-2. Eseguire **task 0101** (n8n-docs) — aggiornare n8n per leggere template dal repo.
-3. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
-4. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.
+1. Eseguire **task 0101** (n8n-docs) — aggiornare n8n per leggere template dal repo (richiede lavoro manuale n8n).
+2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
+3. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.

@@ -31,15 +31,17 @@ Runner: Claude Code (temporaneo al posto di Cursor, ~11 giorni)
 ## Checks eseguiti (pre-commit)
 
 - `git diff --check`: nessun errore di whitespace.
-- `git diff --stat`: solo path sotto `docs/` — gate superato.
+- `git diff --cached --stat`: solo path sotto `docs/` — gate superato.
 - `git status --short`: 3 file modificati/creati, tutti sotto `docs/`.
 
 ## Esito
 
 - Task 0102 completato: docs aggiornate, sessione creata.
+- Commit: `5b86b20` — `docs: update automation state for claude-code runner test`.
+- Push su `origin/main` eseguito.
+- Workspace pulito post-push.
 - Nessuna modifica a `src/`, `gas-current/`, `appsscript.json`, `package.json`.
 - Nessun deploy, nessun tag, nessun rollback.
-- Approvazione manuale utente richiesta prima di commit e push.
 
 ## Rischi residui
 
