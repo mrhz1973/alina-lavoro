@@ -8,20 +8,20 @@ Current status: prompt generated, Cursor not executed yet.
 
 ## Timestamp
 
-2026-05-11T09:11:20.782Z
+2026-05-11T09:26:07.212Z
 
 ## Project
 
-
+Alina Lavoro
 
 ## Task
 
 - Task name: 0100-cursor-prompt-template-in-repo.md
 - Task path: docs/tasks/queue/0100-cursor-prompt-template-in-repo.md
-- Task SHA: b7a221e025659457e97059df84c25ef6167d7276
-- Type: 
-- Priority: 
-- Deploy policy: 
+- Task SHA: 0b8a97dc991d6b9e9056c2128830c7a53977841a
+- Type: docs-only
+- Priority: normal
+- Deploy policy: no
 
 ## Generated files
 
@@ -57,16 +57,16 @@ Task source:
 docs/tasks/queue/0100-cursor-prompt-template-in-repo.md
 
 Project:
-
+Alina Lavoro
 
 Type:
-
+docs-only
 
 Priority:
-
+normal
 
 Deploy policy:
-
+no
 
 Objective:
 Creare il file:
