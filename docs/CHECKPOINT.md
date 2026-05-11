@@ -1,10 +1,13 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **OK** (2026-05-10): **1.9.2**; Dettaglio mese layout visivo; metriche in alto; card giorno; barre proporzionali; **Indietro** OK; **Stipendio** assente sul mese corrente e presente sui precedenti; smoke Home–Note–Impostazioni OK; **Xiaomi Redmi 9C NFC** incluso. **V1.9.1** su **`@23`:** **OK** (2026-05-10). Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
+Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** più **visivo** — metriche, card, barre ore ); `APP_VERSION` **1.9.2**; Apps Script **clasp `@24`** — ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; tag **`v1.9.2-stable`**. Deploy Windows — **Git Bash** + `npx clasp` se `npm run deploy` fallisce (`docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`). **Rollback immediato:** **`v1.9.1-stable`** / **`@23`**. **Test manuale utente su `/exec` @24:** **OK** (2026-05-10): **1.9.2**; Dettaglio mese layout visivo; metriche in alto; card giorno; barre proporzionali; **Indietro** OK; **Stipendio** assente sul mese corrente e presente sui precedenti; smoke Home–Note–Impostazioni OK; **Xiaomi Redmi 9C NFC** incluso. **V1.9.1** su **`@23`:** **OK** (2026-05-10). Banner GAS «creato da un utente di Google Apps Script» = **limitazione piattaforma**, non bug app — vedi sessione. **Link Sheet vs Web App:** uso quotidiano sul cellulare = URL Web App **`/exec`**; il Google Sheet è solo database/amministrazione. Workflow **main-only**; **`aggio:win`** (`docs/COMMANDS.md`).
 
 ## Prossimo passo — automazione (pilota)
 
 - **n8n queue reader:** skip **`done`** su **`TEST - GitHub list Alina task queue`** — **implementato e validato** in UI (2026-05-11); **ramo `has_task: true`** con **0005**; **primo docs-only 0100** con vincolo metadata in **formato lista** per **Classify task** (stessa sessione). Restano regressioni mirate / watcher MVP per `docs/automation/runbook.md`.
+- **PR #7 mergiata** su `main` (2026-05-11): template `cursor-prompt-default.md` e documentazione sessione n8n in repo.
+- **Task 0101** in queue (tipo `n8n-docs`): aggiornare n8n per leggere template dal repo — richiede lavoro manuale n8n.
+- **Task 0102** in queue (tipo `docs-only`): **primo test Claude Code runner docs-only** — in esecuzione (2026-05-11); sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
@@ -166,5 +169,7 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
-2. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.
+1. Completare **task 0102** (docs-only, Claude Code runner) — commit + push post-approvazione manuale.
+2. Eseguire **task 0101** (n8n-docs) — aggiornare n8n per leggere template dal repo.
+3. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
+4. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.
