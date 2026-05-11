@@ -6,7 +6,7 @@
 
 ## Stato
 
-Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)). Il workflow **`TEST - Mark Alina task done copy-only generalized`** (task **0004**, path dinamici): prima run in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md); **rerun idempotente** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md); **Verify done file** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md) — vedi [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).
+Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)). Il workflow **`TEST - Mark Alina task done copy-only generalized`** (task **0004**, path dinamici): prima run in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md); **rerun idempotente** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md); **Verify done file** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md) — vedi [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).
 
 ## Scopo
 
@@ -101,14 +101,14 @@ Il file `docs/tasks/queue/0003-test-n8n-done-copy-only.md` **resta** in `queue` 
 
 ## Prossimo passo consigliato
 
-**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Stato:** validazione **0004** + **rerun idempotente** + **Verify done file** OK — sessioni [`0004-generalized-validation`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md), [`0004-idempotent-rerun`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md), [`0004-verify-done-file`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md). **Prossima evoluzione documentata:** skip queue reader se `done` esiste; contratto dati con queue reader.
+**Design generalizzazione:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Stato:** validazione **0004** + **rerun idempotente** + **Verify done file** OK — sessioni [`0004-generalized-validation`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md), [`0004-idempotent-rerun`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md), [`0004-verify-done`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md). **Prossima evoluzione documentata:** skip queue reader se `done` esiste; contratto dati con queue reader.
 
 ## Riferimenti correlati
 
 - Design generalizzazione: [`done-copy-only-generalization.md`](./done-copy-only-generalization.md)
 - Validazione generalizzata 0004 (prima run): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
 - Rerun idempotente 0004: [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)
-- Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md)
+- Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md)
 - Design lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Design done/failed (move, gate, non ancora tutto in n8n): [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)

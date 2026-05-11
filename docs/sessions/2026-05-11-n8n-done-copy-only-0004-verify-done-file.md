@@ -1,5 +1,7 @@
 # Sessione — n8n done copy-only 0004 Verify done file
 
+> **Nota:** la sessione di validazione consolidata con esito su file `done` / queue / sessione è anche in [`2026-05-11-n8n-done-copy-only-0004-verify-done.md`](./2026-05-11-n8n-done-copy-only-0004-verify-done.md).
+
 ## Data
 
 2026-05-11
