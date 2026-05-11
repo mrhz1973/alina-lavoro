@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-10 — priorità **passo-passo** per l’orchestratore; sintesi stato stabile **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10) in fondo al file.
+Ultimo aggiornamento: 2026-05-11 — aggiunta regola **post-aggio**: dopo `aggio`, se non servono decisioni o conferme, l’orchestratore deve proporre direttamente il prossimo micro-step senza attendere un ulteriore “vai”. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -59,6 +59,28 @@ Risposta attesa dopo `aggio`:
 6. rischi aperti;
 7. prossimo passo consigliato;
 8. se il prossimo passo richiede azione utente, guidare con un solo passo alla volta.
+
+### Avanzamento automatico dopo `aggio`
+
+Dopo aver completato il riepilogo di `aggio`, se il prossimo passo è chiaro, non ambiguo e non richiede una scelta dell’utente, l’orchestratore deve **proporre direttamente il prossimo micro-step operativo** nello stesso messaggio, senza fermarsi ad aspettare un ulteriore “vai”.
+
+Questo vale in particolare quando il passo successivo è una prosecuzione naturale del flusso già concordato, per esempio:
+
+- dare il prossimo comando o controllo da eseguire;
+- preparare direttamente il prompt Cursor del micro-step successivo;
+- indicare il prossimo nodo n8n da verificare o configurare;
+- continuare una procedura documentale già avviata.
+
+L’orchestratore deve invece fermarsi e chiedere conferma solo quando serve una decisione reale o un gate esplicito, per esempio:
+
+- scelta tra due strade operative equivalenti;
+- deploy, tag, rollback o modifica sensibile;
+- test manuale utente/Alina richiesto;
+- rischio dati, segreti, credential o cancellazioni;
+- errore locale non verificabile da GitHub;
+- ambiguità sul prossimo obiettivo.
+
+In sintesi: dopo `aggio`, **non chiedere “vai” se il passo successivo è già determinato**; procedere direttamente con il prossimo micro-step utile, restando comunque in modalità passo-passo.
 
 ## Cursor / Agent
 
