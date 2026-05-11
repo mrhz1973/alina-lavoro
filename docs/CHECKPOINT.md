@@ -6,7 +6,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** 
 
 - **n8n queue reader:** skip **`done`** su **`TEST - GitHub list Alina task queue`** — **implementato e validato** in UI (2026-05-11); **ramo `has_task: true`** con **0005**; **primo docs-only 0100** con vincolo metadata in **formato lista** per **Classify task** (stessa sessione). Restano regressioni mirate / watcher MVP per `docs/automation/runbook.md`.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
-- Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent.
+- Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
 
