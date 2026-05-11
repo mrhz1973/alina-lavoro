@@ -79,14 +79,14 @@ Documenti correlati: [`task-lifecycle.md`](./task-lifecycle.md) · [`done-failed
 
 ---
 
-## Regole per `failed` (design — non validato)
+## Regole per `failed` (validato)
 
-- **Non validato:** nessun workflow n8n né runner ha ancora prodotto un file in `docs/tasks/failed/`.
+- **Validato:** skip failed implementato e validato nel queue reader n8n (2026-05-12) — sessione [`docs/sessions/2026-05-12-n8n-queue-reader-skip-failed-runtime-validation.md`](../../sessions/2026-05-12-n8n-queue-reader-skip-failed-runtime-validation.md).
 - Il file `docs/tasks/failed/{task}.md` deve contenere:
   - il contenuto del task originale (copy-only);
   - una sezione `## Failed status` con `failure_reason` leggibile, evidence, timestamp, link al task originale e alla sessione.
-- Il queue reader dovrebbe saltare task con `failed/{task}.md` (da implementare / validare).
-- **Niente failed automatico fire-and-forget** finché il pattern non è validato manualmente.
+- Il queue reader **salta** task con `failed/{task}.md` (implementato e validato).
+- **Niente failed automatico fire-and-forget** finché il pattern non è completamente automatizzato.
 - Failed è la destinazione per: errore n8n, errore GitHub, parsing task fallito, runner fallisce, controlli non superati, violazione di policy.
 
 ---
