@@ -46,5 +46,7 @@ Runner: Claude Code (temporaneo al posto di Cursor, ~11 giorni)
 ## Rischi residui
 
 - Nessun rischio bloccante: solo documentazione, zero codice app.
-- Task 0101 (n8n-docs) richiede lavoro manuale n8n: non è eseguibile da runner automatico senza supervisione.
+- Task 0101 completato (commit `5f602f8`, 2026-05-11): rischio chiuso.
+- n8n queue reader non trova task eleggibili: 0101/0102 coperti da processing/done — comportamento atteso.
 - Runner Claude Code temporaneo (~11 giorni): riallineare a Cursor CLI quando disponibile.
+- Prossimo passo automazione da decidere: lifecycle queue → done/failed oppure ritorno all'app Alina.
