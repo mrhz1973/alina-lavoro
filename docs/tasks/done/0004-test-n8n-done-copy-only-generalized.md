@@ -51,7 +51,7 @@ Nessuna modifica app.
 
 - status: done
 - outcome: copy-only generalized validation
-- completed_at: 2026-05-11T07:01:46.956Z
+- completed_at: 2026-05-11T07:04:29.386Z
 - original_queue_path: docs/tasks/queue/0004-test-n8n-done-copy-only-generalized.md
 - cursor_prompt_path: docs/tasks/processing/0004-test-n8n-done-copy-only-generalized-cursor-prompt.md
 - session_path: docs/sessions/automation-0004-test-n8n-done-copy-only-generalized.md
