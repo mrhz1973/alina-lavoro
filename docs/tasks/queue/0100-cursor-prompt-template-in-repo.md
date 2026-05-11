@@ -2,14 +2,13 @@
 
 ## Metadata
 
-| Campo | Valore |
-|--|--|
-| ID | 0100-cursor-prompt-template-in-repo |
-| Project | Alina Lavoro |
-| Type | docs-only |
-| Priority | normal |
-| Created by | Orchestrator |
-| Deploy | no |
+- ID: 0100-cursor-prompt-template-in-repo
+- Project: Alina Lavoro
+- Type: docs-only
+- Priority: normal
+- Status: queued
+- Created by: Orchestrator
+- Deploy: no
 
 ## Context
 
