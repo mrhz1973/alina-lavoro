@@ -94,6 +94,23 @@ Il workflow n8n reale è stato aggiornato con la correzione sopra. I file prompt
 - Nessuna modifica a `gas-current/`.
 - Nessuna esecuzione automatica di Cursor.
 
+## Riesecuzione post-audit
+
+Dopo l’audit manuale e la correzione della stringa nel nodo **Build Cursor prompt**, il workflow n8n `TEST - GitHub list Alina task queue` è stato **rieseguito manualmente** da n8n.
+
+I file generati su GitHub sono stati **aggiornati**:
+
+- `docs/tasks/processing/0001-test-n8n-task-cursor-prompt.md`
+- `docs/sessions/automation-0001-test-n8n-task.md`
+
+Entrambi contengono ora la riga corretta:
+
+`- Do not use git add .`
+
+La vecchia forma `- Do not use git add ..` **non compare più** in questi file correnti prodotti dal workflow. Il punto aperto legato alla stringa errata nei file generati da questo flusso per il task di prova documentato è quindi **chiuso** per lo stato attuale del repository.
+
+Restano invariati i vincoli di scope: **nessuna modifica al codice applicativo Alina**; **nessun deploy**; **nessun tag**; **nessuna modifica a `gas-current/`**.
+
 ## Prossimo passo consigliato
 
-Rieseguire il workflow n8n dopo la correzione per rigenerare prompt e file di sessione con la stringa corretta, oppure procedere — come passo separato — alla progettazione del runner Cursor o dell’esecuzione manuale guidata del prompt.
+Progettare, come **step separato**, il runner Cursor o l’**esecuzione manuale** del prompt generato, oppure la futura gestione della coda task (transizioni verso **done** / **failed** e affini).
