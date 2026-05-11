@@ -25,7 +25,7 @@
 
 La sessione automation indica esplicitamente che **Cursor non è ancora stato eseguito** sul prompt generato (passo successivo manuale o runner).
 
-- **Test finale osservato (workflow completo):** output del filtro con **`has_task: false`** e **`message: No queued task found or all queued tasks already have processing prompts or done files`** (nessun task in coda eleggibile rispetto a `processing` + `done` correnti).
+- **Test finale osservato (workflow completo):** output del filtro con **`has_task: false`** e **`message: No queued task found or all queued tasks already have processing prompts or done files`** (nessun task in coda eleggibile rispetto a `processing` + `done` correnti). Dopo **`Execute Once`** su **`List processing files`**, **nessuna regressione** osservata nello stesso scenario di test.
 
 ## Trigger
 
@@ -58,7 +58,8 @@ Manual Trigger
     └→ false → No queued task / already processing   (Code: output JSON no_action; nessun write GitHub)
 ```
 
-- **List done files:** nodo GitHub list directory **`docs/tasks/done`**. In n8n usare **`Execute Once`** su questo nodo se altrimenti la lista viene emessa una volta per item a monte (effetto collaterale: decine di item duplicati); con **Execute Once** l’output resta coerente (es. **3** entry: `.gitkeep` + file `done` reali). Il **Code** `Filter first queued task` legge le tre liste con **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (nomi nodi devono coincidere).
+- **Micro-ottimizzazione n8n (2026-05-11):** anche **`List processing files`** è impostato con **`Execute Once`**, come **`List done files`**, per evitare la moltiplicazione inutile degli item quando a monte arrivano più trigger/item; dopo la modifica l’output della lista `processing` risulta **4** voci coerenti con i prompt presenti (vedi sessione di validazione).
+- **List processing files** / **List done files:** nodi GitHub list directory su **`docs/tasks/processing`** e **`docs/tasks/done`**. Usare **`Execute Once`** su **entrambi** se altrimenti ciascun nodo emette la directory **una volta per ogni** item a monte (duplicati rumorosi nel **Code** `Filter first queued task`). Con **Execute Once**, **`List done files`** resta coerente (es. **3** entry in `done`: `.gitkeep` + due task); **`List processing files`** resta coerente (es. **4** prompt: `0001-` … `0004-…-cursor-prompt.md`). Il **Code** `Filter first queued task` legge le tre liste con **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (nomi nodi devono coincidere).
 - **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` il flusso entra nel **Code** `No queued task / already processing` (item con `status: 'no_action'` e/o campo `message` coerente con l’output del filtro, ecc.) **senza** aggiornare prompt o sessione su GitHub.
 - (Sintassi ramo **Error → Create** invariata come fallback per creazione file quando `has_task` è `true`.)
 
@@ -85,6 +86,7 @@ Manual Trigger
 
 - Le **credential GitHub** restano **solo in n8n** (istanza/VPS dell’operatore).
 - **Token o segreti** non devono essere salvati nel repository GitHub né committati in chiaro.
+- **Non** documentare né incollare in chat **URL raw GitHub** con **token temporanei** o query string sensibili (restano solo in n8n / browser locale, redatti negli export).
 - Eventuali **export JSON** del workflow n8n vanno **redatti** prima del commit se contengono riferimenti a credenziali, webhook o dati sensibili.
 
 ## Disciplina modifica workflow (allineamento repo)

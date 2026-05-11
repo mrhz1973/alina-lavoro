@@ -103,6 +103,18 @@ return [
 
 La validazione dimostra che il workflow reale **salta** i task in **`docs/tasks/queue/`** già presenti in **`processing`** o in **`done`**, coerentemente con la logica documentata.
 
+## Aggiornamento incrementale — `Execute Once` su `List processing files`
+
+- **Nodo modificato:** **`List processing files`** — abilitato **`Execute Once`** (come già per **`List done files`**) per evitare la moltiplicazione inutile degli item quando a monte ci sono più trigger/item.
+- **Output osservato dopo modifica:** **4** voci pulite:
+  - `0001-test-n8n-task-cursor-prompt.md`
+  - `0002-test-n8n-processing-skip-cursor-prompt.md`
+  - `0003-test-n8n-done-copy-only-cursor-prompt.md`
+  - `0004-test-n8n-done-copy-only-generalized-cursor-prompt.md`
+- **Test workflow completo:** **`has_task: false`**, **`message: No queued task found or all queued tasks already have processing prompts or done files`** — **nessuna regressione** osservata rispetto allo scenario precedente.
+- **Non** sono stati aggiunti **export JSON** al repository; **non** sono stati toccati workflow **non target** (es. **`TEST - Mark Alina task done copy-only generalized`**).
+- **Sicurezza:** **non** documentare né condividere **URL raw GitHub** con **token temporanei** in query string.
+
 ## Cosa NON è stato fatto
 
 - **Nessun** export JSON n8n committato nel repository.
@@ -112,18 +124,14 @@ La validazione dimostra che il workflow reale **salta** i task in **`docs/tasks/
 
 ## Rischi residui
 
-- **Export JSON** del workflow da **redigere** (credenziali, URL interni) prima di ogni eventuale commit o condivisione.
+- **Export JSON** del workflow da **redigere** (credenziali, URL interni, **mai** URL raw con token in chiaro) prima di ogni eventuale commit o condivisione.
 - **Test futuro** consigliato sul ramo **`has_task: true`** con almeno un task in coda **realmente eleggibile** (nessun prompt in `processing` e nessun omonimo in `done`), per confermare end-to-end la catena Get → Decode → … oltre al caso “tutti saltati” già osservato.
 
 ## File documentazione toccati da questo aggiornamento incrementale
 
 - `docs/automation/n8n-workflows/queue-reader.md`
 - `docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`
-- `docs/automation/n8n-workflows/done-copy-only-generalization.md`
-- `docs/automation/README.md`
 - `docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md` (questo file)
-
-*(Documentazione correlata già aggiornata in commit precedente su `main`: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/roadmap.md`, `docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`.)*
 
 ## Prossimo passo suggerito
 

@@ -17,6 +17,7 @@ Comportamento documentato di riferimento (allineato a `docs/automation/n8n-workf
 - Test completo OK; workflow **ri-eseguibile**.
 - Lettura **queue** + **processing** + **`done`**; primo `.md` in coda **senza** prompt in `processing` **né** file omonimo in `done`; decode; classify — **implementato e validato in n8n** (2026-05-11), vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 - **List done files:** usare **`Execute Once`** in n8n se necessario per evitare item duplicati dalla moltiplicazione a monte.
+- **`List processing files`:** stessa regola — **`Execute Once`** quando a monte arrivano più item, così l’output della directory `processing` non viene ripetuto inutilmente (in validazione: **4** file prompt puliti).
 - Generazione prompt Cursor; **create/update** sotto `<PROCESSING_PATH>`.
 - **Create/update** sessione automation sotto `<SESSIONS_PATH>`.
 - **Cursor non** è eseguito automaticamente dal workflow.
@@ -79,7 +80,7 @@ Manual Trigger
     └→ false → No queued task / already processing   (Code: no_action; nessun write GitHub)
 ```
 
-I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8n legge gli output tramite **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (i nomi devono coincidere con i nodi). **List done files** va impostato con **`Execute Once`** se senza questa opzione la directory viene ripetuta per ogni item a monte (effetto: decine di duplicati).
+I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8n legge gli output tramite **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (i nomi devono coincidere con i nodi). Impostare **`Execute Once`** su **`List processing files`** e su **`List done files`** se senza questa opzione le directory vengono emesse una volta per ogni item a monte (effetto: molti duplicati nel filtro).
 
 ---
 
@@ -115,7 +116,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Tipo n8n presumibile** | GitHub — list directory |
 | **Input atteso** | Stessi owner/repo/branch |
 | **Output atteso** | Lista entry sotto `<PROCESSING_PATH>` |
-| **Note** | Serve per costruire l’insieme dei basename `{task}-cursor-prompt.md` presenti. |
+| **Note** | **`Execute Once`** se a monte arrivano più item e la directory verrebbe emessa ripetuta (molti duplicati nel filtro). In validazione manuale: **4** file `*-cursor-prompt.md` coerenti. Allineare con **`List done files`** (stessa opzione). |
 | **Placeholder** | `<PROCESSING_PATH>` |
 
 ### 4. List done files
@@ -126,7 +127,7 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 | **Tipo n8n presumibile** | GitHub — list directory |
 | **Input atteso** | Stessi owner/repo/branch |
 | **Output atteso** | Lista entry sotto `<DONE_PATH>` |
-| **Note** | In produzione: **`Execute Once`** se senza questa opzione la lista `done` viene emessa ripetuta (molti item duplicati). **Contratto** con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). |
+| **Note** | **`Execute Once`** come per **`List processing files`** se senza questa opzione la lista `done` viene emessa ripetuta (molti item duplicati). **Contratto** con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). |
 | **Placeholder** | `<DONE_PATH>` |
 
 ### 5. Filter first queued task
