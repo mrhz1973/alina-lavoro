@@ -74,7 +74,7 @@ none
 ## Done status
 
 - Completed by: Claude Code runner
-- Completion commit: (see below — da aggiornare dopo commit)
+- Completion commit: 7abf6cc
 - Completion message: docs: add claude code project memory CLAUDE.md
 - Completed at: 2026-05-12
 - Outcome: CLAUDE.md creato nella root; sessione documentale creata; nessuna modifica app
