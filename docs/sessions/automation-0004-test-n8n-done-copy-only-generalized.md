@@ -128,3 +128,27 @@ Final response required:
 - No tag created.
 - No rollback required.
 - This session only tracks task-to-prompt automation.
+
+---
+
+## Done copy-only outcome
+
+Current status: done copy-only generalized validation completed.
+
+- status: done
+- outcome: copy-only generalized validation
+- completed_at: 2026-05-11T03:29:52.088Z
+- queue_path: docs/tasks/queue/0004-test-n8n-done-copy-only-generalized.md
+- done_path: docs/tasks/done/0004-test-n8n-done-copy-only-generalized.md
+- cursor_prompt_path: docs/tasks/processing/0004-test-n8n-done-copy-only-generalized-cursor-prompt.md
+- session_path: docs/sessions/automation-0004-test-n8n-done-copy-only-generalized.md
+- source_sha: e9d4510785b3771d72b510d732831d11db07fee7
+- session_source_sha: 58d69376bfb134fad6a0059905245646a59ad571
+
+## Done copy-only notes
+
+- The generalized done file was created successfully.
+- The original queue task was not deleted.
+- No application code was modified.
+- No Apps Script deploy was executed.
+- No tag was created.
