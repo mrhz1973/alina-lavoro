@@ -137,13 +137,13 @@ Current status: done copy-only generalized validation completed.
 
 - status: done
 - outcome: copy-only generalized validation
-- completed_at: 2026-05-11T07:04:29.386Z
+- completed_at: 2026-05-11T07:15:16.700Z
 - queue_path: docs/tasks/queue/0004-test-n8n-done-copy-only-generalized.md
 - done_path: docs/tasks/done/0004-test-n8n-done-copy-only-generalized.md
 - cursor_prompt_path: docs/tasks/processing/0004-test-n8n-done-copy-only-generalized-cursor-prompt.md
 - session_path: docs/sessions/automation-0004-test-n8n-done-copy-only-generalized.md
 - source_sha: e9d4510785b3771d72b510d732831d11db07fee7
-- session_source_sha: 2a8abcc9a2baa91dcdbbeef7a713d6ad345324fc
+- session_source_sha: 233922cafddcb5b76de0849a1a6cb84151af98ae
 
 ## Done copy-only notes
 
