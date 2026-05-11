@@ -130,7 +130,7 @@ La policy “**create or update**” (o ramo Error → Create come nel queue rea
 
 ## Interazione con queue reader
 
-Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. Il queue reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (**Opzione A**).
+Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. **Skip `processing`:** il reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` — validazione n8n **precedente** (2026-05-11), vedi [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../sessions/2026-05-11-n8n-queue-reader-processing-skip.md).
 
 **Skip `done` (2026-05-11):** se esiste **`docs/tasks/done/{task}.md`**, il task in coda con lo stesso nome file **non** viene eleggito per un nuovo prompt — **implementato e validato in n8n** sul workflow **`TEST - GitHub list Alina task queue`** ([`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md)); il workflow **`TEST - Mark Alina task done copy-only generalized`** **non** è stato modificato durante quel lavoro. Coordinamento: [`task-lifecycle.md`](./task-lifecycle.md).
 

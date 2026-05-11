@@ -53,5 +53,6 @@ Allineata a **`docs/ORCHESTRATOR_RULES.md`** (**PRIORITÀ 0 — passo passo**), 
   - il workflow è in stato **finale**, non solo “diagnostico”.
 - **Non modificare** workflow già **validati** se non sono il **target esplicito** del micro-step corrente.
 - **Esempio vincolante:** mentre si lavora allo skip `done` del queue reader (`TEST - GitHub list Alina task queue`), **non** toccare il workflow **`TEST - Mark Alina task done copy-only generalized`** (già validato su 0004).
+- **Primo caso pratico documentato (2026-05-11):** skip **`done`** sul queue reader — la disciplina **passo passo** ha evitato di lasciare **diagnostica temporanea** nel workflow finale (diagnostica usata in test, poi **rimossa** prima della chiusura). Dettagli: [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 
 Sessione motivante: [`docs/sessions/2026-05-11-operational-step-by-step-hard-rule.md`](../sessions/2026-05-11-operational-step-by-step-hard-rule.md).

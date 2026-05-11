@@ -251,6 +251,8 @@ I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8
 
 ### Filter first queued task
 
+> **Nota:** codice di **riferimento** per il nodo n8n; **non** è sorgente versionata dell’app nel repo.
+
 Riferimento allineato al workflow validato (nomi nodi **`List files`**, **`List processing files`**, **`List done files`**):
 
 ```javascript
