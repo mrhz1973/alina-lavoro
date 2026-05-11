@@ -13,6 +13,7 @@
 - È **ri-eseguibile**: se il prompt Cursor o la sessione automation esistono già, vengono **aggiornati**; altrimenti vengono **creati**.
 - **Anti-doppio-run (2026-05-11):** se per un task in `docs/tasks/queue` esiste già `docs/tasks/processing/{task}-cursor-prompt.md`, quel task viene **saltato**; se non resta nessun task “libero”, il flusso va sul ramo **`false`** dell’**IF** con terminatore **Code** `No queued task / already processing` (**nessun** write su prompt/sessione GitHub; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md)).
 - **Skip `done` (2026-05-11):** il queue reader legge anche **`docs/tasks/done/`** e **non** elegge un file in coda se esiste già **`docs/tasks/done/{task}.md`** con lo stesso nome del task in `queue`. **Implementato e validato manualmente in n8n** (nodo **List done files** con **`Execute Once`**, filtro **Filter first queued task** in versione finale pulita; workflow **`TEST - Mark Alina task done copy-only generalized` non modificato**) — [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md); design in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
+- **Ramo `has_task: true` (task 0005, 2026-05-11):** validazione manuale in n8n su **`0005-test-n8n-queue-reader-true-branch`** (file in `docs/tasks/queue/`): filtro **`has_task: true`** → **Build Cursor prompt** → **Create** prompt in `docs/tasks/processing/` e sessione in `docs/sessions/` (commit **`8d579a8`**, **`05e1292`** su `main`); **secondo run** **`has_task: false`** con messaggio standard → **0005** saltato perché il prompt è già in **processing**. **Nessuna delete** da `docs/tasks/queue/`; altri workflow n8n non toccati. Output numerici e path in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 - Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
 
 ## Scopo
@@ -25,7 +26,9 @@
 
 La sessione automation indica esplicitamente che **Cursor non è ancora stato eseguito** sul prompt generato (passo successivo manuale o runner).
 
-- **Test finale osservato (workflow completo):** output del filtro con **`has_task: false`** e **`message: No queued task found or all queued tasks already have processing prompts or done files`** (nessun task in coda eleggibile rispetto a `processing` + `done` correnti). Dopo **`Execute Once`** su **`List processing files`**, **nessuna regressione** osservata nello stesso scenario di test.
+- **Test osservati (workflow completo):**
+  - scenario **tutti saltati:** **`has_task: false`** e **`message: No queued task found or all queued tasks already have processing prompts or done files`** (nessun eleggibile rispetto a `processing` + `done`); dopo **`Execute Once`** su **`List processing files`**, **nessuna regressione** su questo scenario;
+  - scenario **0005 ramo `true`:** vedi bullet **Stato** su **`0005-test-n8n-queue-reader-true-branch`** e secondo run con **`has_task: false`** (skip via **`processing`**).
 
 ## Trigger
 
@@ -105,7 +108,7 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Validazione task 0003 (2026-05-11):** skip su `0001`/`0002`, selezione `0003`, prompt/sessione creati, nessun `done` (atteso); dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-0003-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0003-validation.md).
 
-**Skip `done` — validazione n8n (2026-05-11):** [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md). Design iniziale: [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
+**Skip `done` + ramo `true` task 0005 (2026-05-11):** [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md). Design iniziale skip `done`: [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
 
 ## Riferimento codice — `Filter first queued task` (implementazione validata)
 
@@ -175,8 +178,8 @@ return [
 
 ## Prossimo passo consigliato
 
-1. **Regressioni** in n8n su combinazioni coda / `processing` / `done` (task libero vs tutti saltati) e aggiornamento sessione breve se si trovano edge case.
-2. Template **AI-friendly**: [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md). Export JSON n8n redatto resta opzionale.
+1. **Export JSON** n8n: se serve versionare il workflow, **redigere** credenziali/URL/token prima di ogni commit (mai URL raw con `token=` in documentazione).
+2. Evoluzioni **watcher** / runner — `docs/automation/runbook.md`. Template: [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md).
 
 **Done copy-only (0003, workflow separato `TEST - Mark Alina task done copy-only`):** [`done-copy-only.md`](./done-copy-only.md); sessione [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
 

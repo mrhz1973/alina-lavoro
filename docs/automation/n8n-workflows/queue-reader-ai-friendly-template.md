@@ -16,6 +16,7 @@ Comportamento documentato di riferimento (allineato a `docs/automation/n8n-workf
 
 - Test completo OK; workflow **ri-eseguibile**.
 - Lettura **queue** + **processing** + **`done`**; primo `.md` in coda **senza** prompt in `processing` **né** file omonimo in `done`; decode; classify — **implementato e validato in n8n** (2026-05-11), vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
+- **Ramo `has_task: true`:** validato in n8n con task **0005** (prompt + sessione su GitHub; secondo run con skip `processing`) — stessa sessione di validazione.
 - **List done files:** usare **`Execute Once`** in n8n se necessario per evitare item duplicati dalla moltiplicazione a monte.
 - **`List processing files`:** stessa regola — **`Execute Once`** quando a monte arrivano più item, così l’output della directory `processing` non viene ripetuto inutilmente (in validazione: **4** file prompt puliti).
 - Generazione prompt Cursor; **create/update** sotto `<PROCESSING_PATH>`.

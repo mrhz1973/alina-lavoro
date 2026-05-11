@@ -115,6 +115,55 @@ La validazione dimostra che il workflow reale **salta** i task in **`docs/tasks/
 - **Non** sono stati aggiunti **export JSON** al repository; **non** sono stati toccati workflow **non target** (es. **`TEST - Mark Alina task done copy-only generalized`**).
 - **Sicurezza:** **non** documentare né condividere **URL raw GitHub** con **token temporanei** in query string.
 
+## Validazione ramo `true` con task 0005 (2026-05-11)
+
+- **Workflow testato:** **`TEST - GitHub list Alina task queue`**.
+- **Workflow non toccati:** **`TEST - Mark Alina task done copy-only generalized`** e altri workflow n8n.
+- **Task in coda (presente prima del test):** `docs/tasks/queue/0005-test-n8n-queue-reader-true-branch.md`.
+
+### Primo run (filtro → build prompt → file su GitHub)
+
+Output osservato in n8n dopo **Filter first queued task** e a valle:
+
+- **`has_task: true`**
+- **`task_name`:** `0005-test-n8n-queue-reader-true-branch.md`
+- **`task_path`:** `docs/tasks/queue/0005-test-n8n-queue-reader-true-branch.md`
+- **`task_sha`:** `2aa15d6e98a3c0b1f35808dc9de6dc5b68bb2b10`
+- **`task_size`:** `1168`
+
+**Nodo `Build Cursor prompt` (output osservato):**
+
+- **`cursor_prompt_path`:** `docs/tasks/processing/0005-test-n8n-queue-reader-true-branch-cursor-prompt.md`
+- **`session_path`:** `docs/sessions/automation-0005-test-n8n-queue-reader-true-branch.md`
+- **`next_action`:** `create_cursor_prompt_file`
+
+**Nodo `Create Cursor prompt file`:**
+
+- File creato: `docs/tasks/processing/0005-test-n8n-queue-reader-true-branch-cursor-prompt.md`
+- **SHA file (GitHub / output n8n):** `e0bd5a8debb7bb9a9651131dc6995a6e26b07336`
+- **Commit:** `8d579a8cb4669199170e9479d6f144b512909c8e`
+- **Messaggio commit:** `docs: create cursor prompt from queued task`
+
+**Nodo `Create session file`:**
+
+- File creato: `docs/sessions/automation-0005-test-n8n-queue-reader-true-branch.md`
+- **SHA file:** `fec2ecbf8973fd85830f8cce94d42fbb167d40a1`
+- **Commit:** `05e1292dcd8924d1c1146ed9ae7a4e3d33b5de6a`
+- **Messaggio commit:** `docs: create automation session from queued task`
+
+### Secondo run (skip via `processing`)
+
+- **`has_task: false`**
+- **`message`:** `No queued task found or all queued tasks already have processing prompts or done files`
+
+### Interpretazione
+
+Il ramo **`has_task: true`** è stato verificato almeno fino a: filtro di eleggibilità → **Build Cursor prompt** → **Create Cursor prompt file** → **Create session file** (commit su **`main`**). Il secondo run conferma che **0005** non viene più rieletto perché il relativo prompt esiste in **`docs/tasks/processing/`**. **Nessuna delete** da `docs/tasks/queue/`.
+
+### Nota sicurezza (questa validazione)
+
+**Non** documentare né copiare **URL raw GitHub** con `token=...`. **Non** committare export JSON n8n, credenziali, webhook o header sensibili.
+
 ## Cosa NON è stato fatto
 
 - **Nessun** export JSON n8n committato nel repository.
@@ -124,18 +173,19 @@ La validazione dimostra che il workflow reale **salta** i task in **`docs/tasks/
 
 ## Rischi residui
 
-- **Export JSON** del workflow da **redigere** (credenziali, URL interni, **mai** URL raw con token in chiaro) prima di ogni eventuale commit o condivisione.
-- **Test futuro** consigliato sul ramo **`has_task: true`** con almeno un task in coda **realmente eleggibile** (nessun prompt in `processing` e nessun omonimo in `done`), per confermare end-to-end la catena Get → Decode → … oltre al caso “tutti saltati” già osservato.
+- **Export JSON** del workflow da **redigere** (credenziali, URL interni, **mai** URL raw con token in chiaro) prima di ogni eventuale commit o condivisione — resta il rischio principale se si versiona l’export.
 
 ## File documentazione toccati da questo aggiornamento incrementale
 
 - `docs/automation/n8n-workflows/queue-reader.md`
 - `docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`
+- `docs/PROJECT_STATE.md`
+- `docs/CHECKPOINT.md`
 - `docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md` (questo file)
 
 ## Prossimo passo suggerito
 
-Un **solo** run n8n controllato con **almeno un** file `.md` in `docs/tasks/queue/` che resti **eleggibile** dopo i filtri, verificando **`has_task: true`** e l’intera catena a valle.
+Se serve tracciabilità del grafo n8n nel repo: preparare un **export JSON redatto** (o solo aggiornamenti testuali in `queue-reader.md` / template) senza segreti. In parallelo, evoluzioni **watcher** / runner — `docs/automation/runbook.md`.
 
 ## Riferimenti incrociati
 
