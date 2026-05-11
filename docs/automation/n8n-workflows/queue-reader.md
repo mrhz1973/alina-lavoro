@@ -1,1 +1,82 @@
-# n8n Workflow — Queue Reader  ## Nome workflow n8n  TEST - GitHub list Alina task queue  ## Stato  Test manuale OK.  ## Scopo  Leggere la coda task del repository Alina Lavoro, ignorare i file non operativi, selezionare il primo task Markdown disponibile, leggerne il contenuto e trasformarlo in dati strutturati.  ## Trigger  Manual Trigger.  ## Flusso nodi  1. Manual Trigger 2. GitHub — List files 3. Code — Filter first queued Markdown task 4. GitHub — Get a file 5. Code — Decode task Markdown 6. Code — Classify task metadata  ## Input  Cartella GitHub:  docs/tasks/queue  ## Regole operative  - Ignora .gitkeep. - Considera task validi solo i file .md. - Ordina i task per nome file. - Seleziona il primo task disponibile. - Non modifica codice. - Non fa deploy. - Non crea tag. - Non tocca gas-current.  ## Output strutturato  Il workflow produce:  - task_name - task_path - task_sha - task_size - project - type - priority - status - created_by - deploy - objective - requirements - expected_output - markdown  ## Test eseguito  Task usato per il test:  docs/tasks/queue/0001-test-n8n-task.md  Output verificato:  - project: Alina Lavoro - type: test - priority: low - status: queued - created_by: n8n manual test - deploy: no - objective valorizzato - requirements valorizzato - expected_output valorizzato  ## Note sicurezza  Il workflow usa una credential GitHub salvata dentro n8n.  Il token GitHub non deve mai essere salvato in GitHub, esportato in chiaro o incollato in chat.  Gli export JSON dei workflow n8n possono contenere nomi e ID delle credenziali; prima di salvarli stabilmente in GitHub vanno controllati o redatti.  ## Stato pubblicazione  Non pubblicato.  Da pubblicare solo quando verrà trasformato in workflow schedulato o trigger automatico.  ## Prossimo step  Creare un workflow successivo che prenda l’output strutturato e generi:  - prompt operativo per Cursor; - file sessione; - stato task aggiornato; - eventuale spostamento task da queue a processing o done.
+# n8n Workflow — Queue Reader (`TEST - GitHub list Alina task queue`)
+
+## Nome workflow n8n
+
+**`TEST - GitHub list Alina task queue`**
+
+## Stato
+
+**Aggiornamento (workflow più avanzato della prima documentazione):**
+
+- Test **completo OK**.
+- Il workflow **non** si limita più a lettura, decode e classify del task.
+- È **ri-eseguibile**: se il prompt Cursor o la sessione automation esistono già, vengono **aggiornati**; altrimenti vengono **creati**.
+- Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
+
+## Scopo
+
+1. Leggere il **primo task Markdown** in `docs/tasks/queue`.
+2. **Decodificarlo** e **classificarlo** (metadata + contenuto).
+3. **Generare il prompt Cursor** operativo.
+4. **Creare o aggiornare** il file prompt in `docs/tasks/processing/`.
+5. **Creare o aggiornare** la sessione automation in `docs/sessions/`.
+
+La sessione automation indica esplicitamente che **Cursor non è ancora stato eseguito** sul prompt generato (passo successivo manuale o runner).
+
+## Trigger
+
+**Manual Trigger**
+
+## Flusso nodi (struttura finale)
+
+```text
+Manual Trigger
+→ List files
+→ Filter first queued task
+→ Get queued task file
+→ Decode task markdown
+→ Classify task
+→ Build Cursor prompt
+   ├→ Check Cursor prompt file exists
+   │   ├→ Success → IF Cursor prompt file exists
+   │   │   ├→ true  → Update Cursor prompt file
+   │   │   └→ false → Create Cursor prompt file
+   │   └→ Error → Create Cursor prompt file
+   └→ Build session file
+       → Check session file exists
+           ├→ Success → IF session file exists
+           │   ├→ true  → Update session file
+           │   └→ false → Create session file
+           └→ Error → Create session file
+```
+
+(Sintassi nodi allineata alla grafica n8n: ramo **Error → Create** come fallback per creazione file.)
+
+## Regole operative (invariati principi)
+
+- Ignorare `.gitkeep`.
+- Task validi: solo file `.md` in `docs/tasks/queue`, ordinati per nome file; primo disponibile.
+- Non modificare codice applicativo (`src/`), non deploy Apps Script, non tag, non `gas-current/` tramite questo workflow.
+
+## File verificati / prodotti (prova su repository)
+
+| Ruolo | Path |
+|--------|------|
+| Task in coda (input) | `docs/tasks/queue/0001-test-n8n-task.md` |
+| Prompt Cursor (output, create/update) | `docs/tasks/processing/0001-test-n8n-task-cursor-prompt.md` |
+| Sessione automation (output, create/update) | `docs/sessions/automation-0001-test-n8n-task.md` |
+| Questa documentazione | `docs/automation/n8n-workflows/queue-reader.md` |
+
+## Note sicurezza
+
+- Le **credential GitHub** restano **solo in n8n** (istanza/VPS dell’operatore).
+- **Token o segreti** non devono essere salvati nel repository GitHub né committati in chiaro.
+- Eventuali **export JSON** del workflow n8n vanno **redatti** prima del commit se contengono riferimenti a credenziali, webhook o dati sensibili.
+
+## Stato pubblicazione documentazione
+
+Workflow documentato qui come **TEST** manuale riuscito. Export/template versionato nel repo va preparato **dopo** questo allineamento (vedi prossimo passo).
+
+## Prossimo passo consigliato
+
+Preparare un **template o export n8n AI-friendly** (descrizione nodi + parametri redatti), solo dopo che questa documentazione è considerata allineata al comportamento reale del workflow.
