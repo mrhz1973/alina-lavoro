@@ -20,7 +20,7 @@ Questo documento è una **specifica di progettazione** per definire come gestire
 
 **Workflow separato `TEST - Mark Alina task done copy-only` (0003, copy-only `done`):** [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
 
-**Failed stub documentale (2026-05-12, task 0104):** primo file in `docs/tasks/failed/` creato come validazione manuale del formato `## Failed status`; skip failed nel queue reader non ancora implementato né validato — dettagli in [`lifecycle-ownership.md`](./lifecycle-ownership.md) e sessione [`docs/sessions/2026-05-12-failed-validation-stub.md`](../../sessions/2026-05-12-failed-validation-stub.md).
+**Failed stub documentale (2026-05-12, task 0104):** primo file in `docs/tasks/failed/` creato come validazione manuale del formato `## Failed status`; skip failed nel queue reader non ancora implementato né validato — dettagli in [`lifecycle-ownership.md`](./lifecycle-ownership.md) e sessione [`docs/sessions/2026-05-12-failed-validation-stub.md`](../../sessions/2026-05-12-failed-validation-stub.md). **Design per implementazione disponibile** in [`queue-reader-skip-failed-design.md`](./queue-reader-skip-failed-design.md) (task 0106).
 
 ## Scope
 

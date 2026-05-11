@@ -120,7 +120,7 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Primo task reale docs-only 0100 (2026-05-11):** edge case metadata (tabella vs lista), rigenerazione prompt e update sessione — stessa sessione [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 
-**Skip `failed` — non implementato né validato (2026-05-12):** il queue reader attuale **non** salta task con `docs/tasks/failed/{task}.md`. Il formato `## Failed status` è stato documentato con stub manuale intenzionale (task 0104) — sessione [`docs/sessions/2026-05-12-failed-validation-stub.md`](../../sessions/2026-05-12-failed-validation-stub.md). Se skip failed sarà necessario, richiederà modifica esplicita del nodo `Filter first queued task` e validazione separata in n8n.
+**Skip `failed` — non implementato né validato (2026-05-12):** il queue reader attuale **non** salta task con `docs/tasks/failed/{task}.md`. Il formato `## Failed status` è stato documentato con stub manuale intenzionale (task 0104) — sessione [`docs/sessions/2026-05-12-failed-validation-stub.md`](../../sessions/2026-05-12-failed-validation-stub.md). **Design per implementazione disponibile** in [`queue-reader-skip-failed-design.md`](./queue-reader-skip-failed-design.md) (task 0106). Se skip failed sarà necessario, richiederà modifica esplicita del nodo `Filter first queued task` e validazione separata in n8n.
 
 ## Riferimento codice — `Filter first queued task` (implementazione validata)
 

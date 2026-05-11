@@ -13,7 +13,7 @@ Note operative da `lifecycle-ownership.md`:
 
 ## Stato
 
-**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`. **Failed stub documentale (2026-05-12, task 0104):** primo file in `docs/tasks/failed/` creato come validazione manuale del formato `## Failed status`; skip failed nel queue reader non ancora validato né implementato — vedi `lifecycle-ownership.md`.
+**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`. **Failed stub documentale (2026-05-12, task 0104):** primo file in `docs/tasks/failed/` creato come validazione manuale del formato `## Failed status`; skip failed nel queue reader non ancora validato né implementato — vedi `lifecycle-ownership.md`. **Design per implementazione skip failed disponibile** in `queue-reader-skip-failed-design.md` (task 0106).
 
 ## Scopo
 
