@@ -50,4 +50,3 @@ After compacting, preserve:
 - Checks already executed.
 - Any open risks or manual gates.
 - Never infer deploy/tag/rollback permission from prior conversation.
-- Re-read the required project documents if unsure.
