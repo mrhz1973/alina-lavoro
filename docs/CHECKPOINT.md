@@ -11,7 +11,8 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **n8n queue reader:** nessun task eleggibile — 0101/0102/0103 coperti da `processing/done` (`docs/tasks/done/0103-lifecycle-ownership-design.md` creato, 2026-05-11).
 - **Task 0103** **completato** (tipo `docs-only`, 2026-05-11): `docs/automation/n8n-workflows/lifecycle-ownership.md` creato — fonte canonica per ownership queue → processing → done / failed; documenti collegati aggiornati; nessuna modifica app, n8n runtime, done/, failed/, deploy, tag.
 - **Task 0105** **completato** (tipo `docs-only`, 2026-05-12): `CLAUDE.md` creato nella root — memoria progetto stabile per Claude Code post-compacting; sezione `Compact Instructions`; punta ai documenti canonici senza duplicarli.
-- Prossimo passo automazione: eseguire task 0104 (failed validation stub) oppure tornare all'app Alina — decisione orchestratore.
+- **Task 0104** **completato** (tipo `n8n-validation-planning`, 2026-05-12): failed stub documentale creato in `docs/tasks/failed/0104-failed-validation-stub.md` con sezione `## Failed status`; done marker in `docs/tasks/done/0104-failed-validation-stub.md`; documenti automazione aggiornati minimalmente; skip failed nel queue reader non ancora validato né implementato — sessione: `docs/sessions/2026-05-12-failed-validation-stub.md`.
+- Prossimo passo automazione: decisione orchestratore — se skip failed nel queue reader è prioritario, creare task dedicato; altrimenti tornare all'app Alina.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 

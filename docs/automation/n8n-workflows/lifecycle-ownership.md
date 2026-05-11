@@ -4,7 +4,7 @@
 
 Questo documento è la **fonte canonica** per definire chi possiede le transizioni di stato nel lifecycle file-based dei task di Alina Lavoro: queue → processing → done / failed.
 
-**Stato (2026-05-11):** documento attivo. Queue reader, skip processing e skip done validati. Failed handling non validato — design documentato, implementazione rimandata a task separato.
+**Stato (2026-05-12):** documento attivo. Queue reader, skip processing e skip done validati. Failed stub documentale creato per task 0104 (2026-05-12) — formato `## Failed status` documentato in `docs/tasks/failed/0104-failed-validation-stub.md`; skip failed nel queue reader non ancora validato né implementato. Sessione: `docs/sessions/2026-05-12-failed-validation-stub.md`.
 
 Documenti correlati: [`task-lifecycle.md`](./task-lifecycle.md) · [`done-failed-design.md`](./done-failed-design.md) · [`queue-reader.md`](./queue-reader.md) · [`docs/tasks/README.md`](../../tasks/README.md).
 
@@ -20,6 +20,7 @@ Documenti correlati: [`task-lifecycle.md`](./task-lifecycle.md) · [`done-failed
 | Done copy-only via n8n (workflow `TEST - Mark Alina task done copy-only generalized`) | **validato** (2026-05-11) |
 | Done manuale via Claude Code runner (`## Done status`) | **validato** (2026-05-11, task 0101 e 0102) |
 | Failed handling (create `failed/{task}.md`, marker, retry) | **non validato** — design in questo doc e in [`done-failed-design.md`](./done-failed-design.md) |
+| Failed stub manuale (pattern `## Failed status`, intenzionale) | **stub creato** (2026-05-12, task 0104) — formato documentato; skip failed non validato in queue reader |
 
 ---
 

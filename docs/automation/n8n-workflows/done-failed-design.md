@@ -9,11 +9,11 @@
 Note operative da `lifecycle-ownership.md`:
 - **`## Done status`** (Claude Code runner manuale) e **`## Done copy-only outcome`** (n8n workflow) sono **entrambi pattern validi**: non vanno retro-normalizzati.
 - I file già scritti in `docs/tasks/done/` non vanno modificati retroattivamente.
-- **Failed** resta design non validato: nessun file scritto in `docs/tasks/failed/` finché il pattern non è validato manualmente.
+- **Failed** resta design non validato nel workflow n8n; il formato `## Failed status` è stato documentato con uno stub manuale intenzionale (task 0104, 2026-05-12): `docs/tasks/failed/0104-failed-validation-stub.md` — sessione `docs/sessions/2026-05-12-failed-validation-stub.md`.
 
 ## Stato
 
-**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`. **Failed handling non validato (2026-05-11):** nessun file in `docs/tasks/failed/` ancora creato; design documentato qui e in `lifecycle-ownership.md`.
+**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`. **Failed stub documentale (2026-05-12, task 0104):** primo file in `docs/tasks/failed/` creato come validazione manuale del formato `## Failed status`; skip failed nel queue reader non ancora validato né implementato — vedi `lifecycle-ownership.md`.
 
 ## Scopo
 
