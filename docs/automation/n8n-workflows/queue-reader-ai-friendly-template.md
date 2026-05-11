@@ -514,7 +514,6 @@ Documentazione workflow già pubblicata sul repo:
 
 - `docs/automation/n8n-workflows/queue-reader.md`
 
-
 ## Aggiornamento 2026-05-11 — Origine template prompt
 
 - Il template prompt Cursor non è più solo hardcoded nel nodo Code: viene letto dal repository tramite nodo GitHub dedicato (**`Get cursor prompt template`**) dal path `docs/tasks/templates/cursor-prompt-default.md`.
