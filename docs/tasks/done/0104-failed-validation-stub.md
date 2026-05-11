@@ -33,7 +33,7 @@ La validazione dovrà dimostrare, in un micro-step futuro, come un task fallito 
 ## Done status
 
 - Completed by: Claude Code runner
-- Completion commit: (set after commit)
+- Completion commit: dec7f28
 - Completed at: 2026-05-12
 - Outcome: failed stub documentale creato in docs/tasks/failed/0104-failed-validation-stub.md con sezione ## Failed status; sessione docs/sessions/2026-05-12-failed-validation-stub.md creata; documenti automazione aggiornati minimalmente; nessuna modifica app, n8n runtime, deploy, tag o rollback
 - Session: docs/sessions/2026-05-12-failed-validation-stub.md

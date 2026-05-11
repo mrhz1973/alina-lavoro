@@ -89,4 +89,4 @@ Il file `docs/tasks/failed/0104-failed-validation-stub.md` contiene:
 
 ## Commit
 
-- (hash da aggiornare dopo push)
+- dec7f28
