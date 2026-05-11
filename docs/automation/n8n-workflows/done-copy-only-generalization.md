@@ -6,13 +6,15 @@
 
 **Validazione (2026-05-11):** il workflow n8n reale **`TEST - Mark Alina task done copy-only generalized`** ha superato la **prima validazione manuale** sul task **`0004-test-n8n-done-copy-only-generalized`** (create `done`, update sessione, `queue` intatta). Dettagli operativi e limiti residui in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
 
+**Rerun idempotente (2026-05-11):** aggiunto ramo **Success** → **`Update done file`** (GitHub **File / Edit**, path e content dinamici da **`Build done copy content`**), rimosso nodo legacy **`Update done file 0003`**; seconda esecuzione sul **0004** completata senza passare da **`Create done file`**. Dettagli in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
+
 Nessuna modifica a codice applicativo, deploy, tag o `gas-current/` tramite questo documento.
 
 ## Scopo
 
 Definire come passare dal workflow **hardcoded** sul task **0003** (path fissi in ogni nodo) a un flusso **riutilizzabile** per **task arbitrari**, mantenendo le garanzie attuali: **nessuna delete** da `queue`, **create/update** idempotente del file `done`, aggiornamento **sessione** coerente.
 
-Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md). Prima validazione del flusso **generalizzato** su **0004**: [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
+Baseline operativa già validata: [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md). Prima validazione **generalizzata** su **0004**: [`2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md). **Rerun idempotente 0004:** [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
 
 ## Baseline (workflow attuale)
 
@@ -89,14 +91,17 @@ Un nodo **Code** `Build dynamic paths` può calcolare le quattro stringhe a part
 
 ## Nodi futuri proposti
 
+Struttura **allineata** al workflow generalizzato validato (rami **Create** / **Edit** dopo `Check done file exists`):
+
 ```text
 Manual Trigger
 → Set task input
 → Build dynamic paths
 → Get queue task
 → Build done copy content
-→ Check done file exists          (opzionale ma consigliato)
-→ Create or update done file      (GitHub Edit / upsert)
+→ Check done file exists
+   ├→ Success / file esiste → Update done file   (GitHub File / Edit)
+   └→ Error / Not Found    → Create done file    (GitHub File / Create)
 → Get automation session
 → Build updated session
 → Update automation session
@@ -111,6 +116,8 @@ Solo **Create** su path già esistente tende a **fallire** alla riesecuzione (co
 - API di **Edit** / update con **`sha`** obbligatorio quando il file esiste.
 
 La policy “**create or update**” (o ramo Error → Create come nel queue reader) deve restare esplicita nei nodi GitHub.
+
+**Stato (2026-05-11):** sul workflow **`TEST - Mark Alina task done copy-only generalized`** il pattern **Check → Success/Edit** vs **Error/Create** è stato **validato** sul task **0004** (vedi [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)).
 
 ## Regole anti-perdita dati
 
@@ -130,7 +137,9 @@ In **futuro** si può estendere la logica di skip (es. non eleggere task se esis
 
 Il task **`0004-test-n8n-done-copy-only-generalized.md`** in `docs/tasks/queue/` è stato usato per la **prima validazione** del workflow **`TEST - Mark Alina task done copy-only generalized`** (Set manuale `task_name`, path dinamici, create `done`, update sessione). Esito: **OK** — vedi [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
 
-Per regressioni future: rieseguire con lo stesso `task_name` dopo implementazione del ramo **Success** → **Update done** dinamico (idempotenza).
+**Rerun idempotente:** dopo implementazione ramo **Success** → **`Update done file`**, seconda esecuzione sullo stesso **0004** senza **`Create done file`** — [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
+
+Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcome in `done` + sessione.
 
 ## Rischi
 
@@ -153,14 +162,15 @@ Per regressioni future: rieseguire con lo stesso `task_name` dopo implementazion
 
 ## Prossimo passo consigliato
 
-1. **Implementare e validare** il ramo **Success** di **`Check done file exists`** verso un nodo **`Update done file`** con **path dinamico** (Expression) e update **idempotente** (es. GitHub Edit con `sha`), come tracciato in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md).
-2. **Ripulire** il canvas da nodi **legacy** hardcoded sul task **0003** dove ancora presenti.
-3. Valutare il **contratto dati** con il queue reader (**opzione B** in questo documento) solo dopo idempotenza stabile.
+1. **Skip queue reader** se esiste già `docs/tasks/done/{task}.md` (o se la sessione indica chiusura copy-only), coordinando [`task-lifecycle.md`](./task-lifecycle.md) — vedi anche [`2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md).
+2. **GET di verifica** opzionale dopo `Update done file` / `Create done file` (confronto minimo su `done_path`).
+3. **Contratto dati** con il queue reader (**opzione B**) solo dopo policy di skip chiara.
 
 ## Riferimenti
 
 - Workflow validato (0003): [`done-copy-only.md`](./done-copy-only.md)
-- Validazione generalizzata (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
+- Validazione generalizzata (0004, prima run): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md)
+- Rerun idempotente (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md)
 - Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
 - Queue reader: [`queue-reader.md`](./queue-reader.md)
