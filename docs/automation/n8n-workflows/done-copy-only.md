@@ -6,7 +6,7 @@
 
 ## Stato
 
-Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)). Il workflow **`TEST - Mark Alina task done copy-only generalized`** (task **0004**, path dinamici): prima run in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md); **rerun idempotente** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md) — vedi [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).
+Test **manuale OK** sul task **0003** (validazione documentata in [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md)). Il workflow **`TEST - Mark Alina task done copy-only generalized`** (task **0004**, path dinamici): prima run in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-generalized-validation.md); **rerun idempotente** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-idempotent-rerun.md); **Verify done file** in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md`](../../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done-file.md) — vedi [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).
 
 ## Scopo
 
