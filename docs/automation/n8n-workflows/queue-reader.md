@@ -75,8 +75,8 @@ Manual Trigger
 
 ## Stato pubblicazione documentazione
 
-Workflow documentato qui come **TEST** manuale riuscito. Export/template versionato nel repo va preparato **dopo** questo allineamento (vedi prossimo passo).
+Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly** nel repo: **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un **export JSON** n8n resta opzionale e va redatto prima del commit.
 
 ## Prossimo passo consigliato
 
-Preparare un **template o export n8n AI-friendly** (descrizione nodi + parametri redatti), solo dopo che questa documentazione è considerata allineata al comportamento reale del workflow.
+Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
