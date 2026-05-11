@@ -36,7 +36,7 @@ Il workflow TEST - GitHub list Alina task queue deve vedere questo file nella ca
 Mandatory constraints:
 - Work on branch main only.
 - Do not use dev.
-- Do not use git add ..
+- Do not use git add .
 - Do not modify gas-current unless explicitly authorized by a deploy/release task.
 - Do not deploy unless the task explicitly authorizes deploy.
 - Do not create tags unless the task explicitly authorizes tag creation.
