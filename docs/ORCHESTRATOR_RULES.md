@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-11 — aggiunta regola **post-aggio**: dopo `aggio`, se non servono decisioni o conferme, l’orchestratore deve proporre direttamente il prossimo micro-step senza attendere un ulteriore “vai”. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
+Ultimo aggiornamento: 2026-05-11 — aggiunta regola **output prompt Cursor** (formato asciutto: solo introduzione fissa + **unico** blocco prompt; nessun riepilogo esterno che duplica il contenuto del prompt — vedi sezione **Regola output prompt Cursor**). Resta valida la regola **post-aggio**: dopo `aggio`, se non servono decisioni o conferme, l’orchestratore deve proporre direttamente il prossimo micro-step senza attendere un ulteriore “vai”. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -124,6 +124,25 @@ Se il task tocca backend, includere anche:
 ```
 
 Ogni prompt operativo per Cursor deve essere autosufficiente per Cursor: tutto cio che non e gia documentato nel repo deve stare dentro il prompt stesso. L'utente non deve dover copiare pezzi esterni separati.
+
+## Regola output prompt Cursor
+
+Quando l’orchestratore deve fornire un **prompt da incollare in Cursor**, deve usare il formato **asciutto**:
+
+```text
+Incolla questo in Cursor:
+
+[UNICO BLOCCO PROMPT — tutto il testo da copiare, inclusi @-file e istruzioni]
+```
+
+Vincoli:
+
+- **Nessun** riepilogo esterno **prima** o **dopo** il prompt che ripeta o parafrasi il prompt stesso.
+- **Nessuna** spiegazione separata dei paragrafi **interni** al prompt (il prompt è già autodescrittivo).
+- **Nessuna** ripetizione **fuori** dal prompt del contenuto già incluso **nel** prompt.
+- L’utente legge il prompt se vuole; **non** duplicarne il contenuto nel messaggio esterno.
+- Testo **fuori** dal prompt consentito **solo** se serve una **decisione reale**, un **rischio**, un **errore**, **deploy/tag/rollback**, **cancellazioni**, **credenziali** o altra **conferma esplicita**.
+- Se **non** ci sono decisioni né rischi, l’output deve essere **solo** la riga fissa **`Incolla questo in Cursor:`** seguita dal **blocco prompt completo** (nessun altro testo esplicativo).
 
 ## Richiamo sintetico delle procedure standard
 
