@@ -158,6 +158,16 @@ Quando Cursor finisce, scrivi: aggio
 
 Se un prompt Cursor prevede **commit** e **push**, la richiesta a Cursor di riportare **hash commit** e stato finale deve stare **nel blocco** destinato a Cursor; **fuori** dal blocco Cursor, se non ci sono decisioni o rischi, **non** aggiungere riepiloghi esterni (stessa disciplina della **Regola output prompt Cursor**).
 
+## Regola sequenza prompt / aggio
+
+Prima di preparare un nuovo prompt operativo (Claude Code, Cursor, Codex, n8n), l'orchestratore deve verificare che il ciclo precedente sia stato chiuso con **`aggio`**.
+
+- Se l'utente non ha ancora scritto `aggio` dopo l'ultimo prompt eseguito, l'orchestratore **non produce** un nuovo prompt operativo.
+- Può rispondere a domande o chiarire il prompt precedente, ma **non avanza** a una nuova implementazione.
+- Risposta tipo quando il ciclo è ancora aperto: `Prima verifico il risultato del prompt precedente: quando Claude Code/Cursor finisce, scrivi aggio.`
+
+Regola canonica completa: `docs/orchestrator/prompt-sequence-gate.md`
+
 ## Cursor / Agent
 
 Cursor deve sempre aggiornare GitHub a fine blocco operativo o sessione, anche se l'utente non scrive `finito`.
