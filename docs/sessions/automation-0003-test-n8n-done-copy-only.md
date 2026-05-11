@@ -127,3 +127,26 @@ Final response required:
 - No tag created.
 - No rollback required.
 - This session only tracks task-to-prompt automation.
+
+---
+
+## Done copy-only outcome
+
+Current status: done copy-only validation completed.
+
+- status: done
+- outcome: copy-only validation
+- completed_at: 2026-05-11T02:50:57.798Z
+- queue_path: docs/tasks/queue/0003-test-n8n-done-copy-only.md
+- done_path: docs/tasks/done/0003-test-n8n-done-copy-only.md
+- cursor_prompt_path: docs/tasks/processing/0003-test-n8n-done-copy-only-cursor-prompt.md
+- session_path: docs/sessions/automation-0003-test-n8n-done-copy-only.md
+- session_source_sha: 5618d69fcc102bb63f19e513bfc8b1824951db2d
+
+## Done copy-only notes
+
+- The done file was created successfully.
+- The original queue task was not deleted.
+- No application code was modified.
+- No Apps Script deploy was executed.
+- No tag was created.
