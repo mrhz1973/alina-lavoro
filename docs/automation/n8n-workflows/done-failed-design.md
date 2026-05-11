@@ -143,8 +143,8 @@ Solo dopo periodo di osservazione e procedure chiare, valutare **A** con delete 
 
 ## Prossimo micro-step consigliato
 
-Creare un **task di test `0003`** in `docs/tasks/queue/` dedicato alla **simulazione `done` in modalità copy-only** (nessuna delete da `queue`), con *Expected output* che elenca solo i file da creare in `docs/tasks/done/` e l’aggiornamento sessione atteso — **senza** ancora implementare i nodi n8n, così da avere un criterio di accettazione scritto prima del lavoro sul grafo.
+Il task **`0003`** in `docs/tasks/queue/` è stato usato per validare il queue reader (prompt + sessione); esito in [`docs/sessions/2026-05-11-n8n-queue-reader-0003-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0003-validation.md). **Prossimo passo:** implementare in n8n (o workflow dedicato) la **prima fase copy-only** verso `docs/tasks/done/0003-test-n8n-done-copy-only.md` e aggiornamento sessione con esito `done`, **senza** delete da `queue`, come da sezioni precedenti di questo documento.
 
 ---
 
-*Documenti correlati: [`task-lifecycle.md`](./task-lifecycle.md), [`queue-reader.md`](./queue-reader.md), [`docs/sessions/2026-05-11-n8n-queue-reader-0002-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0002-validation.md).*
+*Documenti correlati: [`task-lifecycle.md`](./task-lifecycle.md), [`queue-reader.md`](./queue-reader.md), [`docs/sessions/2026-05-11-n8n-queue-reader-0002-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0002-validation.md), [`docs/sessions/2026-05-11-n8n-queue-reader-0003-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0003-validation.md).*
