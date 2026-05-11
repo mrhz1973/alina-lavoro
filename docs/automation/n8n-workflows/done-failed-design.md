@@ -1,8 +1,19 @@
 # n8n Workflow Design — Done / Failed Task Handling
 
+## Ownership canonica
+
+**Aggiornamento (2026-05-11):** per la definizione di **chi possiede le transizioni** done/failed, i due pattern validi (`## Done status` e `## Done copy-only outcome`), le regole di coesistenza e la politica retry, il documento **canonico** è:
+
+**[`lifecycle-ownership.md`](./lifecycle-ownership.md)**
+
+Note operative da `lifecycle-ownership.md`:
+- **`## Done status`** (Claude Code runner manuale) e **`## Done copy-only outcome`** (n8n workflow) sono **entrambi pattern validi**: non vanno retro-normalizzati.
+- I file già scritti in `docs/tasks/done/` non vanno modificati retroattivamente.
+- **Failed** resta design non validato: nessun file scritto in `docs/tasks/failed/` finché il pattern non è validato manualmente.
+
 ## Stato
 
-**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`.
+**Design documentale** — non implementato nel workflow n8n reale (`TEST - GitHub list Alina task queue`) finché non viene adottato esplicitamente. Non modifica codice applicativo né `gas-current/`. **Failed handling non validato (2026-05-11):** nessun file in `docs/tasks/failed/` ancora creato; design documentato qui e in `lifecycle-ownership.md`.
 
 ## Scopo
 

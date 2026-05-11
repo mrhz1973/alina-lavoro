@@ -8,7 +8,9 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **PR #7 mergiata** su `main` (2026-05-11): template `cursor-prompt-default.md` e documentazione sessione n8n in repo.
 - **Task 0101** **completato** (tipo `n8n-docs`, commit `5f602f8`, 2026-05-11): n8n legge template dal repo; nodo `Get cursor prompt template` attivo; `Build Cursor prompt` usa contenuto decodificato — marcato done.
 - **Task 0102** **completato** (tipo `docs-only`, commit `5b86b20` + cleanup `bca334d` + done `bfe85c3`, 2026-05-11): **primo test Claude Code runner docs-only** riuscito — sessione: `docs/sessions/2026-05-11-claude-code-runner-test-0102.md`.
-- **n8n queue reader:** nessun task eleggibile — 0101/0102 coperti da `processing/done`.
+- **n8n queue reader:** nessun task eleggibile — 0101/0102/0103 coperti da `processing/done`.
+- **Task 0103** **completato** (tipo `docs-only`, 2026-05-11): `docs/automation/n8n-workflows/lifecycle-ownership.md` creato — fonte canonica per ownership queue → processing → done / failed; documenti collegati aggiornati; nessuna modifica app, n8n runtime, done/, failed/, deploy, tag.
+- Prossimo passo automazione: validare pattern **failed** (task separato) oppure tornare all'app Alina — decisione orchestratore.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
@@ -170,6 +172,6 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Progettare prossimo blocco automazione: lifecycle queue → done/failed, runner controllato, oppure tornare all'app Alina — decisione orchestratore.
+1. Task 0103 completato. Prossimo passo automazione: validare pattern **failed** (task separato) oppure tornare all'app Alina — decisione orchestratore.
 2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
 3. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.

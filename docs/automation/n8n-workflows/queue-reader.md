@@ -17,6 +17,12 @@
 - **Primo task reale docs-only 0100 (2026-05-11):** `docs/tasks/queue/0100-cursor-prompt-template-in-repo.md` — selezione corretta (**`has_task: true`**, `task_sha` **`b7a221e025659457e97059df84c25ef6167d7276`**, `task_size` **2600**). **Edge case:** metadata in **tabella** Markdown → il parser del nodo **Classify task** (comportamento attuale) non riempie `Project` / `Type` / `Priority` / `Deploy policy` nel prompt. **Senza modificare n8n:** normalizzazione del task in **lista** (`- Project: …`, `- Type: …`, `- Status: …`, `- Deploy: …`); rimozione mirata del prompt errato in **`processing`** (**commit `3f4aa2d`**); rigenerazione corretta (**commit `4f09513`**, SHA file **`7a89e587510616aef2afdf8a0e0c632f434b9002`**) e **Update session file** sulla sessione esistente (**commit `b7ba555`**, SHA **`085b363a8f192382b28fd4ac48f5b98df09da6fa`**). **Secondo run** **`has_task: false`** (messaggio standard, skip **`processing`**). **Nessuna delete** da `queue`. **Per ora** i task in coda devono usare il **formato lista** per i metadata finché il parser non viene esteso. Cronaca in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 - Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
 
+## Ownership lifecycle
+
+Lo skip `processing` e lo skip `done` in questo queue reader sono **comportamenti validati** (2026-05-11). La **ownership della chiusura done/failed** — chi può marcare done, chi può marcare failed, i due pattern validi, le regole di coesistenza — è definita nel documento canonico:
+
+**[`lifecycle-ownership.md`](./lifecycle-ownership.md)**
+
 ## Scopo
 
 1. Leggere i file in **`docs/tasks/queue`**, in **`docs/tasks/processing`** e in **`docs/tasks/done`** per individuare il **primo** file **`.md`** in coda (ordinamento per nome file) che **non** abbia né il relativo **`docs/tasks/processing/{task}-cursor-prompt.md`** né **`docs/tasks/done/{task}.md`** (stesso `{task}` = nome file in `queue` senza `.md`). Allineato a *Opzione A* + skip **`done`** in [`task-lifecycle.md`](./task-lifecycle.md) e contratto in [`done-copy-only-generalization.md`](./done-copy-only-generalization.md).

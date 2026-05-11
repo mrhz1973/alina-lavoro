@@ -17,6 +17,8 @@ Questa cartella ospita **specifiche di lavoro** destinate a essere elaborate da 
 | **`failed/`** | Task **non completati** (errore runner, test falliti, gate manuale non superato); utile per analisi e retry. |
 | **`templates/`** | Modelli vuoti per nuovi task (`task-template.md`, `docs-task-template.md`, ecc.). |
 
+**Lifecycle ownership (canonico):** chi possiede le transizioni queue → processing → done / failed, matrice owner, pattern validi done, regole retry, gate manuali → **[`lifecycle-ownership.md`](../automation/n8n-workflows/lifecycle-ownership.md)**.
+
 **Lifecycle (design):** proposta per stati `queue` → `processing` → `done` / `failed`, path e mitigazioni → [`task-lifecycle.md`](../automation/n8n-workflows/task-lifecycle.md).
 
 ## Current task

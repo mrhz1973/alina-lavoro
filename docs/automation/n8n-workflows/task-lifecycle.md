@@ -1,5 +1,13 @@
 # n8n Workflow Design — Task Lifecycle
 
+## Ownership canonica
+
+**Aggiornamento (2026-05-11):** per la definizione di **chi possiede le transizioni** di stato (queue → processing → done / failed), le condizioni, i formati e le regole di coesistenza tra n8n e Claude Code runner, il documento **canonico** è:
+
+**[`lifecycle-ownership.md`](./lifecycle-ownership.md)**
+
+Questo documento (`task-lifecycle.md`) resta la **specifica di progettazione** del lifecycle completo (move verso `done`/`failed`, metadata strutturati, lock, ecc.); per le regole operative di ownership leggere prima `lifecycle-ownership.md`.
+
 ## Scopo
 
 Questo documento è una **specifica di progettazione** per definire come gestire, in futuro, il **ciclo di vita** dei task **file-based** del repository **Alina Lavoro** (Markdown in `docs/tasks/`, prompt in `processing`, sessioni in `docs/sessions/`). Non sostituisce la documentazione operativa del queue reader in [`queue-reader.md`](./queue-reader.md); le parti già attive nel workflow n8n reale (es. skip anti-doppio-run dal 2026-05-11) sono descritte lì e nelle sessioni collegate.
