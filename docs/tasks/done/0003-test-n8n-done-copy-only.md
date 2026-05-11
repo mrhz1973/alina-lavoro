@@ -50,7 +50,7 @@ Nessuna modifica app.
 
 - status: done
 - outcome: copy-only validation
-- completed_at: 2026-05-11T02:44:15.118Z
+- completed_at: 2026-05-11T02:48:53.719Z
 - original_queue_path: docs/tasks/queue/0003-test-n8n-done-copy-only.md
 - cursor_prompt_path: docs/tasks/processing/0003-test-n8n-done-copy-only-cursor-prompt.md
 - session_path: docs/sessions/automation-0003-test-n8n-done-copy-only.md
