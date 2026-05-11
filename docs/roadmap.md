@@ -16,7 +16,7 @@ Stack:
 
 ## Automation / Orchestrator Hub (trasversale, non applicativo)
 
-Iniziativa **documentale** per preparare il repo come **pilota** di orchestrazione esterna: **`docs/tasks/`** (code task queue + template), **`docs/automation/`** (visione piattaforma, permessi, runbook). Obiettivo futuro: **ChatGPT** → task su **GitHub** → **n8n** (VPS) → **Cursor CLI** → commit/push → session report → **aggio**. Non sostituisce il workflow manuale finché le fasi del runbook non sono implementate; **nessun effetto** sulle release app (es. **V1.9.2**) finché non compare un task operativo esplicito in `docs/tasks/queue/`. Dettaglio: `docs/sessions/2026-05-10-automation-task-framework.md`.
+Iniziativa **documentale** per preparare il repo come **pilota** di orchestrazione esterna: **`docs/tasks/`** (code task queue + template), **`docs/automation/`** (visione piattaforma, permessi, runbook). Obiettivo futuro: **ChatGPT** → task su **GitHub** → **n8n** (VPS) → **Cursor CLI** → commit/push → session report → **aggio**. Non sostituisce il workflow manuale finché le fasi del runbook non sono implementate; **nessun effetto** sulle release app (es. **V1.9.2**) finché non compare un task operativo esplicito in `docs/tasks/queue/`. Dettaglio: `docs/sessions/2026-05-10-automation-task-framework.md`. **Stato n8n (2026-05-11):** workflow **`TEST - GitHub list Alina task queue`** con skip **`processing`** + **`done`** validato manualmente in interfaccia — `docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`.
 
 ## Struttura repository
 

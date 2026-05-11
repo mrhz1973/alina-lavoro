@@ -12,7 +12,7 @@
 - Il workflow **non** si limita più a lettura, decode e classify del task.
 - È **ri-eseguibile**: se il prompt Cursor o la sessione automation esistono già, vengono **aggiornati**; altrimenti vengono **creati**.
 - **Anti-doppio-run (2026-05-11):** se per un task in `docs/tasks/queue` esiste già `docs/tasks/processing/{task}-cursor-prompt.md`, quel task viene **saltato**; se non resta nessun task “libero”, il flusso va sul ramo **`false`** dell’**IF** con terminatore **Code** `No queued task / already processing` (**nessun** write su prompt/sessione GitHub; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md)).
-- **Skip `done` (design 2026-05-11):** il queue reader deve considerare anche **`docs/tasks/done/`**: un task in coda va **saltato** anche se esiste **`docs/tasks/done/{task}.md`** (stesso basename del file `.md` in `queue`, senza estensione = `{task}`). Allinea il contratto con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md) (task che restano in `queue` dopo copy-only **done** non devono essere riselezionati). **Stato:** logica e grafo documentati qui e nel template AI-friendly; **implementazione e test end-to-end in n8n** restano da eseguire — [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
+- **Skip `done` (2026-05-11):** il queue reader considera **`docs/tasks/done/`** e salta un task in coda se esiste **`docs/tasks/done/{task}.md`** o il prompt **`docs/tasks/processing/{task}-cursor-prompt.md`**. **Implementato e validato manualmente in n8n** (nodo **List done files** con **`Execute Once`**, filtro finale pulito, workflow **`TEST - Mark Alina task done copy-only generalized` non modificato**) — [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md); design in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
 - Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
 
 ## Scopo
@@ -56,8 +56,8 @@ Manual Trigger
     └→ false → No queued task / already processing   (Code: output JSON no_action; nessun write GitHub)
 ```
 
-- **List done files:** stesso tipo di nodo GitHub usato per listare `queue` / `processing` (directory **`docs/tasks/done`**). Il nodo **Filter first queued task** (Code) riceve le tre liste (in n8n: **Merge** dei tre rami in un item unico oppure lettura sequenziale aggregata — dettaglio implementativo lasciato al maintainer).
-- **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` il flusso entra nel **Code** `No queued task / already processing` (item con `status: 'no_action'`, `reason`, `checked_at`, ecc.) **senza** aggiornare prompt o sessione su GitHub.
+- **List done files:** nodo GitHub list directory **`docs/tasks/done`**. In n8n usare **`Execute Once`** su questo nodo se altrimenti la lista viene emessa una volta per item a monte (effetto collaterale: decine di item duplicati); con **Execute Once** l’output resta coerente (es. **3** entry: `.gitkeep` + file `done` reali). Il **Code** `Filter first queued task` legge le tre liste con **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (nomi nodi devono coincidere).
+- **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` il flusso entra nel **Code** `No queued task / already processing` (item con `status: 'no_action'` e/o campo `message` coerente con l’output del filtro, ecc.) **senza** aggiornare prompt o sessione su GitHub.
 - (Sintassi ramo **Error → Create** invariata come fallback per creazione file quando `has_task` è `true`.)
 
 ## Regole operative (invariati principi)
@@ -65,7 +65,7 @@ Manual Trigger
 - Ignorare `.gitkeep`.
 - Task validi: solo file `.md` in `docs/tasks/queue`, ordinati per nome file; il **primo** eleggibile è il primo `.md` per cui **non** esiste **`docs/tasks/processing/{task}-cursor-prompt.md`** **e** **non** esiste **`docs/tasks/done/{task}.md`** (`{task}` = basename del file in coda senza `.md`). Skip se almeno uno dei due file esiste.
 - **Nessuna delete** da `docs/tasks/queue/` in questa fase (né come effetto del filtro, né come “pulizia” post-`done`): il task può restare in coda anche dopo archiviazione in `done`; lo skip evita solo **nuovi** prompt/sessione automation.
-- Se **nessun** task in queue resta eleggibile: `has_task: false` e messaggio coerente (es. *No queued task found or all queued tasks skipped — processing prompt and/or done file already present*); il ramo **`false`** dell’**IF** esegue il **Code** `No queued task / already processing` (solo output in n8n); **nessun** aggiornamento a file prompt/sessione su GitHub.
+- Se **nessun** task in queue resta eleggibile: `has_task: false` e messaggio **`No queued task found or all queued tasks already have processing prompts or done files`** (come osservato nel test finale); il ramo **`false`** dell’**IF** esegue il **Code** `No queued task / already processing` (solo output in n8n); **nessun** aggiornamento a file prompt/sessione su GitHub.
 - **Contratto** con il flusso **done copy-only generalizzato** ([`done-copy-only-generalization.md`](./done-copy-only-generalization.md)): dopo **`Verify done file`** e update sessione, il task può restare in `queue`; il queue reader **non** deve rigenerare prompt se `done/{task}.md` esiste già.
 - Non modificare codice applicativo (`src/`), non deploy Apps Script, non tag, non `gas-current/` tramite questo workflow.
 
@@ -75,7 +75,7 @@ Manual Trigger
 |--------|------|
 | Task in coda (input) | `docs/tasks/queue/0001-test-n8n-task.md` |
 | Prompt Cursor (output, create/update) | `docs/tasks/processing/0001-test-n8n-task-cursor-prompt.md` |
-| File `done` (solo lettura filtro; design 2026-05-11) | `docs/tasks/done/{task}.md` |
+| File `done` (lettura filtro skip) | `docs/tasks/done/{task}.md` |
 | Sessione automation (output, create/update) | `docs/sessions/automation-0001-test-n8n-task.md` |
 | Questa documentazione | `docs/automation/n8n-workflows/queue-reader.md` |
 
@@ -101,13 +101,77 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Validazione task 0003 (2026-05-11):** skip su `0001`/`0002`, selezione `0003`, prompt/sessione creati, nessun `done` (atteso); dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-0003-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0003-validation.md).
 
-**Skip `done` — design documentale (2026-05-11):** [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md) (nodo **List done files** + filtro; **validazione n8n reale ancora da fare**).
+**Skip `done` — validazione n8n (2026-05-11):** [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md). Design iniziale: [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
 
-**Done copy-only (0003, workflow separato `TEST - Mark Alina task done copy-only`):** [`done-copy-only.md`](./done-copy-only.md); sessione [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+## Riferimento codice — `Filter first queued task` (implementazione validata)
+
+Versione **finale** documentata dal run manuale (nomi nodi **`List files`**, **`List processing files`**, **`List done files`**). Vedi anche la sessione di validazione.
+
+```javascript
+const queuedFiles = $('List files').all().map(item => item.json);
+const processingFiles = $('List processing files').all().map(item => item.json);
+const doneFiles = $('List done files').all().map(item => item.json);
+
+const processingNames = new Set(
+  processingFiles
+    .map(file => String(file.name || ''))
+    .filter(name => name.endsWith('-cursor-prompt.md'))
+    .map(name => name.replace(/-cursor-prompt\.md$/i, '.md'))
+);
+
+const doneNames = new Set(
+  doneFiles
+    .map(file => String(file.name || ''))
+    .filter(name => name.endsWith('.md') && name !== '.gitkeep')
+);
+
+const tasks = queuedFiles
+  .filter(file => {
+    const name = String(file.name || '');
+    const path = String(file.path || '');
+
+    if (!name.endsWith('.md')) return false;
+    if (path.indexOf('docs/tasks/queue/') !== 0) return false;
+
+    if (processingNames.has(name)) return false;
+    if (doneNames.has(name)) return false;
+
+    return true;
+  })
+  .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+
+if (!tasks.length) {
+  return [
+    {
+      json: {
+        has_task: false,
+        message: 'No queued task found or all queued tasks already have processing prompts or done files'
+      }
+    }
+  ];
+}
+
+const task = tasks[0];
+
+return [
+  {
+    json: {
+      has_task: true,
+      task_name: task.name,
+      task_path: task.path,
+      task_sha: task.sha || '',
+      task_size: task.size || 0,
+      skip_reason: ''
+    }
+  }
+];
+```
 
 ## Prossimo passo consigliato
 
-1. **Implementare in n8n** il nodo **List done files** (`docs/tasks/done`) e aggiornare il **Code** `Filter first queued task` secondo questa documentazione e [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md); poi **eseguire test manuali** (task con solo `done`, solo `processing`, entrambi, nessuno) e aggiornare una sessione in `docs/sessions/`.
-2. Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
+1. **Regressioni** in n8n su combinazioni coda / `processing` / `done` (task libero vs tutti saltati) e aggiornamento sessione breve se si trovano edge case.
+2. Template **AI-friendly**: [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md). Export JSON n8n redatto resta opzionale.
 
-**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; **skip** se prompt in `processing` **attivo** nel workflow reale dal 2026-05-11; **skip** se file in `done` **documentato**, implementazione n8n da completare). **Chiusura `done`/`failed` (design, non implementato):** [`done-failed-design.md`](./done-failed-design.md). **Done copy-only generalizzato + verify:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Done copy-only (workflow test separato, 0003):** [`done-copy-only.md`](./done-copy-only.md).
+**Done copy-only (0003, workflow separato `TEST - Mark Alina task done copy-only`):** [`done-copy-only.md`](./done-copy-only.md); sessione [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+
+**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (**skip** `processing` e **`done`** attivi nel workflow reale dal 2026-05-11). **Chiusura `done`/`failed` (design, non implementato):** [`done-failed-design.md`](./done-failed-design.md). **Done copy-only generalizzato + verify:** [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). **Done copy-only (workflow test separato, 0003):** [`done-copy-only.md`](./done-copy-only.md).

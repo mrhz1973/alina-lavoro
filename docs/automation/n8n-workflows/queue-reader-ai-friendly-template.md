@@ -15,13 +15,14 @@ Deriva dal workflow **già testato** in repository:
 Comportamento documentato di riferimento (allineato a `docs/automation/n8n-workflows/queue-reader.md`):
 
 - Test completo OK; workflow **ri-eseguibile**.
-- Lettura **queue** + **processing** + **`done`** (design 2026-05-11); primo `.md` in coda **senza** prompt in `processing` **né** file omonimo in `done`; decode; classify.
+- Lettura **queue** + **processing** + **`done`**; primo `.md` in coda **senza** prompt in `processing` **né** file omonimo in `done`; decode; classify — **implementato e validato in n8n** (2026-05-11), vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
+- **List done files:** usare **`Execute Once`** in n8n se necessario per evitare item duplicati dalla moltiplicazione a monte.
 - Generazione prompt Cursor; **create/update** sotto `<PROCESSING_PATH>`.
 - **Create/update** sessione automation sotto `<SESSIONS_PATH>`.
 - **Cursor non** è eseguito automaticamente dal workflow.
 - Nessuna modifica al codice app, nessun deploy, nessun tag, nessun tocco a `gas-current/`.
 - Modifiche al workflow reale in n8n: disciplina **passo passo** e **`n8n manual run discipline`** — [`docs/automation/README.md`](../../automation/README.md), sessione [`docs/sessions/2026-05-11-operational-step-by-step-hard-rule.md`](../../sessions/2026-05-11-operational-step-by-step-hard-rule.md).
-- **Nessuna delete** da `<QUEUE_PATH>`; implementazione n8n dello skip **`done`** da completare e testare — vedi [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md).
+- **Nessuna delete** da `<QUEUE_PATH>`.
 
 ## Avvertenza sicurezza
 
@@ -78,7 +79,7 @@ Manual Trigger
     └→ false → No queued task / already processing   (Code: no_action; nessun write GitHub)
 ```
 
-I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / append) prima del **Code** `Filter first queued task`, oppure il Code può leggere output aggregato da un nodo precedente che incapsula le tre liste: l’importante è che il filtro conosca **nomi file** (basenames) in `processing` e `done` per confrontarli con i candidati in coda.
+I tre nodi **List** alimentano il **Code** `Filter first queued task`, che in n8n legge gli output tramite **`$('List files').all()`**, **`$('List processing files').all()`**, **`$('List done files').all()`** (i nomi devono coincidere con i nodi). **List done files** va impostato con **`Execute Once`** se senza questa opzione la directory viene ripetuta per ogni item a monte (effetto: decine di duplicati).
 
 ---
 
@@ -125,7 +126,7 @@ I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / appen
 | **Tipo n8n presumibile** | GitHub — list directory |
 | **Input atteso** | Stessi owner/repo/branch |
 | **Output atteso** | Lista entry sotto `<DONE_PATH>` |
-| **Note** | Serve per costruire l’insieme dei file **`{task}.md`** già in **done** (skip se esiste omonimo del task in coda). **Contratto** con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). |
+| **Note** | In produzione: **`Execute Once`** se senza questa opzione la lista `done` viene emessa ripetuta (molti item duplicati). **Contratto** con [`done-copy-only-generalization.md`](./done-copy-only-generalization.md). |
 | **Placeholder** | `<DONE_PATH>` |
 
 ### 5. Filter first queued task
@@ -134,9 +135,9 @@ I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / appen
 |--------|--------|
 | **Nome** | Filter first queued task |
 | **Tipo n8n presumibile** | Code |
-| **Input atteso** | Liste da **queue**, **processing** e **done** (dopo Merge o struttura equivalente) |
-| **Output atteso** | Un item con `path`, `name`, `sha` (se disponibile) del **primo** `.md` in coda eleggibile; più `has_task` (boolean) e messaggio `reason` se nessun task eleggibile |
-| **Note** | Vedi pseudo-code: escludere `<IGNORE_FILES>`, ordinare per nome, saltare se esiste `<PROCESSING_PATH>/{task}-cursor-prompt.md` **oppure** `<DONE_PATH>/{task}.md`. |
+| **Input atteso** | Output dei tre nodi **List**, letti nel Code con **`$('List files').all()`** / **`$('List processing files').all()`** / **`$('List done files').all()`** (nomi nodi allineati) |
+| **Output atteso** | Un item con `has_task: true` e `task_name`, `task_path`, `task_sha`, `task_size`, `skip_reason`, oppure `has_task: false` e `message` testuale (nessun task eleggibile) |
+| **Note** | Codice di riferimento validato in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md) e in `queue-reader.md`. |
 | **Placeholder** | `TASK_FILE_PATTERN`, `IGNORE_FILES`, `<PROCESSING_PATH>`, `<DONE_PATH>` |
 
 ### 6. IF has queued task
@@ -147,7 +148,7 @@ I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / appen
 | **Tipo n8n presumibile** | IF |
 | **Input atteso** | Item da Filter (`has_task` / flag coerente) |
 | **Output atteso** | Ramo `true` → catena Get/Decode/…; ramo `false` → Code terminatore **no_action** (nessun write GitHub) |
-| **Note** | Allineato a `queue-reader.md`; messaggio `reason` può citare skip per **processing** e/o **done**. |
+| **Note** | Allineato a `queue-reader.md`; in assenza di task il filtro espone `message` testuale; ramo `false` → Code **no_action** (nessun write GitHub). |
 | **Placeholder** | — |
 
 ### 7. Get queued task file
@@ -250,62 +251,66 @@ I tre nodi **List** possono alimentare un **Merge** (modalità *combine* / appen
 
 ### Filter first queued task
 
+Riferimento allineato al workflow validato (nomi nodi **`List files`**, **`List processing files`**, **`List done files`**):
+
 ```javascript
-// Input concettuale dopo Merge (o item unico con tre array):
-// queueEntries, processingEntries, doneEntries — come restituiti dalla list directory GitHub.
-const IGNORE = '.gitkeep';
+const queuedFiles = $('List files').all().map(item => item.json);
+const processingFiles = $('List processing files').all().map(item => item.json);
+const doneFiles = $('List done files').all().map(item => item.json);
 
-function taskSlugFromQueueName(/** string */ queueFileName) {
-  if (!queueFileName || !queueFileName.endsWith('.md')) return null;
-  return queueFileName.replace(/\.md$/i, '');
-}
+const processingNames = new Set(
+  processingFiles
+    .map(file => String(file.name || ''))
+    .filter(name => name.endsWith('-cursor-prompt.md'))
+    .map(name => name.replace(/-cursor-prompt\.md$/i, '.md'))
+);
 
-function processingSkipSet(entries) {
-  var set = {};
-  (entries || []).forEach(function (e) {
-    if (e.type !== 'file' || !e.name || !e.name.endsWith('-cursor-prompt.md')) return;
-    var base = e.name.replace(/-cursor-prompt\.md$/i, '');
-    set[base] = true;
-  });
-  return set;
-}
+const doneNames = new Set(
+  doneFiles
+    .map(file => String(file.name || ''))
+    .filter(name => name.endsWith('.md') && name !== '.gitkeep')
+);
 
-function doneSkipSet(entries) {
-  var set = {};
-  (entries || []).forEach(function (e) {
-    if (e.type !== 'file' || !e.name || !e.name.endsWith('.md') || e.name === IGNORE) return;
-    var base = e.name.replace(/\.md$/i, '');
-    set[base] = true;
-  });
-  return set;
-}
+const tasks = queuedFiles
+  .filter(file => {
+    const name = String(file.name || '');
+    const path = String(file.path || '');
 
-const queueFiles = (queueEntries || [])
-  .filter(function (e) {
-    return e.type === 'file' && e.name.endsWith('.md') && e.name !== IGNORE;
+    if (!name.endsWith('.md')) return false;
+    if (path.indexOf('docs/tasks/queue/') !== 0) return false;
+
+    if (processingNames.has(name)) return false;
+    if (doneNames.has(name)) return false;
+
+    return true;
   })
-  .sort(function (a, b) { return a.name.localeCompare(b.name); });
+  .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
 
-const skipProc = processingSkipSet(processingEntries);
-const skipDone = doneSkipSet(doneEntries);
-
-for (var i = 0; i < queueFiles.length; i++) {
-  var q = queueFiles[i];
-  var task = taskSlugFromQueueName(q.name);
-  if (!task) continue;
-  if (skipProc[task] || skipDone[task]) {
-    continue;
-  }
-  return [{ json: { path: q.path, name: q.name, sha: q.sha, has_task: true } }];
+if (!tasks.length) {
+  return [
+    {
+      json: {
+        has_task: false,
+        message: 'No queued task found or all queued tasks already have processing prompts or done files'
+      }
+    }
+  ];
 }
 
-return [{
-  json: {
-    has_task: false,
-    reason: 'No eligible queued task (skipped: processing prompt and/or done file already present)',
-    checked_at: new Date().toISOString()
+const task = tasks[0];
+
+return [
+  {
+    json: {
+      has_task: true,
+      task_name: task.name,
+      task_path: task.path,
+      task_sha: task.sha || '',
+      task_size: task.size || 0,
+      skip_reason: ''
+    }
   }
-}];
+];
 ```
 
 ### Decode task markdown

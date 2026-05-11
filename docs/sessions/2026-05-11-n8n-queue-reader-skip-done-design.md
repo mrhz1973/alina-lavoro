@@ -1,5 +1,7 @@
 # Sessione — n8n queue reader skip `done` (design documentale)
 
+> **Aggiornamento 2026-05-11:** lo skip **`done`** è stato **implementato e validato** in n8n sul workflow **`TEST - GitHub list Alina task queue`**. Dettagli operativi e codice finale in [`2026-05-11-n8n-queue-reader-skip-done-validation.md`](./2026-05-11-n8n-queue-reader-skip-done-validation.md). Questo file resta la traccia del **design** iniziale.
+
 ## Data
 
 2026-05-11
@@ -25,17 +27,18 @@ Documentare il **micro-step** successivo per il workflow n8n **`TEST - GitHub li
 ## Cosa NON è stato fatto
 
 - **Nessuna** modifica al codice applicativo Alina (`src/`, `Index.html`, `Code.gs`, ecc.).
-- **Nessuna** modifica a workflow n8n **reali** nell’istanza operativa (solo specifica in repository).
 - **Nessun** deploy Apps Script, **nessun** tag Git, **nessun** tocco a `gas-current/`.
-- **Nessuna** validazione end-to-end in n8n del nuovo ramo **`done`** (non eseguita in questa sessione).
+- Alla stesura originale di questo documento: **nessuna** validazione end-to-end in n8n del ramo **`done`** (ora coperta da [`2026-05-11-n8n-queue-reader-skip-done-validation.md`](./2026-05-11-n8n-queue-reader-skip-done-validation.md)).
+
+*(L’implementazione n8n reale è avvenuta **dopo** questa sessione di design.)*
 
 ## Rischio residuo
 
-Fino a quando il workflow n8n **non** viene aggiornato e testato, i task con file già presente in **`docs/tasks/done/`** ma ancora in **`docs/tasks/queue/`** possono continuare a essere **eleggibili** dal reader attuale (solo skip **processing** oggi validato). Dopo l’implementazione, restano da considerare **race** tra lettura liste e commit esterni, e coerenza dei **basename** `{task}` tra cartelle.
+~~Fino a quando il workflow n8n **non** viene aggiornato e testato~~ — **superato** per il ramo skip `done` (vedi sessione di **validazione**). Restano da considerare **race** tra lettura liste e commit esterni, e coerenza dei **nomi file** tra cartelle.
 
 ## Prossimo passo operativo
 
-**Implementare e testare in n8n** il nodo **List done files** (`docs/tasks/done`), aggiornare il **Code** `Filter first queued task` (o equivalente) secondo `queue-reader.md` e `queue-reader-ai-friendly-template.md`, poi documentare una sessione di **validazione** con casi controllati (solo `done`, solo `processing`, entrambi, nessuno).
+~~**Implementare e testare in n8n**~~ — fatto; vedi [`2026-05-11-n8n-queue-reader-skip-done-validation.md`](./2026-05-11-n8n-queue-reader-skip-done-validation.md). Eventuali **regressioni** o estensioni documentate in nuove sessioni.
 
 ## Riferimenti
 
@@ -43,4 +46,5 @@ Fino a quando il workflow n8n **non** viene aggiornato e testato, i task con fil
 - [`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`](../automation/n8n-workflows/queue-reader-ai-friendly-template.md)
 - [`docs/automation/n8n-workflows/done-copy-only-generalization.md`](../automation/n8n-workflows/done-copy-only-generalization.md)
 - [`docs/automation/n8n-workflows/task-lifecycle.md`](../automation/n8n-workflows/task-lifecycle.md)
+- [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](./2026-05-11-n8n-queue-reader-skip-done-validation.md)
 - [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](./2026-05-11-n8n-queue-reader-processing-skip.md)

@@ -130,9 +130,9 @@ La policy “**create or update**” (o ramo Error → Create come nel queue rea
 
 ## Interazione con queue reader
 
-Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. Oggi il queue reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (**Opzione A**).
+Finché i task **restano in `queue`**, il queue reader ([`queue-reader.md`](./queue-reader.md)) può ancora **considerarli** in lista. Il queue reader **salta** i task per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (**Opzione A**).
 
-**Contratto atteso (documentato 2026-05-11, implementazione n8n da validare):** estendere lo stesso principio di skip quando esiste **`docs/tasks/done/{task}.md`**, così un task già chiuso in copy-only **done** non riceve un nuovo prompt pur restando in `queue`. Dettagli e stato lavori in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md); coordinamento con [`task-lifecycle.md`](./task-lifecycle.md).
+**Skip `done` (2026-05-11):** se esiste **`docs/tasks/done/{task}.md`**, il task in coda con lo stesso nome file **non** viene eleggito per un nuovo prompt — **implementato e validato in n8n** sul workflow **`TEST - GitHub list Alina task queue`** ([`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md)); il workflow **`TEST - Mark Alina task done copy-only generalized`** **non** è stato modificato durante quel lavoro. Coordinamento: [`task-lifecycle.md`](./task-lifecycle.md).
 
 ## Test consigliato
 
@@ -165,9 +165,8 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 
 ## Prossimo passo consigliato
 
-1. **Implementare e testare in n8n** lo skip del queue reader quando esiste **`docs/tasks/done/{task}.md`** — specifica in [`queue-reader.md`](./queue-reader.md), template in [`queue-reader-ai-friendly-template.md`](./queue-reader-ai-friendly-template.md), traccia in [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md); contesto anche in [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md) e [`task-lifecycle.md`](./task-lifecycle.md).
-2. **Opzionale:** rafforzare `Verify done file` con controlli sul **contenuto** (presenza `## Done copy-only outcome`, vincoli di size) oltre al GET di esistenza.
-3. **Contratto dati** con il queue reader (**opzione B**) dopo che lo skip per `done` è **implementato e testato** in n8n.
+1. **Opzionale:** rafforzare `Verify done file` con controlli sul **contenuto** (presenza `## Done copy-only outcome`, vincoli di size) oltre al GET di esistenza.
+2. **Contratto dati** con il queue reader (**opzione B**) se serve allineare metadati sessione / filtri oltre allo skip per path `done` già operativo — vedi [`queue-reader.md`](./queue-reader.md) e [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md).
 
 ## Riferimenti
 
@@ -177,4 +176,4 @@ Per regressioni future: rieseguire con lo stesso `task_name` e verificare outcom
 - Verify done file (0004): [`docs/sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md`](../sessions/2026-05-11-n8n-done-copy-only-0004-verify-done.md)
 - Lifecycle: [`task-lifecycle.md`](./task-lifecycle.md)
 - Done/failed design: [`done-failed-design.md`](./done-failed-design.md)
-- Queue reader: [`queue-reader.md`](./queue-reader.md) · skip `done` (design): [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md)
+- Queue reader: [`queue-reader.md`](./queue-reader.md) · skip `done` (validazione n8n): [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md) · design: [`docs/sessions/2026-05-11-n8n-queue-reader-skip-done-design.md`](../sessions/2026-05-11-n8n-queue-reader-skip-done-design.md)

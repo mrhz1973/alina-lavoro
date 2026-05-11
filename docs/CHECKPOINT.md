@@ -4,6 +4,7 @@ Ultimo aggiornamento: 2026-05-10 — produzione **V1.9.2** ( **Dettaglio mese** 
 
 ## Prossimo passo — automazione (pilota)
 
+- **n8n queue reader:** skip **`done`** su **`TEST - GitHub list Alina task queue`** — **implementato e validato** in UI (2026-05-11); sessione `docs/sessions/2026-05-11-n8n-queue-reader-skip-done-validation.md`. Restano regressioni mirate / watcher MVP per `docs/automation/runbook.md`.
 - Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent.
 
