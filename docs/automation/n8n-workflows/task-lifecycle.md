@@ -2,11 +2,13 @@
 
 ## Scopo
 
-Questo documento è una **specifica di progettazione** per definire come gestire, in futuro, il **ciclo di vita** dei task **file-based** del repository **Alina Lavoro** (Markdown in `docs/tasks/`, prompt in `processing`, sessioni in `docs/sessions/`). Non costituisce implementazione nel codice applicativo né nel workflow n8n reale finché non viene esplicitamente adottato.
+Questo documento è una **specifica di progettazione** per definire come gestire, in futuro, il **ciclo di vita** dei task **file-based** del repository **Alina Lavoro** (Markdown in `docs/tasks/`, prompt in `processing`, sessioni in `docs/sessions/`). Non sostituisce la documentazione operativa del queue reader in [`queue-reader.md`](./queue-reader.md); le parti già attive nel workflow n8n reale (es. skip anti-doppio-run dal 2026-05-11) sono descritte lì e nelle sessioni collegate.
 
 ## Stato
 
-**Proposta / design** — non ancora implementata nel workflow n8n effettivo sul VPS. Il queue reader attuale (`TEST - GitHub list Alina task queue`) resta quello documentato in `queue-reader.md` fino a eventuali estensioni coordinate.
+**Proposta / design** per il lifecycle completo (move verso `done`/`failed`, metadata strutturati, lock, ecc.). Il documento resta la fonte per quelle evoluzioni.
+
+**Aggiornamento (2026-05-11):** nel workflow reale `TEST - GitHub list Alina task queue` è stata **testata** una **prima implementazione parziale** dell’**Opzione A**: i task in `queue` per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` vengono **saltati**, evitando la doppia esecuzione sullo stesso task. Dettagli operativi in [`queue-reader.md`](./queue-reader.md) e sessione [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../sessions/2026-05-11-n8n-queue-reader-processing-skip.md).
 
 ## Scope
 
@@ -30,14 +32,16 @@ Questo documento è una **specifica di progettazione** per definire come gestire
 
 Il workflow n8n **TEST - GitHub list Alina task queue** oggi, in sintesi:
 
-- Seleziona il **primo file `.md`** in `docs/tasks/queue` (ordinamento deterministico per nome), ignora `.gitkeep`.
-- Decodifica e classifica il contenuto.
+- Elenca i file in **`docs/tasks/queue`** e in **`docs/tasks/processing`**, poi seleziona il **primo file `.md`** in coda **senza** prompt già presente in `processing` (stesso ordinamento deterministico per nome; ignora `.gitkeep`). Se tutti i task in queue hanno già il prompt, il flusso termina con `has_task: false` senza aggiornare file.
+- Decodifica e classifica il contenuto del task selezionato.
 - **Genera o aggiorna** il prompt Cursor in `docs/tasks/processing/{task}-cursor-prompt.md`.
 - **Genera o aggiorna** la sessione in `docs/sessions/automation-{task}.md`.
 - **Non esegue** Cursor.
 - **Non sposta** il task originale da `queue` verso `done` o `failed`.
 
-Questo design documenta cosa aggiungere **dopo** questa baseline.
+Questo design documenta cosa aggiungere **dopo** questa baseline (move `done`/`failed`, metadata aggiuntivi, notifiche, lock, ecc.).
+
+**Nota (2026-05-11):** la mitigazione “skip se esiste `{task}-cursor-prompt.md`” nel queue reader realizza già parte dell’intento dell’**Opzione A** contro il doppio run; restano da progettare/implementare le altre voci di lifecycle (vedi sezioni seguenti).
 
 ## Proposta di lifecycle — stati
 
@@ -95,7 +99,7 @@ Da **aggiungere progressivamente** o **preservare** quando si sposta il task:
 
 **Pro:** si adatta al comportamento **già** del queue reader; meno operazioni GitHub; meno rischio di delete prematuro.
 
-**Contro:** finché il file è in `queue`, un secondo run potrebbe **riselezionare** lo stesso task se non si aggiunge una regola “skip se già in processing”.
+**Contro:** finché il file è in `queue`, senza regole dedicate un secondo run può **riselezionare** lo stesso task. *Mitigazione attiva (2026-05-11, queue reader reale):* salto se esiste già `docs/tasks/processing/{task}-cursor-prompt.md` (vedi [`queue-reader.md`](./queue-reader.md)).
 
 ### Opzione B — Copia del task in `processing`
 

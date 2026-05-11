@@ -11,11 +11,12 @@
 - Test **completo OK**.
 - Il workflow **non** si limita più a lettura, decode e classify del task.
 - È **ri-eseguibile**: se il prompt Cursor o la sessione automation esistono già, vengono **aggiornati**; altrimenti vengono **creati**.
+- **Anti-doppio-run (2026-05-11):** se per un task in `docs/tasks/queue` esiste già `docs/tasks/processing/{task}-cursor-prompt.md`, quel task viene **saltato**; se non resta nessun task “libero”, il flusso termina con `has_task: false` **senza** riscrivere prompt/sessione (dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md)).
 - Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
 
 ## Scopo
 
-1. Leggere il **primo task Markdown** in `docs/tasks/queue`.
+1. Leggere i file in **`docs/tasks/queue`** e quelli in **`docs/tasks/processing`** per individuare il **primo task Markdown** in coda che **non** abbia ancora il relativo **`{task}-cursor-prompt.md`** in `processing` (allineato a *Opzione A* in `task-lifecycle.md`).
 2. **Decodificarlo** e **classificarlo** (metadata + contenuto).
 3. **Generare il prompt Cursor** operativo.
 4. **Creare o aggiornare** il file prompt in `docs/tasks/processing/`.
@@ -31,31 +32,36 @@ La sessione automation indica esplicitamente che **Cursor non è ancora stato es
 
 ```text
 Manual Trigger
-→ List files
-→ Filter first queued task
-→ Get queued task file
-→ Decode task markdown
-→ Classify task
-→ Build Cursor prompt
-   ├→ Check Cursor prompt file exists
-   │   ├→ Success → IF Cursor prompt file exists
-   │   │   ├→ true  → Update Cursor prompt file
-   │   │   └→ false → Create Cursor prompt file
-   │   └→ Error → Create Cursor prompt file
-   └→ Build session file
-       → Check session file exists
-           ├→ Success → IF session file exists
-           │   ├→ true  → Update session file
-           │   └→ false → Create session file
-           └→ Error → Create session file
+→ List files                         (queue: docs/tasks/queue)
+→ List processing files              (docs/tasks/processing)
+→ Filter first queued task           (salta task se esiste {task}-cursor-prompt.md in processing)
+→ IF has queued task
+    ├→ true  → Get queued task file
+    │          → Decode task markdown
+    │          → Classify task
+    │          → Build Cursor prompt
+    │             ├→ Check Cursor prompt file exists
+    │             │   ├→ Success → IF Cursor prompt file exists
+    │             │   │   ├→ true  → Update Cursor prompt file
+    │             │   │   └→ false → Create Cursor prompt file
+    │             │   └→ Error → Create Cursor prompt file
+    │             └→ Build session file
+    │                 → Check session file exists
+    │                     ├→ Success → IF session file exists
+    │                     │   ├→ true  → Update session file
+    │                     │   └→ false → Create session file
+    │                     └→ Error → Create session file
+    └→ false → (nessun nodo; workflow termina)
 ```
 
-(Sintassi nodi allineata alla grafica n8n: ramo **Error → Create** come fallback per creazione file.)
+- **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` non partono nodi a valle (nessun aggiornamento prompt/sessione).
+- (Sintassi ramo **Error → Create** invariata come fallback per creazione file quando `has_task` è `true`.)
 
 ## Regole operative (invariati principi)
 
 - Ignorare `.gitkeep`.
-- Task validi: solo file `.md` in `docs/tasks/queue`, ordinati per nome file; primo disponibile.
+- Task validi: solo file `.md` in `docs/tasks/queue`, ordinati per nome file; il **primo** considerato è il primo **senza** corrispondente `docs/tasks/processing/{task}-cursor-prompt.md` (i task “già presi in carico” tramite prompt esistente vengono **saltati**).
+- Se **nessun** task in queue resta eleggibile: `has_task: false` e messaggio coerente (es. *No queued task found or all queued tasks already have processing prompts*); il workflow **non** prosegue oltre l’**IF**.
 - Non modificare codice applicativo (`src/`), non deploy Apps Script, non tag, non `gas-current/` tramite questo workflow.
 
 ## File verificati / prodotti (prova su repository)
@@ -79,8 +85,10 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Audit manuale (2026-05-11):** esito OK rispetto a questa documentazione e al template AI-friendly; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-manual-audit.md`](../../sessions/2026-05-11-n8n-queue-reader-manual-audit.md).
 
+**Anti-doppio-run / processing skip (2026-05-11):** implementazione n8n testata; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md).
+
 ## Prossimo passo consigliato
 
 Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
 
-**Lifecycle task (design, non implementato nel workflow reale):** [`task-lifecycle.md`](./task-lifecycle.md).
+**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; la parte **skip** se prompt già in `processing` è attiva nel workflow reale dal 2026-05-11).
