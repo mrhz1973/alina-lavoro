@@ -1,6 +1,6 @@
 # Alina Lavoro — Regole prioritarie orchestratore
 
-Ultimo aggiornamento: 2026-05-11 — aggiunta regola **output prompt Cursor** (formato asciutto: solo introduzione fissa + **unico** blocco prompt; nessun riepilogo esterno che duplica il contenuto del prompt — vedi sezione **Regola output prompt Cursor**). Resta valida la regola **post-aggio**: dopo `aggio`, se non servono decisioni o conferme, l’orchestratore deve proporre direttamente il prossimo micro-step senza attendere un ulteriore “vai”. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
+Ultimo aggiornamento: 2026-05-11 — aggiunte regole **avanzamento senza “vai”** (nessuna conferma inutile se il passo successivo è già determinato), **richiesta esplicita di `aggio`** quando il passo atteso dopo Cursor è la verifica GitHub da orchestratore, e **rafforzamento** della **Regola output prompt Cursor** (tutto il contesto operativo, inclusa la richiesta di `aggio` e il messaggio commit, dentro l’unico blocco copiabile). Restano valide le regole già descritte per **post-aggio** e formato asciutto. Stato stabile app: **V1.9.2** (deploy **`@24`**, test **`/exec` OK** 2026-05-10).
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
@@ -82,6 +82,48 @@ L’orchestratore deve invece fermarsi e chiedere conferma solo quando serve una
 
 In sintesi: dopo `aggio`, **non chiedere “vai” se il passo successivo è già determinato**; procedere direttamente con il prossimo micro-step utile, restando comunque in modalità passo-passo.
 
+## Regola avanzamento senza “vai”
+
+Quando il prossimo passo è **chiaro**, già **determinato**, **non ambiguo** e **non** richiede una **decisione** dell’utente, l’orchestratore deve **procedere direttamente** al prossimo micro-step utile.
+
+L’orchestratore **non** deve far perdere tempo all’utente chiedendo:
+
+- «vai»;
+- «andiamo avanti»;
+- «procedo?»;
+- «vuoi che continui?»;
+- formule **equivalenti** di conferma in assenza di scelta reale.
+
+Chiedere conferme **inutili** è considerato **errore operativo**. Il tempo dell’utente è prezioso.
+
+L’orchestratore deve **fermarsi** solo se serve **davvero** una decisione o un gate, per esempio:
+
+- scelta tra **due** strade operative **equivalenti** (serve scelta);
+- **rischio** dati o integrità;
+- **cancellazioni** significative;
+- **deploy**, **tag**, **rollback**;
+- **credenziali** o gestione segreti;
+- **errore** locale non verificabile da GitHub;
+- **ambiguità reale** sul prossimo obiettivo;
+- **test** manuale utente/Alina necessario come gate.
+
+Se **non** c’è una decisione reale, l’orchestratore deve **avanzare** (coerente anche con la sottosezione **Avanzamento automatico dopo `aggio`**, che resta il caso particolare dopo il riepilogo `aggio`).
+
+## Regola richiesta esplicita di `aggio`
+
+Quando il prossimo passo **atteso** è che l’utente faccia **`aggio`** (verifica GitHub / stato repo da parte dell’orchestratore) **dopo** un blocco **Cursor**, l’orchestratore deve chiederlo **esplicitamente**, ad esempio:
+
+```text
+Quando Cursor finisce, scrivi: aggio
+```
+
+oppure **formula equivalente** altrettanto chiara.
+
+- **Non** lasciare **implicito** che l’utente debba scrivere `aggio`.
+- **Non** aspettarsi un `aggio` **senza** averlo richiesto in modo leggibile nel flusso (idealmente **dentro** il prompt Cursor se il passo corrente è il prompt — vedi **Regola output prompt Cursor**).
+
+Se un prompt Cursor prevede **commit** e **push**, la richiesta a Cursor di riportare **hash commit** e stato finale deve stare **nel prompt**; **fuori** dal prompt, se non ci sono decisioni o rischi, **non** aggiungere riepiloghi esterni (stessa disciplina della **Regola output prompt Cursor**).
+
 ## Cursor / Agent
 
 Cursor deve sempre aggiornare GitHub a fine blocco operativo o sessione, anche se l'utente non scrive `finito`.
@@ -127,22 +169,50 @@ Ogni prompt operativo per Cursor deve essere autosufficiente per Cursor: tutto c
 
 ## Regola output prompt Cursor
 
-Quando l’orchestratore deve fornire un **prompt da incollare in Cursor**, deve usare il formato **asciutto**:
+Quando l’output richiesto è un **prompt Cursor**, il messaggio dell’orchestratore deve contenere **solo**:
 
 ```text
 Incolla questo in Cursor:
 
-[UNICO BLOCCO PROMPT — tutto il testo da copiare, inclusi @-file e istruzioni]
+[UNICO BLOCCO PROMPT COMPLETO]
 ```
 
-Vincoli:
+Tutto il **contesto operativo** necessario deve stare **dentro** l’unico blocco da copiare e incollare, inclusi a titolo **esemplificativo** (non esaustivo):
 
-- **Nessun** riepilogo esterno **prima** o **dopo** il prompt che ripeta o parafrasi il prompt stesso.
-- **Nessuna** spiegazione separata dei paragrafi **interni** al prompt (il prompt è già autodescrittivo).
-- **Nessuna** ripetizione **fuori** dal prompt del contenuto già incluso **nel** prompt.
-- L’utente legge il prompt se vuole; **non** duplicarne il contenuto nel messaggio esterno.
-- Testo **fuori** dal prompt consentito **solo** se serve una **decisione reale**, un **rischio**, un **errore**, **deploy/tag/rollback**, **cancellazioni**, **credenziali** o altra **conferma esplicita**.
-- Se **non** ci sono decisioni né rischi, l’output deve essere **solo** la riga fissa **`Incolla questo in Cursor:`** seguita dal **blocco prompt completo** (nessun altro testo esplicativo).
+- validazioni da eseguire;
+- file da creare o aggiornare;
+- vincoli e procedura del blocco;
+- **messaggio di commit** (ove richiesto);
+- **risposta finale obbligatoria** da riprodurre in chiusura (se prevista dal task);
+- richiesta esplicita di **`aggio`** quando è il passo successivo atteso dopo Cursor, nella forma ad esempio:
+
+```text
+Quando Cursor finisce, scrivi: aggio
+```
+
+(o equivalente **nel** blocco).
+
+Non devono comparire **fuori** dal blocco prompt:
+
+- riepiloghi della validazione;
+- elenchi di file da creare o da aggiornare;
+- contenuto richiesto per sessioni o altri file se già specificato **nel** prompt;
+- vincoli obbligatori o procedura **ripetuti** all’esterno;
+- messaggio di commit duplicato fuori blocco;
+- checklist “risposta finale obbligatoria” come testo parallelo se già inclusa nel prompt;
+- **ripetizioni** o **parafrasi** del prompt.
+
+Testo **fuori** dal prompt è consentito **solo** se serve **davvero**:
+
+- una **decisione**;
+- un **rischio**;
+- un **errore**;
+- **deploy / tag / rollback**;
+- **cancellazioni**;
+- **credenziali** o dati sensibili;
+- **conferma esplicita** non riducibile a istruzioni nel prompt.
+
+Se **non** c’è nulla di tutto ciò, l’output dell’orchestratore deve essere **unicamente** la riga **`Incolla questo in Cursor:`** seguita dal **blocco prompt completo** (nessun altro testo esplicativo).
 
 ## Richiamo sintetico delle procedure standard
 
