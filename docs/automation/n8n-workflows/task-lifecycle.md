@@ -10,6 +10,8 @@ Questo documento è una **specifica di progettazione** per definire come gestire
 
 **Aggiornamento (2026-05-11):** nel workflow reale `TEST - GitHub list Alina task queue` è stata **testata** una **prima implementazione parziale** dell’**Opzione A**: i task in `queue` per cui esiste già `docs/tasks/processing/{task}-cursor-prompt.md` vengono **saltati**, evitando la doppia esecuzione sullo stesso task. Dettagli operativi in [`queue-reader.md`](./queue-reader.md) e sessione [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../sessions/2026-05-11-n8n-queue-reader-processing-skip.md).
 
+**Workflow separato `TEST - Mark Alina task done copy-only` (0003, copy-only `done`):** [`done-copy-only.md`](./done-copy-only.md) · sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+
 ## Scope
 
 **Incluso**

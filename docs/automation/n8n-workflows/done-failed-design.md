@@ -20,6 +20,8 @@ Il workflow **`TEST - GitHub list Alina task queue`** oggi, in sintesi:
 
 La validazione con task `0002` è documentata in `docs/sessions/2026-05-11-n8n-queue-reader-0002-validation.md`.
 
+**Done copy-only (task 0003, workflow manuale separato):** copia in `docs/tasks/done` + aggiornamento sessione, **senza** delete da `queue` — [`done-copy-only.md`](./done-copy-only.md); sessione [`2026-05-11-n8n-done-copy-only-0003-validation.md`](../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+
 ## Principio principale
 
 **Non cancellare** mai il file task in `queue` prima che la **destinazione** (`done` o `failed`) sia stata **creata** (o aggiornata in modo idempotente) e **verificata** (contenuto leggibile, commit riuscito, SHA coerente dove serve).

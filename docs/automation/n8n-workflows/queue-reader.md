@@ -91,8 +91,10 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Validazione task 0003 (2026-05-11):** skip su `0001`/`0002`, selezione `0003`, prompt/sessione creati, nessun `done` (atteso); dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-0003-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0003-validation.md).
 
+**Done copy-only (0003, workflow separato `TEST - Mark Alina task done copy-only`):** [`done-copy-only.md`](./done-copy-only.md); sessione [`docs/sessions/2026-05-11-n8n-done-copy-only-0003-validation.md`](../../sessions/2026-05-11-n8n-done-copy-only-0003-validation.md).
+
 ## Prossimo passo consigliato
 
 Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
 
-**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; la parte **skip** se prompt già in `processing` è attiva nel workflow reale dal 2026-05-11). **Chiusura `done`/`failed` (design, non implementato):** [`done-failed-design.md`](./done-failed-design.md).
+**Lifecycle task:** [`task-lifecycle.md`](./task-lifecycle.md) (design per `done`/`failed` e move; la parte **skip** se prompt già in `processing` è attiva nel workflow reale dal 2026-05-11). **Chiusura `done`/`failed` (design, non implementato):** [`done-failed-design.md`](./done-failed-design.md). **Done copy-only (workflow test separato, 0003):** [`done-copy-only.md`](./done-copy-only.md).
