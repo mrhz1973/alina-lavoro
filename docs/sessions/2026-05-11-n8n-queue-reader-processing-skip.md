@@ -6,7 +6,7 @@
 
 ## Stato
 
-Implementazione manuale su n8n **testata OK** (prima logica anti-doppio-run).
+Implementazione manuale su n8n **testata OK** (anti-doppio-run + **terminatore esplicito** sul ramo `false` dell’IF).
 
 ## Workflow
 
@@ -48,17 +48,51 @@ Non è richiesto in questa sessione riportare l’intero codice del nodo: la sem
   - *operator:* **is equal to**
   - *value2:* `true`
 - **Ramo `true`:** collegato a **`Get queued task file`** (prosegue il flusso storico: decode, classify, build prompt, sessione, GitHub write).
-- **Ramo `false`:** **nessun nodo a valle** — il workflow **termina** senza aggiornare prompt né sessione.
+- **Ramo `false`:** collegato al nodo **Code** `No queued task / already processing` (vedi sotto): **nessun** aggiornamento a prompt o sessione su GitHub; solo output strutturato in n8n per osservabilità.
+
+### `No queued task / already processing` (nuovo, ramo `false`)
+
+- **Tipo nodo:** Code (JavaScript).
+- **Posizione:** ramo **`false`** di **`IF has queued task`** (terminatore esplicito al posto dello stop “a vuoto”).
+- **Scopo:** esporre un item JSON **stabile** con motivazione e timestamp quando non c’è lavoro da fare (`has_task: false`), così l’esecuzione risulta **tracciabile** nell’UI n8n e nei log di run.
+
+Logica implementata:
+
+```javascript
+const input = $input.first()?.json || {};
+
+return [
+  {
+    json: {
+      has_task: false,
+      status: 'no_action',
+      reason: input.message || 'No queued task found or all queued tasks already have processing prompts',
+      next_action: 'none',
+      checked_at: new Date().toISOString()
+    }
+  }
+];
+```
+
+Campi in output:
+
+| Campo | Ruolo |
+|--------|--------|
+| `has_task` | Sempre `false` su questo ramo. |
+| `status` | Valore fisso `no_action` (nessuna azione GitHub). |
+| `reason` | Messaggio dal filtro (`input.message`) oppure stringa di fallback uguale al messaggio documentato per “nessun task / tutti già in processing”. |
+| `next_action` | Valore fisso `none`. |
+| `checked_at` | Timestamp ISO 8601 della valutazione. |
 
 ## Esito test manuale
 
 Scenario: task di test ancora presente in **`docs/tasks/queue`**, con **`docs/tasks/processing/{task}-cursor-prompt.md`** già esistente.
 
-- Il workflow ha emesso **`has_task: false`**.
-- Il ramo **false** dell’**IF** non ha avviato nodi successivi (**stop corretto**).
-- **Prompt** e **sessione** non sono stati rigenerati né aggiornati.
+- Il workflow ha emesso **`has_task: false`** dal filtro.
+- Il ramo **false** dell’**IF** ha eseguito il nodo Code **`No queued task / already processing`**, producendo l’output strutturato (`status: no_action`, `reason`, `checked_at`, ecc.).
+- **Prompt** e **sessione** su GitHub **non** sono stati rigenerati né aggiornati.
 
-**Sintesi:** test OK; il flusso si è **fermato sul false** come previsto, evitando la **doppia esecuzione** sullo stesso task già dotato di prompt in `processing`.
+**Sintesi:** test OK; uscita **esplicita** sul `false` con terminatore Code, senza doppia esecuzione sul task già coperto da prompt in `processing`.
 
 ## Condizione IF (riferimento esatto)
 
@@ -78,8 +112,8 @@ Scenario: task di test ancora presente in **`docs/tasks/queue`**, con **`docs/ta
 
 ## Prossimo passo consigliato
 
-- Valutare un **ramo `false` esplicito** (es. nodo *NoOp*, log strutturato, notifica redatta) per rendere più visibile in n8n l’uscita “tutti i task già in processing”, oppure
-- Procedere verso una **marcatura `processing` più strutturata** (metadata nel task o nella sessione, `picked_at`, ecc.) come evoluzione successiva rispetto al solo controllo sul nome file del prompt.
+- Procedere verso una **marcatura `processing` più strutturata** (metadata nel task o nella sessione, `picked_at`, ecc.) come evoluzione oltre al solo controllo sul nome file del prompt.
+- Valutare **notifiche redatte** (webhook/email) agganciate all’output del terminatore `false`, senza mai includere segreti.
 
 ## Riferimenti
 

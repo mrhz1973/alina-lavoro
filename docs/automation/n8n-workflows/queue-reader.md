@@ -11,7 +11,7 @@
 - Test **completo OK**.
 - Il workflow **non** si limita più a lettura, decode e classify del task.
 - È **ri-eseguibile**: se il prompt Cursor o la sessione automation esistono già, vengono **aggiornati**; altrimenti vengono **creati**.
-- **Anti-doppio-run (2026-05-11):** se per un task in `docs/tasks/queue` esiste già `docs/tasks/processing/{task}-cursor-prompt.md`, quel task viene **saltato**; se non resta nessun task “libero”, il flusso termina con `has_task: false` **senza** riscrivere prompt/sessione (dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md)).
+- **Anti-doppio-run (2026-05-11):** se per un task in `docs/tasks/queue` esiste già `docs/tasks/processing/{task}-cursor-prompt.md`, quel task viene **saltato**; se non resta nessun task “libero”, il flusso va sul ramo **`false`** dell’**IF** con terminatore **Code** `No queued task / already processing` (**nessun** write su prompt/sessione GitHub; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md)).
 - Nessuna modifica al codice applicativo del repo (solo file documentazione/task prodotti dal flusso).
 
 ## Scopo
@@ -51,17 +51,17 @@ Manual Trigger
     │                     │   ├→ true  → Update session file
     │                     │   └→ false → Create session file
     │                     └→ Error → Create session file
-    └→ false → (nessun nodo; workflow termina)
+    └→ false → No queued task / already processing   (Code: output JSON no_action; nessun write GitHub)
 ```
 
-- **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` non partono nodi a valle (nessun aggiornamento prompt/sessione).
+- **IF has queued task:** `{{ String($json.has_task) }}` **is equal to** `true` sul ramo `true`; sul `false` il flusso entra nel **Code** `No queued task / already processing` (item con `status: 'no_action'`, `reason`, `checked_at`, ecc.) **senza** aggiornare prompt o sessione su GitHub.
 - (Sintassi ramo **Error → Create** invariata come fallback per creazione file quando `has_task` è `true`.)
 
 ## Regole operative (invariati principi)
 
 - Ignorare `.gitkeep`.
 - Task validi: solo file `.md` in `docs/tasks/queue`, ordinati per nome file; il **primo** considerato è il primo **senza** corrispondente `docs/tasks/processing/{task}-cursor-prompt.md` (i task “già presi in carico” tramite prompt esistente vengono **saltati**).
-- Se **nessun** task in queue resta eleggibile: `has_task: false` e messaggio coerente (es. *No queued task found or all queued tasks already have processing prompts*); il workflow **non** prosegue oltre l’**IF**.
+- Se **nessun** task in queue resta eleggibile: `has_task: false` e messaggio coerente (es. *No queued task found or all queued tasks already have processing prompts*); il ramo **`false`** dell’**IF** esegue il **Code** `No queued task / already processing` (solo output in n8n); **nessun** aggiornamento a file prompt/sessione su GitHub.
 - Non modificare codice applicativo (`src/`), non deploy Apps Script, non tag, non `gas-current/` tramite questo workflow.
 
 ## File verificati / prodotti (prova su repository)
