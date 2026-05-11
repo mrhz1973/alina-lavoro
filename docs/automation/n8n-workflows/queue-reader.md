@@ -87,6 +87,8 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Anti-doppio-run / processing skip (2026-05-11):** implementazione n8n testata; dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-processing-skip.md`](../../sessions/2026-05-11-n8n-queue-reader-processing-skip.md).
 
+**Validazione task 0002 (2026-05-11):** due esecuzioni manuali (ramo `true` poi ramo `false` con `no_action`); dettagli in [`docs/sessions/2026-05-11-n8n-queue-reader-0002-validation.md`](../../sessions/2026-05-11-n8n-queue-reader-0002-validation.md).
+
 ## Prossimo passo consigliato
 
 Template **AI-friendly** (descrizione nodi + parametri redatti, senza JSON segreti): **`docs/automation/n8n-workflows/queue-reader-ai-friendly-template.md`**. Un export JSON n8n redatto resta opzionale e va revisionato prima di ogni commit.
