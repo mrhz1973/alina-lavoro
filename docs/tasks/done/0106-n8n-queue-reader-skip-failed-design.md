@@ -41,7 +41,7 @@ Questo task deve produrre una progettazione operativa chiara per il passo succes
 
 - **completed_at**: 2026-05-12
 - **session_path**: docs/sessions/2026-05-12-n8n-queue-reader-skip-failed-design.md
-- **commit_hash**: [da inserire dopo commit]
+- **commit_hash**: 3ab1ed6
 - **completed_by**: Windsurf/Cascade (reserve implementer)
 
 ## Design output creato
