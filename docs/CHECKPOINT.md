@@ -244,7 +244,7 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 
 **Stato VPS attuale:** Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅ | Login bloccato ❌ | API key ❌ | Runner automatico ❌
 
-**Task 0124 creato** (tipo `runner-decision-docs-only`, 2026-05-12): task decisionale Fase 3A sulle alternative runner praticabili senza API key manuali; in queue; non autorizza runtime, runner automatico, API key, login Claude, CLI di alcun tipo, modifiche n8n/VPS/GitHub Actions/deploy; alternative A/B/C/D/E/F confrontate; gate manuale separato richiesto per esecuzione futura; task `docs/tasks/queue/0124-runner-alternatives-no-api-decision.md`.
+**Task 0124 completato** (tipo `runner-decision-docs-only`, 2026-05-12): decisione Fase 3A no-API documentata; alternative A/B/C/D/E/F confrontate; raccomandazione: breve termine modalità manuale-supervisionata (Claude Code locale principale + Windsurf/Cascade riserva); n8n resta queue reader/prompt generator/session tracker; Cursor CLI rinviato al reset; Codex CLI solo eventuale verifica documentale futura (task 0125 proposto, non creato); Claude Code CLI VPS non raccomandato finché resta vincolo no-API-key; runner automatico non attivato; nessun runtime; documentazione in `docs/automation/runner-alternatives-no-api-decision.md`; sessione: `docs/sessions/2026-05-12-runner-alternatives-no-api-decision.md`.
 
-1. Prossimo passo: eseguire task 0124 (docs-only decision) con gate manuale. App Alina V1.9.2 stabile e non toccata.
+1. Prossimo passo: continuare in modalità manuale-supervisionata; valutare eventuale task 0125 Codex CLI feasibility check (docs-only) e task Cursor CLI preflight al reset. App Alina V1.9.2 stabile e non toccata.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
