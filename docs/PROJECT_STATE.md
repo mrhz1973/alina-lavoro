@@ -94,5 +94,7 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** (**Dettaglio mese** p
 
 ## Prossimo passo consigliato
 
-1. Task 0110 completato: binding n8n ristretto a `127.0.0.1:5678`; accesso esterno diretto bloccato; tunnel SSH operativo. Prossimo passo: evoluzione watcher/runner oppure tornare all'app Alina — decisione orchestratore.
+**Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app. App Alina **V1.9.2** resta stabile e non toccata.
+
+1. Prossimo passo operativo: evoluzione watcher/runner — progettare MVP n8n (watcher) + runner documentale su VPS, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
