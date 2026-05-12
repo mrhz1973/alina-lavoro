@@ -229,5 +229,16 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 - Opzione A (Claude Code CLI VPS) raccomandata; Opzione C (GitHub Actions) alternativa.
 - Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback, CLI, API key.
 
-1. Prossimo passo: creare task preflight `vps-runner-setup-preflight` — verifica compatibilità CLI, stima costo token, design nodo SSH exec n8n; ancora design/preflight, non runtime pieno.
+**Task 0119 creato (2026-05-12).** Preflight docs-only in queue:
+
+- Task `docs/tasks/queue/0119-vps-runner-setup-preflight-docs-only.md` in queue.
+- Richiede `docs/automation/vps-runner-setup-preflight.md` con dieci sezioni: compatibilità
+  CLI teorica, checklist comandi read-only futuri (non eseguiti ora), stima costo token,
+  proposta budget, design nodo SSH exec su carta, allowlist/denylist, piano Fase 3A,
+  rischi/mitigazioni, criteri task successivo.
+- Nessuna installazione, nessuna API key, nessuna modifica VPS/n8n.
+- Sessione: `docs/sessions/2026-05-12-create-task-0119-vps-runner-setup-preflight.md`.
+- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
+
+1. Prossimo passo: n8n seleziona task 0119 → produce `docs/automation/vps-runner-setup-preflight.md`; task successivo = read-only check VPS, non installazione diretta.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
