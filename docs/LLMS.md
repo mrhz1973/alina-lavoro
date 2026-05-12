@@ -79,6 +79,8 @@ Use **technical English** for internal reasoning, prompts, JSON/YAML, classifier
 
 Use **Italian** for final user-facing summaries and orchestrator output.
 
+Agent-facing operational rules (`docs/AI_RULES.md`, `docs/WORKFLOW.md`) are normalized in technical English.
+
 → Full rule: `docs/AI_RULES.md` — "Language policy for agents"
 
 ---

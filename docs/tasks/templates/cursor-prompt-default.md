@@ -1,17 +1,17 @@
 # Cursor prompt template — default (`Build Cursor prompt`)
 
-Questo file documenta il **layout** del prompt operativo oggi assemblato dal nodo n8n **Build Cursor prompt** (workflow **TEST - GitHub list Alina task queue**). I token `{{nome}}` sono **segnaposto**: la sostituzione da GitHub/n8n sarà introdotta in un task successivo.
+This file documents the **layout** of the operational prompt assembled by the n8n node **Build Cursor prompt** (workflow **TEST - GitHub list Alina task queue**). The `{{name}}` tokens are **placeholders**: substitution from GitHub/n8n will be introduced in a future task.
 
-| Segnaposto | Contenuto tipico |
-|------------|------------------|
-| `{{task_source_path}}` | Percorso del file task in `docs/tasks/queue/…` |
-| `{{project}}` | Nome progetto (es. Alina Lavoro) |
-| `{{type}}` | Tipo task (es. docs-only, test) |
-| `{{priority}}` | Priorità (es. normal, low) |
-| `{{deploy_policy}}` | Politica deploy (es. no, none) |
-| `{{objective}}` | Testo sezione Objective (Markdown inline / paragrafi) |
-| `{{requirements}}` | Testo o elenco Requirements |
-| `{{expected_output}}` | Testo o elenco Expected output |
+| Placeholder | Typical content |
+|-------------|-----------------|
+| `{{task_source_path}}` | Path of the task file in `docs/tasks/queue/…` |
+| `{{project}}` | Project name (e.g. Alina Lavoro) |
+| `{{type}}` | Task type (e.g. docs-only, test) |
+| `{{priority}}` | Priority (e.g. normal, low) |
+| `{{deploy_policy}}` | Deploy policy (e.g. no, none) |
+| `{{objective}}` | Objective section text (Markdown inline / paragraphs) |
+| `{{requirements}}` | Requirements text or list |
+| `{{expected_output}}` | Expected output text or list |
 
 ---
 

@@ -1,36 +1,36 @@
-# Alina Lavoro — Regole permanenti per AI / Cursor
+# Alina Lavoro — Permanent rules for AI / Cursor
 
-Queste regole integrano i vincoli del repository e riducono ambiguita operative.
+These rules complement the repository constraints and reduce operational ambiguity.
 
-## Regola implementatori — Niente conferme superflue
+## Implementer rule — No unnecessary confirmations
 
-Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.
 
-L'implementatore (Cursor, Windsurf/Cascade, Claude Code, Agent) deve:
+The implementer (Cursor, Windsurf/Cascade, Claude Code, Agent) must:
 
-- **non chiedere all'utente conferme superflue** per task **docs-only** già assegnati;
-- **non trasformare in decisione** ciò che è già deciso da roadmap, task in queue o prompt orchestratore;
-- se il task è **docs-only** e gli **allowed paths** sono chiari, **eseguire**;
-- **fermarsi** solo per:
-  - scope drift (i cambiamenti escono dagli allowed paths);
-  - path vietati toccati;
-  - conflitti Git non risolvibili autonomamente;
-  - errori tecnici non risolvibili (es. file corrotti, dipendenze mancanti);
-  - **gate sensibili** (runtime, VPS runtime, n8n runtime, modifiche app Alina, deploy, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili, test fisico reale).
-- nel **riepilogo finale** indicare se sono rimasti **gate reali** o rischi residui, ma **non** chiedere «procedo?» se non c'è scelta.
+- **not ask the user for unnecessary confirmations** for already-assigned **docs-only** tasks;
+- **not turn into a decision** what is already decided by the roadmap, queue task, or orchestrator prompt;
+- if the task is **docs-only** and the **allowed paths** are clear, **execute**;
+- **stop only for**:
+  - scope drift (changes go outside the allowed paths);
+  - forbidden paths touched;
+  - Git conflicts not autonomously resolvable;
+  - unresolvable technical errors (e.g. corrupted files, missing dependencies);
+  - **sensitive gates** (runtime, VPS runtime, n8n runtime, Alina app changes, deploy, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, sensitive data, real physical test).
+- in the **final report**, indicate if any **real gates** or residual risks remain, but **do not ask «shall I proceed?»** if there is no real choice.
 
-Per task **docs-only determinati** l'assenza di scelta equivale a **consenso operativo a proseguire**: eseguire e chiudere secondo workflow con commit selettivo e push.
+For **determined docs-only tasks**, the absence of a real choice equals **operational consent to proceed**: execute and close according to workflow with selective commit and push.
 
-## Ruoli operativi
+## Operational roles
 
-- **Orchestratore**: la chat di coordinamento. **Non legge il filesystem locale di Cursor**: ricostruisce lo stato da **GitHub** (e da quanto l’utente incolla in chat).
-- **Implementatore**: Cursor / Agent. Esegue modifiche, controlli, commit, push e aggiornamento documenti su GitHub.
-- **GitHub**: **fonte di verita per l’orchestratore** e memoria condivisa con l’implementatore.
-- **Terminale**: normalmente usato dall'implementatore. L'utente non deve essere costretto a eseguire comandi manuali salvo casi eccezionali.
+- **Orchestrator**: the coordination chat. **Does not read the local filesystem**: reconstructs state from **GitHub** (and from what the user pastes in chat).
+- **Implementer**: Cursor / Agent. Executes changes, checks, commits, pushes, and updates documents on GitHub.
+- **GitHub**: **source of truth for the orchestrator** and shared memory with the implementer.
+- **Terminal**: normally used by the implementer. The user must not be forced to run manual commands except in exceptional cases.
 
-## Prima di agire
+## Before acting
 
-0. **Sincronizzarsi con GitHub** prima di un nuovo blocco di lavoro sul branch operativo (**`main`**):
+0. **Sync with GitHub** before starting a new work block on the operational branch (**`main`**):
 
    ```bash
    git checkout main
@@ -38,21 +38,21 @@ Per task **docs-only determinati** l'assenza di scelta equivale a **consenso ope
    npm run aggio
    ```
 
-1. **Non inventare stato** del progetto, del deploy o del branch: verificare con `git status`, `git branch`, documenti in `docs/` e, se utile, `npm run aggio`.
-2. **Leggere** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/STREAMLINED_WORKFLOW.md` quando pertinenti al task.
-3. **Branch operativo:** lavorare su **`main`**. **`dev`** è **legacy/inattivo** — non usarlo per nuovi sviluppi.
-4. **`gas-current/`** e **solo lettura**: mai modificare, mai usarlo come sorgente di patch.
-5. **Modifiche applicative** solo sotto **`src/`** (backend `src/backend/`, frontend `src/frontend/`), salvo workflow/documentazione/tool esplicitamente richiesti.
+1. **Do not invent state** of the project, deploy, or branch: verify with `git status`, `git branch`, docs in `docs/`, and if useful, `npm run aggio`.
+2. **Read** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/STREAMLINED_WORKFLOW.md` when relevant to the task.
+3. **Operational branch:** work on **`main`**. **`dev`** is **legacy/inactive** — do not use it for new development.
+4. **`gas-current/`** is **read-only**: never modify, never use as a source for patches.
+5. **Application changes** only under **`src/`** (backend `src/backend/`, frontend `src/frontend/`), unless workflow/documentation/tools are explicitly requested.
 
-## Regola obbligatoria: GitHub sempre aggiornato
+## Mandatory rule: GitHub always updated
 
-L'implementatore deve sempre mantenere GitHub aggiornato a **fine blocco operativo o sessione**, anche quando l'utente **non** scrive esplicitamente `finito`.
+The implementer must always keep GitHub updated at the **end of every operational block or session**, even when the user does **not** explicitly write `finito`.
 
-Motivo: l'orchestratore **non** legge il workspace locale; se GitHub non è aggiornato, l'orchestratore resta fuori dal loop.
+Reason: the orchestrator does **not** read the local workspace; if GitHub is not updated, the orchestrator is out of the loop.
 
-A fine blocco l'implementatore deve **sempre**, in ordine:
+At the end of a block, the implementer must **always**, in order:
 
-1. **Controllare lo stato reale** (locale, prima di documentare e committare):
+1. **Check real state** (local, before documenting and committing):
 
    ```bash
    git status
@@ -60,60 +60,60 @@ A fine blocco l'implementatore deve **sempre**, in ordine:
    git log --oneline -5
    ```
 
-2. **Aggiornare la documentazione** se lo stato è cambiato: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, e se utile un file in `docs/sessions/YYYY-MM-DD-*.md` (o `npm run checkpoint` se si usa quello schema).
+2. **Update documentation** if state has changed: `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, and if useful a file in `docs/sessions/YYYY-MM-DD-*.md` (or `npm run checkpoint` if using that schema).
 
-3. **Eseguire i controlli minimi** pertinenti al blocco. Se viene modificato `src/frontend/Index.html`, l'implementatore deve eseguire i **controlli frontend standard** definiti in `docs/COMMANDS.md`, senza chiedere all'utente di lanciarli manualmente.
+3. **Run the minimum checks** relevant to the block. If `src/frontend/Index.html` is modified, the implementer must run the **standard frontend checks** defined in `docs/COMMANDS.md`, without asking the user to launch them manually.
 
-4. **Commit selettivo** — mai `git add .`; elenco file esplicito o `npm run finito -- "msg" file1 file2 …`.
+4. **Selective commit** — never `git add .`; explicit file list or `npm run finito -- "msg" file1 file2 …`.
 
-5. **Push su GitHub** (`git push origin main`).
+5. **Push to GitHub** (`git push origin main`).
 
-6. **Riepilogo finale** in risposta all'utente con:
-   - file modificati;
-   - test/check eseguiti;
-   - errori o rischi residui;
-   - **hash** del commit;
-   - output di **`git status --short`** finale;
-   - **conferma esplicita**: workspace **pulito** oppure **non pulito** (e perche).
+6. **Final report** in reply to the user with:
+   - files changed;
+   - tests/checks executed;
+   - errors or residual risks;
+   - **commit hash**;
+   - **`git status --short`** output;
+   - **explicit confirmation**: workspace **clean** or **not clean** (and why).
 
-Eccezione: durante una fase intermedia non ancora considerata conclusa, l'implementatore può lasciare modifiche locali **solo** se lo dichiara esplicitamente nel riepilogo e non presenta il blocco come chiuso.
+Exception: during an intermediate phase not yet considered complete, the implementer may leave local changes **only** if explicitly stated in the report and the block is not presented as closed.
 
-## Controlli standard
+## Standard checks
 
-Quando un prompt Cursor riguarda `src/frontend/Index.html`, l'orchestratore non deve riscrivere ogni volta tutti i comandi shell. Deve invece richiamare questa formula:
+When a Cursor prompt concerns `src/frontend/Index.html`, the orchestrator does not need to rewrite all shell commands every time. Use this formula instead:
 
-> Esegui i controlli frontend standard da `docs/COMMANDS.md`.
+> Run the standard frontend checks from `docs/COMMANDS.md`.
 
-L'implementatore deve interpretarla come obbligo di eseguire il blocco canonico in `docs/COMMANDS.md`, cioe almeno:
+The implementer must interpret this as the obligation to run the canonical block in `docs/COMMANDS.md`, i.e. at least:
 
 - `git diff --check`;
-- estrazione dello script inline da `src/frontend/Index.html`;
-- `node --check` sullo script estratto;
-- grep degli operatori moderni da evitare su WebView vecchie;
-- verifica delle tab `data-page` della navbar.
+- inline script extraction from `src/frontend/Index.html`;
+- `node --check` on the extracted script;
+- grep for modern operators to avoid on old WebViews;
+- verification of `data-page` tabs in the navbar.
 
-Se un comando non e disponibile nell'ambiente, l'implementatore deve usare un equivalente e dichiararlo nel riepilogo finale.
+If a command is not available in the environment, the implementer must use an equivalent and declare it in the final report.
 
-## Passo passo e blocchi operativi (Cursor / Agent)
+## Step-by-step and operational blocks (Cursor / Agent)
 
-- In task **operativi**, lavorare a **blocchi piccoli**; **non** anticipare fasi successive non richieste dal prompt o dal task corrente.
-- Se il task include **procedure manuali** o **n8n** (o altro fuori dal repo), documentare in chiusura **quali passi sono completati** e **quali restano aperti** per l’utente.
-- **Codice diagnostico temporaneo** (es. nodi Code di debug, log rumorosi, workaround “solo per provare”): o **rimuoverlo** prima della chiusura del blocco, o dichiararlo **esplicitamente temporaneo** nel riepilogo e **non** presentare il blocco come finale finché non è ripulito e confermato.
-- Nel **riepilogo finale** obbligatorio, indicare se restano **passaggi manuali** non completati (sì/no e quali).
+- In **operational tasks**, work in **small blocks**; **do not** anticipate subsequent phases not requested by the prompt or current task.
+- If the task includes **manual procedures** or **n8n** (or anything outside the repo), document at closing **which steps are complete** and **which remain open** for the user.
+- **Temporary diagnostic code** (e.g. debug Code nodes, noisy logs, workarounds "just to test"): either **remove before closing** the block, or declare it **explicitly temporary** in the report and **do not** present the block as final until it is cleaned and confirmed.
+- In the **mandatory final report**, indicate whether any **manual steps** remain incomplete (yes/no and which ones).
 
-Allineamento orchestratore: `docs/ORCHESTRATOR_RULES.md` (**PRIORITÀ 0**). Disciplina n8n: `docs/automation/README.md` (**n8n manual run discipline**).
+Orchestrator alignment: `docs/ORCHESTRATOR_RULES.md` (**PRIORITY 0**). n8n discipline: `docs/automation/README.md` (**n8n manual run discipline**).
 
-## Modalita di lavoro
+## Working mode
 
-- Per modifiche **importanti o ambigue**: **Plan** prima di **Agent**, con piano approvato dall'utente.
-- **Deploy** Apps Script / aggiornamento deployment quando il blocco lo prevede (`docs/STREAMLINED_WORKFLOW.md` + istruzioni nel prompt), senza deploy «casuali» fuori contesto.
-- **Niente `git add .`**: usare elenco file selettivo o `npm run finito` con lista esplicita.
-- **Commit piccoli e mirati**; messaggi chiari in italiano o inglese coerente con il repo.
+- For **significant or ambiguous** changes: **Plan** before **Agent**, with plan approved by the user.
+- **Deploy** Apps Script / deployment update only when the block requires it (`docs/STREAMLINED_WORKFLOW.md` + instructions in the prompt); no accidental deploys out of context.
+- **No `git add .`**: use explicit file list or `npm run finito` with explicit list.
+- **Small, targeted commits**; commit messages in English (consistent with repo history).
 
-## Qualita e output
+## Quality and output
 
-- Preferire **piccoli blocchi** di modifiche revisionabili.
-- **Output finale** (fine turno o fine task / fine blocco) allineato al punto 6 sopra: file modificati, test/check, errori/rischi, hash commit, `git status --short`, workspace pulito o meno, **prossimo passo** (una riga).
+- Prefer **small, reviewable** blocks of changes.
+- **Final output** (end of turn or end of task / block) aligned to point 6 above: files changed, tests/checks, errors/risks, commit hash, `git status --short`, workspace clean or not, **next step** (one line).
 
 ## Language policy for agents
 
@@ -140,7 +140,7 @@ Empirical basis: user observed that qwen3:8b via Ollama produces more verbose an
 
 Canonical reference: `docs/AI_RULES.md` (this section). Other files reference this section for the full rule; they do not duplicate it.
 
-## Comandi sensibili
+## Sensitive commands and gates
 
-- **`npm run push`** / **`clasp push`**: solo dopo verifica locale e consenso utente sullo stato.
-- **Rollback**: principale meccanismo = **tag stabili** su `main` (es. `v1.8.1-stable`, `v1.8.0-stable`, …; storico `v1.5-stable`); non eseguire reset/merge distruttivi senza ordine esplicito.
+- **`npm run push`** / **`clasp push`**: only after local verification and user consent on state.
+- **Rollback**: primary mechanism = **stable tags** on `main` (e.g. `v1.8.1-stable`, `v1.8.0-stable`, …; historical `v1.5-stable`); do not execute destructive reset/merge without explicit order.

@@ -4,6 +4,42 @@ Ultimo aggiornamento: 2026-05-12 — aggiunta **PRIORITÀ 0A — Avanzamento sen
 
 Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per qualsiasi nuova chat AI che ricostruisce lo stato del progetto da GitHub.
 
+## Agent-facing operational summary (English)
+
+Quick reference for new agents, Claude Code, Cursor, Windsurf/Cascade, and future classifier/planner. Full rules in Italian sections below; this section is a compact English extraction for token efficiency.
+
+**No unnecessary confirmations (PRIORITY 0A):**
+- Determined docs-only task → execute; the absence of a real choice equals operational consent.
+- Forbidden: asking «vuoi?», «procedo?», «autorizzi?», «vai?» for predetermined docs-only work.
+- Asking unnecessary confirmations is an **operational error**.
+
+**Sensitive gates — always require explicit user decision:**
+runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script · tag · rollback · API key · login · GitHub Actions · new recurring costs · automatic runner · personal data / credentials / secrets / OAuth material · real physical test (Alina on phone)
+
+**Step-by-step mode (PRIORITY 0) — mandatory only when user is manually operating:**
+n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface requiring human-in-the-loop
+→ One step at a time, wait for outcome before the next step.
+
+**GitHub is the source of truth.** Orchestrator reads GitHub, not the local filesystem.
+
+**`aggio` is voluntary/fallback.** Orchestrator may read GitHub directly without waiting for `aggio` when the commit is already pushed.
+
+**Implementer prompt output format:**
+- One block, one mode line: `MODALITÀ: AGENT / IMPLEMENTAZIONE`
+- All operational context inside the block.
+- Outside the block: only real decisions or real gates not executable by the implementer.
+- Do not write outside the block: summaries, confirmations, repeated constraints.
+
+**Agent language:**
+- Internal reasoning, prompts, JSON/YAML, classifier/planner, wiki agent-facing → **technical English**
+- Final summaries to user, orchestrator chat output → **Italian**
+- Full rule: `docs/AI_RULES.md` — "Language policy for agents"
+
+**Claude Code prompt length rule:**
+- Short prompt: task file already in `docs/tasks/queue/` → minimal prompt is sufficient.
+- Full prompt: only when needed data is not yet on GitHub.
+- Sonnet for ordinary tasks; Opus only for complex planning or architectural decisions.
+
 ## PRIORITÀ 0A — Avanzamento senza conferme inutili
 
 **Regola globale del progetto.** Vale per ChatGPT orchestratore, implementatori (Windsurf/Cascade, Cursor, Claude Code, Agent), prompt generati da n8n, workflow documentale n8n / watcher / runner, politiche VPS/runner, documentazione di stato e ripartenza.
