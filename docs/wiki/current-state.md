@@ -30,7 +30,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 | Item | Value |
 |------|-------|
 | Last completed | 0133 — Ollama Classifier/Planner Feasibility Post-Wiki |
-| Next planned | Gate 7 → task 0134 **Windows** Ollama Local Preflight (runtime-gated) — target: Windows workstation (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria |
+| Next planned | 0134 — Windows Ollama Local Preflight (queued, docs-only preparation completed 2026-05-13) — runtime execution requires explicit manual gate; target: Windows workstation (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria |
 | Queue | `docs/tasks/queue/` |
 
 ---
