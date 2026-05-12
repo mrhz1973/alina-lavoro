@@ -218,15 +218,16 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
   - Prerequisiti tecnici e gate manuali permanenti documentati.
 - Nessun runner automatico attivato. Nessuna modifica app, deploy, tag, rollback.
 
-**Task 0118 creato (2026-05-12).** Gate decision docs-only in queue:
+**Task 0118 completato (2026-05-12).** Decision gate Fase 3 runner documentale approvate:
 
-- Task `docs/tasks/queue/0118-runner-phase3-gate-decision-docs-only.md` in queue.
-- Il task fissa le risposte gate dell'orchestratore ai cinque punti di `runner-phase3-design.md`.
-- Decisioni registrate: scope docs-only, frequenza bassa/media, Fase 3A supervisionata,
-  failed tracciato, API key dedicata — nessun runtime autorizzato.
-- Opzione A (Claude Code CLI VPS) raccomandata; prossimo task dopo 0118 = design/preflight.
-- Sessione: `docs/sessions/2026-05-12-create-task-0118-runner-phase3-gate-decision.md`.
-- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
+- `docs/automation/runner-phase3-gate-decision.md` creato — cinque gate approvati.
+- Gate 1 Scope: solo docs-only; allowlist path esplicita; denylist assoluta su `src/**` e credenziali.
+- Gate 2 Frequenza: max 1 task/run; rate limit; budget token da approvare prima del runtime.
+- Gate 3 Supervisione: Fase 3A obbligatoria (dry-run/branch separato); ≥3 task supervisionati prima di direct commit.
+- Gate 4 Errori: failed tracciato in `failed/`; sessione errore; no retry automatico; manual review.
+- Gate 5 API key: chiave dedicata; segreto solo n8n/VPS; task `vps-runner-setup` separato.
+- Opzione A (Claude Code CLI VPS) raccomandata; Opzione C (GitHub Actions) alternativa.
+- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback, CLI, API key.
 
-1. Prossimo passo: n8n seleziona task 0118 → produce `docs/automation/runner-phase3-gate-decision.md`; task successivo = design/preflight Fase 3, non runtime pieno.
+1. Prossimo passo: creare task preflight `vps-runner-setup-preflight` — verifica compatibilità CLI, stima costo token, design nodo SSH exec n8n; ancora design/preflight, non runtime pieno.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
