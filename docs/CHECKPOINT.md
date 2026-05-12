@@ -229,16 +229,14 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 - Opzione A (Claude Code CLI VPS) raccomandata; Opzione C (GitHub Actions) alternativa.
 - Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback, CLI, API key.
 
-**Task 0119 creato (2026-05-12).** Preflight docs-only in queue:
+**Task 0119 completato (2026-05-12).** Preflight Fase 3A runner documentale su carta:
 
-- Task `docs/tasks/queue/0119-vps-runner-setup-preflight-docs-only.md` in queue.
-- Richiede `docs/automation/vps-runner-setup-preflight.md` con dieci sezioni: compatibilità
-  CLI teorica, checklist comandi read-only futuri (non eseguiti ora), stima costo token,
-  proposta budget, design nodo SSH exec su carta, allowlist/denylist, piano Fase 3A,
-  rischi/mitigazioni, criteri task successivo.
-- Nessuna installazione, nessuna API key, nessuna modifica VPS/n8n.
-- Sessione: `docs/sessions/2026-05-12-create-task-0119-vps-runner-setup-preflight.md`.
-- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
+- `docs/automation/vps-runner-setup-preflight.md` creato — dieci sezioni complete.
+- CLI: Claude Code CLI compatibile con Ubuntu 24.04.4 LTS (teorico); headless via `--print`.
+- Costo stimato: ~$0,13/task; ~$11,70/mese scenario medio; budget proposto $25/mese.
+- Design nodo Execute Command n8n su carta (non implementato).
+- Allowlist/denylist esplicite; piano Fase 3A (≥3 task dummy); 10 rischi/mitigazioni.
+- Nessuna installazione, nessuna API key, nessuna modifica VPS/n8n/app.
 
-1. Prossimo passo: n8n seleziona task 0119 → produce `docs/automation/vps-runner-setup-preflight.md`; task successivo = read-only check VPS, non installazione diretta.
+1. Prossimo passo: gate orchestratore esplicito per autorizzare task `vps-runner-read-only-check` (read-only SSH VPS, nessuna installazione).
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
