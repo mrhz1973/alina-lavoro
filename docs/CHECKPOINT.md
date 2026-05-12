@@ -244,5 +244,7 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 
 **Stato VPS attuale:** Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅ | Login bloccato ❌ | API key ❌ | Runner automatico ❌
 
-1. Prossimo passo: decisione orchestratore su percorso alternativo per Fase 3A (API key vietata, setup manuale interattivo, uso locale Claude Code, o alternative). App Alina V1.9.2 stabile e non toccata.
+**Task 0124 creato** (tipo `runner-decision-docs-only`, 2026-05-12): task decisionale Fase 3A sulle alternative runner praticabili senza API key manuali; in queue; non autorizza runtime, runner automatico, API key, login Claude, CLI di alcun tipo, modifiche n8n/VPS/GitHub Actions/deploy; alternative A/B/C/D/E/F confrontate; gate manuale separato richiesto per esecuzione futura; task `docs/tasks/queue/0124-runner-alternatives-no-api-decision.md`.
+
+1. Prossimo passo: eseguire task 0124 (docs-only decision) con gate manuale. App Alina V1.9.2 stabile e non toccata.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
