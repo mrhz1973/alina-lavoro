@@ -394,3 +394,71 @@ Il wiki layer è il prerequisito che rende il classifier Ollama post-wiki sensib
 ---
 
 **Documento chiuso — Raccomandazione: PROCEDERE al preflight runtime-gated (gate 7 richiesto prima dell'apertura del task).**
+
+---
+
+## 11. Post-Feasibility User Decision (2026-05-12)
+
+### Decisione utente
+
+Dopo il completamento della feasibility (task 0133), l'utente ha comunicato esplicitamente:
+
+> "ora non voglio usare il mac, continuo ad usare windows con ollama"
+
+**Il target iniziale per il futuro preflight Ollama locale non è più MacBook Pro M2.**
+
+**Il target iniziale diventa la workstation Windows già in uso dall'utente.**
+
+### Nuovo target hardware
+
+| Campo | Valore |
+|-------|--------|
+| OS | Windows (in uso corrente) |
+| CPU | AMD Ryzen 9 3900X |
+| RAM | 32 GB |
+| GPU | NVIDIA RTX 3060 12 GB VRAM |
+
+### Aggiornamento raccomandazione hardware
+
+| Macchina | Ruolo aggiornato |
+|----------|-----------------|
+| **Workstation Windows (Ryzen 9 3900X / RTX 3060 12 GB)** | ⭐ **Primo test e target iniziale** — GPU dedicata 12 GB VRAM; Ollama con CUDA; 32 GB RAM |
+| **MacBook Pro M2** | Opzione futura / seconda fase — non target iniziale |
+| **VPS IONOS** | Invariato — solo n8n; non per LLM locali |
+
+### Aggiornamento raccomandazione modello
+
+| Modello | Parametri | VRAM stimata (4-bit) | Target hardware | Ruolo aggiornato |
+|---------|-----------|---------------------|-----------------|-----------------|
+| **Qwen 2.5 7B** | 7B | ~5–6 GB | RTX 3060 12 GB | ⭐ **Prima scelta** — entra in VRAM con margine abbondante |
+| **Qwen 3 8B** | 8B | ~5–6 GB | RTX 3060 12 GB | Alternativa aggiornata — da valutare nel preflight |
+| **Llama 3.1 8B** | 8B | ~5–6 GB | RTX 3060 12 GB | Fallback valido |
+| **Qwen 2.5 14B** | 14B | ~9–10 GB | RTX 3060 12 GB | **Da valutare nella seconda fase** — entra in 12 GB VRAM solo se quantizzazione efficiente; da verificare nel preflight |
+
+**Nota modello 14B:** su RTX 3060 12 GB la fattibilità di un 14B 4-bit (~9–10 GB VRAM) dipende dal margine residuo dopo l'overhead del driver CUDA. Il preflight deve verificare questo esplicitamente. Il primo test resta con Qwen 2.5 7B o Qwen 3 8B.
+
+### Cosa non cambia
+
+- I 7 gate pre-installazione restano invariati e obbligatori
+- Il fallback invariante (Fase A, triage manuale orchestratore) resta sempre disponibile
+- Gate 7 (conferma manuale utente + Decision Packet) è ancora richiesto prima di aprire il task preflight
+- Nessuna installazione Ollama, nessun download modello, nessun runtime eseguito in questo task
+- Il documento di feasibility originale (sezioni 1–10) conserva validità: cambiano solo il target hardware e il contesto di deployment
+
+### Impatto sul futuro task 0134
+
+Il futuro task **"0134 Ollama Local Preflight Install"** deve essere riformulato come:
+
+**"0134 Windows Ollama Local Preflight Install"** (tipo: `runtime-gated`)
+
+Scope aggiornato del preflight:
+1. Installazione Ollama su Windows con backend CUDA (solo con gate 7 superato)
+2. Download modello Qwen 2.5 7B (~4.7 GB) o Qwen 3 8B
+3. Verifica VRAM consumata e latenza (gate 3 — soglie invariate: ≤10s, modello caricato entro limite VRAM)
+4. Verifica isolamento rete (gate 5)
+5. Esecuzione benchmark sintetico (20 task storici, gate 1)
+6. Dry-run 10 task reali (gate 6)
+7. Documentazione risultati
+8. Valutazione opzionale Qwen 2.5 14B se 7B passa i criteri minimi
+
+**Sessione di registrazione decisione:** `docs/sessions/2026-05-12-ollama-target-windows-decision.md`
