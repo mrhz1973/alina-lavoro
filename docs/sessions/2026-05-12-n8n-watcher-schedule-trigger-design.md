@@ -39,6 +39,23 @@ Produrre il documento di design per l'integrazione del Schedule Trigger n8n come
 
 **Completato.** Documento di design creato, done marker creato, documenti aggiornati.
 
+## Runtime Discovery (2026-05-12, post-design)
+
+Dopo la pubblicazione del design, l'utente ha eseguito una verifica manuale in n8n.
+
+**Azioni eseguite:**
+- Creato nuovo workflow `Alina watcher - Schedule queue reader` (non pubblicato, non eseguito).
+- Aggiunto Manual Trigger e nodo Execute Sub-workflow.
+- Tentata la selezione del queue reader `TEST - GitHub list Alina task queue` nel nodo Execute Sub-workflow.
+
+**Osservazione:** il queue reader non compare come opzione selezionabile. Compare invece un riferimento non desiderato (`My Sub-Workflow 1`). Il workflow watcher è rimasto non pubblicato; Schedule Trigger non aggiunto; queue reader non modificato; nessuna modifica app/deploy/tag.
+
+**Interpretazione:** il workflow `TEST - GitHub list Alina task queue` ha solo il Manual Trigger e non è configurato come sub-workflow richiamabile. In n8n, il nodo Execute Sub-workflow richiede che il target esponga un trigger "When executed by another workflow".
+
+**Conseguenza:** Opzione B resta l'architettura desiderabile, ma richiede un prerequisito di configurazione nel runtime n8n prima di essere implementabile. Il design rimane valido come obiettivo. Dettaglio e opzioni di risoluzione documentati in `docs/automation/n8n-watcher-schedule-trigger-design.md` (Sezione 10).
+
+**Documentazione aggiornata:** `docs/automation/n8n-watcher-schedule-trigger-design.md` (Sezione 10 aggiunta), `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/tasks/done/0112-n8n-watcher-schedule-trigger-design.md`.
+
 ## Prossimo passo
 
-Task 0113 (futuro): runner documentale automatico — Claude Code CLI o Cursor CLI sul VPS (gate manuale prima del primo run non supervisionato).
+Task separato per analizzare il prerequisito sub-workflow (verificare versione n8n, scegliere tra B1/B2/B3, implementare con gate manuale). Solo dopo: creazione workflow watcher. Task 0113 (runner documentale) rimane successivo al completamento del watcher.

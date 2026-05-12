@@ -222,4 +222,58 @@ Questa sessione di validazione è prerequisito per passare al task 0113 (runner 
 
 ---
 
+---
+
+## 10. Runtime Discovery — Implementation Caveat (2026-05-12)
+
+**Stato:** verifica manuale eseguita dall'utente in n8n dopo la pubblicazione di questo design.
+
+### Cosa è stato testato
+
+- Creato un nuovo workflow n8n: `Alina watcher - Schedule queue reader`.
+- Aggiunto un nodo Manual Trigger.
+- Aggiunto un nodo Execute Sub-workflow.
+- Tentata la selezione del workflow target `TEST - GitHub list Alina task queue` nel nodo Execute Sub-workflow.
+
+### Cosa è stato osservato
+
+- Il nodo Execute Sub-workflow non trova / non elenca il workflow `TEST - GitHub list Alina task queue` come opzione selezionabile.
+- È comparso un riferimento non desiderato (tipo `My Sub-Workflow 1` / workflow ID non corrispondente al queue reader).
+- Il workflow watcher **non è stato pubblicato** (Publish non cliccato).
+- Il workflow watcher **non è stato eseguito**.
+- Il Schedule Trigger **non è stato aggiunto**.
+- Il workflow queue reader validato **non è stato modificato**.
+- Nessuna modifica app, deploy, tag, rollback.
+
+### Interpretazione
+
+La causa probabile è che il workflow `TEST - GitHub list Alina task queue` **non è configurato come sub-workflow richiamabile** in n8n. In n8n Community Edition, perché un workflow sia selezionabile tramite il nodo Execute Sub-workflow (o "Execute Workflow"), il workflow target deve esporre un trigger di tipo **"When executed by another workflow"** (o equivalente nella versione installata). Il queue reader ha solo il **Manual Trigger**, che non lo rende eleggibile come sub-workflow.
+
+### Conseguenza per l'Opzione B
+
+**L'Opzione B resta l'architettura desiderabile** (workflow separato, zero impatto sul queue reader validato), ma **non è direttamente implementabile** nella configurazione attuale senza uno step preparatorio.
+
+Le opzioni per risolvere il prerequisito, da analizzare in un task dedicato, sono:
+
+| Opzione | Descrizione | Rischio |
+|---------|-------------|---------|
+| **B1** | Aggiungere al queue reader un secondo trigger "When executed by another workflow", lasciando il Manual Trigger invariato | Basso — n8n supporta trigger multipli; il comportamento del Manual Trigger non cambia |
+| **B2** | Aggiungere Schedule Trigger direttamente al queue reader (Opzione A del design) | Medio — modifica il workflow validato; valutare regressioni |
+| **B3** | Workflow watcher chiama il queue reader via HTTP Request + webhook interno | Medio — richiede configurazione webhook; più fragile |
+
+**Regola operativa:** non modificare il queue reader al buio. Qualsiasi modifica al runtime n8n richiede analisi, gate manuale esplicito e sessione di validazione dedicata.
+
+### Prossimo passo richiesto prima dell'implementazione
+
+Creare un task separato per:
+
+1. Verificare la versione n8n installata sul VPS e la sintassi del trigger "When executed by another workflow" disponibile.
+2. Scegliere tra B1 (trigger multiplo sul queue reader) e le alternative, con motivazione documentata.
+3. Implementare il prerequisito in un task runtime dedicato (con gate manuale).
+4. Solo dopo: procedere con la creazione del workflow watcher (Schedule Trigger + Execute Sub-workflow).
+
+**Il design Opzione B in questo documento rimane valido come obiettivo architetturale.** Il caveat riguarda esclusivamente il prerequisito di configurazione nel runtime n8n, non la correttezza del design.
+
+---
+
 *Documenti correlati: [`n8n-watcher-runner-mvp-design.md`](./n8n-watcher-runner-mvp-design.md) · [`runbook.md`](./runbook.md) · [`permissions.md`](./permissions.md) · [`n8n-workflows/queue-reader.md`](./n8n-workflows/queue-reader.md) · [`n8n-workflows/lifecycle-ownership.md`](./n8n-workflows/lifecycle-ownership.md)*
