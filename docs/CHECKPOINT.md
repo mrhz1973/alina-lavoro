@@ -23,8 +23,8 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0115 completato** (tipo `n8n-runtime
 - **Task 0113** **completato** (tipo `n8n-runtime-prerequisite`, 2026-05-12): prerequisito B1 validato — trigger "When Executed by Another Workflow" aggiunto al queue reader come secondo trigger (collegato a `List files`, `Accept all data`); Manual Trigger invariato; watcher `Alina watcher - Schedule queue reader` configurato con Manual Trigger → Execute Workflow puntato al queue reader; test manuale tutto verde; nessun Schedule Trigger; watcher non pubblicato/attivato; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-subworkflow-trigger-validation.md`.
 - **Task 0114** **bloccato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto al watcher, test manuale tutto verde, ma pubblicazione bloccata — n8n richiede sub-workflow pubblicato prima del parent; queue reader non pubblicabile ("no trigger nodes that require publishing"); deadlock UI; Opzione A investigata e chiusa (nessuna leva UI); superato con task 0115; sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
 - **Task 0115 completato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto direttamente al queue reader `TEST - GitHub list Alina task queue` (5 min, Europe/Berlin); nodo Execute Workflow inverso spurio rimosso; grafo ripulito — tre trigger → `List files`; test manuale pre-pubblicazione OK; pubblicato come `queue-reader-schedule-5min` e attivato; primo tick automatico `has_task:false` silenzioso, nessuna scrittura GitHub; Manual Trigger e "When Executed by Another Workflow" invariati; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-direct-schedule-trigger-validation.md`.
-- **Task 0116 creato** (tipo `n8n-runtime-validation`, 2026-05-12): `docs/tasks/queue/0116-n8n-queue-reader-has-task-true-scheduled-polling-validation.md` aggiunto in coda per validare il ciclo `has_task:true` del polling automatico già attivo — task docs-only minimale, gate manuale obbligatorio; stato: `queued`.
-- **Prossimo passo consigliato:** `aggio` dopo il push — verificare su GitHub se n8n ha generato i file attesi in `docs/tasks/processing/` e/o `docs/sessions/automation-*` per il task 0116. Gate manuale obbligatorio prima di dichiarare completato.
+- **Task 0116** **completato** (tipo `n8n-runtime-validation`, 2026-05-12): ciclo `has_task:true` del polling automatico validato end-to-end — n8n ha selezionato il task 0116, generato sessione automation (commit `bbef5d7`) e cursor prompt in processing (commit `cb75002`); run successivo ha saltato il task (skip `processing/`, `has_task:false` silenzioso); nessun runner automatico; nessuna modifica app/deploy/tag/rollback; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-has-task-true-scheduled-polling-validation.md`.
+- **Prossimo passo:** polling automatico `queue-reader-schedule-5min` validato end-to-end (`has_task:false` + `has_task:true` + anti-doppio-run). Workstream automazione continua; app Alina V1.9.2 stabile.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
@@ -195,11 +195,18 @@ npm run finito -- "Messaggio commit" file1 file2
 - Primo tick automatico: `has_task:false` silenzioso, nessuna scrittura GitHub.
 - Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
 
-**Task 0116 creato (2026-05-12).** In attesa di polling:
+**Task 0116 completato (2026-05-12).** Ciclo `has_task:true` validato:
 
-- `docs/tasks/queue/0116-n8n-queue-reader-has-task-true-scheduled-polling-validation.md` in coda.
-- Task docs-only minimale per validare `has_task:true` del polling automatico.
-- Gate manuale obbligatorio — non dichiarare completato prima di `aggio` e verifica su GitHub.
+- n8n ha selezionato il task 0116 (polling automatico 05:50 CET).
+- Sessione automation generata: `docs/sessions/automation-0116-...md` (commit `bbef5d7`).
+- Cursor prompt generato: `docs/tasks/processing/0116-...-cursor-prompt.md` (commit `cb75002`).
+- Run successivo: skip su `processing/`, `has_task:false` silenzioso. Anti-doppio-run confermato.
+- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
 
-1. Prossimo passo operativo: `aggio` — verificare su GitHub se n8n ha generato i file attesi in `docs/tasks/processing/` e/o `docs/sessions/automation-*` per il task 0116.
+Polling automatico `queue-reader-schedule-5min` validato end-to-end:
+- `has_task:false` silenzioso ✓ (task 0115)
+- `has_task:true` → genera processing + sessione ✓ (task 0116)
+- Anti-doppio-run su `processing/` ✓ (task 0116)
+
+1. Prossimo passo: workstream automazione continua. App Alina V1.9.2 stabile.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
