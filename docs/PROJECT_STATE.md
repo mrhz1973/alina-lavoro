@@ -96,5 +96,7 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** (**Dettaglio mese** p
 
 **Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app. App Alina **V1.9.2** resta stabile e non toccata.
 
-1. Prossimo passo operativo: evoluzione watcher/runner — progettare MVP n8n (watcher) + runner documentale su VPS, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
+**Task 0111** **completato** (tipo `n8n-runner-design`, 2026-05-12): documento di design MVP watcher + runner documentale in `docs/automation/n8n-watcher-runner-mvp-design.md`; trigger scelto (polling timer n8n); runner MVP (Anthropic API via n8n HTTP node / Claude Code CLI futuro); gate manuali, scope docs-only, rischi e sequenza implementazione futura (task 0112/0113/0114); allineamento runbook Fase 2+3; nessuna modifica runtime/app; sessione: `docs/sessions/2026-05-12-n8n-watcher-runner-mvp-design.md`.
+
+1. Prossimo passo operativo: implementare watcher n8n (task 0112) — Schedule Trigger + chiamata queue reader, allineato a `docs/automation/n8n-watcher-runner-mvp-design.md`.
 2. Lavoro nuovo su **`main`** dopo `git pull origin main`.
