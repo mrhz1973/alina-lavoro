@@ -19,7 +19,6 @@ Ultimo aggiornamento: 2026-05-11 — produzione **V1.9.2** ( **Dettaglio mese** 
 - **Task 0110** **completato** (tipo `vps-hardening-planning`, 2026-05-12): binding Docker n8n ristretto da `0.0.0.0:5678` a `127.0.0.1:5678` — compose `/root/docker-compose.yaml`, backup creato, `docker compose up -d` applicato; `docker ps` mostra `127.0.0.1:5678->5678/tcp`; `curl localhost:5678` HTTP 200; tunnel SSH OK; accesso esterno diretto non raggiungibile; warning log non critici annotati; nessun upgrade/reboot/workflow n8n/app; sessione: `docs/sessions/2026-05-12-vps-n8n-bind-localhost-hardening.md`.
 - **Workstream attivo obbligatorio:** evoluzione watcher/runner — non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app. App Alina **V1.9.2** stabile, non toccata.
 - Prossimo passo operativo: progettare MVP n8n (watcher) + runner documentale su VPS, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
-- Progettare MVP **n8n** (watcher) + **runner** documentale su **VPS**, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
@@ -180,6 +179,7 @@ npm run finito -- "Messaggio commit" file1 file2
 
 ## Prossimo passo raccomandato
 
-1. Task 0105 completato: `CLAUDE.md` creato. Prossimo passo automazione: eseguire task 0104 (failed validation stub) oppure tornare all'app Alina — decisione orchestratore.
-2. Nuovi sviluppi su **`main`**: `git checkout main`, `git pull origin main`.
-3. Backlog **UI** Dettaglio mese (`docs/roadmap.md`) quando prioritizzato.
+**Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app.
+
+1. Prossimo passo operativo: progettare MVP n8n (watcher) + runner documentale su VPS, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
+2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
