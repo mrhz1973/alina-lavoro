@@ -184,6 +184,10 @@ npm run finito -- "Messaggio commit" file1 file2
 
 - Nessun rischio bloccante post-test **V1.9.1** / **`@23`**. Evoluzione **Dettaglio mese** più grafico — backlog (`docs/roadmap.md`).
 
+## Debiti tecnici documentali
+
+- **Compattare `docs/PROJECT_STATE.md`** (task futuro docs-only): il file supera 47 k caratteri e genera warning di performance in Claude Code / Windsurf / Cursor. Obiettivo: mantenere `PROJECT_STATE.md` come stato corrente sintetico, `CHECKPOINT.md` come ripartenza breve, spostare lo storico in `docs/history/PROJECT_LOG.md` o struttura equivalente senza perdere informazioni. Non eseguire ora — non interferire con workstream watcher/runner/low-touch. Sessione di registrazione: `docs/sessions/2026-05-12-register-project-state-compaction-debt.md`.
+
 ## Prossimo passo raccomandato
 
 **Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app.

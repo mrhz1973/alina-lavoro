@@ -91,6 +91,7 @@ Ultimo aggiornamento: 2026-05-12 — **Task docs-only completato** (rimozione re
 
 - Mesi / Home / Note: possibili ottimizzazioni future (es. virtualizzazione lista Mesi, alleggerimento CSS) — **non urgenti**.
 - Rollback: **`@23`** (V1.9.1) / tag **`v1.9.1-stable`**, **`@22`** (V1.9.0) / tag **`v1.9.0-stable`**, **`@21`** (V1.8.10) / tag **`v1.8.10-stable`**, o gestione deployment in Apps Script.
+- **Debito tecnico documentale:** `docs/PROJECT_STATE.md` da compattare in task futuro (>47 k char → warning performance Claude Code / Windsurf / Cursor); storico da spostare in `docs/history/PROJECT_LOG.md`; non eseguire ora.
 
 ## Prossimo passo consigliato
 
