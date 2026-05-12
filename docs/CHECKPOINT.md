@@ -185,5 +185,19 @@ npm run finito -- "Messaggio commit" file1 file2
 
 **Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app.
 
-1. Prossimo passo operativo: progettare MVP n8n (watcher) + runner documentale su VPS, allineato a `docs/automation/runbook.md` e `docs/automation/permissions.md`.
+**Task 0114 bloccato in fase Publish.** Stato corrente:
+
+- Schedule Trigger aggiunto al watcher `Alina watcher - Schedule queue reader`; test manuale tutto verde.
+- Watcher **non pubblicato / non attivo** come polling automatico.
+- Blocco: n8n richiede che il sub-workflow sia pubblicato prima del parent; il queue reader `TEST - GitHub list Alina task queue` non risulta pubblicabile ("This workflow has no trigger nodes that require publishing").
+- Nessun polling automatico attivo. Nessun runner automatico.
+- Sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
+
+Decisione architetturale richiesta prima di qualsiasi modifica al runtime n8n:
+
+- **Opzione A:** investigare impostazioni/versione n8n per rendere pubblicabile il queue reader come sub-workflow.
+- **Opzione B:** aggiungere Schedule Trigger direttamente nel queue reader (rinuncia temporanea al watcher separato).
+- **Opzione C:** altra alternativa sicura e documentata.
+
+1. Prossimo passo operativo: scegliere Opzione A, B o C con l'orchestratore; nessuna modifica runtime senza gate manuale e approvazione.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
