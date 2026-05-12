@@ -108,9 +108,9 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0122 completato** (tipo `cli-setup-p
 
 **Implementatori:** Claude Code implementatore principale temporaneo (fino al reset di Cursor tra ~10 giorni); Windsurf/Cascade implementatore di riserva/supervisionato (attualmente in uso); Cursor sospeso fino al reset.
 
-**Stato VPS:** Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅ | Login non eseguito ❌ | API key non configurata ❌ | Runner automatico non attivo ❌
+**Stato VPS:** Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅ | Login bloccato ❌ | API key non configurata ❌ | Runner automatico non attivo ❌
 
-**Task 0123 creato** (tipo `cli-auth-planning-gated`, 2026-05-12): task gated per futuro login/subscription check preparato in `docs/tasks/queue/0123-claude-login-subscription-check-gated.md`; presupposto operativo: Claude Pro/subscription login, non API key Anthropic manuale; nessuna esecuzione runtime; nessun login; nessuna configurazione API key; attesa gate manuale per esecuzione.
+**Task 0123 completato** (tipo `cli-auth-planning-gated`, 2026-05-12): verifica login/subscription eseguita; output "Not logged in · Please run /login" — Claude CLI richiede autenticazione interattiva, non compatibile con VPS headless; login non riuscito, blocco documentato; API key non configurata; `claude --print` non eseguito; nessun task reale eseguito; documentazione in `docs/automation/claude-login-subscription-check.md`; sessione: `docs/sessions/2026-05-12-claude-login-subscription-check.md`.
 
-1. Prossimo passo: gate orchestratore esplicito per autorizzare esecuzione task 0123 (login Claude/subscription authentication). App Alina V1.9.2 stabile e non toccata.
-2. Workstream automazione: Fase 2 chiusa, Fase 3 decision gate approvate, preflight Fase 3A in progress (task 0119+0120+0121+0122 completati; task 0123 creato; Node.js+npm+Claude CLI installati; login non eseguito; API key non configurata); runtime non attivo; VPS pronto per login subscription con gate manuale.
+1. Prossimo passo: decisione orchestratore su percorso alternativo per Fase 3A (API key vietata, setup manuale interattivo, uso locale Claude Code, o alternative). App Alina V1.9.2 stabile e non toccata.
+2. Workstream automazione: Fase 2 chiusa, Fase 3 decision gate approvate, preflight Fase 3A bloccato (task 0119+0120+0121+0122 completati; task 0123 completato con esito bloccato; Claude CLI installata ma non autenticabile in modo sicuro su VPS headless); runtime non attivo; VPS NON pronto per runner automatico Claude Code CLI.
