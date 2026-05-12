@@ -145,6 +145,35 @@ Creare `docs/sessions/2026-05-NN-n8n-watcher-schedule-trigger-runtime-activation
 - Export n8n non redatti
 - File contenenti credenziali o token
 
+## Runtime Blocker (2026-05-12)
+
+**Stato:** bloccato in fase Publish. Task in sospeso in attesa di scelta architetturale.
+
+### Azioni eseguite prima del blocco
+
+- Schedule Trigger aggiunto al watcher (5 min, Europe/Berlin). Manual Trigger invariato.
+- Test manuale watcher post-aggiunta Schedule Trigger: **tutto verde**.
+
+### Blocco
+
+- Tentativo di pubblicare il watcher → errore: il queue reader non è pubblicato e n8n richiede che i sub-workflow siano pubblicati prima del parent.
+- Tentativo di pubblicare il queue reader → risposta n8n: `This workflow has no trigger nodes that require publishing`.
+- Deadlock UI: watcher non pubblicabile perché queue reader non pubblicato; queue reader non pubblicabile perché n8n non riconosce "When Executed by Another Workflow" come trigger che richiede pubblicazione.
+
+In test manuale (Manual Trigger) tutto funziona. Il blocco riguarda esclusivamente la pubblicazione/attivazione come polling automatico.
+
+### Opzioni di sblocco (da scegliere con orchestratore)
+
+| Opzione | Descrizione |
+|---------|-------------|
+| **A** | Investigare versione n8n sul VPS: verificare se esiste modalità per rendere pubblicabile il queue reader |
+| **B** | Schedule Trigger direttamente nel queue reader (Opzione A del design 0112), rinunciando temporaneamente al watcher separato |
+| **C** | Altra alternativa sicura e documentata |
+
+Nessuna delle opzioni deve essere implementata senza gate manuale e approvazione orchestratore.
+
+Sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
+
 ## Done criteria
 
 Il task 0114 sarà completato solo quando:
