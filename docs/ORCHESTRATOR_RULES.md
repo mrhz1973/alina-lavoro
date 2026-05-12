@@ -211,6 +211,41 @@ Se il task tocca backend, includere anche:
 
 Ogni prompt operativo per Cursor deve essere autosufficiente **per Cursor** nel blocco da incollare: tutto ciò che Cursor deve fare e che non è già documentato nel repo deve stare in quel blocco. L’utente non deve dover copiare **per Cursor** pezzi esterni separati da quel blocco; la richiesta di scrivere `aggio` dopo Cursor resta **fuori** dal blocco (vedi **Regola output prompt Cursor**).
 
+## Regola lunghezza prompt per implementatore
+
+La lunghezza e il livello di dettaglio del prompt dipende dall’implementatore destinatario.
+
+| Implementatore | Stile prompt | Motivo |
+|----------------|-------------|--------|
+| **Claude Code** | Breve | Legge GitHub in autonomia; prompt lunghi sprecano contesto e token di sessione |
+| **Cursor** | Completo / autosufficiente | Il blocco deve contenere tutto il contesto operativo necessario |
+| **Windsurf / Cascade** | Completo / autosufficiente | Come Cursor; non accorciare |
+
+### Claude Code
+
+Se il task esiste già in `docs/tasks/queue/`, usare prompt minimo:
+
+```text
+Esegui il task docs/tasks/queue/<task>.md.
+Applica CLAUDE.md, docs/ORCHESTRATOR_RULES.md, docs/AI_RULES.md, docs/WORKFLOW.md e docs/COMMANDS.md.
+Chiudi secondo workflow con commit selettivo e push.
+```
+
+Se il task non esiste ancora: creare il task prima con prompt breve, poi far leggere i documenti già in repo.
+
+Usare prompt più lungo con Claude Code **solo** quando i dati necessari non sono ancora su GitHub (es. output appena raccolto in chat, non ancora committato).
+
+### Regola modello per Claude Code
+
+- **Sonnet**: esecuzione operativa ordinaria, task piccoli, docs-only, chiusure documentali.
+- **Opus**: solo per pianificazione complessa, analisi difficile o decisioni architetturali.
+
+Non usare Opus per task che Sonnet può completare correttamente.
+
+### Cursor / Windsurf / Cascade
+
+Non accorciare i prompt per questi implementatori. Seguire la **Regola output prompt Cursor** qui sotto.
+
 ## Regola output prompt Cursor
 
 Quando l’output richiesto è un **prompt Cursor**:

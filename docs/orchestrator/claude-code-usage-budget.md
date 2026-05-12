@@ -94,17 +94,44 @@ claude
 
 ## Prompt discipline
 
-Prefer short prompts that reference task files already stored in GitHub.
+### Regola principale per lunghezza prompt
 
-Do not paste huge operational prompts when the task already exists in `docs/tasks/queue/`.
+La lunghezza del prompt dipende dall'implementatore destinatario.
 
-Preferred structure:
+| Implementatore | Stile prompt |
+|----------------|-------------|
+| **Claude Code** | Breve — referenzia task e documenti già su GitHub |
+| **Cursor** | Completo — blocco operativo autosufficiente |
+| **Windsurf / Cascade** | Completo — blocco operativo autosufficiente |
+
+### Claude Code — prompt brevi
+
+Claude Code legge GitHub e i documenti canonici in autonomia. Prompt lunghi sprecano contesto e token di sessione.
+
+Se il task esiste già in `docs/tasks/queue/`, usare questa struttura minima:
 
 ```text
 Esegui il task docs/tasks/queue/<task>.md.
 Applica CLAUDE.md, docs/ORCHESTRATOR_RULES.md, docs/AI_RULES.md, docs/WORKFLOW.md e docs/COMMANDS.md.
 Chiudi secondo workflow con commit selettivo e push.
 ```
+
+Se il task non esiste ancora: creare prima il task con prompt breve, lasciando che Claude Code legga i documenti già in repo.
+
+Usare prompt più lungo con Claude Code **solo** quando i dati necessari non sono ancora su GitHub — per esempio output appena raccolto in chat che non è stato ancora committato.
+
+### Cursor / Windsurf / Cascade — prompt più estesi
+
+Cursor e Windsurf/Cascade preferiscono blocchi operativi più autosufficienti. Non accorciare i prompt per questi implementatori. Il blocco deve contenere tutto il contesto operativo necessario, secondo la **Regola output prompt Cursor** in `docs/ORCHESTRATOR_RULES.md`.
+
+### Regola modello per Claude Code
+
+Per Claude Code, preferire:
+
+- **Sonnet**: esecuzione operativa ordinaria, task piccoli, docs-only, chiusure documentali, commit e push.
+- **Opus**: solo per pianificazione complessa, analisi difficile o decisioni architetturali.
+
+Non usare Opus per task che Sonnet può completare correttamente.
 
 ## Rationale
 

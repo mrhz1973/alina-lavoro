@@ -50,3 +50,13 @@ After completing a task:
 4. report changed files, checks, commit hash, final `git status --short`, and whether the workspace is clean.
 
 Do not continue to a new task in the same session unless the orchestrator explicitly instructs it after `aggio`.
+
+## Prompt length and model selection
+
+Canonical rule: `docs/orchestrator/claude-code-usage-budget.md` — **Prompt discipline**.
+
+Summary:
+
+- **Claude Code receives short prompts.** It reads GitHub and canonical docs autonomously. If the task exists in `docs/tasks/queue/`, the prompt is: task path + apply CLAUDE/AGENTS/canonical rules + close with selective commit and push.
+- **Cursor and Windsurf/Cascade receive complete prompts.** Do not shorten operational blocks for these implementers.
+- **Model preference for Claude Code:** Sonnet for ordinary execution and docs-only tasks; Opus only for complex planning, difficult analysis, or architectural decisions.
