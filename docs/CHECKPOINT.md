@@ -254,5 +254,7 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 
 **Task 0128 completato** (tipo `low-touch-loop-docs-only`, 2026-05-12): design loop autonomo asincrono in `docs/automation/autonomous-low-touch-loop-design.md`; architettura target `GitHub → n8n → classifier/planner → implementatore → Decision Packet → utente`; 3 livelli A/B/C; MVP: INBOX.md + auto-aggio senza runtime; sequenza 0129–0133 proposta; Decision Packet D-0128-A emesso (scelta: 1 INBOX / 2 auto-aggio / 3 n8n DP gen); nessun runtime/installazione/CLI/login/API key; sessione: `docs/sessions/2026-05-12-autonomous-low-touch-loop-design.md`.
 
-1. Prossimo passo: rispondere al Decision Packet D-0128-A (1 / 2 / 3) per scegliere il primo componente MVP da progettare (INBOX.md / auto-aggio / n8n DP generator). Se serve scelta, usare Decision Packet Format (task 0127). App Alina V1.9.2 stabile e non toccata.
+**Decisione D-0128-A registrata** (2026-05-12): risposta utente = **2** (Auto-Aggio prima). Task **0130 Auto-Aggio Design** creato in queue (`docs/tasks/queue/0130-auto-aggio-design.md`), **NON completato**. Documento design 0128 disponibile: `docs/automation/autonomous-low-touch-loop-design.md`. Ordine atteso dopo 0130: **0129** INBOX → **0131** n8n DP Generator → **0132** Ollama Feasibility → **0133** Implementer Bridge. Eventuali cambi futuri d'ordine tramite Decision Packet, non commenti liberi.
+
+1. Prossimo passo: attendere che n8n queue reader intercetti 0130 e generi processing/sessione automation; gate utente separato richiesto per esecuzione 0130. App Alina V1.9.2 stabile e non toccata.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
