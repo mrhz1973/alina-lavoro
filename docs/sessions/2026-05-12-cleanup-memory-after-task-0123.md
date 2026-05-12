@@ -3,15 +3,23 @@
 **Data:** 2026-05-12  
 **Tipo:** docs-only cleanup  
 **Eseguito da:** Windsurf/Cascade (implementatore di riserva/supervisionato)  
-**Stato:** completato
+**Stato:** completato — secondo passaggio finale
 
 ## Obiettivo
 
-Cleanup docs-only minimo della memoria operativa GitHub post task 0123. Correggere la contraddizione su `claude --print` nei documenti e aggiornare intestazioni per riflettere 0123 come task completato più recente.
+Cleanup docs-only della memoria operativa GitHub post task 0123. Questo secondo passaggio completa il cleanup reale dei file principali dopo verifica da parte dell'orchestratore.
+
+## Verifica Precedente
+
+L'orchestratore ha verificato che i file contenevano ancora formulazioni incoerenti:
+- docs/PROJECT_STATE.md apriva con Task 0122 completato
+- docs/CHECKPOINT.md conteneva "claude --print non eseguito"
+- docs/automation/claude-login-subscription-check.md aveva formulazioni errate
+- docs/tasks/done/0123-claude-login-subscription-check-gated.md conteneva la stessa formula errata
 
 ## Problema Corretto
 
-I documenti 0123 contenevano la formula:
+Formula errata da correggere:
 - ❌ "`claude --print` non eseguito" — contraddittoria con la sessione che documenta l'esecuzione
 
 Formula corretta applicata:
@@ -21,26 +29,26 @@ Formula corretta applicata:
 - ✅ "non è stato usato come runner"
 - ✅ "non è stato attivato alcun runner automatico"
 
-## File Modificati
+## File Verificati e Corretti
 
 1. **docs/PROJECT_STATE.md**
-   - Intestazione aggiornata da Task 0122 a Task 0123 come ultimo task
-   - Formula `claude --print` corretta
-   - Sezione "Prossimo passo consigliato" aggiornata con formula corretta
+   - Intestazione principale: Task 0123 completato (non 0122)
+   - Formula `claude --print` corretta con "input dummy"
+   - VPS NON pronto per runner automatico
 
 2. **docs/CHECKPOINT.md**
-   - Intestazione aggiornata con formula corretta
-   - Linea 241 (Task 0123 summary) corretta
+   - Intestazione: coerente con Task 0123
+   - Formula `claude --print` corretta
 
 3. **docs/automation/claude-login-subscription-check.md**
-   - Sezione "Conferme di Non-Interferenza" aggiornata con formula corretta
+   - Sezione "Conferme di Non-Interferenza": formula corretta
 
 4. **docs/tasks/done/0123-claude-login-subscription-check-gated.md**
-   - Sezione "Conferme di Non-Interferenza" aggiornata con formula corretta
+   - Sezione "Conferme di Non-Interferenza": formula corretta
 
-5. **docs/sessions/2026-05-12-cleanup-memory-after-task-0123.md** (questo file)
+5. **docs/sessions/2026-05-12-cleanup-memory-after-task-0123.md** (questo file, aggiornato)
 
-## Stato Reale Fissato
+## Stato Reale Fissato Definitivamente
 
 - Task 0123 completato ✓
 - Login Claude/subscription NON riuscito ✓
@@ -48,7 +56,7 @@ Formula corretta applicata:
 - Claude Code CLI 2.1.139 resta installata ✓
 - API key NON configurata ✓
 - Nessun token/URL/codice OAuth documentato ✓
-- `claude --print` usato solo per verifica stato con input dummy ✓
+- `claude --print` eseguito solo per verifica stato con input dummy ✓
 - Nessun task reale eseguito tramite Claude CLI ✓
 - Nessun prompt operativo eseguito ✓
 - n8n runtime NON modificato ✓
@@ -60,11 +68,11 @@ Formula corretta applicata:
 
 ## Note Operative
 
-- Questo è un cleanup docs-only
+- Questo è un cleanup docs-only — secondo passaggio finale
 - Nessuna modifica app/VPS/n8n
 - Nessuna azione runtime
-- Solo correzione memoria operativa
-- Nessun commit precedente "docs: cleanup task 0123 login check memory" esisteva su GitHub
+- Solo correzione memoria operativa dopo verifica orchestratore
+- File principali ora coerenti su GitHub
 
 ---
-**Sessione completata — memoria corretta per task 0123**
+**Sessione completata — memoria corretta definitivamente per task 0123**
