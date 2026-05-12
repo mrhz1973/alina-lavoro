@@ -122,6 +122,8 @@ Workflow documentato qui come **TEST** manuale riuscito. Template **AI-friendly*
 
 **Skip `failed` — implementato e validato manualmente (2026-05-12):** il queue reader ora **salta** task con `docs/tasks/failed/{task}.md`. Il formato `## Failed status` è stato documentato con stub manuale intenzionale (task 0104) — sessione [`docs/sessions/2026-05-12-failed-validation-stub.md`](../../sessions/2026-05-12-failed-validation-stub.md). **Design e validazione completati** in [`queue-reader-skip-failed-design.md`](./queue-reader-skip-failed-design.md) (task 0106) e [`docs/sessions/2026-05-12-n8n-queue-reader-skip-failed-runtime-validation.md`](../../sessions/2026-05-12-n8n-queue-reader-skip-failed-runtime-validation.md) (task 0107). Il workflow legge ora `queue/`, `processing/`, `done/` e `failed/`. Non è stato versionato export JSON n8n.
 
+**Ramo `has_task: true` dopo skip failed — validato (2026-05-12, task 0108):** dopo l'introduzione dello skip failed, il ramo `true` è stato confermato funzionante: task 0108 selezionato correttamente (`has_task: true`), prompt Cursor e sessione automation creati; secondo run `has_task: false` (anti-doppio-run processing confermato). Nessuna regressione rilevata — sessione [`docs/sessions/2026-05-12-n8n-queue-reader-has-task-true-after-skip-failed.md`](../../sessions/2026-05-12-n8n-queue-reader-has-task-true-after-skip-failed.md).
+
 ## Riferimento codice — `Filter first queued task` (implementazione validata)
 
 > **Nota:** il blocco seguente è **solo documentazione di riferimento** per il nodo **Code** nell’istanza n8n; **non** è file sorgente dell’app Alina né parte del build del repository.
