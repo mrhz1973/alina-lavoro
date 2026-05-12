@@ -102,5 +102,7 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0115 completato** (tipo `n8n-runtime
 
 **Task 0117** **completato** (tipo `docs-only`, 2026-05-12): **Fase 2 watcher/polling MVP dichiarata chiusa** — documento di completamento in `docs/automation/n8n-watcher-polling-mvp-completion.md` (evidenze task 0115+0116, lifecycle validato end-to-end); documento di design Fase 3 runner documentale in `docs/automation/runner-phase3-design.md` (quattro opzioni: Claude Code CLI VPS, Cursor CLI VPS, GitHub Actions, manuale; confronto rischi/costi; domande gate orchestratore; prerequisiti tecnici; gate manuali permanenti); nessun runner automatico; nessun deploy/tag/rollback; nessuna modifica app.
 
-1. Prossimo passo: l'orchestratore risponde alle domande gate in `docs/automation/runner-phase3-design.md` (scope, frequenza, supervisione post-run, gestione errori, API key) prima di qualsiasi task di tipo `n8n-runner-setup` o `vps-runner-setup`. App Alina V1.9.2 stabile e non toccata.
-2. Workstream automazione: Fase 2 chiusa, Fase 3 in attesa di decisione orchestratore.
+**Task 0118** **creato** (tipo `docs-only`, 2026-05-12): task in queue per documentare le risposte gate dell'orchestratore alla Fase 3 runner documentale — fissa scope (solo docs-only), frequenza (bassa/media, rate limit), supervisione (Fase 3A dry-run), gestione errori (failed tracciato, no retry automatico), API key (chiave dedicata, approvazione budget); opzione A raccomandata; nessun runtime autorizzato; sessione: `docs/sessions/2026-05-12-create-task-0118-runner-phase3-gate-decision.md`.
+
+1. Prossimo passo: n8n seleziona task 0118 → produce `docs/automation/runner-phase3-gate-decision.md`; task successivo a 0118 deve essere ancora design/preflight, non runtime pieno. App Alina V1.9.2 stabile e non toccata.
+2. Workstream automazione: Fase 2 chiusa, Fase 3 decision gate in corso (task 0118 in queue).
