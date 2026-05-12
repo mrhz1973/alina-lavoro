@@ -15,13 +15,12 @@ This file documents the **layout** of the operational prompt assembled by the n8
 
 ---
 
-@docs/roadmap.md
-@docs/STREAMLINED_WORKFLOW.md
+@docs/LLMS.md
+@docs/wiki/current-state.md
+@docs/wiki/token-efficiency.md
 @docs/ORCHESTRATOR_RULES.md
 @docs/AI_RULES.md
 @docs/WORKFLOW.md
-@docs/CHECKPOINT.md
-@docs/PROJECT_STATE.md
 @docs/COMMANDS.md
 
 MODALITÀ: AGENT / IMPLEMENTAZIONE
@@ -64,6 +63,7 @@ Mandatory constraints:
 - Proceed with the assigned docs-only task; the absence of a real choice equals operational consent to proceed.
 - Stop only for sensitive gates: runtime, VPS runtime, n8n runtime, app changes, deploy, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, secrets or personal data, or physical user/Alina test.
 - If a sensitive gate appears during execution, stop and report it clearly in the final response.
+- LLMS-first orientation: read docs/LLMS.md first, then docs/wiki/current-state.md, then docs/wiki/token-efficiency.md, then the task file. Do NOT read docs/PROJECT_STATE.md or docs/CHECKPOINT.md by default; if you open them, say why in the final response.
 
 Final response required:
 - Files changed.
@@ -72,3 +72,4 @@ Final response required:
 - Git status final.
 - Any risks or manual tests required.
 - Any sensitive gate encountered (yes/no; if yes, which one).
+- Whether docs/PROJECT_STATE.md or docs/CHECKPOINT.md were opened (yes/no; if yes, why).

@@ -4,6 +4,18 @@
 This file is derived memory (Level 2). Canonical sources always win.  
 → Design: docs/automation/local-llm-wiki-token-efficiency-design.md
 
+**Mandatory read order:**
+1. This file (`docs/LLMS.md`) — always first
+2. `docs/wiki/current-state.md` — state snapshot
+3. `docs/wiki/token-efficiency.md` — navigation rules
+4. Assigned task file (if any)
+5. Only task-specific canonical docs
+
+**Do NOT read by default:**
+- `docs/PROJECT_STATE.md` — large file; fallback/audit only; open only if this file + wiki cannot answer your question; justify in final report if you open it
+- `docs/CHECKPOINT.md` — restart context only; open only when explicitly required; justify in final report if you open it
+- Claude Code large-file warnings for these files may remain until a future physical compression task
+
 ---
 
 ## Current App State

@@ -39,7 +39,16 @@ git pull origin main
 npm run aggio
 ```
 
-Then read the relevant documents (`PROJECT_STATE`, `CHECKPOINT`, `roadmap`, `STREAMLINED_WORKFLOW`, etc.).
+**LLMS-first orientation (mandatory):**
+1. Read `docs/LLMS.md` — compact entry point (≤200 lines).
+2. Read `docs/wiki/current-state.md` — state snapshot (≤100 lines).
+3. Read `docs/wiki/token-efficiency.md` — navigation rules.
+4. Read the assigned task file (if any).
+5. Read only task-specific canonical docs.
+6. **Do NOT read `docs/PROJECT_STATE.md` by default** — fallback/audit only; if you open it, justify in final report.
+7. **Do NOT read `docs/CHECKPOINT.md` by default** — restart context only; if you open it, justify in final report.
+
+Note: task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules. This routing rule does not change the update obligation — only the default startup read path.
 
 ## Main rule
 

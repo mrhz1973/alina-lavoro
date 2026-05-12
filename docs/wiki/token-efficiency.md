@@ -5,15 +5,23 @@
 
 ---
 
-## Minimum Read Protocol
+## Minimum Read Protocol (mandatory — LLMS-first routing)
 
 For any new session or task:
 
-1. `docs/LLMS.md` (≤ 200 lines) — current state + pointers
-2. `docs/wiki/current-state.md` (≤ 100 lines) — state snapshot
-3. The specific canonical doc for your task area (see map below)
+1. `docs/LLMS.md` (≤ 200 lines) — current state + pointers — **always first**
+2. `docs/wiki/current-state.md` (≤ 100 lines) — state snapshot — **always second**
+3. `docs/wiki/token-efficiency.md` — this file — **always third**
+4. The assigned task file (if any)
+5. Only the specific canonical doc for your task area (see map below)
 
-**Do not read PROJECT_STATE.md unless LLMS.md + wiki cannot answer your question.**
+**`docs/PROJECT_STATE.md` is FALLBACK/AUDIT only — do NOT read by default.**
+Open only when LLMS.md + wiki cannot answer your question. If you open it, justify in your final report.
+
+**`docs/CHECKPOINT.md` is RESTART CONTEXT only — do NOT read by default.**
+Open only when restart context is explicitly required. If you open it, justify in your final report.
+
+**Note:** Claude Code large-file warnings for PROJECT_STATE.md and CHECKPOINT.md may remain until a future physical compression task. This routing rule reduces real context consumption independently of those warnings.
 
 ---
 
@@ -58,15 +66,21 @@ Avoid duplicated bilingual blocks. One language per context.
 ## Token Efficiency Rules
 
 1. Read `docs/LLMS.md` first — always, at every session start.
-2. If LLMS.md answers your question, stop. Do not open PROJECT_STATE.md.
-3. If you need state details not in LLMS.md, read `docs/wiki/current-state.md` next.
-4. Only read `docs/PROJECT_STATE.md` for full historical context or audit.
-5. Always read `docs/ORCHESTRATOR_RULES.md` in full — it is compact and contains hard rules.
-6. Read `docs/AI_RULES.md` + `docs/WORKFLOW.md` when implementing any task.
-7. Do not read `docs/sessions/` unless debugging a specific past incident.
-8. Do not read all files in `docs/automation/` — read only the specific design doc needed.
-9. Do not read `docs/tasks/done/` unless auditing task history.
-10. Do not read `gas-current/` — it is a read-only snapshot, not a source for active work.
+2. Read `docs/wiki/current-state.md` second — always.
+3. Read `docs/wiki/token-efficiency.md` third — always (this file).
+4. If LLMS.md + wiki answer your question, **stop**. Do not open PROJECT_STATE.md.
+5. Read the assigned task file before any canonical docs.
+6. Read only the canonical docs needed for your specific task.
+7. **`docs/PROJECT_STATE.md` — do NOT read by default.** Fallback/audit only. If you open it, justify in final report.
+8. **`docs/CHECKPOINT.md` — do NOT read by default.** Restart context only. If you open it, justify in final report.
+9. Always read `docs/ORCHESTRATOR_RULES.md` in full — it is compact and contains hard rules.
+10. Read `docs/AI_RULES.md` + `docs/WORKFLOW.md` when implementing any task.
+11. Do not read `docs/sessions/` unless debugging a specific past incident.
+12. Do not read all files in `docs/automation/` — read only the specific design doc needed.
+13. Do not read `docs/tasks/done/` unless auditing task history.
+14. Do not read `gas-current/` — it is a read-only snapshot, not a source for active work.
+15. If an agent reads PROJECT_STATE.md or CHECKPOINT.md, it must justify why in the final report.
+16. Future `docs/history/PROJECT_LOG.md` (after compression task) will be audit-only — do not read by default.
 
 ---
 

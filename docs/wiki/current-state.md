@@ -70,5 +70,6 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 Full deploy history → `docs/PROJECT_STATE.md`
 
 ---
-→ Entry point: `docs/LLMS.md`  
-→ Full state: `docs/PROJECT_STATE.md`
+→ Mandatory read order: `docs/LLMS.md` → this file → `docs/wiki/token-efficiency.md` → task file → task-specific canonicals
+→ Full state (fallback/audit only): `docs/PROJECT_STATE.md` — do NOT read by default
+→ Restart context (fallback only): `docs/CHECKPOINT.md` — do NOT read by default

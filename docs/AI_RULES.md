@@ -38,8 +38,18 @@ For **determined docs-only tasks**, the absence of a real choice equals **operat
    npm run aggio
    ```
 
+0a. **LLMS-first orientation (mandatory):**
+    - Read `docs/LLMS.md` first (≤200 lines) — answers most orientation questions.
+    - Read `docs/wiki/current-state.md` second (≤100 lines) — state snapshot.
+    - Read `docs/wiki/token-efficiency.md` third — navigation rules and what NOT to read.
+    - Read the assigned task file if one exists.
+    - Read only task-specific canonical docs (e.g. `docs/COMMANDS.md` for frontend tasks; automation docs for automation tasks).
+    - **Do NOT read `docs/PROJECT_STATE.md` by default** — it is a large fallback/audit file; open only if LLMS.md + wiki cannot answer your question; if you open it, say why in your final report.
+    - **Do NOT read `docs/CHECKPOINT.md` by default** — restart context only; open only when explicitly required; if you open it, say why in your final report.
+    - Claude Code large-file warnings may remain until a future physical compression task; this routing rule reduces real context consumption independently.
+
 1. **Do not invent state** of the project, deploy, or branch: verify with `git status`, `git branch`, docs in `docs/`, and if useful, `npm run aggio`.
-2. **Read** `docs/roadmap.md`, `docs/PROJECT_STATE.md`, `docs/CHECKPOINT.md`, `docs/STREAMLINED_WORKFLOW.md` when relevant to the task.
+2. **Read** `docs/ORCHESTRATOR_RULES.md` and `docs/AI_RULES.md` always. Read `docs/roadmap.md` only when the task requires product context. Read `docs/PROJECT_STATE.md` / `docs/CHECKPOINT.md` only as fallback — see 0a above.
 3. **Operational branch:** work on **`main`**. **`dev`** is **legacy/inactive** — do not use it for new development.
 4. **`gas-current/`** is **read-only**: never modify, never use as a source for patches.
 5. **Application changes** only under **`src/`** (backend `src/backend/`, frontend `src/frontend/`), unless workflow/documentation/tools are explicitly requested.

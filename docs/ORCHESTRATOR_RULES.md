@@ -40,6 +40,14 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Full prompt: only when needed data is not yet on GitHub.
 - Sonnet for ordinary tasks; Opus only for complex planning or architectural decisions.
 
+**LLMS-first routing rule (mandatory):**
+- All agents start from `docs/LLMS.md` (≤200 lines), then `docs/wiki/current-state.md` (≤100 lines), then `docs/wiki/token-efficiency.md`.
+- `docs/PROJECT_STATE.md` is a **fallback/audit** file — do not read by default; open only when LLMS.md + wiki cannot answer the question; justify in final report.
+- `docs/CHECKPOINT.md` is a **restart context** file — open only when restart context is explicitly required; justify in final report.
+- Canonicals win over wiki if there is a conflict — update the wiki, not the canonicals.
+- Task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules — this routing rule does not change that.
+- Claude Code large-file warnings may remain until a future physical compression task; this rule reduces real context consumption independently.
+
 ## PRIORITÀ 0A — Avanzamento senza conferme inutili
 
 **Regola globale del progetto.** Vale per ChatGPT orchestratore, implementatori (Windsurf/Cascade, Cursor, Claude Code, Agent), prompt generati da n8n, workflow documentale n8n / watcher / runner, politiche VPS/runner, documentazione di stato e ripartenza.
