@@ -100,5 +100,7 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0115 completato** (tipo `n8n-runtime
 
 **Task 0116** **completato** (tipo `n8n-runtime-validation`, 2026-05-12): ciclo `has_task:true` del polling automatico validato end-to-end — n8n ha selezionato il task 0116 come eleggibile, generato sessione automation (commit `bbef5d7`, 05:50:53 +0200) e cursor prompt in processing (commit `cb75002`, 05:50:54 +0200); run successivo ha saltato il task (skip su `processing/`, `has_task:false` silenzioso); nessun runner automatico; nessuna modifica app/deploy/tag/rollback; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-has-task-true-scheduled-polling-validation.md`.
 
-1. Prossimo passo: il polling automatico `queue-reader-schedule-5min` è validato end-to-end (`has_task:false` e `has_task:true`). Lavoro nuovo su **`main`** dopo `git pull origin main`.
+**Task 0117 creato** (tipo `docs-only`, 2026-05-12): `docs/tasks/queue/0117-n8n-watcher-polling-mvp-completion-and-runner-phase3-planning.md` in coda — consolida Fase 2 MVP completata (task 0115+0116) e avvia design Fase 3 runner documentale; nessun runner automatico; nessun deploy/tag/rollback; stato: `queued`.
+
+1. Prossimo passo: `aggio` dopo il push — verificare se n8n ha generato processing/sessione per il task 0117. Gate manuale obbligatorio prima di qualsiasi implementazione runtime Fase 3. Lavoro nuovo su **`main`** dopo `git pull origin main`.
 2. Workstream automazione watcher/runner continua; app Alina V1.9.2 stabile e non toccata.
