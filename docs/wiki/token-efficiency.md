@@ -38,6 +38,23 @@ For any new session or task:
 
 ---
 
+## Language Efficiency
+
+| Context | Language | Why |
+|---------|----------|-----|
+| Internal prompts, system prompts | Technical English | Fewer tokens, higher precision |
+| JSON/YAML structured output fields | Technical English | Machine-readable consistency |
+| Local models (Ollama, 7B/8B), classifier, planner | Technical English | Better accuracy, less verbosity (empirical: qwen3:8b) |
+| Wiki agent-facing content | Technical English preferred | Compact, reduces token cost |
+| Final summaries to user | Italian | User-facing output |
+| Canonical docs (PROJECT_STATE, roadmap, etc.) | Italian — do not change | No retroactive translation |
+
+Avoid duplicated bilingual blocks. One language per context.
+
+→ Full rule: `docs/AI_RULES.md` — "Language policy for agents"
+
+---
+
 ## Token Efficiency Rules
 
 1. Read `docs/LLMS.md` first — always, at every session start.

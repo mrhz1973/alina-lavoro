@@ -73,6 +73,16 @@ n8n binding: 127.0.0.1:5678 (hardened)
 
 ---
 
+## Agent Language
+
+Use **technical English** for internal reasoning, prompts, JSON/YAML, classifier/planner, wiki content.
+
+Use **Italian** for final user-facing summaries and orchestrator output.
+
+→ Full rule: `docs/AI_RULES.md` — "Language policy for agents"
+
+---
+
 ## Open Technical Debts
 
 - `docs/PROJECT_STATE.md` > 47k chars → compaction task pending (separate, flexible timing)

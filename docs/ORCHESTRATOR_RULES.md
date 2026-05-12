@@ -269,6 +269,13 @@ Usare prompt più lungo con Claude Code **solo** quando i dati necessari non son
 
 Non usare Opus per task che Sonnet può completare correttamente.
 
+### Language policy
+
+- **Internal agent language:** technical English (prompts, JSON/YAML fields, wiki agent-facing, classifier/planner, structured outputs).
+- **Final user-facing language:** Italian (orchestrator summaries, Decision Packets, user output).
+- **Goal:** token efficiency + technical precision for local 7B/8B models.
+- **Canonical rule:** `docs/AI_RULES.md` — "Language policy for agents".
+
 ### Cursor / Windsurf / Cascade
 
 Non accorciare i prompt per questi implementatori. Seguire la **Regola output prompt Cursor** qui sotto.

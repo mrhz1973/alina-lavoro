@@ -303,6 +303,41 @@ Not implemented (reserved for future runtime-gated tasks):
 
 ---
 
+## 14. Language Policy as Token Efficiency Multiplier
+
+**Added post-task 0133 (2026-05-12) — docs-only update.**
+
+Language choice is a direct token efficiency lever, particularly for local 7B/8B models.
+
+### Rule
+
+| Context | Language | Rationale |
+|---------|----------|-----------|
+| Internal prompts, system prompts, prompt skeletons | Technical English | Fewer tokens per concept; higher instruction-following precision in small models |
+| JSON/YAML structured classifier/planner output | Technical English | Machine-readable field names; consistent parsing |
+| Wiki agent-facing files (`docs/LLMS.md`, `docs/wiki/`) | Technical English preferred | Reduces token count for every agent session that reads these files |
+| n8n AI layer, future Ollama classifier/planner | Technical English | Empirical basis: qwen3:8b produces less verbose, more structured output in English for technical tasks |
+| Final user-facing summaries (orchestrator → user) | Italian | User expects Italian; orchestrator (ChatGPT) responds in Italian |
+| Canonical project docs | Italian (keep as-is) | No retroactive translation — the cost outweighs the benefit |
+
+### Token Impact
+
+This policy is a **multiplicative** improvement on top of the wiki structure:
+
+- Wiki reduces *how much* is read per session (~70–80% reduction)
+- Language policy reduces *how many tokens* are needed per line of that reduced read (~10–20% additional saving for English-facing wiki content)
+- Combined: maximum token efficiency for local AI sessions
+
+### Empirical Basis
+
+User observation (2026-05-12): qwen3:8b via Ollama operates in Italian but is more verbose and less precise on technical concepts. English technical phrasing improves instruction following stability and reduces hallucinated structure.
+
+### Canonical reference
+
+Full rule in `docs/AI_RULES.md` — "Language policy for agents". This section is the design rationale. Do not duplicate the full rule here.
+
+---
+
 ## Conclusion
 
 The LLM Wiki / Token Efficiency layer is the highest-impact zero-runtime optimization available in the Alina Lavoro project. It addresses the root cause of per-session token cost: agents loading the full historical PROJECT_STATE and canonical stack at every invocation.

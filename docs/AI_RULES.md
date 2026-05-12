@@ -115,6 +115,31 @@ Allineamento orchestratore: `docs/ORCHESTRATOR_RULES.md` (**PRIORITÀ 0**). Disc
 - Preferire **piccoli blocchi** di modifiche revisionabili.
 - **Output finale** (fine turno o fine task / fine blocco) allineato al punto 6 sopra: file modificati, test/check, errori/rischi, hash commit, `git status --short`, workspace pulito o meno, **prossimo passo** (una riga).
 
+## Language policy for agents
+
+**Rule:** use technical English for internal reasoning and structured outputs; use Italian for final user-facing summaries.
+
+| Context | Language | Reason |
+|---------|----------|--------|
+| Internal prompts, system prompts, JSON/YAML fields | Technical English | Lower token count, higher technical precision, better stability in local 7B/8B models |
+| Structured classifier/planner output fields | Technical English | Machine-readable consistency |
+| Wiki agent-facing content (`docs/LLMS.md`, `docs/wiki/`) | Technical English preferred | Compact, reduces token cost for local AI |
+| n8n AI layer, future Ollama classifier/planner prompts | Technical English | Local 7B/8B models (e.g. qwen3:8b) are more precise and less verbose in English |
+| Final summaries to the user | Italian | User expects Italian; orchestrator (ChatGPT) responds in Italian |
+| Canonical project docs (`PROJECT_STATE.md`, `roadmap.md`, etc.) | Italian (keep as-is) | Do not translate retroactively |
+| Commit messages | English (already standard) | Consistent with repo history |
+
+**Applicability:** Claude Code, Cursor, Windsurf/Cascade, local AI (Ollama), future n8n AI layer, n8n prompt generator.
+
+**Do not:**
+- translate existing canonical docs retroactively;
+- create duplicated bilingual blocks (one language per context, not both);
+- write internal JSON/YAML values in Italian if the field is machine-readable.
+
+Empirical basis: user observed that qwen3:8b via Ollama produces more verbose and less precise output in Italian for technical classification tasks. Technical English is the default for internal agent reasoning from this point forward.
+
+Canonical reference: `docs/AI_RULES.md` (this section). Other files reference this section for the full rule; they do not duplicate it.
+
 ## Comandi sensibili
 
 - **`npm run push`** / **`clasp push`**: solo dopo verifica locale e consenso utente sullo stato.
