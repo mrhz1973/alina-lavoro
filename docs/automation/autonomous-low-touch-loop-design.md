@@ -373,6 +373,8 @@ Obiettivo operativo: l'utente esegue solo:
 - Session tracker: crea `docs/sessions/automation-*.md`
 - Prompt generator: crea `docs/tasks/processing/*-cursor-prompt.md`
 
+**No provider APIs by default:** n8n is workflow orchestration, queue, polling, GitHub, notification, and file coordination. n8n must not call provider AI APIs (OpenAI, Anthropic, OpenRouter, etc.) by default. Classifier/planner means Ollama/local models unless a future explicit manual gate changes this.
+
 **MVP (da progettare nei task successivi):**
 - Decision Packet generator: crea draft DP quando il task richiede scelta
 - Auto-aggio trigger: rileva commit e aggiorna stato

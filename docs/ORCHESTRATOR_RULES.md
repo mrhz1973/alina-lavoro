@@ -16,6 +16,9 @@ Quick reference for new agents, Claude Code, Cursor, Windsurf/Cascade, and futur
 **Sensitive gates — always require explicit user decision:**
 runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script · tag · rollback · API key · login · GitHub Actions · new recurring costs · automatic runner · personal data / credentials / secrets / OAuth material · real physical test (Alina on phone)
 
+**No provider APIs by default:**
+ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models. Any provider API / hosted AI call / API key / billing / recurring cost requires explicit future manual gate and is out of scope by default.
+
 **Step-by-step mode (PRIORITY 0) — mandatory only when user is manually operating:**
 n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface requiring human-in-the-loop
 → One step at a time, wait for outcome before the next step.

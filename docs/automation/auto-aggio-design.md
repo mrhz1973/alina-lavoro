@@ -21,6 +21,8 @@ Auto-Aggio non sostituisce il Decision Packet: lo affianca, segnalandolo all'ute
 
 **Auto-Aggio** = rilevamento automatico, da parte del sistema (ChatGPT orchestratore + n8n), che un task è stato completato/fallito/richiede attenzione, **senza** che l'utente debba scrivere manualmente "aggio" per attivare la rilettura dello stato.
 
+**No provider APIs:** Auto-Aggio immediate means ChatGPT web/on-demand reads GitHub when the user interacts; it does not mean automatic OpenAI API calls. Auto-Aggio runtime future must prefer n8n + GitHub + file-based workflow + Ollama/local models; provider APIs are out of scope by default.
+
 Il termine "aggio" nel contesto del progetto è la formula breve con cui l'utente segnala a ChatGPT: "guarda GitHub, lo stato è cambiato, riallineati". Auto-Aggio sposta questa funzione su trigger oggettivi (commit, file presenti, marker espliciti) anziché su un comando esplicito dell'utente.
 
 ---

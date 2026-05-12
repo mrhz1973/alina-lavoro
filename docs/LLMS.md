@@ -112,6 +112,7 @@ The following require explicit manual gate before any action:
 - API key, login, GitHub Actions
 - deploy Apps Script, tag, rollback, runner automatico
 - app Alina source modifications (`src/**`)
+- **NO provider APIs by default** — ChatGPT = web/on-demand, Claude Code = supervised usage, Local AI = Ollama/local models; provider APIs / hosted AI calls / API keys / billing / recurring costs require explicit future manual gate and are out of scope by default
 
 ---
 

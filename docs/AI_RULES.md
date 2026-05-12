@@ -154,3 +154,7 @@ Canonical reference: `docs/AI_RULES.md` (this section). Other files reference th
 
 - **`npm run push`** / **`clasp push`**: only after local verification and user consent on state.
 - **Rollback**: primary mechanism = **stable tags** on `main` (e.g. `v1.8.1-stable`, `v1.8.0-stable`, …; historical `v1.5-stable`); do not execute destructive reset/merge without explicit order.
+
+## No provider APIs by default
+
+Implementers must not suggest OpenAI API, Anthropic API, OpenRouter, hosted provider AI, API keys, or paid cloud model calls as default solutions. Provider APIs are out of scope unless a future explicit manual gate says otherwise. ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models.
