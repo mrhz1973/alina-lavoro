@@ -186,18 +186,14 @@ npm run finito -- "Messaggio commit" file1 file2
 
 **Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app.
 
-**Task 0114 bloccato in fase Publish.** Stato corrente:
+**Task 0115 completato (2026-05-12).** Stato corrente:
 
-- Schedule Trigger aggiunto al watcher `Alina watcher - Schedule queue reader`; test manuale tutto verde.
-- Watcher **non pubblicato / non attivo** come polling automatico.
-- Blocco: n8n richiede che il sub-workflow sia pubblicato prima del parent; il queue reader `TEST - GitHub list Alina task queue` non risulta pubblicabile ("This workflow has no trigger nodes that require publishing").
-- Nessun polling automatico attivo. Nessun runner automatico.
-- Sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
+- Queue reader `TEST - GitHub list Alina task queue` pubblicato come `queue-reader-schedule-5min` e **attivo come polling automatico** ogni 5 minuti (Schedule Trigger, timezone Europe/Berlin).
+- Manual Trigger e "When Executed by Another Workflow" ancora presenti e invariati nel queue reader.
+- Watcher `Alina watcher - Schedule queue reader`: esiste in n8n, non pubblicato, non attivo come polling.
+- Primo tick automatico osservato: `has_task:false` silenzioso, nessuna scrittura GitHub.
+- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
+- Sessione: `docs/sessions/2026-05-12-n8n-queue-reader-direct-schedule-trigger-validation.md`.
 
-Decisione architetturale richiesta prima di qualsiasi modifica al runtime n8n:
-
-- **Opzione A investigata (2026-05-12): esito negativo / non risolutiva.** Nessuna impostazione UI trovata. `Define Below` scartato. Vedi sessione `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
-- **Opzione B controllata: task 0115 creato.** Schedule Trigger ogni 5 minuti aggiunto direttamente al queue reader `TEST - GitHub list Alina task queue`; Manual Trigger e "When Executed by Another Workflow" mantenuti; gate manuale obbligatorio prima del runtime.
-
-1. Prossimo passo operativo: eseguire task 0115 con gate manuale — aggiungere Schedule Trigger al queue reader, test manuale pre-pubblicazione, pubblicare, verificare primo tick has_task:false silenzioso.
+1. Prossimo passo operativo: creare task separato per validare ciclo `has_task:true` con task docs-only minimale in coda — gate manuale obbligatorio, approvazione orchestratore prima di esecuzione.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
