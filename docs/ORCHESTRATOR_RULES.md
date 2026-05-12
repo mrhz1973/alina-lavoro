@@ -398,6 +398,20 @@ Per V1.8A il gate manuale previsto e: tab Mesi, stipendio da riga, cambio lingua
 - Non introdurre librerie esterne o service worker senza approvazione.
 - Preferire blocchi piccoli, testabili e committabili.
 
+## Criterio decisionale permanente — Micro-interazioni umane eliminate
+
+Per il workstream watcher/runner e low-touch loop, ogni nuova proposta deve valutare la riduzione delle micro-interazioni dell'utente.
+
+**Criterio permanente:** "Quante micro-interazioni umane elimina?"
+
+Questo criterio si applica a:
+- Nuove architetture di automazione
+- Nuovi formati decisionali (es. Decision Packet)
+- Nuovi processi di coordinamento orchestratore/implementatore
+- Proposte di riduzione di passaggi meccanici (copiare/incollare prompt, avviare implementatori, scrivere "aggio", tradurre tra orchestratore e implementatore)
+
+Il campo `kind` del futuro Decision Packet (`alina-feature` / `automation` / `infra` / `meta`) è un indicatore strutturale di equilibrio roadmap, non una domanda all'utente.
+
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
 - Produzione Git/Apps Script: **V1.9.2** su **`main`**; tag stabile **`v1.9.2-stable`**; deploy clasp **`@24`** (ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; deploy Windows: **Git Bash** + `npx clasp` se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`); **Dettaglio mese** più **visivo** (metriche in alto, card giorno, barre ore proporzionali); **Stipendio** nascosto sul **mese corrente** in lista **Mesi** (**V1.9.1**); **Dettaglio** sempre; eredità **V1.9.0** (**Dettaglio mese** **`monthDetail`**), V1.8.10 (snooze promemoria stipendio), V1.8.9 (toggle anni **Mesi**), issue **#5**, V1.8B.
