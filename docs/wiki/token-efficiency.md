@@ -80,7 +80,7 @@ Avoid duplicated bilingual blocks. One language per context.
 13. Do not read `docs/tasks/done/` unless auditing task history.
 14. Do not read `gas-current/` — it is a read-only snapshot, not a source for active work.
 15. If an agent reads PROJECT_STATE.md or CHECKPOINT.md, it must justify why in the final report.
-16. Future `docs/history/PROJECT_LOG.md` (after compression task) will be audit-only — do not read by default.
+16. `docs/history/PROJECT_LOG.md` (audit-only) — do not read by default. Contains migrated long historical content from PROJECT_STATE.md and CHECKPOINT.md.
 
 ---
 

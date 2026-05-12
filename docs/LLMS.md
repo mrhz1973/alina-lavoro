@@ -99,7 +99,6 @@ Agent-facing operational rules (`docs/AI_RULES.md`, `docs/WORKFLOW.md`) are norm
 
 ## Open Technical Debts
 
-- `docs/PROJECT_STATE.md` > 47k chars → compaction task pending (separate, flexible timing)
 - `docs/INBOX.md` not yet created → reserved for future mixed/runtime-gated task
 
 ---
