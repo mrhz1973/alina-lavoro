@@ -99,7 +99,7 @@ Not logged in · Please run /login
 
 - ✅ **Nessuna API key configurata** — anti-API-key check negativo
 - ✅ **Nessun token/URL/codice OAuth documentato** — flusso non completato
-- ✅ **`claude --print` NON eseguito** — solo per verifica stato, non per task reali
+- ✅ **`claude --print` usato una sola volta con input dummy** per verifica stato autenticazione; non eseguito alcun task reale, nessun prompt operativo
 - ✅ **Nessun task reale eseguito** — nessun prompt eseguito tramite Claude CLI
 - ✅ **Nessuna modifica n8n runtime** — container n8n invariato
 - ✅ **Nessun nodo Execute Command creato** — nessuna modifica workflow

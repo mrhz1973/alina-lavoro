@@ -49,7 +49,7 @@ Prompt n8n generato automaticamente e presente in:
 - ✅ **Login/subscription verificato** — blocco documentato per incompatibilità headless
 - ✅ **Nessuna API key configurata** — anti-API-key check negativo
 - ✅ **Nessun token/URL/codice OAuth documentato** — flusso non completato
-- ✅ **`claude --print` NON eseguito** — solo verifica stato
+- ✅ **`claude --print` usato una sola volta con input dummy** per verifica stato autenticazione; non eseguito alcun task reale, nessun prompt operativo
 - ✅ **Nessun task reale eseguito** — nessun prompt tramite Claude CLI
 - ✅ **n8n runtime NON modificato** — container n8n invariato
 - ✅ **docker-compose NON modificato** — nessuna modifica
