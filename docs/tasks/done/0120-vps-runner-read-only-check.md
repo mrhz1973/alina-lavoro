@@ -18,7 +18,7 @@ Task 0119 ha completato il setup preflight del VPS runner in modalità docs-only
 ## Done copy-only outcome
 
 - **completed_at**: 2026-05-12
-- **completion_commit**: da inserire dopo commit
+- **completion_commit**: 6b398b3ca7bf11ef81f41bd3e5be9b4b880a7d40
 - **completed_by**: Windsurf/Cascade (reserve implementer)
 - **runtime_validation**: VPS read-only check executed
 - **vps_modified**: No
