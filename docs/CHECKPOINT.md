@@ -246,5 +246,7 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 
 **Task 0124 completato** (tipo `runner-decision-docs-only`, 2026-05-12): decisione Fase 3A no-API documentata; alternative A/B/C/D/E/F confrontate; raccomandazione: breve termine modalità manuale-supervisionata (Claude Code locale principale + Windsurf/Cascade riserva); n8n resta queue reader/prompt generator/session tracker; Cursor CLI rinviato al reset; Codex CLI solo eventuale verifica documentale futura (task 0125 proposto, non creato); Claude Code CLI VPS non raccomandato finché resta vincolo no-API-key; runner automatico non attivato; nessun runtime; documentazione in `docs/automation/runner-alternatives-no-api-decision.md`; sessione: `docs/sessions/2026-05-12-runner-alternatives-no-api-decision.md`.
 
-1. Prossimo passo: continuare in modalità manuale-supervisionata; valutare eventuale task 0125 Codex CLI feasibility check (docs-only) e task Cursor CLI preflight al reset. App Alina V1.9.2 stabile e non toccata.
+**Task 0125 creato** (tipo `runner-feasibility-docs-only`, 2026-05-12): Codex CLI feasibility check in queue; solo valutazione documentale; NON autorizza installazione Codex CLI, esecuzione Codex CLI, login, API key, VPS, n8n, GitHub Actions, runner automatico, app, deploy/tag/rollback; gate manuale separato richiesto per esecuzione futura; task `docs/tasks/queue/0125-codex-cli-feasibility-check.md`.
+
+1. Prossimo passo: continuare in modalità manuale-supervisionata; attendere che n8n queue reader generi processing/sessione per 0125 oppure verificare con aggio; task Cursor CLI preflight al reset. App Alina V1.9.2 stabile e non toccata.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
