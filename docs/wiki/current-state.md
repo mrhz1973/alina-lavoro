@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-12 (post-0133 Windows decision)**
+**Derived memory (Level 2) — last updated: 2026-05-13 (post-state compression)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -20,7 +20,7 @@
 
 ## Active Workstream
 
-**automation / watcher / runner / low-touch**  
+**automation / watcher / runner / low-touch**
 Constraint: do not return to Alina app work until this workstream is closed.
 
 ---
@@ -45,7 +45,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 ## VPS
 
-Ubuntu 24.04.4 LTS | Docker/n8n at `127.0.0.1:5678` (hardened)  
+Ubuntu 24.04.4 LTS | Docker/n8n at `127.0.0.1:5678` (hardened)
 Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 
 ---
@@ -54,7 +54,7 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 
 | Debt | Status | Task |
 |------|--------|------|
-| `PROJECT_STATE.md` > 47k chars | Pending | Future docs-only (flexible timing) |
+| PROJECT_STATE.md / CHECKPOINT.md physical compression | Completed 2026-05-13 | History moved to docs/history/PROJECT_LOG.md (audit-only) |
 | `docs/INBOX.md` not created | Pending | Future mixed/runtime-gated task |
 
 ---
@@ -68,6 +68,7 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | V1.8.10 | `v1.8.10-stable` | @21 |
 
 Full deploy history → `docs/PROJECT_STATE.md`
+Full project history → `docs/history/PROJECT_LOG.md` (audit-only, not default read)
 
 ---
 → Mandatory read order: `docs/LLMS.md` → this file → `docs/wiki/token-efficiency.md` → task file → task-specific canonicals
