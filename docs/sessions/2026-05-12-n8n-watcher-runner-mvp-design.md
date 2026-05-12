@@ -30,11 +30,16 @@ Il documento copre:
 
 ## Decisioni chiave
 
-- **Trigger:** polling timer n8n (non webhook — porta non pubblica)
-- **Runner MVP:** Anthropic API via n8n HTTP node (nessuna dipendenza aggiuntiva VPS)
-- **Runner futuro:** Claude Code CLI sul VPS (per task più complessi)
+- **Trigger:** polling timer n8n ogni 5 minuti (non webhook — porta 5678 non pubblica)
+- **Runner MVP:** supervisionato/manuale — n8n genera prompt, utente/orchestratore esegue Claude Code o Cursor localmente
+- **Runner futuro:** Claude Code CLI o Cursor CLI sul VPS (automazione piena, gate manuale prima del primo run)
+- **API LLM:** scartate come runner predefinito (costi, policy utente); valutabili in futuro solo via provider economici, per task non sensibili, con gate manuale
 - **Supervisione:** ogni ciclo tracciato con done/failed marker e sessione aggiornata
 - **Scope:** solo docs-only per MVP; estensione frontend in Fase 4 runbook
+
+## Correzione applicata (2026-05-12)
+
+Il documento originale indicava erroneamente "Anthropic API via n8n HTTP node" come raccomandazione MVP. Corretto: il runner MVP è supervisionato/manuale. Le API LLM a pagamento (Anthropic/OpenAI) non sono il runner predefinito per questo progetto.
 
 ## Esclusioni
 

@@ -19,9 +19,11 @@
 **Evidence:**
 
 - Documento di design creato: `docs/automation/n8n-watcher-runner-mvp-design.md`
-- Trigger MVP scelto e motivato: polling timer n8n (porta 5678 non pubblica → webhook non praticabile)
+- Trigger MVP scelto e motivato: polling timer n8n ogni 5 minuti (porta 5678 non pubblica → webhook non praticabile)
 - Ruoli e componenti definiti con matrice ownership
-- Flusso runner documentale descritto per due opzioni (Anthropic API via n8n / Claude Code CLI)
+- Runner MVP: supervisionato/manuale — n8n genera prompt, utente/orchestratore esegue Claude Code o Cursor localmente
+- Runner futuro: Claude Code CLI o Cursor CLI sul VPS
+- API LLM (Anthropic/OpenAI): scartate come runner predefinito; valutabili in futuro solo tramite provider economici, task non sensibili, gate manuale
 - Gate manuali obbligatori elencati esplicitamente
 - Scope MVP definito: solo task docs-only con `Deploy: no`
 - 8 rischi e relative mitigazioni documentati

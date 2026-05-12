@@ -47,7 +47,7 @@ Orchestratore (ChatGPT)
     [Runner documentale — script VPS]
         → git pull --rebase origin main
         → legge prompt da docs/tasks/processing/{task}-cursor-prompt.md
-        → esegue implementatore (Claude Code CLI o API)
+        → utente/orchestratore esegue prompt localmente (Claude Code / Cursor)
         → commit selettivo su path consentiti
         → git push origin main
         → crea done marker o failed marker
@@ -62,7 +62,7 @@ Orchestratore (ChatGPT)
 | Crea task in queue | Orchestratore / utente | GitHub / ChatGPT | No (scrittura doc) |
 | Watcher (rileva task) | n8n | Schedule Trigger | No (polling passivo) |
 | Queue reader (genera prompt) | n8n | Workflow esistente | No (già validato) |
-| Runner documentale (esegue prompt) | Script VPS | Claude Code CLI o Anthropic API | **Sì (MVP supervisionato)** |
+| Runner documentale (esegue prompt) | Utente / orchestratore | Claude Code / Cursor (locale) | **Sì — sempre per MVP** |
 | Verifica esito e done/failed | n8n + utente | Script + review | Sì |
 | Deploy / tag / rollback | Utente | Sempre manuale | Sempre |
 
@@ -97,67 +97,72 @@ Orchestratore (ChatGPT)
 
 ## 3. Runner documentale MVP
 
-### 3.1 Opzioni implementative
+### 3.1 Runner MVP: supervisionato/manuale
 
-Il runner deve leggere il prompt da `docs/tasks/processing/{task}-cursor-prompt.md` ed eseguirlo. Per l'MVP documentale (solo `docs/**`), le opzioni in ordine di semplicità:
+**Il runner MVP non è automatizzato.**
 
-| Opzione | Descrizione | Dipendenze VPS |
-|---------|-------------|----------------|
-| **A — Claude Code CLI** | `claude` CLI installato sul VPS, eseguito da n8n via Execute Command | `claude` installato, autenticato |
-| **B — Anthropic API diretta** | n8n chiama `api.anthropic.com` via HTTP node con il contenuto del prompt | Solo chiave API in n8n |
-| **C — Script shell + API** | Script bash sul VPS che chiama l'API e gestisce il commit | `curl`, `git`, `jq` (già disponibili) |
+n8n (watcher + queue reader) prepara:
+- Il prompt in `docs/tasks/processing/{task}-cursor-prompt.md`
+- La sessione automation in `docs/sessions/automation-{task}.md`
 
-**Raccomandazione MVP: Opzione B (Anthropic API via n8n HTTP node)**
-
-Motivazioni:
-- Nessun software aggiuntivo da installare sul VPS.
-- n8n gestisce già le credenziali; si aggiunge solo la chiave Anthropic come credenziale n8n.
-- Il prompt è già un testo strutturato pronto per l'API.
-- Per task docs-only, la risposta può essere scritta direttamente come file tramite nodi n8n GitHub.
-- Opzione A (Claude Code CLI) è preferibile a lungo termine per task più complessi, ma richiede installazione sul VPS.
-
-### 3.2 Flusso runner documentale MVP (Opzione B)
+L'utente o l'orchestratore esegue poi il prompt **localmente** tramite **Claude Code** o **Cursor**, già disponibili sulla macchina dell'utente. Questo è esattamente il pattern già validato nei task 0101–0111.
 
 ```
-[n8n: queue reader ha_task:true]
+[n8n: watcher rileva task + queue reader genera prompt]
     ↓
-[n8n: legge prompt da processing/{task}-cursor-prompt.md via GitHub API]
+[n8n: aggiorna sessione automation — "prompt generated, Cursor not executed yet"]
     ↓
-[n8n: chiama Anthropic API con il prompt]
+[Utente / orchestratore: legge GitHub → esegue prompt con Claude Code o Cursor locale]
     ↓
-[n8n: interpreta risposta — file da creare/modificare]
+[Claude Code / Cursor: commit selettivo + push]
     ↓
-[n8n: per ogni file: crea/aggiorna su GitHub via API]
-    → commit message derivato dal task
+[Utente / Claude Code: crea done marker o failed marker]
     ↓
-[n8n: verifica esito]
-    ├→ successo → crea done marker in docs/tasks/done/
-    └→ fallimento → crea failed marker in docs/tasks/failed/
-    ↓
-[n8n: aggiorna sessione automation]
+[Orchestratore: aggio → verifica esito]
 ```
 
-**Vincolo critico:** il runner MVP opera **solo** su path elencati nel task come `Allowed paths`. Se la risposta dell'API tenta di scrivere fuori da questi path, il nodo deve rifiutare e marcare il task come failed.
+Il vantaggio MVP rispetto allo stato attuale è che il ciclo watcher+queue reader è **automatico** (polling ogni 5 minuti), mentre l'esecuzione del prompt rimane **umana e supervisionata**.
 
-### 3.3 Flusso runner documentale MVP (Opzione A — Claude Code CLI, futuro)
+### 3.2 Runner futuro: Claude Code CLI o Cursor CLI sul VPS
 
-Per quando Claude Code CLI è installato sul VPS:
+Per l'automazione piena (Fase 3 runbook), il runner eseguirà Claude Code CLI o Cursor CLI direttamente sul VPS tramite n8n Execute Command node o script shell:
 
 ```
 [n8n: Execute Command node]
-    → ssh ionos-n8n "cd /repo && git pull --rebase origin main"
-    → ssh ionos-n8n "claude < docs/tasks/processing/{task}-cursor-prompt.md"
-    → ssh ionos-n8n "git add [path consentiti] && git commit -m '...' && git push"
+    → git pull --rebase origin main
+    → claude --print < docs/tasks/processing/{task}-cursor-prompt.md
+    → git add [path elencati in Allowed paths del task]
+    → git commit -m "automation: complete task {id}"
+    → git push origin main
 ```
 
 Questa opzione richiede:
 - Repository clonato sul VPS.
-- Claude Code CLI installato e autenticato (`~/.claude/`).
-- SSH configurato tra n8n container e host VPS (o esecuzione diretta nel container).
+- Claude Code CLI (o Cursor CLI) installato e autenticato.
+- Gate manuale prima del primo run non supervisionato.
+- Sessione di validazione dedicata prima di passare a fire-and-forget.
+
+### 3.3 API modelli — opzione scartata per runner predefinito
+
+**Anthropic API e OpenAI API non sono il runner predefinito** per questo progetto.
+
+Motivazioni del rigetto come runner MVP:
+- Costi a pagamento per ogni esecuzione automatica.
+- Policy utente: nessuna API a pagamento come runner predefinito.
+- Preferenza per runner locali (Claude Code CLI, Cursor CLI) già disponibili.
+- Rischio di invio involontario di dati sensibili a API esterne.
+
+**Valutazione futura possibile** tramite provider economici/alternativi (non Anthropic/OpenAI come default), esclusivamente per:
+- Task non sensibili, docs-only o a basso rischio.
+- Con gate manuale esplicito prima di ogni run.
+- Senza credenziali, dati privati o informazioni sensibili nel prompt.
+- Con decisione esplicita dell'utente al momento dell'implementazione.
+
+Questa valutazione è rinviata a dopo la stabilizzazione del runner CLI.
 
 ### 3.4 Commit e push
 
-In entrambe le opzioni:
+In tutte le opzioni:
 - Commit selettivo: solo i file elencati in `Allowed paths` del task.
 - Mai `git add .`.
 - Push su `origin main`.
@@ -234,7 +239,7 @@ Per una notifica più attiva (email/Telegram/Slack secondo Fase 2 del runbook), 
 Questo design non implementa nulla. La sequenza operativa raccomandata per i task successivi è:
 
 1. **Task 0112 (futuro):** implementare watcher n8n — Schedule Trigger + chiamata queue reader.
-2. **Task 0113 (futuro):** implementare runner documentale MVP — Opzione B (Anthropic API via n8n) o Opzione A (Claude Code CLI).
+2. **Task 0113 (futuro):** implementare runner documentale automatico — Claude Code CLI o Cursor CLI sul VPS (gate manuale prima del primo run non supervisionato).
 3. **Task 0114 (futuro):** test end-to-end con un task docs-only di basso rischio in ambiente supervisionato.
 4. **Task 0115+ (futuro):** estensione a task frontend (Fase 4 runbook) solo dopo validazione MVP.
 
