@@ -412,6 +412,20 @@ Questo criterio si applica a:
 
 Il campo `kind` del futuro Decision Packet (`alina-feature` / `automation` / `infra` / `meta`) è un indicatore strutturale di equilibrio roadmap, non una domanda all'utente.
 
+## Regola lifecycle — Aggiornamento documenti di stato
+
+Alla creazione di un task in `docs/tasks/queue/`:
+
+- Aggiornare solo:
+  - Il file task in `docs/tasks/queue/`
+  - La sessione di creazione in `docs/sessions/`
+- NON aggiornare `docs/PROJECT_STATE.md` né `docs/CHECKPOINT.md` alla sola creazione del task
+- Aggiornare `docs/PROJECT_STATE.md` e `docs/CHECKPOINT.md` solo al completamento del task, cioè quando viene creato il relativo done marker in `docs/tasks/done/`
+- Eccezione: se la creazione del task introduce una regola strategica permanente, `docs/ORCHESTRATOR_RULES.md` può essere aggiornato subito
+- Anche in quell'eccezione, `PROJECT_STATE.md` e `CHECKPOINT.md` restano fermi fino al completamento
+
+Questa regola riduce micro-interazioni e mantiene coerenza: PROJECT_STATE riflette stato reale dei task completati, non delle intenzioni.
+
 ## Stato stabile corrente (sintesi — dettaglio in `docs/PROJECT_STATE.md`)
 
 - Produzione Git/Apps Script: **V1.9.2** su **`main`**; tag stabile **`v1.9.2-stable`**; deploy clasp **`@24`** (ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`; deploy Windows: **Git Bash** + `npx clasp` se `npm run sync` fallisce — vedi `docs/sessions/2026-05-10-v192-month-detail-visual-refresh-deploy.md`); **Dettaglio mese** più **visivo** (metriche in alto, card giorno, barre ore proporzionali); **Stipendio** nascosto sul **mese corrente** in lista **Mesi** (**V1.9.1**); **Dettaglio** sempre; eredità **V1.9.0** (**Dettaglio mese** **`monthDetail`**), V1.8.10 (snooze promemoria stipendio), V1.8.9 (toggle anni **Mesi**), issue **#5**, V1.8B.
