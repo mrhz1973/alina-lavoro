@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-12 (task 0132)**  
+**Derived memory (Level 2) — last updated: 2026-05-12 (task 0133)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,8 +29,8 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0132 — LLM Wiki / Token Efficiency Design |
-| Next planned | Ollama Classifier/Planner Feasibility (reworked post-wiki) |
+| Last completed | 0133 — Ollama Classifier/Planner Feasibility Post-Wiki |
+| Next planned | Gate 7 → task 0134 Ollama Local Preflight Install (runtime-gated) |
 | Queue | `docs/tasks/queue/` |
 
 ---

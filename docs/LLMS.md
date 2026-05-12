@@ -34,8 +34,8 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0132** — LLM Wiki / Token Efficiency Design (2026-05-12) |
-| Next planned | Ollama Classifier/Planner Feasibility (reworked post-wiki) |
+| Last completed | **0133** — Ollama Classifier/Planner Feasibility Post-Wiki (2026-05-12) |
+| Next planned | Gate 7 → task 0134 Ollama Local Preflight Install (runtime-gated) |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -51,6 +51,7 @@ Building the autonomous low-touch task loop:
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
+| Ollama Classifier/Planner | ✅ Feasibility done — preflight runtime-gated pending Gate 7 | `docs/automation/ollama-classifier-planner-feasibility-post-wiki.md` |
 
 ---
 
