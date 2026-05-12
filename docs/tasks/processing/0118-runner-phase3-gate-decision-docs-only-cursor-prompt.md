@@ -1,0 +1,74 @@
+@docs/roadmap.md
+@docs/STREAMLINED_WORKFLOW.md
+@docs/ORCHESTRATOR_RULES.md
+@docs/AI_RULES.md
+@docs/WORKFLOW.md
+@docs/CHECKPOINT.md
+@docs/PROJECT_STATE.md
+@docs/COMMANDS.md
+
+AGENT MODE.
+
+Task source:
+docs/tasks/queue/0118-runner-phase3-gate-decision-docs-only.md
+
+Project:
+Alina Lavoro
+
+Type:
+docs-only
+
+Priority:
+normal
+
+Deploy policy:
+no
+
+Objective:
+Creare `docs/automation/runner-phase3-gate-decision.md` con le risposte gate
+dell'orchestratore, stabilendo i vincoli operativi per la Fase 3 prima di qualsiasi
+task di tipo `vps-runner-setup` o `n8n-runner-setup`.
+
+Requirements:
+Risposta ai cinque gate (vedi sezione Decisioni gate).
+
+Vincoli assoluti da ripetere nel documento di decisione:
+
+- Non autorizzare ancora installazione Claude Code CLI sul VPS.
+- Non configurare API key Anthropic sul VPS.
+- Non creare workflow GitHub Actions per runner automatico.
+- Non attivare runner automatico di nessun tipo.
+- Non modificare SSH exec o accessi VPS oltre a quelli già documentati.
+- Non modificare app Alina.
+- Non fare deploy Apps Script.
+- Non creare tag di release.
+- Non fare rollback.
+
+Il documento di decisione deve anche specificare:
+
+- L'opzione raccomandata per la Fase 3 (Opzione A o Opzione C da `runner-phase3-design.md`).
+- Il prossimo task dopo 0118: deve essere ancora design/preflight, non runtime pieno.
+- Il perimetro allowlist dei path che il runner potrà toccare.
+
+Expected output:
+- `docs/automation/runner-phase3-gate-decision.md` con le risposte ai cinque gate.
+- Aggiornamento `docs/PROJECT_STATE.md`: indicare task 0118 creato e decision gate in corso.
+- Aggiornamento `docs/CHECKPOINT.md`: prossimo passo = task di design/preflight post-0118.
+- Sessione opzionale: `docs/sessions/2026-05-12-create-task-0118-runner-phase3-gate-decision.md`.
+
+Mandatory constraints:
+- Work on branch main only.
+- Do not use dev.
+- Do not use git add .
+- Do not modify gas-current unless explicitly authorized by a deploy/release task.
+- Do not deploy unless the task explicitly authorizes deploy.
+- Do not create tags unless the task explicitly authorizes tag creation.
+- Run the repository checks required by docs/COMMANDS.md.
+- Commit selectively and push only the intended changes.
+
+Final response required:
+- Files changed.
+- Checks executed.
+- Commit hash.
+- Git status final.
+- Any risks or manual tests required.
