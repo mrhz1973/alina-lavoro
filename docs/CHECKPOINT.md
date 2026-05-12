@@ -238,5 +238,7 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 - Allowlist/denylist esplicite; piano Fase 3A (≥3 task dummy); 10 rischi/mitigazioni.
 - Nessuna installazione, nessuna API key, nessuna modifica VPS/n8n/app.
 
-1. Prossimo passo: gate orchestratore esplicito per autorizzare task `vps-runner-read-only-check` (read-only SSH VPS, nessuna installazione).
+**Task 0119 completato** (tipo `vps-preflight-docs-only`, 2026-05-12): documentazione VPS runner setup in `docs/automation/vps-runner-setup-preflight.md` e `docs/automation/vps-runner-setup-preflight-docs-only.md`; nessuna modifica VPS; nessuna installazione Claude CLI; nessuna configurazione API key; nessun runner automatico; sessione: `docs/sessions/2026-05-12-vps-runner-setup-preflight-docs-only.md`. **Task 0120 creato** (tipo `vps-preflight-readonly`, 2026-05-12): verifica read-only VPS preparata in `docs/tasks/queue/0120-vps-runner-read-only-check.md`; nessuna esecuzione SSH; nessuna modifica VPS; runner automatico non attivo.
+
+1. Prossimo passo: gate orchestratore esplicito per autorizzare task `vps-runner-read-only-check` (read-only SSH sul VPS — nessuna installazione). App Alina V1.9.2 stabile e non toccata.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
