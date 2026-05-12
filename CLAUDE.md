@@ -8,7 +8,8 @@ Claude Code implements only the current micro-step.
 
 ## Required reading at session start
 
-Read these files before acting:
+For fast context (token-efficient entry point), read @docs/LLMS.md first.
+Then read these files before acting:
 
 - @docs/ORCHESTRATOR_RULES.md
 - @docs/PROJECT_STATE.md
