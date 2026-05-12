@@ -24,8 +24,8 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0115 completato** (tipo `n8n-runtime
 - **Task 0114** **bloccato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto al watcher, test manuale tutto verde, ma pubblicazione bloccata — n8n richiede sub-workflow pubblicato prima del parent; queue reader non pubblicabile ("no trigger nodes that require publishing"); deadlock UI; Opzione A investigata e chiusa (nessuna leva UI); superato con task 0115; sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
 - **Task 0115 completato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto direttamente al queue reader `TEST - GitHub list Alina task queue` (5 min, Europe/Berlin); nodo Execute Workflow inverso spurio rimosso; grafo ripulito — tre trigger → `List files`; test manuale pre-pubblicazione OK; pubblicato come `queue-reader-schedule-5min` e attivato; primo tick automatico `has_task:false` silenzioso, nessuna scrittura GitHub; Manual Trigger e "When Executed by Another Workflow" invariati; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-direct-schedule-trigger-validation.md`.
 - **Task 0116** **completato** (tipo `n8n-runtime-validation`, 2026-05-12): ciclo `has_task:true` del polling automatico validato end-to-end — n8n ha selezionato il task 0116, generato sessione automation (commit `bbef5d7`) e cursor prompt in processing (commit `cb75002`); run successivo ha saltato il task (skip `processing/`, `has_task:false` silenzioso); nessun runner automatico; nessuna modifica app/deploy/tag/rollback; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-has-task-true-scheduled-polling-validation.md`.
-- **Task 0117 creato** (tipo `docs-only`, 2026-05-12): `docs/tasks/queue/0117-n8n-watcher-polling-mvp-completion-and-runner-phase3-planning.md` in coda — consolida Fase 2 MVP completata e avvia design Fase 3 runner documentale; nessun runner automatico; stato: `queued`.
-- **Prossimo passo:** `aggio` dopo il push — verificare se n8n ha generato processing/sessione per il task 0117. Gate manuale obbligatorio prima di qualsiasi implementazione runtime Fase 3. App Alina V1.9.2 stabile.
+- **Task 0117** **completato** (tipo `docs-only`, 2026-05-12): **Fase 2 watcher/polling MVP dichiarata chiusa**; documento completamento `docs/automation/n8n-watcher-polling-mvp-completion.md`; documento design Fase 3 `docs/automation/runner-phase3-design.md` (opzioni A/B/C/D, domande gate orchestratore, prerequisiti, gate manuali); nessun runner automatico; nessun deploy/tag/rollback.
+- **Prossimo passo:** orchestratore risponde alle domande gate in `docs/automation/runner-phase3-design.md` prima di qualsiasi runtime Fase 3. App Alina V1.9.2 stabile.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
@@ -209,12 +209,14 @@ Polling automatico `queue-reader-schedule-5min` validato end-to-end:
 - `has_task:true` → genera processing + sessione ✓ (task 0116)
 - Anti-doppio-run su `processing/` ✓ (task 0116)
 
-**Task 0117 creato (2026-05-12).** Design Fase 3 runner documentale:
+**Task 0117 completato (2026-05-12).** Fase 2 chiusa, Fase 3 in design:
 
-- `docs/tasks/queue/0117-n8n-watcher-polling-mvp-completion-and-runner-phase3-planning.md` in coda.
-- Task docs-only: consolida Fase 2 MVP e produce documento di design/decisione per Fase 3.
-- Fase 3 runner (Claude Code CLI / Cursor CLI) resta futura — gate manuale obbligatorio prima di runtime.
-- Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
+- Fase 2 watcher/polling MVP: **dichiarata completata e validata** (`n8n-watcher-polling-mvp-completion.md`).
+- Fase 3 runner documentale: documento di design prodotto (`runner-phase3-design.md`).
+  - Opzione A raccomandata: Claude Code CLI sul VPS.
+  - Domande gate orchestratore identificate (scope, frequenza, supervisione, errori, API key).
+  - Prerequisiti tecnici e gate manuali permanenti documentati.
+- Nessun runner automatico attivato. Nessuna modifica app, deploy, tag, rollback.
 
-1. Prossimo passo: `aggio` — verificare se n8n ha generato processing/sessione per il task 0117. Gate manuale prima di Fase 3 runtime.
+1. Prossimo passo: orchestratore risponde alle domande gate in `docs/automation/runner-phase3-design.md` e approva l'opzione prima di qualsiasi task di runtime Fase 3.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
