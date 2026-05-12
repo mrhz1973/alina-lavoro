@@ -2,6 +2,17 @@
 
 Roadmap interna per introdurre automazione **senza** saltare i gate di sicurezza. Le fasi sono cumulative.
 
+## Niente conferme superflue (regola globale)
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+- Nelle fasi **docs-only** e **runner documentale**, i passaggi **determinati** non richiedono conferma extra dell'utente.
+- L'utente interviene **solo** per:
+  - decisioni vere (formato canonico: Decision Packet — `docs/automation/decision-packet-format.md`);
+  - gate sensibili: runtime, VPS runtime, n8n runtime, modifiche app Alina, deploy, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili, test fisico reale.
+- Il futuro **Auto-Aggio** (`docs/automation/auto-aggio-design.md`) e la futura **INBOX** (`docs/automation/human-decision-inbox-design.md`) devono **ridurre** conferme e micro-interazioni, **non crearne di nuove**.
+- **n8n** non deve generare richieste di autorizzazione ridondanti per task docs-only già determinati: il prompt operativo viene assemblato dal template e consegnato all'implementatore senza step di conferma intermedia.
+
 ## Fase 1 — Struttura `docs/tasks` (completata quando questo runbook è adottato)
 
 - Cartelle `queue/`, `done/`, `failed/`, `templates/`.

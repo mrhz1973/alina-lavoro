@@ -2,6 +2,25 @@
 
 Queste regole integrano i vincoli del repository e riducono ambiguita operative.
 
+## Regola implementatori — Niente conferme superflue
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+L'implementatore (Cursor, Windsurf/Cascade, Claude Code, Agent) deve:
+
+- **non chiedere all'utente conferme superflue** per task **docs-only** già assegnati;
+- **non trasformare in decisione** ciò che è già deciso da roadmap, task in queue o prompt orchestratore;
+- se il task è **docs-only** e gli **allowed paths** sono chiari, **eseguire**;
+- **fermarsi** solo per:
+  - scope drift (i cambiamenti escono dagli allowed paths);
+  - path vietati toccati;
+  - conflitti Git non risolvibili autonomamente;
+  - errori tecnici non risolvibili (es. file corrotti, dipendenze mancanti);
+  - **gate sensibili** (runtime, VPS runtime, n8n runtime, modifiche app Alina, deploy, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili, test fisico reale).
+- nel **riepilogo finale** indicare se sono rimasti **gate reali** o rischi residui, ma **non** chiedere «procedo?» se non c'è scelta.
+
+Per task **docs-only determinati** l'assenza di scelta equivale a **consenso operativo a proseguire**: eseguire e chiudere secondo workflow con commit selettivo e push.
+
 ## Ruoli operativi
 
 - **Orchestratore**: la chat di coordinamento. **Non legge il filesystem locale di Cursor**: ricostruisce lo stato da **GitHub** (e da quanto l’utente incolla in chat).

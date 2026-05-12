@@ -2,6 +2,18 @@
 
 Obiettivo: ridurre il copia/incolla manuale e mantenere sempre GitHub come fonte di verita condivisa.
 
+## Avanzamento senza conferme inutili (regola globale)
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+- I task **docs-only determinati** **non richiedono** nuova autorizzazione utente.
+- Se il task è già in roadmap o conseguenza diretta del task precedente, l'orchestratore **genera direttamente** il prompt implementatore senza chiedere «vuoi?», «procedo?», «autorizzi?».
+- L'implementatore deve **eseguire e chiudere** secondo workflow (sezioni sotto), senza chiedere conferme aggiuntive all'utente.
+- Il **gate manuale** resta obbligatorio **solo** per: runtime, VPS runtime, n8n runtime, modifiche app Alina, deploy Apps Script, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili/credenziali, test fisico reale.
+- **GitHub** resta fonte di verità.
+- Il ciclo si chiude con **commit/push** e successivo **`aggio`** o auto-aggio per verifica, **non** con richieste «vuoi procedere?».
+- La modalità passo-passo (PRIORITÀ 0) resta obbligatoria solo quando l'utente sta operando manualmente su n8n/VPS/browser/terminale/Apps Script.
+
 ## Ruoli
 
 - **Utente**: parla con l'orchestratore e con Cursor quando serve, ma non deve gestire normalmente i comandi terminale.

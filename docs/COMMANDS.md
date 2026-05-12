@@ -2,6 +2,15 @@
 
 Percorsi relativi alla radice del repository. Eseguire da macchina con repo clonato.
 
+## Nota operativa — Niente conferme superflue
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+- I comandi conversazionali `aggio`, `checkpoint`, `finito` **non** devono essere usati come scusa per chiedere conferme inutili all'utente.
+- Per **task docs-only determinati** (allowed paths chiari, nessun gate sensibile), l'implementatore deve **chiudere con commit selettivo e push**, senza domande «procedo?» o «vai?».
+- L'orchestratore verifica l'esito con **`aggio`** o futuro **auto-aggio** (vedi `docs/automation/auto-aggio-design.md`).
+- Le conferme esplicite restano obbligatorie solo per gate sensibili (runtime, VPS runtime, n8n runtime, app, deploy, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili, test fisico reale).
+
 ## Orchestratore / aggio locale
 
 Cursor deve scegliere automaticamente il comando corretto in base all'ambiente, senza chiedere all'utente quale usare.

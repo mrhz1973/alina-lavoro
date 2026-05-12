@@ -24,7 +24,7 @@ Questo file documenta il **layout** del prompt operativo oggi assemblato dal nod
 @docs/PROJECT_STATE.md
 @docs/COMMANDS.md
 
-AGENT MODE.
+MODALITÀ: AGENT / IMPLEMENTAZIONE
 
 Task source:
 {{task_source_path}}
@@ -59,6 +59,11 @@ Mandatory constraints:
 - Do not create tags unless the task explicitly authorizes tag creation.
 - Run the repository checks required by docs/COMMANDS.md.
 - Commit selectively and push only the intended changes.
+- Do not insert user-facing instructions outside this prompt block; report any real gates in the final response.
+- Do not ask the user for confirmation when the task is docs-only, already assigned, and has no real decision or sensitive gate.
+- Proceed with the assigned docs-only task; the absence of a real choice equals operational consent to proceed.
+- Stop only for sensitive gates: runtime, VPS runtime, n8n runtime, app changes, deploy, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, secrets or personal data, or physical user/Alina test.
+- If a sensitive gate appears during execution, stop and report it clearly in the final response.
 
 Final response required:
 - Files changed.
@@ -66,3 +71,4 @@ Final response required:
 - Commit hash.
 - Git status final.
 - Any risks or manual tests required.
+- Any sensitive gate encountered (yes/no; if yes, which one).

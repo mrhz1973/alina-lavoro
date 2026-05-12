@@ -2,6 +2,27 @@
 
 Le azioni sotto sono classificate per ridurre rischio su **produzione** (Apps Script **@24**, Sheet, utenti finali). Un task in **`docs/tasks/queue/`** può **restringere** ulteriormente; non può **allargare** senza revisione orchestratore.
 
+## Politica conferme — docs-only senza nuovo gate umano
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+- I task **docs-only** con **allowed paths sotto `docs/`** e **senza segreti/dati sensibili** sono **consentiti senza nuovo gate umano**: l'implementatore esegue e chiude secondo workflow.
+- Il **gate esterno (conferma utente esplicita)** resta **obbligatorio** per:
+  - runtime / esecuzione CLI esterna;
+  - VPS runtime;
+  - n8n runtime;
+  - modifiche app Alina (`src/**`, `gas-current/**`, `.gas/**`, `appsscript.json`, `package.json`, `.clasp.json`);
+  - deploy Apps Script;
+  - tag git;
+  - rollback;
+  - API key, login;
+  - GitHub Actions (`.github/workflows/**`);
+  - costi ricorrenti nuovi;
+  - runner automatico;
+  - dati personali, credenziali, OAuth material, segreti.
+- Un task **non può allargare i permessi** oltre quanto documentato; ogni allargamento richiede revisione orchestratore.
+- Se durante un task docs-only **emerge un gate sensibile** (es. necessità imprevista di modificare runtime), l'implementatore deve **fermarsi**, dichiararlo nel riepilogo finale, e non procedere oltre.
+
 ## Sempre consentito
 
 - Lettura repository; `git status`, `git diff`, `git log`.
