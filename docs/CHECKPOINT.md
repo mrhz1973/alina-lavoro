@@ -22,7 +22,9 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0114 bloccato** (publish blocker n8n
 - **Workstream attivo obbligatorio:** evoluzione watcher/runner — non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app. App Alina **V1.9.2** stabile, non toccata.
 - **Task 0113** **completato** (tipo `n8n-runtime-prerequisite`, 2026-05-12): prerequisito B1 validato — trigger "When Executed by Another Workflow" aggiunto al queue reader come secondo trigger (collegato a `List files`, `Accept all data`); Manual Trigger invariato; watcher `Alina watcher - Schedule queue reader` configurato con Manual Trigger → Execute Workflow puntato al queue reader; test manuale tutto verde; nessun Schedule Trigger; watcher non pubblicato/attivato; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-subworkflow-trigger-validation.md`.
 - **Task 0114** **bloccato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto al watcher, test manuale tutto verde, ma pubblicazione bloccata — n8n richiede sub-workflow pubblicato prima del parent; queue reader non pubblicabile ("no trigger nodes that require publishing"); deadlock UI; sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
-- Prossimo passo: scelta architetturale orchestratore (Opzione A: investigare n8n per rendere pubblicabile il queue reader; Opzione B: Schedule Trigger direttamente nel queue reader; Opzione C: alternativa sicura). Nessuna modifica runtime senza gate manuale e approvazione.
+- **Opzione A investigata (2026-05-12):** nessuna leva UI sicura — Workflow settings del queue reader non espongono voce per sub-workflow pubblicabile; campo Source del nodo Execute Workflow mostra solo `Database` / `Define Below`; `Define Below` scartato. Opzione A chiusa, esito negativo.
+- **Task 0115 creato** (tipo `n8n-runtime-activation`): Opzione B controllata — Schedule Trigger ogni 5 minuti direttamente nel queue reader `TEST - GitHub list Alina task queue`; Manual Trigger e "When Executed by Another Workflow" mantenuti; gate manuale obbligatorio prima del runtime; nessun runner automatico.
+- Prossimo passo: eseguire task 0115 — gate manuale → aggiunta Schedule Trigger → test manuale → pubblicazione → verifica primo tick has_task:false silenzioso.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
@@ -195,9 +197,8 @@ npm run finito -- "Messaggio commit" file1 file2
 
 Decisione architetturale richiesta prima di qualsiasi modifica al runtime n8n:
 
-- **Opzione A:** investigare impostazioni/versione n8n per rendere pubblicabile il queue reader come sub-workflow.
-- **Opzione B:** aggiungere Schedule Trigger direttamente nel queue reader (rinuncia temporanea al watcher separato).
-- **Opzione C:** altra alternativa sicura e documentata.
+- **Opzione A investigata (2026-05-12): esito negativo / non risolutiva.** Nessuna impostazione UI trovata. `Define Below` scartato. Vedi sessione `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
+- **Opzione B controllata: task 0115 creato.** Schedule Trigger ogni 5 minuti aggiunto direttamente al queue reader `TEST - GitHub list Alina task queue`; Manual Trigger e "When Executed by Another Workflow" mantenuti; gate manuale obbligatorio prima del runtime.
 
-1. Prossimo passo operativo: scegliere Opzione A, B o C con l'orchestratore; nessuna modifica runtime senza gate manuale e approvazione.
+1. Prossimo passo operativo: eseguire task 0115 con gate manuale — aggiungere Schedule Trigger al queue reader, test manuale pre-pubblicazione, pubblicare, verificare primo tick has_task:false silenzioso.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.

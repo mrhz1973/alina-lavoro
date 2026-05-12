@@ -162,15 +162,13 @@ Creare `docs/sessions/2026-05-NN-n8n-watcher-schedule-trigger-runtime-activation
 
 In test manuale (Manual Trigger) tutto funziona. Il blocco riguarda esclusivamente la pubblicazione/attivazione come polling automatico.
 
-### Opzioni di sblocco (da scegliere con orchestratore)
+### Opzioni di sblocco
 
-| Opzione | Descrizione |
-|---------|-------------|
-| **A** | Investigare versione n8n sul VPS: verificare se esiste modalità per rendere pubblicabile il queue reader |
-| **B** | Schedule Trigger direttamente nel queue reader (Opzione A del design 0112), rinunciando temporaneamente al watcher separato |
-| **C** | Altra alternativa sicura e documentata |
-
-Nessuna delle opzioni deve essere implementata senza gate manuale e approvazione orchestratore.
+| Opzione | Descrizione | Esito |
+|---------|-------------|-------|
+| **A** | Investigare versione n8n sul VPS: verificare se esiste modalità per rendere pubblicabile il queue reader | **Investigata (2026-05-12) — non risolutiva.** Nessuna impostazione UI trovata. `Define Below` scartato (duplicazione rischiosa). Vedi sezione "Opzione A — indagine UI read-only" in sessione. |
+| **B** | Schedule Trigger direttamente nel queue reader (Opzione A del design 0112) | **Prossimo passo** — preparata come task 0115. |
+| **C** | Altra alternativa sicura e documentata | Non perseguita. |
 
 Sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
 

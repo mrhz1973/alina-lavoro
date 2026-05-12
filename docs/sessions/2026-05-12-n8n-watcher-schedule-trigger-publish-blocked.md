@@ -82,3 +82,56 @@ Il task 0113 (prerequisito B1) resta valido: in **test manuale** (Manual Trigger
 ## Prossimo passo richiesto
 
 Attendere scelta architetturale dall'orchestratore (Opzione A, B o C) prima di qualsiasi ulteriore modifica al runtime n8n. Il task 0114 resta bloccato/in sospeso fino alla decisione.
+
+---
+
+## Opzione A — indagine UI read-only (2026-05-12)
+
+**Esito: non risolutiva.** Opzione A investigata dall'utente in n8n in modalità read-only. Nessuna modifica al runtime.
+
+### Ispezione Workflow settings del queue reader
+
+Workflow ispezionato: `TEST - GitHub list Alina task queue`.
+
+Voci visibili in **Workflow settings**:
+- Execution Logic
+- Error Workflow
+- Timezone
+- Save failed production executions
+- Save successful production executions
+- Save manual executions
+- Save execution progress
+- Redact execution data
+- Timeout Workflow
+- Estimated time saved
+
+**Assente:** nessuna voce tipo "This workflow can be called by" o impostazione equivalente per rendere il workflow pubblicabile come sub-workflow.
+
+### Ispezione del nodo Execute Workflow nel watcher
+
+Nel workflow `Alina watcher - Schedule queue reader`, sul nodo Execute Workflow / Call queue reader, il campo **Source** mostra solo due opzioni:
+
+- **Database**
+- **Define Below**
+
+Non sono disponibili opzioni tipo `URL`, `Local File`, `Parameter` esterno o equivalenti.
+
+**`Define Below` non è stato selezionato.** Significherebbe incorporare il JSON del workflow target direttamente nel nodo chiamante — non è una soluzione pulita perché:
+- duplica il queue reader nel nodo watcher;
+- crea rischio di drift tra la copia incorporata e il workflow reale;
+- complica la manutenzione;
+- contrasta con la regola di non usare export JSON n8n non redatti.
+
+### Conclusione Opzione A
+
+Non è emersa alcuna leva UI sicura per:
+- rendere pubblicabile il queue reader come sub-workflow;
+- aggirare pulitamente il vincolo di publish del watcher senza modifiche rischiose.
+
+Il blocco di 0114 resta invariato. Opzione A è chiusa con esito negativo / non risolutiva.
+
+### Prossimo passo deciso
+
+**Opzione B controllata:** aggiungere Schedule Trigger direttamente nel workflow `TEST - GitHub list Alina task queue`, mantenendo il Manual Trigger e il trigger "When Executed by Another Workflow". Preparata come task separato **0115** — nessuna modifica al runtime in questa fase.
+
+Riferimento task: `docs/tasks/queue/0115-n8n-queue-reader-direct-schedule-trigger-runtime-activation.md`.
