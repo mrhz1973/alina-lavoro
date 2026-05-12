@@ -110,5 +110,7 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0122 completato** (tipo `cli-setup-p
 
 **Stato VPS:** Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅ | Login non eseguito ❌ | API key non configurata ❌ | Runner automatico non attivo ❌
 
-1. Prossimo passo: gate orchestratore esplicito per login Claude/subscription authentication (task 0123 o equivalente). App Alina V1.9.2 stabile e non toccata.
-2. Workstream automazione: Fase 2 chiusa, Fase 3 decision gate approvate, preflight Fase 3A in progress (task 0119+0120+0121+0122 completati; Node.js+npm+Claude CLI installati; login non eseguito; API key non configurata); runtime non attivo; VPS pronto per login subscription con gate manuale.
+**Task 0123 creato** (tipo `cli-auth-planning-gated`, 2026-05-12): task gated per futuro login/subscription check preparato in `docs/tasks/queue/0123-claude-login-subscription-check-gated.md`; presupposto operativo: Claude Pro/subscription login, non API key Anthropic manuale; nessuna esecuzione runtime; nessun login; nessuna configurazione API key; attesa gate manuale per esecuzione.
+
+1. Prossimo passo: gate orchestratore esplicito per autorizzare esecuzione task 0123 (login Claude/subscription authentication). App Alina V1.9.2 stabile e non toccata.
+2. Workstream automazione: Fase 2 chiusa, Fase 3 decision gate approvate, preflight Fase 3A in progress (task 0119+0120+0121+0122 completati; task 0123 creato; Node.js+npm+Claude CLI installati; login non eseguito; API key non configurata); runtime non attivo; VPS pronto per login subscription con gate manuale.
