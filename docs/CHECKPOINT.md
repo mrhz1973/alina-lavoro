@@ -23,7 +23,8 @@ Ultimo aggiornamento: 2026-05-12 — **Task 0115 completato** (tipo `n8n-runtime
 - **Task 0113** **completato** (tipo `n8n-runtime-prerequisite`, 2026-05-12): prerequisito B1 validato — trigger "When Executed by Another Workflow" aggiunto al queue reader come secondo trigger (collegato a `List files`, `Accept all data`); Manual Trigger invariato; watcher `Alina watcher - Schedule queue reader` configurato con Manual Trigger → Execute Workflow puntato al queue reader; test manuale tutto verde; nessun Schedule Trigger; watcher non pubblicato/attivato; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-subworkflow-trigger-validation.md`.
 - **Task 0114** **bloccato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto al watcher, test manuale tutto verde, ma pubblicazione bloccata — n8n richiede sub-workflow pubblicato prima del parent; queue reader non pubblicabile ("no trigger nodes that require publishing"); deadlock UI; Opzione A investigata e chiusa (nessuna leva UI); superato con task 0115; sessione: `docs/sessions/2026-05-12-n8n-watcher-schedule-trigger-publish-blocked.md`.
 - **Task 0115 completato** (tipo `n8n-runtime-activation`, 2026-05-12): Schedule Trigger aggiunto direttamente al queue reader `TEST - GitHub list Alina task queue` (5 min, Europe/Berlin); nodo Execute Workflow inverso spurio rimosso; grafo ripulito — tre trigger → `List files`; test manuale pre-pubblicazione OK; pubblicato come `queue-reader-schedule-5min` e attivato; primo tick automatico `has_task:false` silenzioso, nessuna scrittura GitHub; Manual Trigger e "When Executed by Another Workflow" invariati; nessun runner automatico; nessuna modifica app; sessione: `docs/sessions/2026-05-12-n8n-queue-reader-direct-schedule-trigger-validation.md`.
-- **Prossimo passo consigliato:** creare task separato per validare ciclo `has_task:true` con un task docs-only minimale di test in coda — gate manuale obbligatorio, approvazione orchestratore prima di esecuzione.
+- **Task 0116 creato** (tipo `n8n-runtime-validation`, 2026-05-12): `docs/tasks/queue/0116-n8n-queue-reader-has-task-true-scheduled-polling-validation.md` aggiunto in coda per validare il ciclo `has_task:true` del polling automatico già attivo — task docs-only minimale, gate manuale obbligatorio; stato: `queued`.
+- **Prossimo passo consigliato:** `aggio` dopo il push — verificare su GitHub se n8n ha generato i file attesi in `docs/tasks/processing/` e/o `docs/sessions/automation-*` per il task 0116. Gate manuale obbligatorio prima di dichiarare completato.
 - Usare **`docs/tasks/templates/`** come formato unico dei task da passare a **Cursor CLI** / Agent; **template prompt Cursor** versionato: **`docs/tasks/templates/cursor-prompt-default.md`** (allineato a **Build Cursor prompt** n8n; sostituzione `{{…}}` in task n8n successivo).
 
 Questo file serve per ripartire rapidamente in una nuova chat AI senza perdere contesto.
@@ -186,14 +187,19 @@ npm run finito -- "Messaggio commit" file1 file2
 
 **Workstream attivo obbligatorio: automazione watcher/runner.** Non proporre ritorno all'app Alina finché watcher/runner non è chiuso o finché l'utente non chiede esplicitamente di tornare all'app.
 
-**Task 0115 completato (2026-05-12).** Stato corrente:
+**Task 0115 completato (2026-05-12).** Polling automatico attivo:
 
-- Queue reader `TEST - GitHub list Alina task queue` pubblicato come `queue-reader-schedule-5min` e **attivo come polling automatico** ogni 5 minuti (Schedule Trigger, timezone Europe/Berlin).
-- Manual Trigger e "When Executed by Another Workflow" ancora presenti e invariati nel queue reader.
-- Watcher `Alina watcher - Schedule queue reader`: esiste in n8n, non pubblicato, non attivo come polling.
-- Primo tick automatico osservato: `has_task:false` silenzioso, nessuna scrittura GitHub.
+- Queue reader `TEST - GitHub list Alina task queue` pubblicato come `queue-reader-schedule-5min`, Schedule Trigger ogni 5 minuti (Europe/Berlin).
+- Manual Trigger e "When Executed by Another Workflow" invariati nel queue reader.
+- Watcher `Alina watcher - Schedule queue reader`: esiste in n8n, non pubblicato, non attivo.
+- Primo tick automatico: `has_task:false` silenzioso, nessuna scrittura GitHub.
 - Nessun runner automatico. Nessuna modifica app, deploy, tag, rollback.
-- Sessione: `docs/sessions/2026-05-12-n8n-queue-reader-direct-schedule-trigger-validation.md`.
 
-1. Prossimo passo operativo: creare task separato per validare ciclo `has_task:true` con task docs-only minimale in coda — gate manuale obbligatorio, approvazione orchestratore prima di esecuzione.
+**Task 0116 creato (2026-05-12).** In attesa di polling:
+
+- `docs/tasks/queue/0116-n8n-queue-reader-has-task-true-scheduled-polling-validation.md` in coda.
+- Task docs-only minimale per validare `has_task:true` del polling automatico.
+- Gate manuale obbligatorio — non dichiarare completato prima di `aggio` e verifica su GitHub.
+
+1. Prossimo passo operativo: `aggio` — verificare su GitHub se n8n ha generato i file attesi in `docs/tasks/processing/` e/o `docs/sessions/automation-*` per il task 0116.
 2. Lavoro su **`main`**: `git checkout main`, `git pull origin main`.
