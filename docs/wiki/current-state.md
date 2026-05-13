@@ -30,7 +30,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 | Item | Value |
 |------|-------|
 | Last completed | 0138 — Qwen-Alina Modelfile Design (2026-05-13) — docs-only Modelfile design completed; defines optional future local profile over qwen3:14b; reduces SYSTEM prompt tokens and stabilizes classifier behavior; temperature 0.1 recommended; SYSTEM prompt boundaries defined; validation plan designed; no actual Modelfile/profile created; future profile creation/validation is runtime-gated |
-| Next planned | No automatic runtime step; potential future docs-only local classifier wrapper / qwen-alina profile design, or docs/INBOX.md debt, only as separate task |
+| In queue | 0139 — Auto-Aggio Prompt-Generation Handshake Design (2026-05-13) — docs-only design in queue; clarifies that "aggio" is not only status refresh but prompt-generation handshake; defines flows with/without decisions; activation channels; hybrid architecture; Ollama role; security rules; no runtime/integration/API |
 | Queue | `docs/tasks/queue/` |
 
 ---
