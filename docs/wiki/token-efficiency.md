@@ -43,6 +43,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Cursor force-mode bridge architecture? | `docs/automation/cursor-cli-force-mode-implementer-bridge-design.md` | — |
 | Local classifier wrapper / qwen-alina profile? | `docs/automation/local-classifier-wrapper-qwen-alina-profile-design.md` | — |
 | Local classifier wrapper script? | `docs/automation/local-classifier-wrapper-script-design.md` | — |
+| qwen-alina Modelfile design? | `docs/automation/qwen-alina-modelfile-design.md` | — |
 | Task lifecycle ownership? | `docs/automation/n8n-workflows/lifecycle-ownership.md` | — |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
