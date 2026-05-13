@@ -97,3 +97,83 @@ This preflight only validated local feasibility. Any future n8n/Ollama integrati
 ---
 
 **Task completed — manual runtime validation documented, no integration authorized**
+
+---
+
+## Additional Repeatability Test — JSON API Schema Prompt
+
+**User-executed additional repeatability test (later manual test, not part of initial preflight).**
+
+**Method:** Local Ollama HTTP API through PowerShell with enum-constrained schema prompt
+- model = qwen3:14b
+- stream = false
+- think = false
+- format = json
+- Enum-like allowed values:
+  - task_type = docs_only | app_source | n8n_runtime | infra | mixed | unknown
+  - risk_level = low | medium | high | blocked
+  - recommended_implementer = claude_code | windsurf | cursor | human_gate | none
+
+**Task classified:**
+```
+Create docs/INBOX.md for future Decision Packets. Docs-only. No n8n runtime. No app changes. No deploy. No API.
+```
+
+**Results:**
+- RUN 1: VALID JSON, elapsed 9.38 s
+  ```json
+  {
+    "task_type": "docs_only",
+    "risk_level": "low",
+    "needs_runtime_gate": false,
+    "recommended_implementer": "none",
+    "reason_short": "Docs-only change with no runtime, app, or API involvement."
+  }
+  ```
+- RUN 2: VALID JSON, elapsed 2.10 s
+  ```json
+  {
+    "task_type": "docs_only",
+    "risk_level": "low",
+    "needs_runtime_gate": false,
+    "recommended_implementer": "none",
+    "reason_short": "Docs-only change with no runtime or app impact."
+  }
+  ```
+- RUN 3: VALID JSON, elapsed 2.13 s
+  ```json
+  {
+    "task_type": "docs_only",
+    "risk_level": "low",
+    "needs_runtime_gate": false,
+    "recommended_implementer": "none",
+    "reason_short": "Docs-only change with no runtime or app impact."
+  }
+  ```
+
+**Repeatability conclusion:**
+- 3/3 valid JSON
+- Decisional fields stable across all runs: task_type = docs_only, risk_level = low, needs_runtime_gate = false, recommended_implementer = none
+- Only reason_short varied slightly (acceptable)
+- This supports using qwen3:14b as a local classifier candidate with schema/enum-constrained prompts
+- recommended_implementer = none is acceptable for a purely docs-only candidate task; future wrapper design may choose to map repo tasks to windsurf/claude_code if an implementer is required
+
+**GPU state after repeatability test:**
+- NVIDIA GeForce RTX 3060
+- memory.total: 12288 MiB
+- memory.used: 11389 MiB
+- utilization.gpu: 30%
+- temperature.gpu: 53C
+
+**Post-repeatability unload confirmation:**
+- User ran: ollama stop qwen3:14b, ollama ps, nvidia-smi
+- `ollama ps` returned empty table
+- First post-stop GPU state: 2040 MiB used, 3% utilization, 54C
+- User ran second redundant stop/check: ollama stop qwen3:14b, ollama ps, nvidia-smi
+- `ollama ps` again returned empty table
+- Final GPU state: 2015 MiB used, 28% utilization, 52C
+- Interpretation: Post-repeatability unload confirmed; VRAM returned near idle around ~2.0 GB; final 28% GPU utilization is not evidence of Ollama model activity because `ollama ps` was empty and VRAM remained near idle
+
+**Conclusion:** Local API + format=json + think=false + stream=false is suitable for future classifier wrapper design. qwen3:14b remains VRAM-heavy and should be used in short bursts.
+
+---
