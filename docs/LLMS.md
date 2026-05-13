@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0184** — Update Telegram Idempotency Runtime Cross-References (2026-05-13) — docs-only batch (0182–0184); 0182 recorded D-0180-A = 1 (idempotency/state-store runtime gate open); 0183 created runtime UI handoff (`docs/automation/telegram-idempotency-runtime-ui-handoff.md`); 0184 updated cross-references; Telegram Mode A remains manual-tested but not automatic; no Schedule Trigger; no runtime in this batch; no token/chat id in repo; INBOX: 0 pending, 11 decided; Gate 7 closed; next runtime micro-step: inspect n8n Data Store availability (inspection only, no node changes) |
+| Last completed | **0187** — Create Duplicate-Skip Validation Decision Packet (2026-05-14) — docs-only batch (0185–0187); 0185 recorded user-reported idempotency runtime implementation success (Data Table `alina_telegram_notifier_state`, one send/write test succeeded); 0186 updated docs; 0187 created D-0187-A pending duplicate-skip validation gate; workflow remains inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0187-A), 11 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending**; 11 decided: `D-0180-A` = 1 (idempotency/state-store gate open), `D-0173-A` = 3 (schedule deferred), `D-0171-A` = 3 (schedule deferred), `D-0169-A` = 1 (manual test), `D-0167-A` = 1 (Telegram node), `D-0165-A` = 1 (workflow creation), `D-0163-A` = 1 (credential gate), `D-0157-A` = 1 (Mode A MVP), `D-0154-A` = 2 (project-chat deferred), `D-0151-A` = 1 (sandbox gate), `D-0148-A` = 1 (dry-run gate) | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending** (`D-0187-A` — duplicate-skip validation gate); 11 decided: `D-0180-A` = 1 (idempotency/state-store gate open), `D-0173-A` = 3 (schedule deferred), `D-0171-A` = 3 (schedule deferred), `D-0169-A` = 1 (manual test), `D-0167-A` = 1 (Telegram node), `D-0165-A` = 1 (workflow creation), `D-0163-A` = 1 (credential gate), `D-0157-A` = 1 (Mode A MVP), `D-0154-A` = 2 (project-chat deferred), `D-0151-A` = 1 (sandbox gate), `D-0148-A` = 1 (dry-run gate) | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
@@ -73,7 +73,7 @@ Building the autonomous low-touch task loop:
 | Browser Bridge Sandbox | ✅ **Implemented** (task 0153) — `tools/browser-bridge-sandbox/browser-bridge-sandbox.py` + `sandbox.html`; Python stdlib only; local `file://` target only; throwaway context; `aggio` only; `--no-open` validated; no real ChatGPT/Claude.ai; no project chat; no INBOX | `tools/browser-bridge-sandbox/README.md` · `docs/automation/candidate-gate-backlog.md` |
 | Telegram Notifier Idempotency Design | ✅ **Designed** (task 0178) — `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md`; key model, state-store options (Data Store / static data), send/skip algorithm, failure modes, observability; no runtime; **D-0180-A = 1 decided (task 0182)** | `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Telegram Notifier Idempotency Checklist | ✅ **Created** (task 0179) — `docs/automation/telegram-notifier-idempotency-implementation-checklist.md`; step-by-step pre-runtime checklist; **D-0180-A = 1 decided — checklist active for one-step-at-a-time supervision** | `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
-| Telegram Idempotency Runtime UI Handoff | ✅ **Created** (task 0183) — `docs/automation/telegram-idempotency-runtime-ui-handoff.md`; handoff for future supervised n8n UI implementation; first step is inspection only (Data Store availability check, no node changes); no runtime | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` |
+| Telegram Idempotency Runtime UI Handoff | ✅ **Implemented** (task 0183 handoff → user 2026-05-14) — Data Table path chosen; `alina_telegram_notifier_state` created; idempotency nodes implemented; one send/write test succeeded; duplicate-skip validation pending (D-0187-A) | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` |
 
 ---
 

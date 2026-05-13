@@ -266,10 +266,12 @@ Task sequence (updated task 0167, 2026-05-13):
 | D-0180-A = 1 decision recorded | 0182 ✅ | docs-only | `D-0180-A = 1` recorded (task 0182, 2026-05-13); D-0180-A moved from Pending to Decided; idempotency/state-store runtime gate open; no runtime; no Schedule Trigger |
 | Runtime UI handoff created | 0183 ✅ | docs-only | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` created; defines safe starting sequence; first step is inspection only (Data Store availability); no runtime |
 | Cross-references updated | 0184 ✅ | docs-only | LLMS.md, wiki, runbook, design, checklist, candidate-gate-backlog, roadmap updated; D-0180-A = 1 reflected throughout |
-| Idempotency/state-store implementation | TBD (post-D-0180-A) | n8n UI + docs-only | One-step-at-a-time supervised implementation; start with Data Store inspection; then per design and checklist; no Schedule Trigger |
+| Idempotency/state-store implementation | 0185 ✅ | n8n UI (user) + docs-only record | Data Table `alina_telegram_notifier_state` created; idempotency nodes implemented; IF condition corrected; one send/write test succeeded by user report (2026-05-14) |
+| Duplicate-skip validation Decision Packet | 0187 ✅ | docs-only | D-0187-A pending in `docs/INBOX.md`; awaiting user authorization for one duplicate-skip validation run |
+| Duplicate-skip validation | TBD (D-0187-A) | n8n UI (user) | One manual Execute workflow for same done file; expected: false branch, no Telegram send, no new state row |
 | Schedule activation + session record | TBD (post-idempotency gate) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and validated; separately gated |
 
-**Note (updated batch 0182–0184, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred. D-0180-A = 1 decided (task 0182) — idempotency/state-store runtime gate is now open. Runtime UI handoff created (task 0183): `docs/automation/telegram-idempotency-runtime-ui-handoff.md`. Next runtime step is inspection only: check Data Store/Data Table availability in n8n, then stop and report before adding any nodes. No Schedule Trigger. No automatic INBOX responses. No provider API LLM. Chat id must not be recorded in repo/docs/AI chat.
+**Note (updated batch 0185–0187, 2026-05-14):** Idempotency/state-store implemented by user (task 0185). Data Table `alina_telegram_notifier_state` created. One send/write test succeeded. D-0187-A **pending** — duplicate-skip validation gate. Next: resolve D-0187-A. If option 1, user performs one duplicate-skip validation run (expected: no Telegram send). Schedule activation remains separately gated after duplicate-skip validation. No Schedule Trigger. No automatic notifications. No provider API LLM. Chat id must not be recorded in repo/docs/AI chat.
 
 **Critical files for future implementation tasks to read:**
 

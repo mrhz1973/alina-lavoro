@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-13 (batch 0182–0184)**
+**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0185–0187)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0184 — batch (0182–0184) docs-only (2026-05-13): D-0180-A = 1 recorded (idempotency/state-store runtime gate open); runtime UI handoff created (`docs/automation/telegram-idempotency-runtime-ui-handoff.md`); cross-references updated; next runtime micro-step: inspect n8n Data Store availability (inspection only); Telegram workflow inactive; no Schedule Trigger; no token/chat id in repo; INBOX: 0 pending, 11 decided |
+| Last completed | 0187 — batch (0185–0187) docs-only (2026-05-14): 0185 recorded user-reported idempotency runtime implementation success; 0186 updated docs; 0187 created D-0187-A pending duplicate-skip validation gate; Data Table `alina_telegram_notifier_state` implemented by user report; one send/write test succeeded; workflow inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0187-A), 11 decided |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -55,14 +55,17 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 |------|-------|
 | Telegram workflow | Inactive — no Schedule Trigger |
 | D-0173-A | Decided = 3 (task 0177, 2026-05-13) — schedule deferred; implement idempotency first |
-| D-0180-A | **Decided = 1** (task 0182, 2026-05-13) — idempotency/state-store runtime gate open |
+| D-0180-A | Decided = 1 (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened |
+| D-0187-A | **Pending** — duplicate-skip validation gate (task 0187, 2026-05-14) |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
+| Data Table | `alina_telegram_notifier_state` — created and one row written (user report 2026-05-14) |
+| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; duplicate-skip not yet validated |
 | Token / chat id in repo | None |
-| INBOX pending count | 0 |
+| INBOX pending count | 1 (D-0187-A) |
 | INBOX decided count | 11 |
-| Next runtime micro-step | Inspect n8n Data Store/Data Table availability — inspection only, no node changes |
+| Next step | Resolve D-0187-A — if option 1, perform one duplicate-skip validation run |
 
 ---
 

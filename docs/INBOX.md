@@ -52,7 +52,84 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-_No pending decisions._
+### D-0187-A — Authorize one duplicate-skip validation run for Telegram idempotency
+
+**inbox_status:** pending
+**created_at:** 2026-05-14
+**source_task:** 0187-create-duplicate-skip-validation-decision-packet
+**source_document:** docs/automation/telegram-notifier-idempotency-implementation-checklist.md
+**response:**
+**decided_at:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0187-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+D-0180-A = 1 opened the idempotency/state-store runtime gate (task 0182, 2026-05-13). The user implemented the Data Table path in n8n (task 0185, 2026-05-14): Data Table `alina_telegram_notifier_state` created; idempotency nodes added; IF condition corrected to `{{ $json.notification_state_decision === "send" }}`; `Store notification state` wired post-send only. One manual send/write test succeeded by user report: one Telegram message arrived, one row was written to the Data Table. The workflow remains inactive/manual-only. No Schedule Trigger is active.
+
+## Perché serve decisione
+
+Running the workflow a second time for the same done file is runtime. Expected result is that `Decide send or skip` takes the false branch (duplicate detected) and no Telegram message is sent. However, if there is a bug in the idempotency lookup, a duplicate message could be sent. Per project policy, any workflow execution is a runtime step requiring explicit human gate.
+
+## Opzioni
+
+1. **Authorize exactly one duplicate-skip validation run** — user may manually execute the workflow once for the same done file used in the first test. Expected: `Decide send or skip` false branch; no Telegram message; no new row inserted in `alina_telegram_notifier_state`. If a duplicate Telegram message arrives, stop immediately and document failure.
+2. **Defer duplicate-skip validation** — keep implementation as-is without running a second validation; no additional execution.
+3. **Stop and document only** — do not validate duplicate skip now; leave workflow manual-only and unvalidated for duplicates; return to this decision later.
+
+## Raccomandazione orchestratore
+
+Option 1. Duplicate-skip validation is the critical safety property of the idempotency implementation. Validating it once (expected no-send result) is necessary before any future schedule activation gate can be safely opened. The risk is one potential duplicate Telegram message if there is a bug; stop condition is defined.
+
+## Rischio principale
+
+If there is a bug in the idempotency lookup or state-store read, a second Telegram message could be sent. This must be treated as a stop condition requiring investigation before any further steps. The risk is one message — not a schedule loop.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; duplicate-skip validation is a future manual user step.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After duplicate-skip is validated, the path to future schedule activation gate opens safely.
+
+## Scelta richiesta
+
+`D-0187-A = 1` per autorizzare esattamente un validation run duplicate-skip.
+`D-0187-A = 2` per rimandare la validazione.
+`D-0187-A = 3` per documentare solo e non validare ora.
+
+## Cosa succede dopo la scelta
+
+If `D-0187-A = 1`: user may manually execute the workflow once for the same done file. Expected: no Telegram send, no new Data Table row. If duplicate send occurs: stop immediately, document, do not proceed.
+If `D-0187-A = 2` or `D-0187-A = 3`: workflow remains as-is; schedule activation gate remains separately gated.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Schedule Trigger activation;
+- automatic notifications;
+- repeated validation runs;
+- queue reader workflow modification;
+- workflow JSON export/import;
+- token or chat id in repo/docs/AI chat;
+- provider API LLM;
+- new billing;
+- app/deploy/tag/rollback;
+- automatic INBOX responses;
+- automatic `D-NNNN-X = N` writing.
 
 ---
 

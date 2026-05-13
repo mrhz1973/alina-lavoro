@@ -4,7 +4,16 @@
 **Date:** 2026-05-13
 **Type:** docs-only / runtime handoff document
 **Authorization:** D-0180-A = 1 (recorded task 0182, 2026-05-13)
-**Status:** docs-only — no runtime performed
+**Status:** ✅ **Implementation complete by user report (2026-05-14, task 0185)** — Data Table path implemented; one send/write test succeeded; duplicate-skip validation pending (D-0187-A)
+
+**Implementation update (task 0185, 2026-05-14):** User implemented idempotency/state-store logic per this handoff. Data Table `alina_telegram_notifier_state` created. Implemented node chain:
+```
+Manual Trigger → List done files → Pick latest done file → Get done file
+→ Build idempotency key → Load notification state → Normalize notification state
+→ Decide send or skip → true → Build notification payload → Send a text message
+→ Store notification state
+```
+IF condition: `{{ $json.notification_state_decision === "send" }}`. One manual send/write test succeeded. Workflow remains inactive/manual-only. No Schedule Trigger. Next: resolve D-0187-A for duplicate-skip validation.
 
 ---
 

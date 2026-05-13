@@ -6,7 +6,9 @@
 **Authorization prerequisite:** D-0180-A must be decided (opened) before any n8n UI implementation step
 **Status:** checklist only — no runtime performed — **D-0180-A = 1 decided (task 0182, 2026-05-13); this checklist is now active for one-step-at-a-time supervised implementation**
 
-**Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. This checklist may now be followed under one-step-at-a-time ChatGPT supervision. The first step is Section 3.1 (verify topology) and Section 3.2 (check Data Store availability) — inspection only, no new nodes yet. No Schedule Trigger is included in or authorized by this checklist. Schedule activation remains a separate gate after idempotency is implemented and validated. Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md`.
+**Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Checklist activated.
+
+**Implementation update (task 0185, 2026-05-14):** Sections 3.1–3.10 completed by user report. Data Table path chosen (§3.2: Data Store available). All nodes implemented per checklist. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One send/write test succeeded (§6, partial). Duplicate-skip validation (§6 full) pending — D-0187-A in `docs/INBOX.md`. Fail-closed validation (§7) not yet performed. Secret hygiene (§8) maintained — no token/chat id in repo. Schedule activation still excluded and separately gated.
 
 ---
 
