@@ -52,14 +52,20 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
+No pending decisions.
+
+---
+
+## Decided
+
 ### D-0151-A — Open Browser Bridge sandbox gate
 
-**inbox_status:** pending
+**inbox_status:** decided
 **created_at:** 2026-05-13
 **source_task:** 0151-browser-bridge-sandbox-gate-decision-packet
 **source_document:** docs/automation/candidate-gate-backlog.md
-**response:**
-**decided_at:**
+**response:** 1
+**decided_at:** 2026-05-13
 **superseded_by:**
 **archive_policy:** keep
 
@@ -154,11 +160,21 @@ This decision does not authorize:
 
 Even if Option 1 is approved, the project-chat Browser Bridge phase remains a separate future gate.
 
----
+## Decision outcome
+
+Recorded by task 0152 on 2026-05-13: user response `D-0151-A = 1`.
+This opens the Browser Bridge **sandbox gate only**, authorizing a future narrow sandbox implementation task.
+The future task must target only a throwaway/sandbox browser context, may attempt to send only `aggio`, and must fail closed if no sandbox context is available.
+No sandbox has been implemented. No browser automation has been executed. No runtime has been activated.
+This decision does not authorize:
+- project-chat Browser Bridge phase or writing to the real ChatGPT / Claude.ai project chat;
+- INBOX read or answer from the bridge;
+- n8n runtime modification; Telegram; Ollama; Cursor CLI; Gate 7; provider API; API key; billing;
+- app source modification; Apps Script deploy; tag; rollback.
+A separate future task/prompt is required to implement the sandbox.
+Project-chat phase remains a separate future gate.
 
 ---
-
-## Decided
 
 ### D-0148-A — Open Browser Bridge dry-run gate
 

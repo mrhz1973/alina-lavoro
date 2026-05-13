@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0151** — Browser Bridge Sandbox Gate Decision Packet (2026-05-13) — docs-only; created pending D-0151-A in `docs/INBOX.md`; 3 options (open sandbox / defer / reject); sandbox gate NOT opened; no browser automation; no runtime; INBOX now has 1 pending decision |
+| Last completed | **0152** — Record INBOX Decision D-0151-A (2026-05-13) — docs-only; user response `D-0151-A = 1` recorded; D-0151-A moved to `## Decided`; Browser Bridge sandbox gate **open for future narrow sandbox implementation only** (throwaway browser context, `aggio` only, no project chat, no INBOX); no sandbox implemented; no browser automation; INBOX: 0 pending |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided with response `1` on 2026-05-13 (task 0149) — Browser Bridge dry-run gate open for narrow implementation only, no runtime executed | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided (dry-run gate, task 0149); `D-0151-A` decided with response `1` (2026-05-13, task 0152) — Browser Bridge sandbox gate **open for future narrow sandbox implementation only**; no sandbox implemented; no browser automation | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
@@ -68,8 +68,9 @@ Building the autonomous low-touch task loop:
 | Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
 | Runtime Gate Checklist / Readiness Matrix | ✅ Created — 23 components mapped; 5 permanent hard constraints; Gate 7 defined (Ollama + Cursor CLI, not yet opened); no runtime | `docs/automation/runtime-gate-checklist-readiness-matrix.md` |
 | Runtime Gate Decision Packet / Gate Request Playbook | ✅ Created — pairs with readiness matrix; 8-step gate lifecycle; 13 gated categories; 7 DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no runtime | `docs/automation/runtime-gate-decision-packet-playbook.md` |
-| Candidate Gate Backlog / Gate Queue Map | ✅ Created — planning backlog; candidate A (Browser Bridge dry-run) **implemented task 0150**; recommended next = Browser Bridge sandbox (B); 14 candidates A–N; 8 anti-creep rules | `docs/automation/candidate-gate-backlog.md` |
-| Browser Bridge Dry-Run | ✅ **Implemented** (task 0150) — `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; Python stdlib only; `aggio` only; idempotency + rate-limit; no browser/ChatGPT/INBOX/network; sandbox gate remains gated | `tools/browser-bridge-dry-run/README.md` |
+| Candidate Gate Backlog / Gate Queue Map | ✅ Created — A implemented (0150); B sandbox gate **open** (D-0151-A = 1, task 0152); C project-chat deferred; 14 candidates A–N; 8 anti-creep rules | `docs/automation/candidate-gate-backlog.md` |
+| Browser Bridge Dry-Run | ✅ **Implemented** (task 0150) — `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; Python stdlib only; `aggio` only; idempotency + rate-limit; no browser/ChatGPT/INBOX/network | `tools/browser-bridge-dry-run/README.md` |
+| Browser Bridge Sandbox | 🟡 Gate **open** (D-0151-A = 1, task 0152) — future narrow sandbox implementation task authorized; throwaway browser context only; no project chat; no INBOX; not yet implemented | `tools/browser-bridge-dry-run/README.md` · `docs/automation/candidate-gate-backlog.md` |
 
 ---
 

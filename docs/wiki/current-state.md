@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0151 — Browser Bridge Sandbox Gate Decision Packet (2026-05-13) — docs-only; D-0151-A pending in `docs/INBOX.md` (`## Pending`); sandbox gate NOT opened; no browser automation; INBOX: 1 pending (D-0151-A), 1 decided (D-0148-A) |
+| Last completed | 0152 — Record INBOX Decision D-0151-A (2026-05-13) — docs-only; `D-0151-A = 1` recorded; D-0151-A moved to `## Decided`; sandbox gate open for future narrow implementation only (no sandbox yet, no browser automation); INBOX: 0 pending, 2 decided (D-0148-A, D-0151-A) |
 | Queue | `docs/tasks/queue/` |
 
 ---
