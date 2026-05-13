@@ -1,10 +1,15 @@
 # Telegram Notifier — Runbook and Idempotency Hardening
 
-**Task:** 0172
+**Task:** 0172 (created) / cross-referenced by batch 0177–0181 (2026-05-13)
 **Date:** 2026-05-13
 **Type:** docs-only / pre-schedule-activation hardening
 **Authorization:** D-0171-A = 3 (schedule deferred; hardening required before any Schedule Trigger)
-**Status:** active reference document
+**Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A pending runtime gate for idempotency implementation
+
+**Cross-references (added 2026-05-13, batch 0177–0181):**
+- Idempotency/state-store implementation design: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` (task 0178)
+- Implementation checklist: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` (task 0179)
+- Pending runtime gate: D-0180-A in `docs/INBOX.md` (task 0180) — must be decided before any n8n implementation step
 
 ---
 

@@ -49,6 +49,8 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Dual-agent Cursor loop + fallback plan? | `docs/automation/local-cursor-dual-agent-loop-design.md` | — |
 | Local browser bridge preflight? | `docs/automation/local-browser-bridge-preflight-design.md` | — |
 | Telegram/browser bridge trigger coordination? | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` | — |
+| Telegram idempotency/state-store implementation design? | `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` | — |
+| Telegram idempotency implementation checklist (pre-runtime)? | `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` | — |
 | Runtime gate checklist / which components are gated? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 | Runtime gate Decision Packet / gate request playbook? | `docs/automation/runtime-gate-decision-packet-playbook.md` | — |
 | Candidate gate backlog / which gate might be next? | `docs/automation/candidate-gate-backlog.md` | — |

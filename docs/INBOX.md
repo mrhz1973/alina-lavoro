@@ -52,15 +52,96 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0173-A — Authorize Telegram notifier schedule activation after hardening
+### D-0180-A — Open Telegram notifier idempotency/state-store runtime implementation gate
 
 **inbox_status:** pending
 **created_at:** 2026-05-13
-**source_task:** 0173-create-telegram-schedule-activation-decision-packet
-**source_document:** docs/automation/telegram-notifier-runbook-idempotency-hardening.md
+**source_task:** 0180-create-idempotency-runtime-implementation-decision-packet
+**source_document:** docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md
 **response:**
 **decided_at:**
 **archive_policy:** keep
+
+---
+
+**Decision ID:** D-0180-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Telegram Mode A manual test succeeded (task 0170). D-0173-A = 3 (task 0177, 2026-05-13) deferred schedule activation and required an intermediate idempotency/state-store implementation task first. The idempotency/state-store implementation design now exists (`docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md`, task 0178). The implementation checklist now exists (`docs/automation/telegram-notifier-idempotency-implementation-checklist.md`, task 0179). Workflow `TEST - Alina task completion Telegram notifier` remains inactive. No Schedule Trigger is active. No token or chat id in repo.
+
+## Perché serve decisione
+
+Implementing idempotency and state-store logic modifies the n8n runtime workflow. Any n8n runtime change requires an explicit human gate per project policy. The design and checklist exist, but no implementation may begin without an explicit gate decision.
+
+## Opzioni
+
+1. **Open idempotency/state-store implementation gate only** — authorize future step-by-step user-supervised n8n UI implementation of idempotency key computation, state-store lookup, send/skip branch, and state-write-on-success logic per the design and checklist. No Schedule Trigger. No automatic notifications. No repeated Telegram test unless separately gated.
+2. **Keep design-only for now** — no runtime implementation; idempotency design and checklist remain docs-only; no n8n workflow modification.
+3. **Defer and refine design/checklist further** — no runtime; return to this gate after additional design work or clarification.
+
+## Raccomandazione orchestratore
+
+Option 1, as a narrow runtime gate for idempotency/state-store and duplicate-skip logic only. Schedule remains a separate gate after idempotency is validated.
+
+## Rischio principale
+
+Scope creep from idempotency implementation toward schedule activation or repeated Telegram messages without separate gates. The implementation must remain single-step and user-supervised, targeting only the state-store/duplicate-skip logic.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; idempotency implementation is a future manual user step.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After idempotency is implemented and validated, a future schedule activation gate may enable automatic notifications that reduce manual checking burden.
+
+## Scelta richiesta
+
+`D-0180-A = 1` per aprire il gate implementazione idempotency/state-store (solo n8n UI, senza Schedule Trigger).
+`D-0180-A = 2` per mantenere tutto docs-only; nessuna implementazione runtime.
+`D-0180-A = 3` per rimandare e affinare ulteriormente il design.
+
+## Cosa succede dopo la scelta
+
+If `D-0180-A = 1`: future supervised step-by-step n8n UI task implements idempotency key computation, state-store lookup, send/skip branch, state-write-on-success. Workflow remains manual-trigger only. No Schedule Trigger.
+If `D-0180-A = 2`: idempotency design and checklist remain docs-only. Schedule activation gate remains separate.
+If `D-0180-A = 3`: return after additional design refinement.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Schedule Trigger activation;
+- automatic notifications;
+- queue reader workflow modification;
+- workflow JSON export/import with secrets;
+- token or chat id in repo/docs/AI chat;
+- provider API LLM;
+- new billing;
+- app/deploy/tag/rollback;
+- automatic INBOX responses;
+- automatic `D-NNNN-X = N` writing.
+
+If option 1 is chosen, the scope is limited to:
+- idempotency key computation node;
+- state-store lookup node;
+- send/skip IF branch;
+- state-write node (post-send only);
+- fail-closed paths;
+- workflow kept inactive (no Schedule Trigger).
+
+---
+
+## Decided
 
 ---
 
@@ -133,6 +214,64 @@ This decision does not authorize:
 - app/deploy/tag/rollback;
 - automatic INBOX responses;
 - automatic `D-NNNN-X = N` writing.
+
+---
+
+### D-0173-A — Authorize Telegram notifier schedule activation after hardening
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0173-create-telegram-schedule-activation-decision-packet
+**source_document:** docs/automation/telegram-notifier-runbook-idempotency-hardening.md
+**response:** 3
+**decided_at:** 2026-05-13
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0173-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0170 recorded that one manual Telegram test message arrived successfully by user report. D-0171-A = 3 (task 0171) deferred schedule activation pending hardening. Task 0172 created the runbook and idempotency hardening documentation (`docs/automation/telegram-notifier-runbook-idempotency-hardening.md`). Workflow `TEST - Alina task completion Telegram notifier` exists by user report but is inactive. No Schedule Trigger is active.
+
+## Perché serve decisione
+
+Schedule activation introduces automatic recurring runtime behavior. The workflow can send duplicate notifications unless idempotency state-store logic is implemented and validated first. This is a new runtime gate requiring explicit human decision.
+
+## Opzioni
+
+1. Open a narrow schedule activation implementation gate — authorize a future step-by-step user-supervised implementation of idempotency state-store in n8n, followed by Schedule Trigger activation.
+2. Keep Telegram notifier manual-only — no Schedule Trigger; continue using Manual Trigger only when the user wants a notification.
+3. Defer schedule activation and add an intermediate idempotency implementation task first — do not activate schedule now; create a separate task to implement the idempotency/state-store path in n8n before returning to this gate.
+
+## Decision outcome
+
+Recorded by task 0177 on 2026-05-13: user response `D-0173-A = 3`.
+
+User selected D-0173-A = 3. Schedule activation is deferred. An intermediate idempotency/state-store implementation path must be designed and gated first.
+
+**Scope allowed by this decision (batch 0177–0181, 2026-05-13):**
+- Docs-only: design for idempotency/state-store implementation (task 0178).
+- Docs-only: implementation checklist (task 0179).
+- Docs-only: new pending Decision Packet D-0180-A for idempotency runtime gate (task 0180).
+- Docs-only: cross-reference updates (task 0181).
+
+**Scope forbidden (no change from prior state):**
+- No schedule activation.
+- No Schedule Trigger.
+- No automatic notifications.
+- No runtime performed by this decision.
+- Future idempotency runtime implementation requires a separate explicit gate (D-0180-A — pending).
+- Schedule activation remains separately gated after idempotency implementation and validation.
+- No token or chat id in repo.
+- No provider API LLM.
+- No new billing.
+- No app/deploy/tag/rollback.
+- No automatic INBOX responses.
+- No automatic `D-NNNN-X = N` writing.
 
 ---
 

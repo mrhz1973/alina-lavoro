@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-13 (post-state compression)**
+**Derived memory (Level 2) — last updated: 2026-05-13 (batch 0177–0181)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0176 — batch (0174–0176) docs-only (2026-05-13): state consistency fixed; batch-size policy formalized; D-0173-A neutral handoff created; D-0173-A remains pending; Telegram workflow inactive; no Schedule Trigger; no token/chat id in repo |
+| Last completed | 0181 — batch (0177–0181) docs-only (2026-05-13): D-0173-A = 3 recorded; schedule activation deferred; idempotency/state-store design created; implementation checklist created; D-0180-A pending runtime gate created; cross-references updated; Telegram workflow inactive; no Schedule Trigger; no token/chat id in repo |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -46,6 +46,21 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 Ubuntu 24.04.4 LTS | Docker/n8n at `127.0.0.1:5678` (hardened)
 Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
+
+---
+
+## Telegram Mode A / INBOX State
+
+| Item | State |
+|------|-------|
+| Telegram workflow | Inactive — no Schedule Trigger |
+| D-0173-A | Decided = 3 (task 0177, 2026-05-13) — schedule deferred; implement idempotency first |
+| D-0180-A | **Pending** — idempotency/state-store runtime implementation gate |
+| Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
+| Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
+| Token / chat id in repo | None |
+| INBOX pending count | 1 (D-0180-A) |
+| INBOX decided count | 10 |
 
 ---
 

@@ -257,9 +257,16 @@ Task sequence (updated task 0167, 2026-05-13):
 | Schedule deferral + hardening decision | 0171 ✅ | docs-only | D-0171-A = 3 recorded; schedule activation deferred; hardening/runbook/idempotency required first; user auto-follow note recorded as future consideration only |
 | Runbook / idempotency hardening doc | 0172 ✅ | docs-only | `docs/automation/telegram-notifier-runbook-idempotency-hardening.md` created; idempotency model, state-store options, duplicate-prevention rules, stop conditions, checklist |
 | Schedule activation Decision Packet | 0173 ✅ | docs-only | D-0173-A pending Decision Packet created in `docs/INBOX.md`; no decision made; 3 options + orchestrator recommendation |
-| Schedule activation + session record | TBD (D-0173-A) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and D-0173-A decided; separately gated |
+| State consistency / batch policy / neutral handoff | 0174–0176 ✅ | docs-only | D-0173-A consistency fixed (0174); batch-size policy formalized (0175); neutral handoff doc created (0176): `docs/automation/telegram-schedule-activation-pending-gate-handoff.md` |
+| D-0173-A = 3 decision recorded | 0177 ✅ | docs-only | D-0173-A = 3 recorded; D-0173-A moved from Pending to Decided; schedule activation deferred; idempotency implementation required first |
+| Idempotency/state-store design | 0178 ✅ | docs-only | `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` created; full design: key, state-store options, send/skip algorithm, failure modes, observability, validation path |
+| Idempotency implementation checklist | 0179 ✅ | docs-only | `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` created; step-by-step pre-runtime checklist; does not authorize runtime; requires D-0180-A |
+| Idempotency runtime gate Decision Packet | 0180 ✅ | docs-only | D-0180-A pending Decision Packet created in `docs/INBOX.md`; no decision made; pending user response |
+| Cross-references updated | 0181 ✅ | docs-only | LLMS.md, wiki, runbook, handoff, candidate-gate-backlog, roadmap updated |
+| Idempotency/state-store implementation | TBD (D-0180-A) | n8n UI + docs-only | Implement idempotency key, state-store, send/skip branch; no Schedule Trigger; per design and checklist |
+| Schedule activation + session record | TBD (post-idempotency gate) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and validated; separately gated |
 
-**Note (updated task 0176, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0171-A = 3. No Schedule Trigger is active. Runbook and idempotency hardening doc created (task 0172): `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`. D-0173-A **remains pending** — no decision recorded. Neutral handoff doc (task 0176): `docs/automation/telegram-schedule-activation-pending-gate-handoff.md`. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
+**Note (updated batch 0177–0181, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0173-A = 3 (task 0177). No Schedule Trigger is active. Idempotency design and checklist created (tasks 0178–0179). D-0180-A **pending** — idempotency/state-store runtime implementation gate. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
 
 **Critical files for future implementation tasks to read:**
 
