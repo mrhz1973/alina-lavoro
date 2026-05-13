@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0134 — Windows Ollama Local Preflight manual validation (2026-05-13) — Ollama 0.23.2 + qwen3:14b validated locally; JSON strict works via local API format=json, not CLI; additional repeatability test: local API JSON 3/3 valid with enum-constrained schema prompt; model unload confirmed after test; no n8n integration yet; ZERO API intact |
+| Last completed | 0135 — Cursor CLI Force-Mode Implementer Bridge Design (2026-05-13) — docs-only design completed; architecture target: GitHub queue → n8n/local script → Ollama qwen3:14b JSON router → Cursor force-mode → branch → ChatGPT web post-check → human merge; no runtime executed; future Cursor CLI force-mode preflight is runtime-gated |
 | Next planned | No automatic runtime step; potential future docs-only local classifier wrapper / qwen-alina profile design, or docs/INBOX.md debt, only as separate task |
 | Queue | `docs/tasks/queue/` |
 
