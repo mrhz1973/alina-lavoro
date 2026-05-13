@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0156 — Browser Bridge Sandbox Hardening Plan (2026-05-13) — docs-only; hardening/verification plan created; no runtime; Browser Bridge sandbox-only; project-chat deferred; INBOX: 0 pending, 3 decided |
+| Last completed | 0157 — Telegram Mode A Gate Decision Packet (2026-05-13) — docs-only; D-0157-A added to INBOX Pending; no gate opened; no bot/token; INBOX: 1 pending (D-0157-A), 3 decided |
 | Queue | `docs/tasks/queue/` |
 
 ---

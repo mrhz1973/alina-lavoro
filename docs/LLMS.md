@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0156** — Browser Bridge Sandbox Hardening Plan (2026-05-13) — docs-only; `docs/automation/browser-bridge-sandbox-hardening-plan.md` created; static inspection checklist + optional manual verification + hardening checks + reconsideration criteria + anti-creep rules; no runtime executed; no browser opened; no project-chat write; project-chat remains deferred; INBOX: 0 pending, 3 decided |
+| Last completed | **0157** — Telegram Mode A Gate Decision Packet (2026-05-13) — docs-only; D-0157-A added to INBOX `## Pending`; asks whether to open Telegram Mode A notifier gate, defer, or reject; no gate opened; no bot/token/config created; INBOX: 1 pending (D-0157-A), 3 decided |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided (dry-run gate, task 0149); `D-0151-A` decided with response `1` (2026-05-13, task 0152) — Browser Bridge sandbox gate open; sandbox implemented (task 0153); `D-0154-A` decided with response `2` (2026-05-13, task 0155) — Browser Bridge project-chat write **deferred**; Browser Bridge remains sandbox-only; no project-chat gate open | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending** (D-0157-A — Telegram Mode A gate); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate, task 0152); `D-0154-A` decided = 2 (project-chat deferred, task 0155); no Telegram gate open | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
