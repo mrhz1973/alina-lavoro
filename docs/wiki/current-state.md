@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0159 — Record INBOX Decision D-0157-A (2026-05-13) — docs-only; D-0157-A moved to Decided with response 1; Telegram Mode A completion notification MVP gate open for future narrow implementation only; no Telegram implemented; no bot/token/config; no provider API LLM; no new LLM billing; INBOX: 0 pending, 4 decided |
+| Last completed | 0161 — Telegram Mode A MVP Docs-Only Scaffolding (2026-05-13) — docs-only; MVP design pinned in `docs/automation/telegram-mode-a-completion-notification-mvp.md`; no Telegram implemented; no bot/token/config; no n8n runtime modification; no provider API LLM; no new LLM billing; INBOX: 0 pending, 4 decided; Gate 7 closed |
 | Queue | `docs/tasks/queue/` |
 
 ---

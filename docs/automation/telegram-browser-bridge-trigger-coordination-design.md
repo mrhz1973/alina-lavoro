@@ -518,3 +518,19 @@ Key principles:
 This design closes the coordination gap identified in 0142 Section 12 and completes the preflight documentation workstream for the low-touch loop notification and "aggio" injection architecture.
 
 **Task 0143 docs-only — completed 2026-05-13**
+
+---
+
+## Mode A MVP — Scaffolding pointer (task 0161, 2026-05-13)
+
+The Telegram Mode A completion notification MVP scope, message template, trigger model, idempotency key, credential boundary, test sequence, and stop conditions are now pinned in:
+
+**`docs/automation/telegram-mode-a-completion-notification-mvp.md`**
+
+- Gate opened by `D-0157-A = 1` (task 0159, 2026-05-13).
+- Task 0161 created docs-only scaffolding for the MVP.
+- No Telegram runtime has been implemented.
+- No bot, token, or chat id exists.
+- Browser Bridge remains sandbox-only (`D-0151-A = 1`; project-chat deferred: `D-0154-A = 2`).
+- Gate 7 remains closed.
+- Future implementation phases start at indicative task 0162 (credential prerequisite, user-guided).
