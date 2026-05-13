@@ -14,6 +14,23 @@ Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.
 - The cycle closes with **commit/push** and subsequent **`aggio`** or auto-aggio for verification, **not** with «shall I proceed?» requests.
 - Step-by-step mode (PRIORITY 0) is mandatory only when the user is manually operating n8n/VPS/browser/terminal/Apps Script.
 
+## Batch size policy (task 0175, 2026-05-13)
+
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **Batch size policy** and `docs/AI_RULES.md` — **Batch size policy**.
+
+| Batch type | Max sub-tasks |
+|------------|--------------|
+| docs-only pure | 6 |
+| docs + Decision Packet | 5 |
+| docs + small technical design | 4 |
+| runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback | **1 step only** |
+
+- Limits are maximums, not targets. Split if ambiguous.
+- Runtime or secrets in any sub-task → that portion is single-step and separately gated.
+- Selective staging and path allowlists remain mandatory.
+- Do not invent user decisions to fill a batch.
+- Pending Decision Packets stay pending until explicit user response.
+
 ## Roles
 
 - **User**: talks with the orchestrator and with Cursor when needed, but does not normally run terminal commands.

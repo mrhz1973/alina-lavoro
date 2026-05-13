@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0173 — batch (0171–0173) docs-only (2026-05-13): D-0171-A = 3 recorded (schedule deferred; hardening first); runbook/idempotency doc created; D-0173-A pending; Telegram manual test succeeded; workflow inactive; no Schedule Trigger; no token/chat id in repo |
+| Last completed | 0176 — batch (0174–0176) docs-only (2026-05-13): state consistency fixed; batch-size policy formalized; D-0173-A neutral handoff created; D-0173-A remains pending; Telegram workflow inactive; no Schedule Trigger; no token/chat id in repo |
 | Queue | `docs/tasks/queue/` |
 
 ---

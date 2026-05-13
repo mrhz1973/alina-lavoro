@@ -259,7 +259,7 @@ Task sequence (updated task 0167, 2026-05-13):
 | Schedule activation Decision Packet | 0173 ✅ | docs-only | D-0173-A pending Decision Packet created in `docs/INBOX.md`; no decision made; 3 options + orchestrator recommendation |
 | Schedule activation + session record | TBD (D-0173-A) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and D-0173-A decided; separately gated |
 
-**Note (updated task 0173, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0171-A = 3. No Schedule Trigger is active. Runbook and idempotency hardening doc created (task 0172): `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`. Pending Decision Packet D-0173-A exists for future schedule activation. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized by any record in this history. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
+**Note (updated task 0176, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0171-A = 3. No Schedule Trigger is active. Runbook and idempotency hardening doc created (task 0172): `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`. D-0173-A **remains pending** — no decision recorded. Neutral handoff doc (task 0176): `docs/automation/telegram-schedule-activation-pending-gate-handoff.md`. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
 
 **Critical files for future implementation tasks to read:**
 

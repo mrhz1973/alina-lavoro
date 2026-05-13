@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0173** — Create Telegram Schedule Activation Decision Packet (2026-05-13) — docs-only batch (0171–0173); D-0171-A = 3 recorded (schedule deferred; hardening first); runbook/idempotency hardening doc created (`docs/automation/telegram-notifier-runbook-idempotency-hardening.md`); D-0173-A pending Decision Packet created; Telegram Mode A manual test succeeded (task 0170) but workflow remains inactive / not automatic; no Schedule Trigger; no token/chat id in repo; user auto-follow note recorded as future consideration only; INBOX: 1 pending (D-0173-A), 9 decided; Gate 7 closed |
+| Last completed | **0176** — Create Telegram Schedule Pending Gate Handoff (2026-05-13) — docs-only batch (0174–0176); 0174 fixed post-0171–0173 state consistency; 0175 formalized batch-size policy; 0176 created D-0173-A neutral handoff doc; D-0173-A remains pending; Telegram Mode A remains manual-tested but not automatic; no Schedule Trigger; no runtime; no token/chat id in repo; INBOX: 1 pending (D-0173-A), 9 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending**; `D-0163-A` decided = 1 (task 0163; manual Telegram credential prerequisite gate open; no runtime); `D-0157-A` decided = 1 (Telegram Mode A MVP gate; tasks 0159–0162); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate); `D-0154-A` decided = 2 (project-chat deferred) | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending** (`D-0173-A` — Telegram schedule activation); 9 decided: `D-0171-A` = 3 (schedule deferred), `D-0169-A` = 1 (manual test), `D-0167-A` = 1 (Telegram node), `D-0165-A` = 1 (workflow creation), `D-0163-A` = 1 (credential gate), `D-0157-A` = 1 (Mode A MVP), `D-0154-A` = 2 (project-chat deferred), `D-0151-A` = 1 (sandbox gate), `D-0148-A` = 1 (dry-run gate) | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |

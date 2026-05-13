@@ -95,6 +95,7 @@ Avoid duplicated bilingual blocks. One language per context.
 15. If an agent reads PROJECT_STATE.md or CHECKPOINT.md, it must justify why in the final report.
 16. `docs/history/PROJECT_LOG.md` (audit-only) — do not read by default. Contains migrated long historical content from PROJECT_STATE.md and CHECKPOINT.md.
 17. Provider APIs are not part of default architecture; Local AI means Ollama/local models; ChatGPT = web/on-demand, Claude Code = supervised usage.
+18. **Batch size policy (task 0175):** docs-only pure ≤ 6; docs + DP ≤ 5; docs + design ≤ 4; runtime = 1 step only. Full rule: `docs/ORCHESTRATOR_RULES.md` and `docs/AI_RULES.md`.
 
 ---
 

@@ -233,4 +233,6 @@ Before requesting a schedule activation gate (D-0173-A), the following must all 
 
 ---
 
+**Pending gate handoff (task 0176, 2026-05-13):** D-0173-A is pending. Before any schedule activation, read: `docs/automation/telegram-schedule-activation-pending-gate-handoff.md`. Do not activate schedule or record D-0173-A without explicit user response.
+
 *This document is docs-only. No runtime was performed. No n8n UI action. No Telegram message. No Schedule Trigger. No workflow JSON export/import. No token or chat id in repo. Authorization: D-0171-A = 3 (task 0171, 2026-05-13).*

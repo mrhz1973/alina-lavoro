@@ -120,6 +120,22 @@ Orchestrator alignment: `docs/ORCHESTRATOR_RULES.md` (**PRIORITY 0**). n8n disci
 - **No `git add .`**: use explicit file list or `npm run finito` with explicit list.
 - **Small, targeted commits**; commit messages in English (consistent with repo history).
 
+## Batch size policy (task 0175, 2026-05-13)
+
+| Batch type | Max sub-tasks |
+|------------|--------------|
+| docs-only pure | 6 |
+| docs + Decision Packet | 5 |
+| docs + small technical design | 4 |
+| runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback | **1 step only** |
+
+Rules:
+- Batch limits are maximums, not targets. If a batch becomes ambiguous, split it.
+- If any sub-task touches runtime or secrets, that portion must be single-step and separately gated.
+- Selective staging (`git add <file>`) and path allowlists remain mandatory.
+- User decisions must not be invented to fill a batch.
+- Pending Decision Packets remain pending until explicit user response. Never record `D-NNNN-X = N` without an explicit user choice.
+
 ## Quality and output
 
 - Prefer **small, reviewable** blocks of changes.

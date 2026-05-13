@@ -43,6 +43,17 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Full prompt: only when needed data is not yet on GitHub.
 - Sonnet for ordinary tasks; Opus only for complex planning or architectural decisions.
 
+**Batch size policy (task 0175, 2026-05-13):**
+- docs-only pure: up to 6 sub-tasks per batch
+- docs + Decision Packet: up to 5 sub-tasks per batch
+- docs + small technical design: up to 4 sub-tasks per batch
+- runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback: **1 step only**
+- Batch limits are maximums, not targets; split if ambiguous
+- If any sub-task touches runtime or secrets, the runtime portion must be single-step and separately gated
+- Selective staging and path allowlists remain mandatory in all batches
+- User decisions must not be invented to fill a batch
+- Pending Decision Packets remain pending until explicit user response
+
 **LLMS-first routing rule (mandatory):**
 - All agents start from `docs/LLMS.md` (≤200 lines), then `docs/wiki/current-state.md` (≤100 lines), then `docs/wiki/token-efficiency.md`.
 - `docs/PROJECT_STATE.md` is a **fallback/audit** file — do not read by default; open only when LLMS.md + wiki cannot answer the question; justify in final report.
