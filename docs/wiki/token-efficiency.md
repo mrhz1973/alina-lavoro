@@ -41,6 +41,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Decision Packet format? | `docs/automation/decision-packet-format.md` | — |
 | Low-touch loop architecture? | `docs/automation/autonomous-low-touch-loop-design.md` | — |
 | Cursor force-mode bridge architecture? | `docs/automation/cursor-cli-force-mode-implementer-bridge-design.md` | — |
+| Local classifier wrapper / qwen-alina profile? | `docs/automation/local-classifier-wrapper-qwen-alina-profile-design.md` | — |
 | Task lifecycle ownership? | `docs/automation/n8n-workflows/lifecycle-ownership.md` | — |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |

@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0135** — Cursor CLI Force-Mode Implementer Bridge Design (2026-05-13) — docs-only design completed; architecture target: GitHub queue → n8n/local script → Ollama qwen3:14b JSON router → Cursor force-mode → branch → ChatGPT web post-check → human merge; no runtime executed; future Cursor CLI force-mode preflight is runtime-gated |
+| Last completed | **0136** — Local Classifier Wrapper / Qwen-Alina Profile Design (2026-05-13) — docs-only design completed; builds on 0134 qwen3:14b validation and 0135 Cursor bridge; wrapper design with JSON schema v1, prompt template strategy, validation/retry rules; qwen-alina is optional/future; no Modelfile/profile created; no runtime integration; future wrapper/profile creation is runtime-gated |
 | Next planned | No automatic runtime step; potential future docs-only local classifier wrapper / qwen-alina profile design, or docs/INBOX.md debt, only as separate task |
 | Queue location | `docs/tasks/queue/` |
 
