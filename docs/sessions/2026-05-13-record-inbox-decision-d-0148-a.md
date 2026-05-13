@@ -151,7 +151,8 @@ The future implementation task must be drafted by the orchestrator with explicit
 
 ## Commit hash
 
-To be appended after `git commit` and `git push` succeed in the closing step. See final response in chat.
+- Primary commit (selective): `934bec412456e182a40faeaf2c80be1ab93fc473` — `docs: record browser bridge dry-run decision`. Pushed to `origin/main` (`8dec445..934bec4`).
+- A follow-up commit may update this file and the done marker with the recorded commit hash; both are documentation-only edits.
 
 ---
 
