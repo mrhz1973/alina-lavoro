@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0144** — Runtime Gate Checklist / Readiness Matrix (2026-05-13) — single reference mapping every runtime component to gate requirements, current status, and activation constraints; 23 components; 5 permanent hard constraints (no provider LLM, no billing, no API keys, browser bridge cannot answer INBOX, app/deploy/tag/rollback always manual); Gate 7 definition (Ollama + Cursor CLI, not yet opened); docs-only |
+| Last completed | **0146** — Runtime Gate Decision Packet / Gate Request Playbook (2026-05-13) — docs-only playbook standardizing how future runtime gate requests are written and reviewed; pairs with 0144 readiness matrix (matrix = whether gate required; playbook = how to formulate request); 8-step gate lifecycle (proposed action → matrix check → stop → DP → INBOX → response → record → runtime prompt); 13 categories requiring gate; 7 gate-specific DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no INBOX pending added; Gate 7 not opened |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -67,6 +67,7 @@ Building the autonomous low-touch task loop:
 | Local Browser Bridge Preflight | ✅ Designed — "automatic finger" writes only `aggio`; safety controls defined; MVP path (dry-run → sandbox → project chat); no runtime | `docs/automation/local-browser-bridge-preflight-design.md` |
 | Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
 | Runtime Gate Checklist / Readiness Matrix | ✅ Created — 23 components mapped; 5 permanent hard constraints; Gate 7 defined (Ollama + Cursor CLI, not yet opened); no runtime | `docs/automation/runtime-gate-checklist-readiness-matrix.md` |
+| Runtime Gate Decision Packet / Gate Request Playbook | ✅ Created — pairs with readiness matrix; 8-step gate lifecycle; 13 gated categories; 7 DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no runtime | `docs/automation/runtime-gate-decision-packet-playbook.md` |
 
 ---
 

@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0144 — Runtime Gate Checklist / Readiness Matrix (2026-05-13) — 23 components mapped; 5 permanent hard constraints (no provider LLM, no billing, no API keys, browser bridge cannot answer INBOX, app/deploy/tag/rollback always manual); Gate 7 defined (Ollama + Cursor CLI, not yet opened); docs-only |
+| Last completed | 0146 — Runtime Gate Decision Packet / Gate Request Playbook (2026-05-13) — docs-only playbook for future gate requests; pairs with 0144 readiness matrix; 8-step lifecycle; 13 gated categories; 7 DP variants; 8 anti-patterns; no INBOX pending added; Gate 7 not opened |
 | Queue | `docs/tasks/queue/` |
 
 ---
