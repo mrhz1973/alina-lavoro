@@ -194,6 +194,9 @@ The key principle: Auto-Aggio triggers post-check and decision identification. I
 
 This reduces the need to manually write "aggio" and speeds up arrival at the next prompt to paste into Cursor/Claude/Windsurf, without automating user decisions or using provider APIs.
 
+**Commit:** `4cad5cf` — "docs: define auto-aggio prompt generation handshake"
+**Push:** Successfully pushed to origin main
+
 ---
 
 **Auto-Aggio Prompt-Generation Handshake Design completato — task 0139 docs-only**
