@@ -189,6 +189,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 **Telegram node addition gate (updated task 0167, 2026-05-13):** `D-0167-A = 1` recorded. This opens only the future Telegram node addition gate. Chat id must be used only in n8n UI/runtime configuration by the user — never in repo/docs/AI chat. This credential guide remains the secret-handling boundary. No secrets in repo. Test message requires a separate future explicit gate.
 
+**Telegram node addition completion (updated task 0168, 2026-05-13):** The user reported adding and saving the Telegram node in the workflow. Credential referenced by name only (`telegram_alina_notifier`). Chat id entered in n8n UI by the user and not recorded in the repository. No test message was sent. No Execute/Test was performed. No Schedule Trigger was added. This credential guide remains the secret-handling boundary. No secrets in repo. Test message requires a separate future explicit gate.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)
