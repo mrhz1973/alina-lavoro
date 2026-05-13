@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0157 — Telegram Mode A Gate Decision Packet (2026-05-13) — docs-only; D-0157-A added to INBOX Pending; no gate opened; no bot/token; INBOX: 1 pending (D-0157-A), 3 decided |
+| Last completed | 0158 — Revise Telegram Mode A Completion Notification Decision Packet (2026-05-13) — docs-only; D-0157-A revised in-place in INBOX Pending; scope = completion notification MVP; recommendation = Option 1; D-0157-A still pending; no gate opened; no bot/token/config; no provider API LLM; no new LLM billing; INBOX: 1 pending (D-0157-A), 3 decided |
 | Queue | `docs/tasks/queue/` |
 
 ---

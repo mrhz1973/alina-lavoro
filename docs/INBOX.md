@@ -52,11 +52,11 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0157-A — Open Telegram Mode A notifier gate
+### D-0157-A — Open Telegram Mode A completion notification MVP gate
 
 **inbox_status:** pending
 **created_at:** 2026-05-13
-**source_task:** 0157-telegram-mode-a-gate-decision-packet
+**source_task:** 0157-telegram-mode-a-completion-notification-decision-packet
 **source_document:** docs/automation/telegram-browser-bridge-trigger-coordination-design.md
 **response:**
 **decided_at:**
@@ -72,60 +72,80 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 ## Contesto
 
 The Browser Bridge project-chat path is deferred by `D-0154-A = 2`, and Browser Bridge remains sandbox-only.
-The low-touch workflow still needs a safe way to notify the user when a real human decision or important automation state requires attention.
-Telegram Mode A was designed as a notification-only mode: Telegram informs the user, while ChatGPT remains the orchestrator and INBOX remains the source of truth for decisions.
+The low-touch workflow still needs a safe way to notify the user when a supervised implementer task appears to be complete and ready for ChatGPT post-check.
+
+Telegram Mode A is the notification-only path: Telegram informs the user; it does not orchestrate, decide, answer INBOX, or execute project actions.
+ChatGPT remains the orchestrator. GitHub and `docs/INBOX.md` remain the source of truth.
 
 ## Perché serve decisione
 
-Telegram Mode A would introduce an external runtime channel and requires Telegram bot/token handling.
-Even if used only for notifications, it still involves credentials and runtime configuration, so it requires an explicit human gate before any implementation.
+Telegram Mode A would introduce an external notification channel and likely a Telegram bot/token in a future implementation task.
+Even if the MVP is notification-only, it still involves credentials and runtime configuration, so it requires an explicit human gate before implementation.
 
 Without this decision, no Telegram runtime implementation prompt may be generated.
 
 ## Opzioni
 
-1. **Open Telegram Mode A notifier gate only** — authorize a future implementation task to configure a minimal Telegram notification path for user-visible alerts only. It must not answer INBOX, must not create decisions, must not bypass ChatGPT, must not modify app/deploy/tag/rollback, and must store credentials only through the approved secure mechanism.
-2. **Defer Telegram Mode A** — keep Telegram design-only; continue with docs-only hardening, local tooling, or another candidate gate later.
+1. **Open Telegram Mode A completion notification MVP gate only** — authorize a future implementation task for Telegram-only task completion notifications. The future MVP may notify the user with task id/slug, commit hash, optional INBOX pending count, and the instruction "scrivi aggio per post-check". It must not answer INBOX, must not create decisions, must not execute actions, must not use Browser Bridge, must not use Ollama, must not use Cursor, must not touch app/deploy/tag/rollback, must not use provider API LLM, and must not introduce new LLM billing.
+2. **Defer Telegram Mode A MVP** — keep Telegram design-only; continue with docs-only hardening, local tooling, or another candidate gate later.
 3. **Reject Telegram path for now** — keep all Telegram automation blocked until explicit future reconsideration.
 
 ## Raccomandazione orchestratore
 
-Option 2 for now.
-Telegram is useful, but it introduces a token/credential surface and an external runtime channel. Since Browser Bridge project-chat has just been deferred and the system is stable, the safer next posture is to keep Telegram design-only unless the user specifically wants notifications now.
+Option 1.
+Telegram Mode A completion notification is the safest useful low-touch step after Browser Bridge was stopped at sandbox-only.
+It does not write into the real ChatGPT / Claude.ai chat, does not answer INBOX, does not decide anything, and can reduce the user's manual checking burden by telling the user when to run the post-check manually.
 
-If the user wants faster low-touch notifications, Option 1 is reasonable, but the future implementation must be extremely narrow: notify-only, no INBOX answer, no decision responses, no hidden actions, no app changes, no provider API, no billing, and credential handling only through an approved secure path.
+The future implementation must remain extremely narrow:
+- notification-only;
+- task id / slug;
+- commit hash;
+- optional INBOX pending count;
+- fixed instruction: "scrivi aggio per post-check";
+- no INBOX answer;
+- no automatic decision;
+- no Browser Bridge;
+- no Ollama;
+- no Cursor;
+- no app/deploy/tag/rollback;
+- no provider API LLM;
+- no new LLM billing.
 
 ## Rischio principale
 
-The main risk is credential and notification-channel creep: Telegram could slowly become a control plane instead of a notification channel.
-The implementation must therefore keep Telegram Mode A notification-only, with no authority to answer decisions or execute project actions.
+The main risk is notification-channel creep: Telegram could slowly become a control plane instead of a notification channel.
+The implementation must therefore keep Telegram Mode A notification-only, with no authority to answer decisions, write INBOX responses, or execute project actions.
+
+Credential handling is also a risk. Any future Telegram token must be handled only through an explicitly approved secure mechanism and must never be committed to the repository.
 
 ## Impatto
 
 - App Alina: no impact.
-- GitHub docs: only the INBOX decision is added now.
+- GitHub docs: this task revises an existing pending INBOX decision only.
 - Runtime: no runtime in this task; possible Telegram runtime only if Option 1 is later recorded as decided and a separate implementation task is generated.
 - INBOX: remains the source of truth; Telegram must not answer it.
 - Browser Bridge: no change; remains sandbox-only.
 - n8n: no change in this task.
 - Ollama / Gate 7: no impact.
 - Cursor CLI / Gate 7: no impact.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
 
 ## Micro-interazioni umane eliminate
 
 0 immediately.
-If later implemented, Telegram Mode A may reduce the need for the user to manually check GitHub/INBOX for pending decisions or important notifications. This decision alone does not eliminate micro-interactions.
+If later implemented, Telegram Mode A may reduce the need for the user to manually check GitHub/INBOX after implementer completion. It may send a completion notification that tells the user to write `aggio` for ChatGPT post-check. This decision alone does not eliminate micro-interactions.
 
 ## Scelta richiesta
 
-Scrivi: `D-0157-A = 1` per aprire solo il gate Telegram Mode A notifier.
+Scrivi: `D-0157-A = 1` per aprire solo il gate Telegram Mode A completion notification MVP.
 Scrivi: `D-0157-A = 2` per rimandare.
 Scrivi: `D-0157-A = 3` per respingere per ora il percorso Telegram.
 In alternativa: `D-0157-A = defer`, `D-0157-A = skip`, oppure `D-0157-A = retry`.
 
 ## Cosa succede dopo la scelta
 
-If `D-0157-A = 1` is recorded in `docs/INBOX.md`, the orchestrator may generate a future implementer prompt for a narrow Telegram Mode A implementation task. That future task must be notification-only and must not answer INBOX or execute project actions.
+If `D-0157-A = 1` is recorded in `docs/INBOX.md`, the orchestrator may generate a future implementer prompt for a narrow Telegram Mode A MVP implementation task. That future task must be notification-only and must not answer INBOX, make decisions, execute project actions, use Browser Bridge, use Ollama, use Cursor, modify the app, deploy, tag, rollback, use provider API LLM, or introduce new LLM billing.
 If `D-0157-A = 2` or `defer`, Telegram remains design-only and no Telegram runtime prompt is generated.
 If `D-0157-A = 3` or `skip`, the Telegram path remains blocked until explicitly reconsidered.
 If `D-0157-A = retry`, the orchestrator reformulates the Decision Packet.
@@ -137,14 +157,14 @@ This decision does not authorize:
 - Telegram token creation or storage;
 - n8n runtime modification;
 - answering INBOX;
+- reading INBOX from a bridge;
 - writing any `D-NNNN-X = N` response;
 - Browser Bridge project-chat;
 - Ollama install or model pull;
 - Cursor CLI/headless execution;
 - Gate 7;
-- provider API;
-- API key creation beyond the specific Telegram gate if later approved;
-- billing;
+- provider API LLM;
+- new LLM billing;
 - app source modification;
 - Apps Script deploy;
 - tag;

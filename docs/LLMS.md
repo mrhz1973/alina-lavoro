@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0157** — Telegram Mode A Gate Decision Packet (2026-05-13) — docs-only; D-0157-A added to INBOX `## Pending`; asks whether to open Telegram Mode A notifier gate, defer, or reject; no gate opened; no bot/token/config created; INBOX: 1 pending (D-0157-A), 3 decided |
+| Last completed | **0158** — Revise Telegram Mode A Completion Notification Decision Packet (2026-05-13) — docs-only; D-0157-A revised in-place in INBOX `## Pending`; scope updated to Telegram Mode A completion notification MVP; recommendation changed to Option 1; D-0157-A still pending (no decision recorded); no gate opened; no bot/token/config created; no provider API LLM; no new LLM billing; INBOX: 1 pending (D-0157-A), 3 decided |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending** (D-0157-A — Telegram Mode A gate); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate, task 0152); `D-0154-A` decided = 2 (project-chat deferred, task 0155); no Telegram gate open | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending** (D-0157-A — Telegram Mode A completion notification MVP, revised task 0158, recommendation Option 1); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate, task 0152); `D-0154-A` decided = 2 (project-chat deferred, task 0155); no Telegram gate open; no provider API LLM; no new LLM billing | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
