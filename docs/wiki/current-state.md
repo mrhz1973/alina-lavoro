@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0148 — Browser Bridge Dry-Run Gate Decision Packet (2026-05-13) — docs-only; created one real pending Decision Packet `D-0148-A` in `docs/INBOX.md` (Open Browser Bridge dry-run gate); first real DP from the 0144/0146/0147 toolchain; 3 options (open dry-run only / defer / reject); awaits explicit user response; no gate opened; no Browser Bridge code; no runtime; Gate 7 still closed |
+| Last completed | 0149 — Record INBOX Decision D-0148-A (2026-05-13) — docs-only; user response `D-0148-A = 1` recorded; `D-0148-A` moved from `## Pending` to `## Decided` in `docs/INBOX.md` (`response: 1`, `decided_at: 2026-05-13`); Browser Bridge dry-run gate open for future narrow implementation only (local script, no browser, no ChatGPT/Claude.ai write, no INBOX read/answer, no n8n/Telegram/Ollama/Cursor/API/billing); no runtime executed; sandbox and project-chat remain separate future gates; Gate 7 still closed; INBOX has no pending decisions |
 | Queue | `docs/tasks/queue/` |
 
 ---

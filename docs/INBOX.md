@@ -52,14 +52,20 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
+No pending decisions.
+
+---
+
+## Decided
+
 ### D-0148-A — Open Browser Bridge dry-run gate
 
-**inbox_status:** pending
+**inbox_status:** decided
 **created_at:** 2026-05-13
 **source_task:** 0148-browser-bridge-dry-run-gate-decision-packet
 **source_document:** docs/automation/candidate-gate-backlog.md
-**response:**
-**decided_at:**
+**response:** 1
+**decided_at:** 2026-05-13
 **superseded_by:**
 **archive_policy:** keep
 
@@ -149,11 +155,12 @@ This decision does not authorize:
 
 Even if Option 1 is approved, sandbox and project-chat Browser Bridge phases remain separate future gates.
 
----
+## Decision outcome
 
-## Decided
-
-_No decided decisions yet._
+Recorded by task 0149 on 2026-05-13: user response `D-0148-A = 1`.
+This response opens the Browser Bridge **dry-run gate only**, authorizing a future narrow implementation task with the strict scope described above.
+A separate future task/prompt is required to implement the dry-run. No runtime has been executed by this decision: it is a recorded authorization, not an activation.
+Sandbox and project-chat Browser Bridge phases remain separate future gates. Browser Bridge still cannot answer INBOX (Hard Constraint #4 preserved). Gate 7 remains closed.
 
 ---
 

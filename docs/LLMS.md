@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0148** — Browser Bridge Dry-Run Gate Decision Packet (2026-05-13) — docs-only; created one real pending Decision Packet `D-0148-A` in `docs/INBOX.md` asking whether to open the Browser Bridge dry-run gate; first real DP generated from the 0144/0146/0147 toolchain; canonical 13 DP fields + 8 INBOX header fields; 3 options (open dry-run only / defer / reject); recommendation = option 1 (narrow, reversible, local-file-only); requires explicit user response (`D-0148-A = 1/2/3/defer/skip/retry`); no gate opened; no Browser Bridge code; no runtime; Gate 7 still closed; Browser Bridge still cannot answer INBOX |
+| Last completed | **0149** — Record INBOX Decision D-0148-A (2026-05-13) — docs-only; recorded user response `D-0148-A = 1`; `D-0148-A` moved from `## Pending` to `## Decided` in `docs/INBOX.md` (`response: 1`, `decided_at: 2026-05-13`, `inbox_status: decided`); Browser Bridge dry-run gate now **open for future narrow implementation only** (local script writing to a local test file, no browser, no ChatGPT/Claude.ai write, no INBOX read/answer, no n8n runtime change, no Telegram, no Ollama, no Cursor CLI, no API key, no billing); no Browser Bridge code created; no runtime executed; a separate future task/prompt is required to implement the dry-run; sandbox and project-chat phases remain separate future gates; Gate 7 still closed; Browser Bridge still cannot answer INBOX; INBOX has no pending decisions |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **1 pending decision** (`D-0148-A` Browser Bridge dry-run gate, awaiting user response) | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided with response `1` on 2026-05-13 (task 0149) — Browser Bridge dry-run gate open for future narrow implementation only, no runtime executed | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
