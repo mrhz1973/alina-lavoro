@@ -3,7 +3,7 @@
 **Task:** 0147
 **Date:** 2026-05-13
 **Type:** docs-only / low-touch-loop planning
-**Status:** active reference document — **updated task 0150 (2026-05-13): candidate A dry-run implemented**
+**Status:** active reference document — **updated task 0153 (2026-05-13): candidate B sandbox implemented (local file only, `--no-open` validated)**
 
 ---
 
@@ -88,7 +88,7 @@ The table below lists candidate gates currently visible from the design corpus. 
 | # | Candidate | Category | State | Why this state | Must remain gated? |
 |---|-----------|----------|-------|----------------|---------------------|
 | A | **Browser Bridge dry-run** (local script writes to a local test file, no browser) | local runtime | **dry-run implemented** — task 0150 completed (2026-05-13); `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; no browser; no ChatGPT/Claude.ai write; no INBOX read/answer; no network; Decision Packet `D-0148-A = 1` (task 0149) opened the gate. Sandbox (B) is the natural next phase — requires user intent and a new DP. | Dry-run phase complete. Sandbox phase still gated. | Yes |
-| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **gate open for future narrow sandbox implementation only** — `D-0151-A = 1` decided (task 0152, 2026-05-13); sandbox NOT yet implemented or active; a separate future task/prompt is required; must target only a throwaway/sandbox browser context; may send only `aggio`; must fail closed if no sandbox context available; does not authorize project-chat, INBOX read/answer, n8n, Telegram, Ollama, Cursor CLI, API key, billing, app source, deploy, tag, rollback | Gate is open. Sandbox not implemented. Project-chat (C) remains deferred. | Yes |
+| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **sandbox implemented** — `D-0151-A = 1` decided (task 0152, 2026-05-13); task 0153 (2026-05-13) created `tools/browser-bridge-sandbox/browser-bridge-sandbox.py` + `sandbox.html`; target exclusively local `file://` to `tools/browser-bridge-sandbox/sandbox.html`; throwaway context only; allowed message: `aggio`; `--no-open` validated (duplicate skip, invalid-message rejection verified); forbidden substrings rejected (`chatgpt.com`, `chat.openai.com`, `claude.ai`, `openai.com`, `anthropic.com`); no real ChatGPT/Claude.ai; no project chat; no INBOX read/answer; no external network/API/billing/key; no n8n/Telegram/Ollama/Cursor; project-chat phase (C) remains separate future gate | Sandbox phase complete (local file only). Project-chat (C) remains deferred. | Yes |
 | C | **Browser Bridge project chat write `aggio` only** (script writes "aggio" to actual Claude.ai / ChatGPT) | browser bridge runtime | **deferred** | Cannot proceed until sandbox succeeds. Final phase of the 3-phase MVP. **Must never answer INBOX** (Hard Constraint #4). | Yes |
 | D | **Telegram notifier Mode A** (bot creation, token in n8n vault, first message) | Telegram runtime | **candidate** (not first if API key footprint is undesirable) | Functional value (INBOX-pending notifications), but introduces a new API key and a new external runtime channel. Lower priority than Bridge dry-run. Source: `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` Mode A. | Yes |
 | E | **n8n-to-local-bridge trigger** (n8n calls into local bridge endpoint when a task completes) | n8n + local runtime integration | **deferred** | Cannot proceed until Bridge dry-run/sandbox exists. Requires a local listener and an n8n outbound action — larger blast radius. | Yes |
@@ -106,13 +106,17 @@ The table below lists candidate gates currently visible from the design corpus. 
 
 ## 6. Recommended next gate candidate
 
-**Candidate A (Browser Bridge dry-run) is now implemented** (task 0150, 2026-05-13).
+**Candidate A (Browser Bridge dry-run) is implemented** (task 0150, 2026-05-13).
 
-**Candidate B (Browser Bridge sandbox) gate is open** — `D-0151-A = 1` decided (task 0152, 2026-05-13).
+**Candidate B (Browser Bridge sandbox) is implemented** (task 0153, 2026-05-13) under authorization `D-0151-A = 1` (task 0152).
+- Local-file-only sandbox surface (`tools/browser-bridge-sandbox/sandbox.html`).
+- Launcher (`tools/browser-bridge-sandbox/browser-bridge-sandbox.py`) targets only `file://` for that surface.
+- `--no-open` mode validated (idempotency skip, invalid-message rejection).
+- No real ChatGPT/Claude.ai opened.
+- No project chat used. No INBOX read or answered.
+- No external network. No API key. No billing. No n8n / Telegram / Ollama / Cursor change.
 
-Sandbox has **not** been implemented yet. A separate future task/prompt is required.
-The future task must target only a throwaway/sandbox browser context, may send only `aggio`, and must fail closed if no sandbox context is available.
-Project-chat (C) remains a separate future gate — it is not authorized by this decision.
+**Candidate C (Browser Bridge project-chat write) remains deferred / gated.** It is the natural next phase after sandbox but requires a separate Decision Packet posted to `docs/INBOX.md` and an explicit user response. It is **not** authorized by D-0151-A.
 
 ---
 
@@ -197,6 +201,7 @@ This backlog is a living planning document. Update it when, and only when, one o
 | `docs/ORCHESTRATOR_RULES.md` | Sensitive gates list (authoritative) |
 | `docs/AI_RULES.md` | Implementer rules, no provider APIs by default |
 | `tools/browser-bridge-dry-run/README.md` | Browser Bridge dry-run tool (candidate A — implemented task 0150) |
+| `tools/browser-bridge-sandbox/README.md` | Browser Bridge sandbox tool (candidate B — implemented task 0153) |
 
 ---
 

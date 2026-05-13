@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0152** — Record INBOX Decision D-0151-A (2026-05-13) — docs-only; user response `D-0151-A = 1` recorded; D-0151-A moved to `## Decided`; Browser Bridge sandbox gate **open for future narrow sandbox implementation only** (throwaway browser context, `aggio` only, no project chat, no INBOX); no sandbox implemented; no browser automation; INBOX: 0 pending |
+| Last completed | **0153** — Browser Bridge Sandbox Implementation (2026-05-13) — `tools/browser-bridge-sandbox/` created (`browser-bridge-sandbox.py`, `sandbox.html`, `README.md`); Python stdlib only; target exclusively local `file://` to `tools/browser-bridge-sandbox/sandbox.html`; throwaway browser context only; `aggio` only; idempotency + rate-limit; forbidden substrings rejected (`chatgpt.com`, `chat.openai.com`, `claude.ai`, `openai.com`, `anthropic.com`); `--no-open` flag validated; optional browser-open run intentionally skipped (automated implementer context); no real ChatGPT/Claude.ai opened; no project chat; no INBOX read/answer; no external network/API/billing; no n8n/Telegram/Ollama/Cursor/Gate 7; no app/deploy/tag/rollback; INBOX: 0 pending |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -70,7 +70,7 @@ Building the autonomous low-touch task loop:
 | Runtime Gate Decision Packet / Gate Request Playbook | ✅ Created — pairs with readiness matrix; 8-step gate lifecycle; 13 gated categories; 7 DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no runtime | `docs/automation/runtime-gate-decision-packet-playbook.md` |
 | Candidate Gate Backlog / Gate Queue Map | ✅ Created — A implemented (0150); B sandbox gate **open** (D-0151-A = 1, task 0152); C project-chat deferred; 14 candidates A–N; 8 anti-creep rules | `docs/automation/candidate-gate-backlog.md` |
 | Browser Bridge Dry-Run | ✅ **Implemented** (task 0150) — `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; Python stdlib only; `aggio` only; idempotency + rate-limit; no browser/ChatGPT/INBOX/network | `tools/browser-bridge-dry-run/README.md` |
-| Browser Bridge Sandbox | 🟡 Gate **open** (D-0151-A = 1, task 0152) — future narrow sandbox implementation task authorized; throwaway browser context only; no project chat; no INBOX; not yet implemented | `tools/browser-bridge-dry-run/README.md` · `docs/automation/candidate-gate-backlog.md` |
+| Browser Bridge Sandbox | ✅ **Implemented** (task 0153) — `tools/browser-bridge-sandbox/browser-bridge-sandbox.py` + `sandbox.html`; Python stdlib only; local `file://` target only; throwaway context; `aggio` only; `--no-open` validated; no real ChatGPT/Claude.ai; no project chat; no INBOX | `tools/browser-bridge-sandbox/README.md` · `docs/automation/candidate-gate-backlog.md` |
 
 ---
 

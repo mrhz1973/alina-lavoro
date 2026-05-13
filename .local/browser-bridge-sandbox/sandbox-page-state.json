@@ -1,0 +1,19 @@
+{
+  "chatgpt_or_claude_used": false,
+  "external_url_used": false,
+  "inbox_answered": false,
+  "inbox_read": false,
+  "last_browser_context": "throwaway_local_file",
+  "last_browser_open_attempted": false,
+  "last_browser_open_result": "skipped",
+  "last_commit_hash": "sandbox-no-open",
+  "last_file_url": "file:///C:/Users/mrhz/Documents/AI/GitHub/Alina Lavoro/alina-lavoro/tools/browser-bridge-sandbox/sandbox.html",
+  "last_message": "aggio",
+  "last_mode": "sandbox",
+  "last_sandbox_file": "tools/browser-bridge-sandbox/sandbox.html",
+  "last_target": "local_sandbox_file_only",
+  "last_task_id": "0153",
+  "last_timestamp_utc": "2026-05-13T14:40:13.133042+00:00",
+  "network_used": false,
+  "project_chat_used": false
+}

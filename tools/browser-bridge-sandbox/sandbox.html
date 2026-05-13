@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
+  <title>Alina Lavoro — Browser Bridge Sandbox (local only)</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 2em auto;
+      padding: 0 1em;
+      color: #111;
+      background: #fdfdfd;
+    }
+    header {
+      border-left: 4px solid #d97706;
+      padding: 0.25em 0.75em;
+      background: #fff7ed;
+      margin-bottom: 1.5em;
+    }
+    h1 {
+      font-size: 1.25em;
+      margin: 0 0 0.25em 0;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.75em;
+      padding: 0.15em 0.5em;
+      border-radius: 0.25em;
+      background: #fde68a;
+      color: #92400e;
+      margin-right: 0.25em;
+    }
+    section {
+      margin: 1.25em 0;
+    }
+    ul {
+      padding-left: 1.25em;
+    }
+    code {
+      background: #f3f4f6;
+      padding: 0.1em 0.3em;
+      border-radius: 0.2em;
+      font-size: 0.9em;
+    }
+    .params {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 0.75em 1em;
+      border-radius: 0.4em;
+      font-size: 0.9em;
+    }
+    footer {
+      margin-top: 2em;
+      font-size: 0.8em;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Browser Bridge Sandbox — local only</h1>
+    <span class="tag">throwaway</span>
+    <span class="tag">file://</span>
+    <span class="tag">no network</span>
+    <span class="tag">no project chat</span>
+    <span class="tag">no INBOX</span>
+  </header>
+
+  <section>
+    <p>
+      This page is a static local sandbox surface used only to validate the
+      Browser Bridge sandbox phase. It is not the real ChatGPT or Claude.ai
+      project chat. It does not load any external script, stylesheet, font,
+      image, or data. It does not contain any form targeting an external site.
+    </p>
+  </section>
+
+  <section>
+    <h2>Allowed message</h2>
+    <p>
+      The only allowed message is the literal token <code>aggio</code>. The
+      sandbox launcher rejects anything that contains <code>D-</code> or
+      <code>=</code> or that exceeds 20 characters. Decision Packet response
+      syntax such as <code>D-NNNN-X = N</code> is intentionally not present on
+      this page and must never be written by the bridge.
+    </p>
+  </section>
+
+  <section class="params">
+    <h2>Launch parameters (read-only view)</h2>
+    <p>
+      If a launcher passes a query string or hash fragment, it is shown below
+      for visual confirmation only. No network call is made.
+    </p>
+    <p>
+      <strong>Query string:</strong>
+      <code id="query"></code>
+    </p>
+    <p>
+      <strong>Hash fragment:</strong>
+      <code id="hash"></code>
+    </p>
+  </section>
+
+  <section>
+    <h2>What this page must never do</h2>
+    <ul>
+      <li>Open or embed any real ChatGPT or Claude.ai surface.</li>
+      <li>Read or display the contents of <code>docs/INBOX.md</code>.</li>
+      <li>Write any <code>D-NNNN-X = N</code> response anywhere.</li>
+      <li>Trigger any project-chat automation.</li>
+      <li>Issue any external HTTP request, fetch, XHR, beacon, or websocket.</li>
+      <li>Be expanded into a project-chat surface without a separate gate.</li>
+    </ul>
+  </section>
+
+  <footer>
+    Authorized by D-0151-A = 1 (recorded task 0152). Implemented by task 0153.
+    Project-chat phase remains a separate future gate.
+  </footer>
+
+  <script>
+    // Local-only display of the URL parameters. Intentionally no fetch,
+    // no XHR, no beacon, no websocket, no remote anything.
+    (function () {
+      try {
+        var q = window.location.search || "(none)";
+        var h = window.location.hash || "(none)";
+        var qEl = document.getElementById("query");
+        var hEl = document.getElementById("hash");
+        if (qEl) qEl.textContent = q;
+        if (hEl) hEl.textContent = h;
+      } catch (e) {
+        // intentionally silent
+      }
+    })();
+  </script>
+</body>
+</html>

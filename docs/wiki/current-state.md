@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0152 — Record INBOX Decision D-0151-A (2026-05-13) — docs-only; `D-0151-A = 1` recorded; D-0151-A moved to `## Decided`; sandbox gate open for future narrow implementation only (no sandbox yet, no browser automation); INBOX: 0 pending, 2 decided (D-0148-A, D-0151-A) |
+| Last completed | 0153 — Browser Bridge Sandbox Implementation (2026-05-13) — `tools/browser-bridge-sandbox/` created (Python stdlib only); local `file://` target only; `aggio` only; `--no-open` validated; idempotency + rate-limit + duplicate skip + invalid-message rejection verified; optional browser-open run skipped (automated context); no real ChatGPT/Claude.ai; no project chat; no INBOX read/answer; no external network/API/billing/key; no n8n/Telegram/Ollama/Cursor/Gate 7; no app/deploy/tag/rollback; project-chat phase remains gated; INBOX: 0 pending, 2 decided (D-0148-A, D-0151-A) |
 | Queue | `docs/tasks/queue/` |
 
 ---
