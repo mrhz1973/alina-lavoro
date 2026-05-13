@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0143** — Telegram + Browser Bridge Trigger Coordination Design (2026-05-13) — defines coordination between future Telegram notification and Local Browser Bridge for same task completion event; three operating modes (A: Telegram-only current primary, B: Telegram+Bridge future MVP, C: Bridge-only deferred); trigger rules, idempotency key `(task_id, commit_hash)`, duplicate prevention, INBOX-aware Telegram templates; 15 failure modes; no runtime; no browser automation |
+| Last completed | **0144** — Runtime Gate Checklist / Readiness Matrix (2026-05-13) — single reference mapping every runtime component to gate requirements, current status, and activation constraints; 23 components; 5 permanent hard constraints (no provider LLM, no billing, no API keys, browser bridge cannot answer INBOX, app/deploy/tag/rollback always manual); Gate 7 definition (Ollama + Cursor CLI, not yet opened); docs-only |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -66,6 +66,7 @@ Building the autonomous low-touch task loop:
 | Local Cursor Dual-Agent Loop | ✅ Designed — Agent 1 Implementer + Agent 2 Reviewer; ~10-day fallback Claude Code/Windsurf; no runtime | `docs/automation/local-cursor-dual-agent-loop-design.md` |
 | Local Browser Bridge Preflight | ✅ Designed — "automatic finger" writes only `aggio`; safety controls defined; MVP path (dry-run → sandbox → project chat); no runtime | `docs/automation/local-browser-bridge-preflight-design.md` |
 | Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
+| Runtime Gate Checklist / Readiness Matrix | ✅ Created — 23 components mapped; 5 permanent hard constraints; Gate 7 defined (Ollama + Cursor CLI, not yet opened); no runtime | `docs/automation/runtime-gate-checklist-readiness-matrix.md` |
 
 ---
 

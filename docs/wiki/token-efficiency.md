@@ -49,6 +49,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Dual-agent Cursor loop + fallback plan? | `docs/automation/local-cursor-dual-agent-loop-design.md` | — |
 | Local browser bridge preflight? | `docs/automation/local-browser-bridge-preflight-design.md` | — |
 | Telegram/browser bridge trigger coordination? | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` | — |
+| Runtime gate checklist / which components are gated? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
 
