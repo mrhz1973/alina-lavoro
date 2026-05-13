@@ -52,14 +52,20 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
+No pending decisions.
+
+---
+
+## Decided
+
 ### D-0154-A — Open Browser Bridge project-chat write gate
 
-**inbox_status:** pending
+**inbox_status:** decided
 **created_at:** 2026-05-13
 **source_task:** 0154-browser-bridge-project-chat-gate-decision-packet
 **source_document:** docs/automation/candidate-gate-backlog.md
-**response:**
-**decided_at:**
+**response:** 2
+**decided_at:** 2026-05-13
 **superseded_by:**
 **archive_policy:** keep
 
@@ -159,9 +165,21 @@ This decision does not authorize:
 
 Even if Option 1 is approved, any future expansion beyond writing literal `aggio` remains a separate future gate.
 
----
+## Decision outcome
 
-## Decided
+Recorded by task 0155 on 2026-05-13: user response `D-0154-A = 2`.
+This defers Browser Bridge project-chat write.
+Browser Bridge remains sandbox-only for now.
+Project-chat gate is not open.
+No project-chat implementation is authorized.
+No automation may write to the real ChatGPT / Claude.ai project chat.
+No INBOX read or answer is authorized from any bridge.
+No `D-NNNN-X = N` response writing is authorized.
+Future reconsideration requires a new or reopened Decision Packet and an explicit user response.
+Dry-run (task 0150) and sandbox (task 0153) remain implemented.
+Gate 7 remains closed.
+
+---
 
 ### D-0151-A — Open Browser Bridge sandbox gate
 

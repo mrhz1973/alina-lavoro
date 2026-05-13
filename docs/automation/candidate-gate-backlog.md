@@ -3,7 +3,7 @@
 **Task:** 0147
 **Date:** 2026-05-13
 **Type:** docs-only / low-touch-loop planning
-**Status:** active reference document — **updated task 0154 (2026-05-13): D-0154-A pending in INBOX for candidate C project-chat write gate**
+**Status:** active reference document — **updated task 0155 (2026-05-13): D-0154-A decided with response 2 — candidate C project-chat write deferred**
 
 ---
 
@@ -89,7 +89,7 @@ The table below lists candidate gates currently visible from the design corpus. 
 |---|-----------|----------|-------|----------------|---------------------|
 | A | **Browser Bridge dry-run** (local script writes to a local test file, no browser) | local runtime | **dry-run implemented** — task 0150 completed (2026-05-13); `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; no browser; no ChatGPT/Claude.ai write; no INBOX read/answer; no network; Decision Packet `D-0148-A = 1` (task 0149) opened the gate. Sandbox (B) is the natural next phase — requires user intent and a new DP. | Dry-run phase complete. Sandbox phase still gated. | Yes |
 | B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **sandbox implemented** — `D-0151-A = 1` decided (task 0152, 2026-05-13); task 0153 (2026-05-13) created `tools/browser-bridge-sandbox/browser-bridge-sandbox.py` + `sandbox.html`; target exclusively local `file://` to `tools/browser-bridge-sandbox/sandbox.html`; throwaway context only; allowed message: `aggio`; `--no-open` validated (duplicate skip, invalid-message rejection verified); forbidden substrings rejected (`chatgpt.com`, `chat.openai.com`, `claude.ai`, `openai.com`, `anthropic.com`); no real ChatGPT/Claude.ai; no project chat; no INBOX read/answer; no external network/API/billing/key; no n8n/Telegram/Ollama/Cursor; project-chat phase (C) remains separate future gate | Sandbox phase complete (local file only). Project-chat (C) remains deferred. | Yes |
-| C | **Browser Bridge project chat write `aggio` only** (script writes "aggio" to actual Claude.ai / ChatGPT) | browser bridge runtime | **Decision Packet pending** — D-0154-A added to `docs/INBOX.md` `## Pending` (task 0154, 2026-05-13); gate is NOT yet open; requires explicit user response before any implementation prompt may be generated; orchestrator recommendation: Option 2 (defer); **Must never answer INBOX** (Hard Constraint #4); cannot read or answer any `D-NNNN-X` decision. | Yes |
+| C | **Browser Bridge project chat write `aggio` only** (script writes "aggio" to actual Claude.ai / ChatGPT) | browser bridge runtime | **deferred** — `D-0154-A = 2` decided (task 0155, 2026-05-13); project-chat write deferred; Browser Bridge remains sandbox-only for now; gate is NOT open; no implementation authorized; future reconsideration requires a new or reopened Decision Packet and explicit user response; **Must never answer INBOX** (Hard Constraint #4); cannot read or answer any `D-NNNN-X` decision. | Yes |
 | D | **Telegram notifier Mode A** (bot creation, token in n8n vault, first message) | Telegram runtime | **candidate** (not first if API key footprint is undesirable) | Functional value (INBOX-pending notifications), but introduces a new API key and a new external runtime channel. Lower priority than Bridge dry-run. Source: `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` Mode A. | Yes |
 | E | **n8n-to-local-bridge trigger** (n8n calls into local bridge endpoint when a task completes) | n8n + local runtime integration | **deferred** | Cannot proceed until Bridge dry-run/sandbox exists. Requires a local listener and an n8n outbound action — larger blast radius. | Yes |
 | F | **Ollama install** (Ollama installed on Windows workstation, no model pulled) | local AI runtime | **candidate** (Gate 7 sub-gate) | Reversible, local-only, no provider API, no billing. Requires explicit Gate 7 opening. Source: `docs/automation/ollama-classifier-planner-feasibility-post-wiki.md`. | Yes |
@@ -116,7 +116,7 @@ The table below lists candidate gates currently visible from the design corpus. 
 - No project chat used. No INBOX read or answered.
 - No external network. No API key. No billing. No n8n / Telegram / Ollama / Cursor change.
 
-**Candidate C (Browser Bridge project-chat write) has a pending Decision Packet** — D-0154-A posted to `docs/INBOX.md` `## Pending` (task 0154). The gate is NOT yet open. User must respond explicitly. Orchestrator recommendation: Option 2 (defer — sandbox optional browser-open was skipped; further validation recommended before touching real chat). Project-chat cannot read or answer INBOX. Anti-creep rules intact.
+**Candidate C (Browser Bridge project-chat write) is deferred** — `D-0154-A = 2` decided (task 0155, 2026-05-13). Browser Bridge remains sandbox-only for now. No project-chat implementation is authorized. Future reconsideration requires a new or reopened Decision Packet and an explicit user response. Project-chat cannot read or answer INBOX. Anti-creep rules intact. No runtime next step until a new decision.
 
 ---
 

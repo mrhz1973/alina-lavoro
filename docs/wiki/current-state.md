@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0154 — Browser Bridge Project-Chat Gate Decision Packet (2026-05-13) — docs-only; D-0154-A added to INBOX Pending; no gate opened; no project-chat code; INBOX: 1 pending (D-0154-A), 2 decided (D-0148-A, D-0151-A) |
+| Last completed | 0155 — Record INBOX Decision D-0154-A (2026-05-13) — docs-only; `D-0154-A = 2` recorded; project-chat write deferred; Browser Bridge remains sandbox-only; INBOX: 0 pending, 3 decided (D-0154-A, D-0151-A, D-0148-A) |
 | Queue | `docs/tasks/queue/` |
 
 ---
