@@ -9,6 +9,49 @@
 
 ---
 
+## User-Reported Local State Update — 2026-05-13
+
+**This task remains runtime-gated.** The starting assumption has changed from "install Ollama from zero" to "validate/document existing local state."
+
+**User-reported local state (unverified-by-repo but user-confirmed):**
+- Ollama is already installed on Windows
+- `ollama --version` responded correctly
+- Version reported by user: Ollama 0.23.2
+- `qwen3:8b` was downloaded and initially tested, then removed
+- `nomic-embed-text` was downloaded, then removed
+- `qwen3:14b` was then installed/downloaded
+- No custom profile like `qwen-alina:14b` has been created yet
+- No definitive `Modelfile` has been created yet
+- No n8n/Ollama automation has been integrated
+- No embeddings pipeline has been created
+- No vector DB has been created
+- Ollama has not been automatically connected to the repo
+- No provider API has been authorized
+- ZERO API policy remains active
+
+**Future gate starting point:**
+When the runtime gate opens, the preflight should start with validation/documentation of the existing state, not initial installation:
+- `ollama --version` (confirm reported version 0.23.2)
+- `ollama list` (confirm qwen3:14b is present)
+- Run minimal response test with qwen3:14b
+- Run light benchmark (latency, RAM/VRAM usage)
+- Verify no provider API calls
+- Verify no n8n automation integration
+- Verify no embeddings/vector DB
+- Verify no custom profile/Modelfile yet
+
+**Future direction (not to implement now):**
+- Use qwen3:14b as the main local model for real tests
+- First evaluate it pure, without custom Modelfile
+- Later, optionally create a custom profile such as `qwen-alina:14b`
+- The future custom profile may act only as: token-efficiency assistant, router/classifier, prompt compressor, task risk scorer, Decision Packet draft helper, LLMS/wiki summarizer
+- It must NOT become: main autonomous implementer, replacement for Claude Code/Cursor/Windsurf, deploy tool, app modifier, automatic unsupervised runner
+
+**Technical note (future option, not executed now):**
+Ollama supports custom models through `Modelfile` with instructions such as `FROM`, `PARAMETER`, and `SYSTEM`. In the future, a local custom model may be created from qwen3:14b, for example with low temperature and project-specific rules. Do not create that Modelfile now. Record this as a future option, not as an executed implementation.
+
+---
+
 ## Metadata
 
 - **Default architecture:** no provider APIs
@@ -19,7 +62,7 @@
   - GPU: NVIDIA RTX 3060 12 GB VRAM
 - **Purpose:** Prepare runtime-gated preflight for Ollama local AI on Windows workstation
 - **This task:** docs-only preparation only — does NOT authorize runtime execution
-- **Future runtime task:** separate explicit gate required before any installation or execution
+- **Future runtime task:** separate explicit gate required before any validation or execution
 
 ---
 
@@ -84,45 +127,44 @@ This task does NOT:
 
 The future runtime preflight task must include these manual/runtime checks, but this docs-only task does NOT execute them:
 
-1. **Confirm Windows workstation specs**
+**Starting point:** validation/documentation of existing local state (user-reported: Ollama 0.23.2 installed, qwen3:14b present)
+
+1. **Confirm Ollama version and state**
+   - Run `ollama --version` to confirm reported version 0.23.2
+   - Document actual version if different
+   - Verify Ollama service status
+   - Verify Ollama CLI availability
+
+2. **Confirm installed models**
+   - Run `ollama list` to confirm qwen3:14b is present
+   - Document all installed models
+   - Verify model sizes
+
+3. **Confirm Windows workstation specs**
    - Verify CPU: AMD Ryzen 9 3900X
    - Verify RAM: 32 GB
    - Verify GPU: NVIDIA RTX 3060 12 GB VRAM
    - Document actual specs if different
 
-2. **Confirm NVIDIA driver / CUDA availability**
+4. **Confirm NVIDIA driver / CUDA availability**
    - Check NVIDIA driver version
    - Verify CUDA toolkit availability
    - Verify CUDA compatibility with RTX 3060
    - Document driver/CUDA state
 
-3. **Confirm Ollama not installed or installed state**
-   - Check if Ollama is already installed
-   - If installed, document version and state
-   - If not installed, note clean state
-
-4. **Install Ollama only after explicit manual gate**
-   - Download Ollama for Windows
-   - Install Ollama
-   - Verify Ollama service status
-   - Verify Ollama CLI availability
-   - This step requires explicit manual gate before execution
-
-5. **Pull one small local model only after explicit manual gate**
-   - Preferred initial model family: Qwen local model via Ollama
-   - Suggested candidates:
-     - qwen2.5:7b or equivalent current local 7B class model
-     - qwen3:8b only if already considered appropriate by existing docs
-   - Pull model with Ollama
-   - Verify model download completed
-   - This step requires explicit manual gate before execution
-
-6. **Run a tiny local classification prompt**
+5. **Run minimal response test with qwen3:14b**
    - Design a minimal test prompt for classification
-   - Run prompt through Ollama local model
+   - Run prompt through Ollama local model (qwen3:14b)
+   - Verify model responds correctly
    - Measure latency
    - Measure RAM/VRAM usage
    - Verify output quality
+
+6. **Run light benchmark**
+   - Run a few test prompts to establish baseline performance
+   - Document average latency
+   - Document peak RAM usage with model loaded
+   - Document peak VRAM usage with model loaded
 
 7. **Verify no API calls**
    - Confirm Ollama is running in local-only mode
@@ -140,26 +182,41 @@ The future runtime preflight task must include these manual/runtime checks, but 
    - Confirm n8n uses only local Ollama via HTTP Request to localhost
    - Document n8n node configuration
 
-10. **Verify no sensitive data in prompt**
+10. **Verify no embeddings/vector DB**
+    - Confirm no embeddings pipeline has been created
+    - Confirm no vector DB has been created
+    - Document state (none)
+
+11. **Verify no custom profile/Modelfile**
+    - Confirm no custom profile like qwen-alina:14b has been created
+    - Confirm no definitive Modelfile has been created
+    - Document state (none)
+
+12. **Verify no sensitive data in prompt**
     - Review test prompt for sensitive data
     - Confirm no credentials, tokens, API keys, OAuth material
     - Confirm no personal data from Alina app
     - Confirm no Google Sheet data
     - Confirm no email data
 
-11. **Document hardware/latency/quality result**
+13. **Document hardware/latency/quality result**
     - Document RAM usage with model loaded
     - Document VRAM usage with model loaded
     - Document latency for classification
     - Document output quality (subjective assessment)
     - Document any errors or issues
 
-12. **Stop if performance, safety, or quality is poor**
+14. **Stop if performance, safety, or quality is poor**
     - Define thresholds for acceptable performance
     - Define thresholds for acceptable quality
     - Stop preflight if thresholds not met
     - Document failure reason
     - Recommend alternative approach or abort
+
+**Fallback installation steps (only if local state differs from user report):**
+- If Ollama is not installed: download and install Ollama (requires explicit manual gate)
+- If qwen3:14b is not present: pull qwen3:14b (requires explicit manual gate)
+- These steps are fallback only; primary path is validation of existing state
 
 ---
 

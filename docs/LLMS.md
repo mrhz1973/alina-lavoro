@@ -47,7 +47,7 @@ Building the autonomous low-touch task loop:
 | State | Info |
 |-------|------|
 | Last completed | **0133** — Ollama Classifier/Planner Feasibility Post-Wiki (2026-05-12) |
-| Next planned | **0134** — Windows Ollama Local Preflight (queued, docs-only preparation completed 2026-05-13) — runtime execution requires explicit manual gate; target: Windows workstation (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria |
+| Next planned | **0134** — Windows Ollama Local Preflight (queued, docs-only preparation completed 2026-05-13) — runtime execution requires explicit manual gate; user-reported local state: Ollama 0.23.2 installed, qwen3:14b present; future gate is validation/documentation, not initial installation; target: Windows workstation (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria |
 | Queue location | `docs/tasks/queue/` |
 
 ---
