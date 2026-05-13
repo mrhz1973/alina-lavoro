@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0146 — Runtime Gate Decision Packet / Gate Request Playbook (2026-05-13) — docs-only playbook for future gate requests; pairs with 0144 readiness matrix; 8-step lifecycle; 13 gated categories; 7 DP variants; 8 anti-patterns; no INBOX pending added; Gate 7 not opened |
+| Last completed | 0147 — Candidate Gate Backlog / Gate Queue Map (2026-05-13) — docs-only planning backlog ranking which future runtime gates may be worth opening next; pairs with 0144 (matrix) and 0146 (playbook); 6 candidate states; 11 criteria; 14 candidates A–N; recommended next = Browser Bridge dry-run; 8 anti-creep rules; no INBOX pending added; no gate opened |
 | Queue | `docs/tasks/queue/` |
 
 ---

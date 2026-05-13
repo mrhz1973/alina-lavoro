@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0146** — Runtime Gate Decision Packet / Gate Request Playbook (2026-05-13) — docs-only playbook standardizing how future runtime gate requests are written and reviewed; pairs with 0144 readiness matrix (matrix = whether gate required; playbook = how to formulate request); 8-step gate lifecycle (proposed action → matrix check → stop → DP → INBOX → response → record → runtime prompt); 13 categories requiring gate; 7 gate-specific DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no INBOX pending added; Gate 7 not opened |
+| Last completed | **0147** — Candidate Gate Backlog / Gate Queue Map (2026-05-13) — docs-only planning document ranking which runtime gates may be worth opening next; pairs with 0144 (matrix = whether gate required) and 0146 (playbook = how to request); 6 candidate states (candidate / recommended next / deferred / blocked / not recommended / superseded); 11 prioritization criteria; 14 candidates A–N (Bridge dry-run/sandbox/project-chat, Telegram Mode A, n8n-bridge trigger, Ollama install/model-pull, Cursor CLI/dual-agent, n8n DP generator, n8n workflow mod, provider API, app source, deploy/tag/rollback); recommended next = Browser Bridge dry-run (narrow, reversible, no browser/API/billing); 8 anti-creep rules; no INBOX pending added; no gate opened |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -68,6 +68,7 @@ Building the autonomous low-touch task loop:
 | Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
 | Runtime Gate Checklist / Readiness Matrix | ✅ Created — 23 components mapped; 5 permanent hard constraints; Gate 7 defined (Ollama + Cursor CLI, not yet opened); no runtime | `docs/automation/runtime-gate-checklist-readiness-matrix.md` |
 | Runtime Gate Decision Packet / Gate Request Playbook | ✅ Created — pairs with readiness matrix; 8-step gate lifecycle; 13 gated categories; 7 DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no runtime | `docs/automation/runtime-gate-decision-packet-playbook.md` |
+| Candidate Gate Backlog / Gate Queue Map | ✅ Created — planning backlog ranking future gate candidates; 6 states; 11 prioritization criteria; 14 candidates A–N; recommended next = Browser Bridge dry-run; 8 anti-creep rules; no INBOX pending added; no gate opened | `docs/automation/candidate-gate-backlog.md` |
 
 ---
 
