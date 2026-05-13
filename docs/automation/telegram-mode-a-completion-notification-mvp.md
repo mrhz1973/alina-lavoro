@@ -241,14 +241,15 @@ The future implementer must stop immediately and report — without executing �
 
 ## 13. Next implementation phases
 
-Indicative future task sequence (task numbers may change):
+Task sequence (updated task 0163, 2026-05-13):
 
-| Phase | Indicative task | Type | Description |
-|-------|----------------|------|-------------|
-| Credential prerequisite | 0162 | User-guided / docs-only guide | User creates Telegram bot via BotFather; obtains token and chat id; stores both in n8n credential vault `telegram_alina_notifier`; Claude Code produces docs-only instructions or user-guided steps; no token committed |
-| n8n workflow creation | 0163 | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; no exported JSON committed unless fully redacted |
-| Validation series | 0164 | n8n UI (user) + Claude Code docs | Run testing ladder §9 steps 1–7 in order; stop at first failure; session record documents outcome |
-| Schedule activation + session record | 0165 | n8n UI + docs-only | Enable Schedule Trigger after step 4–5 pass; observe one quiet cycle; update LLMS.md, current-state.md, candidate-gate-backlog.md with MVP active status |
+| Phase | Task | Type | Description |
+|-------|------|------|-------------|
+| Credential prerequisite guide | 0162 ✅ | docs-only | Credential prerequisite guide created: `docs/automation/telegram-mode-a-credential-prerequisite-guide.md` |
+| Credential prerequisite gate | 0163 ✅ | docs-only | `D-0163-A = 1` recorded; manual credential prerequisite gate open |
+| n8n workflow creation | TBD | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; no exported JSON committed unless fully redacted; requires separate explicit gate |
+| Validation series | TBD | n8n UI (user) + Claude Code docs | Run testing ladder §9 steps 1–7 in order; stop at first failure; session record documents outcome |
+| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; observe one quiet cycle; update LLMS.md, current-state.md, candidate-gate-backlog.md with MVP active status |
 
 **Critical files for future implementation tasks to read:**
 

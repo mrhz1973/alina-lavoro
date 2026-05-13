@@ -172,6 +172,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 ## 9. Future gate required
 
+**Gate status (updated task 0163, 2026-05-13):** `D-0163-A = 1` recorded. This opens only the manual credential prerequisite gate described in this guide. The user may proceed with BotFather bot creation and n8n credential vault setup (§4–§6). A separate future explicit manual gate is still required before any n8n workflow creation or test message.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

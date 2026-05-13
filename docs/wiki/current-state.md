@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0162 — Telegram Mode A Credential Prerequisite Guide (2026-05-13) — docs-only; credential guide at `docs/automation/telegram-mode-a-credential-prerequisite-guide.md`; no Telegram bot/token/config; no n8n runtime modification; no provider API LLM; no new LLM billing; INBOX: 0 pending, 4 decided; Gate 7 closed |
+| Last completed | 0163 — Record Telegram Credential Prerequisite Gate Decision (2026-05-13) — docs-only; `D-0163-A = 1` recorded; manual Telegram credential prerequisite gate open; no runtime; no bot/token/chat id; no n8n workflow; no Telegram message; INBOX: 0 pending, 5 decided; Gate 7 closed |
 | Queue | `docs/tasks/queue/` |
 
 ---

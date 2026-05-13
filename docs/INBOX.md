@@ -58,6 +58,105 @@ _No pending decisions._
 
 ## Decided
 
+### D-0163-A — Open Telegram credential prerequisite manual gate
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0163-record-telegram-credential-prerequisite-gate-decision
+**source_document:** docs/automation/telegram-mode-a-credential-prerequisite-guide.md
+**response:** 1
+**decided_at:** 2026-05-13
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0163-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0161 (commit 25aff57) created docs-only scaffolding for the Telegram Mode A completion notification MVP, pinning scope, message template, trigger model, idempotency key, credential boundary, test ladder, and stop conditions.
+
+Task 0162 (commit 073e9b6) created a docs-only user-guided prerequisite guide documenting how a future human operator will create a Telegram bot via BotFather, obtain the token privately, identify the chat id privately, and store both only in the n8n credential vault (`telegram_alina_notifier`).
+
+Credentials and an n8n credential vault are sensitive configuration. Even a manual human-guided prerequisite phase requires an explicit human gate before the operator begins collecting or storing secrets.
+
+## Perché serve decisione
+
+The credential prerequisite guide (task 0162) describes manual user steps that involve creating a real Telegram bot and handling a real token. Without an explicit gate, the project cannot confirm the user intentionally chooses to proceed with this credential phase. Without the credential in place, no future n8n workflow can be tested.
+
+## Opzioni
+
+1. **Open only the manual Telegram credential prerequisite gate** — authorize only the human-guided prerequisite phase: user may create bot via BotFather, obtain token privately, identify chat id privately, and store token/chat id only in n8n credential vault as `telegram_alina_notifier`. Does not authorize workflow creation, test messages, Schedule Trigger, workflow JSON export/import, app/deploy/tag/rollback, provider API LLM, or new billing.
+2. **Defer credential prerequisite** — keep all Telegram steps docs-only; no credential creation authorized; return to this gate later.
+3. **Cancel Telegram Mode A path** — block Telegram implementation entirely until explicit future reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1.
+The credential prerequisite is the narrowest possible manual step: it only authorizes the human operator to create a bot and store credentials privately in n8n vault. No runtime workflow is created. No message is sent. The scope is narrow and the step is fully reversible (revoke bot via BotFather if needed).
+
+## Rischio principale
+
+Credential leakage into the repo: if the operator inadvertently commits the bot token or chat id, the credential must be treated as compromised. The prerequisite guide (task 0162) already documents clipboard hygiene, redaction rules, and the git grep check for leaked token shapes.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime in this task; credential creation is a future manual user step.
+- n8n: no workflow creation in this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Browser Bridge: no change; remains sandbox-only.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After credential and future n8n workflow are in place, Telegram Mode A may reduce the user's manual checking burden. This decision alone does not eliminate micro-interactions.
+
+## Scelta richiesta
+
+Scrivi: `D-0163-A = 1` per aprire solo il gate prerequisito credenziali Telegram.
+Scrivi: `D-0163-A = 2` per rimandare.
+Scrivi: `D-0163-A = 3` per annullare il percorso Telegram.
+
+## Cosa succede dopo la scelta
+
+If `D-0163-A = 1` is recorded, the user may proceed with the manual credential prerequisite steps described in `docs/automation/telegram-mode-a-credential-prerequisite-guide.md`. A separate future gated task is required before any n8n workflow creation or test message.
+If `D-0163-A = 2` or `defer`, no credential creation proceeds; Telegram remains docs-only.
+If `D-0163-A = 3` or `skip`, the Telegram path remains blocked until explicitly reconsidered.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- creating or modifying an n8n workflow;
+- sending any Telegram message;
+- enabling any Schedule Trigger;
+- exporting/importing workflow JSON;
+- committing secrets;
+- using provider API LLM;
+- introducing new billing;
+- modifying the app;
+- deploy/tag/rollback;
+- Browser Bridge real project-chat;
+- Ollama runtime;
+- Cursor CLI/headless runner.
+
+## Decision outcome
+
+Recorded by task 0163 on 2026-05-13: user response `D-0163-A = 1`.
+This opens only the manual Telegram credential prerequisite gate.
+It authorizes the human operator to: create a Telegram bot via BotFather, obtain the bot token privately, identify the target chat id privately, and store both only in the n8n credential vault as `telegram_alina_notifier`.
+It does not authorize n8n workflow creation, test messages, Schedule Trigger activation, workflow JSON export/import, app/deploy/tag/rollback, provider API LLM, or new billing.
+No runtime was performed by this task.
+A separate future gated task is required before any n8n workflow creation or test message.
+
+---
+
 ### D-0157-A — Open Telegram Mode A completion notification MVP gate
 
 **inbox_status:** decided
