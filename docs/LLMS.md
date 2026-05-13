@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0169** — Record Single Manual Telegram Test Message Gate Decision (2026-05-13) — docs-only; `D-0169-A = 1` recorded; exactly one future manual Telegram test message gate open; workflow must remain inactive; no Schedule Trigger; no automatic notifications; no runtime by implementer; no Telegram message sent by this task; no token/chat id in repo; INBOX: 0 pending, 8 decided; Gate 7 closed |
+| Last completed | **0170** — Record Single Manual Telegram Test Success (2026-05-13) — docs-only; user reported one manual Telegram test message arrived successfully; workflow `TEST - Alina task completion Telegram notifier` executed manually once under D-0169-A = 1; workflow remains inactive / not automatic; no Schedule Trigger; no workflow JSON export; no token/chat id in repo; INBOX: 0 pending, 8 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---

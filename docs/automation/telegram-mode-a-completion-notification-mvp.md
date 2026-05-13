@@ -253,10 +253,10 @@ Task sequence (updated task 0167, 2026-05-13):
 | Telegram node addition gate decision | 0167 ✅ | docs-only | `D-0167-A = 1` recorded; Telegram node addition gate open |
 | Telegram node addition completion | 0168 ✅ | docs-only record | User reported: Telegram node added and saved; credential by name only (`telegram_alina_notifier`); text `{{ $json.telegram_message }}`; chat id entered in n8n UI only, not in repo; no test message; no Execute/Test; no Schedule Trigger |
 | Single manual test message gate decision | 0169 ✅ | docs-only | `D-0169-A = 1` recorded; exactly one future manual test message gate open |
-| Single manual test execution | TBD | n8n UI (user), once only | User executes workflow once manually; verifies one Telegram message arrives; reports result as text; workflow remains inactive; allowed by `D-0169-A = 1`; retry requires separate gate |
+| Single manual test execution | 0170 ✅ | docs-only record | User reported: one manual Telegram test message arrived successfully; executed once under D-0169-A = 1; workflow remains inactive / not automatic; no Schedule Trigger |
 | Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after test succeeds; separately gated |
 
-**Note:** `D-0169-A = 1` authorizes exactly one future manual test message. This task does not send the message. No Schedule Trigger activation is authorized. Chat id must not be recorded in repo/docs/AI chat.
+**Note:** As of task 0170, one manual Telegram test message succeeded by user report. The workflow remains inactive / not automatic. No Schedule Trigger activation is authorized or performed. Schedule activation requires a future explicit manual gate. Chat id must not be recorded in repo/docs/AI chat.
 
 **Critical files for future implementation tasks to read:**
 

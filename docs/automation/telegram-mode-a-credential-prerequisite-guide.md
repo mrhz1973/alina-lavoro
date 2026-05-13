@@ -193,6 +193,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 **Single manual test message gate (updated task 0169, 2026-05-13):** `D-0169-A = 1` recorded. This opens exactly one future manual test message gate. Credential remains secret-handling boundary. Chat id must not be recorded in repo/docs/AI chat. Schedule activation requires a separate future explicit gate. No secrets in repo.
 
+**Single manual test success (updated task 0170, 2026-05-13):** The user reported that one manual Telegram test message arrived successfully, executed once under D-0169-A = 1. Workflow remains inactive / not automatic. No Schedule Trigger. This credential guide remains the secret-handling boundary. No secrets in repo. Schedule activation requires a separate future explicit gate.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

@@ -150,6 +150,8 @@ No runtime was performed by this task. No Telegram message was sent by this task
 Schedule activation requires a separate future explicit gate.
 No token or chat id stored in repo. No provider API LLM. No new billing. No app/deploy/tag/rollback.
 
+**Follow-up status (task 0170, 2026-05-13):** The user reported that one manual Telegram test message arrived successfully, executed once under D-0169-A = 1. Workflow `TEST - Alina task completion Telegram notifier` remains inactive / not automatic. No Schedule Trigger was added or enabled. No second test execution is authorized by this record. No workflow JSON was exported. No token or chat id is stored in the repository. Schedule activation remains separately gated.
+
 ---
 
 ### D-0167-A — Open Telegram node addition gate

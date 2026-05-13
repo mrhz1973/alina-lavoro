@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0169 — Record Single Manual Telegram Test Message Gate Decision (2026-05-13) — docs-only; `D-0169-A = 1` recorded; one manual Telegram test message gate open; schedule activation remains gated; no runtime by implementer; no message sent by this task; no token/chat id in repo; Gate 7 closed |
+| Last completed | 0170 — Record Single Manual Telegram Test Success (2026-05-13) — docs-only; single manual Telegram test succeeded by user report; workflow remains inactive; schedule activation remains gated; no token/chat id in repo; Gate 7 closed |
 | Queue | `docs/tasks/queue/` |
 
 ---
