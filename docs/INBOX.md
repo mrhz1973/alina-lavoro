@@ -52,7 +52,109 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-No pending decisions.
+### D-0151-A — Open Browser Bridge sandbox gate
+
+**inbox_status:** pending
+**created_at:** 2026-05-13
+**source_task:** 0151-browser-bridge-sandbox-gate-decision-packet
+**source_document:** docs/automation/candidate-gate-backlog.md
+**response:**
+**decided_at:**
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0151-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0150 completed the Browser Bridge dry-run implementation.
+The dry-run is local-file-only: it writes `aggio` to `.local/browser-bridge-dry-run/dry-run-output.jsonl`, rejects DP-like messages, uses idempotency and rate-limit controls, and does not use browser, network, ChatGPT / Claude.ai, or INBOX.
+The next candidate in the phased Browser Bridge path is the **sandbox** phase: testing browser automation only against a throwaway/sandbox browser context, not the real project chat.
+
+## Perché serve decisione
+
+Sandbox introduces actual browser automation.
+Even if it targets only a throwaway/sandbox browser context, it is a higher-risk runtime step than dry-run because it may open or control a browser.
+Project rules require an explicit human gate before any browser automation or sandbox execution.
+
+Without this decision, no Browser Bridge sandbox implementation prompt may be generated.
+
+## Opzioni
+
+1. **Open Browser Bridge sandbox gate only** — authorize a future implementation task for a sandbox-only browser automation test. The future task may target only a throwaway/sandbox browser context and may attempt to send only `aggio` there. It does not authorize the real project chat, INBOX reading, INBOX answering, n8n runtime changes, Telegram, Ollama, Cursor CLI, API keys, billing, app source, deploy, tag, or rollback.
+2. **Defer Browser Bridge sandbox** — keep Browser Bridge at dry-run-only state; continue with docs-only planning, hardening, or another candidate gate later.
+3. **Reject browser automation path for now** — keep dry-run as the terminal Browser Bridge implementation for now; sandbox and project-chat remain blocked until future explicit reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1, but only with narrow scope.
+The dry-run has already validated message allowlist, idempotency, duplicate skip, invalid-message rejection, and local output evidence. Sandbox is the next logical validation step, but it must remain isolated from the real orchestration chat.
+The future implementation prompt must require a throwaway/sandbox browser context, must forbid project-chat access, and must preserve the rule that Browser Bridge may only write `aggio` and must never read or answer INBOX.
+
+## Rischio principale
+
+The main risk is scope creep from sandbox browser automation toward real project-chat automation.
+A sandbox test could be accidentally expanded to the actual ChatGPT / Claude.ai project chat if boundaries are not enforced.
+The future implementation prompt must therefore explicitly separate sandbox from project-chat and must fail closed if no sandbox/throwaway context is available.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: only the INBOX decision is added now.
+- Runtime: no runtime in this task; possible browser sandbox runtime only if Option 1 is later recorded as decided and a separate implementation task is generated.
+- Browser Bridge: dry-run remains implemented; sandbox remains unimplemented until a future task.
+- n8n: no impact.
+- Telegram: no impact.
+- Ollama / Gate 7: no impact.
+- Cursor CLI / Gate 7: no impact.
+
+## Micro-interazioni umane eliminate
+
+0 immediately.
+If later implemented and validated, sandbox is a prerequisite toward a future project-chat bridge that may reduce the need for the user to manually type `aggio` after task completion. This decision alone does not eliminate micro-interactions.
+
+## Scelta richiesta
+
+Scrivi: `D-0151-A = 1` per aprire solo il gate Browser Bridge sandbox.
+Scrivi: `D-0151-A = 2` per rimandare.
+Scrivi: `D-0151-A = 3` per respingere per ora il percorso browser automation.
+In alternativa: `D-0151-A = defer`, `D-0151-A = skip`, oppure `D-0151-A = retry`.
+
+## Cosa succede dopo la scelta
+
+If `D-0151-A = 1` is recorded in `docs/INBOX.md`, the orchestrator may generate a future implementer prompt for a narrow sandbox implementation task. That future task must be sandbox-only, must not touch the real project chat, and must not read or answer INBOX.
+If `D-0151-A = 2` or `defer`, Browser Bridge remains dry-run-only and no sandbox runtime prompt is generated.
+If `D-0151-A = 3` or `skip`, the browser automation path remains blocked until explicitly reconsidered.
+If `D-0151-A = retry`, the orchestrator reformulates the Decision Packet.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- project-chat Browser Bridge phase;
+- writing to the real ChatGPT / Claude.ai project chat;
+- answering INBOX;
+- reading INBOX from the bridge;
+- writing any `D-NNNN-X = N` response;
+- Telegram configuration;
+- n8n runtime modification;
+- Ollama install or model pull;
+- Cursor CLI/headless execution;
+- Gate 7;
+- provider API;
+- API key creation;
+- billing;
+- app source modification;
+- Apps Script deploy;
+- tag;
+- rollback.
+
+Even if Option 1 is approved, the project-chat Browser Bridge phase remains a separate future gate.
+
+---
 
 ---
 

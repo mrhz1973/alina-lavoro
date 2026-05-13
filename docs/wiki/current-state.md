@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0150 — Browser Bridge Dry-Run Implementation (2026-05-13) — local Python stdlib script; writes to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; `aggio` only; rejects DP-like messages; idempotency + rate-limit; no browser/ChatGPT/INBOX/network; sandbox + project-chat gated |
+| Last completed | 0151 — Browser Bridge Sandbox Gate Decision Packet (2026-05-13) — docs-only; D-0151-A pending in `docs/INBOX.md` (`## Pending`); sandbox gate NOT opened; no browser automation; INBOX: 1 pending (D-0151-A), 1 decided (D-0148-A) |
 | Queue | `docs/tasks/queue/` |
 
 ---

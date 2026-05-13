@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0150** — Browser Bridge Dry-Run Implementation (2026-05-13) — local Python stdlib dry-run script; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; allows `aggio` only; rejects DP-like messages; idempotency + rate-limit; no browser / no ChatGPT write / no INBOX / no network; sandbox + project-chat remain gated |
+| Last completed | **0151** — Browser Bridge Sandbox Gate Decision Packet (2026-05-13) — docs-only; created pending D-0151-A in `docs/INBOX.md`; 3 options (open sandbox / defer / reject); sandbox gate NOT opened; no browser automation; no runtime; INBOX now has 1 pending decision |
 | Queue location | `docs/tasks/queue/` |
 
 ---

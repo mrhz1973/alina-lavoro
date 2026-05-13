@@ -88,7 +88,7 @@ The table below lists candidate gates currently visible from the design corpus. 
 | # | Candidate | Category | State | Why this state | Must remain gated? |
 |---|-----------|----------|-------|----------------|---------------------|
 | A | **Browser Bridge dry-run** (local script writes to a local test file, no browser) | local runtime | **dry-run implemented** — task 0150 completed (2026-05-13); `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; no browser; no ChatGPT/Claude.ai write; no INBOX read/answer; no network; Decision Packet `D-0148-A = 1` (task 0149) opened the gate. Sandbox (B) is the natural next phase — requires user intent and a new DP. | Dry-run phase complete. Sandbox phase still gated. | Yes |
-| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **deferred** — promote to `candidate` only after user intent explicitly confirmed | Dry-run (A) succeeded (task 0150). Sandbox introduces a real browser context — larger blast radius. Do not auto-promote per Section 9 update protocol. | Yes |
+| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **Decision Packet pending** — `D-0151-A` created in `docs/INBOX.md` (task 0151, 2026-05-13); sandbox gate NOT yet open; awaiting user response; do not promote until `D-0151-A` is decided | Dry-run (A) succeeded (task 0150). D-0151-A presents 3 options. Sandbox gate opens only if user responds `D-0151-A = 1` and it is recorded in `## Decided`. | Yes |
 | C | **Browser Bridge project chat write `aggio` only** (script writes "aggio" to actual Claude.ai / ChatGPT) | browser bridge runtime | **deferred** | Cannot proceed until sandbox succeeds. Final phase of the 3-phase MVP. **Must never answer INBOX** (Hard Constraint #4). | Yes |
 | D | **Telegram notifier Mode A** (bot creation, token in n8n vault, first message) | Telegram runtime | **candidate** (not first if API key footprint is undesirable) | Functional value (INBOX-pending notifications), but introduces a new API key and a new external runtime channel. Lower priority than Bridge dry-run. Source: `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` Mode A. | Yes |
 | E | **n8n-to-local-bridge trigger** (n8n calls into local bridge endpoint when a task completes) | n8n + local runtime integration | **deferred** | Cannot proceed until Bridge dry-run/sandbox exists. Requires a local listener and an n8n outbound action — larger blast radius. | Yes |
@@ -108,25 +108,11 @@ The table below lists candidate gates currently visible from the design corpus. 
 
 **Candidate A (Browser Bridge dry-run) is now implemented** (task 0150, 2026-05-13).
 
-If — and only if — the orchestrator/user decides to open a new gate, the natural next candidate is:
+**Candidate B (Browser Bridge sandbox) has a pending Decision Packet:** `D-0151-A` is in `docs/INBOX.md` under `## Pending` (task 0151, 2026-05-13).
 
-**B. Browser Bridge sandbox.**
+The sandbox gate (B) is **not open**. It opens only if the user responds `D-0151-A = 1` and that response is recorded in `## Decided`.
 
-**Reason:**
-- Dry-run (A) succeeded: `aggio`-only message, local file, no browser, no ChatGPT write, idempotency and rate-limit verified.
-- Sandbox is the next phase: runs the script against a throwaway browser session.
-- No provider API, no new billing, no INBOX read/answer.
-- No app, no deploy, no tag, no rollback.
-- Validates the full pipeline before project-chat phase (C).
-
-**This recommendation is NOT authorization.** It is a ranking. If the user decides to proceed:
-
-1. The orchestrator MUST use the 0146 playbook to draft a real Decision Packet for B.
-2. The DP MUST be placed in `docs/INBOX.md` under `## Pending` with all 13 canonical DP fields and INBOX header fields.
-3. The user MUST respond manually with `D-NNNN-X = N | defer | skip | retry`.
-4. Only after the response is recorded in `## Decided` may the implementer prompt be generated.
-
-Until those four steps complete, the Browser Bridge sandbox gate (B) is **not open**.
+Until `D-0151-A` is decided, no sandbox implementation prompt may be generated.
 
 ---
 
