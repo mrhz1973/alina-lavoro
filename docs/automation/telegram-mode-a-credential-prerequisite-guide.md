@@ -183,6 +183,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 - No Telegram message was sent.
 - Workflow creation / test message / schedule activation remain separately gated.
 
+**Workflow creation gate (updated task 0165, 2026-05-13):** `D-0165-A = 1` recorded. This opens only the future n8n workflow creation gate. The credential guide remains the secret-handling boundary. No secrets in repo. Test message requires a separate future explicit gate. Schedule activation requires a separate future explicit gate.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

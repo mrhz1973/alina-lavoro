@@ -58,6 +58,104 @@ _No pending decisions._
 
 ## Decided
 
+### D-0165-A — Open n8n Telegram notifier workflow creation gate
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0165-record-n8n-telegram-notifier-workflow-creation-gate-decision
+**source_document:** docs/automation/telegram-mode-a-completion-notification-mvp.md
+**response:** 1
+**decided_at:** 2026-05-13
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0165-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0161 created docs-only MVP scaffolding for Telegram Mode A completion notification.
+Task 0162 created the credential prerequisite guide.
+Task 0163 recorded `D-0163-A = 1` (manual credential prerequisite gate open).
+Task 0164 recorded user-reported completion: bot exists, `telegram_alina_notifier` credential in n8n tested OK, chat id saved privately; no token/chat id in repo.
+
+The next step — creating the n8n notifier workflow — is an n8n runtime modification. Runtime gates require explicit human decision per project policy.
+
+## Perché serve decisione
+
+Workflow creation is an n8n runtime modification. Even a manual user-supervised UI creation requires an explicit gate before any runtime step begins.
+
+## Opzioni
+
+1. **Open only workflow creation gate** — authorize future step-by-step user-supervised n8n UI creation of `TEST - Alina task completion Telegram notifier`; credential referenced by name only; workflow kept manual-safe; no test message; no Schedule Trigger.
+2. **Defer workflow creation** — keep Telegram at credential-only state; no n8n workflow created; return to this gate later.
+3. **Cancel Telegram Mode A path** — block Telegram implementation entirely until explicit future reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1. The credential is in place. Workflow creation is the narrowest safe next step: supervised n8n UI only, no test message, no schedule. Scope is narrow and reversible (workflow can be deleted from n8n UI at any time).
+
+## Rischio principale
+
+Scope creep from workflow creation toward test message or schedule activation without separate gates. Each must remain separately gated.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; workflow creation is a future manual user step.
+- n8n: no workflow created by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After workflow creation and future test/schedule gates, Telegram Mode A may reduce manual checking burden.
+
+## Scelta richiesta
+
+`D-0165-A = 1` per aprire solo il gate creazione workflow n8n notifier.
+`D-0165-A = 2` per rimandare.
+`D-0165-A = 3` per annullare il percorso Telegram.
+
+## Cosa succede dopo la scelta
+
+If `D-0165-A = 1`, user may proceed with step-by-step supervised n8n UI workflow creation. Test message requires a separate future gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- sending any Telegram test message;
+- enabling Schedule Trigger;
+- making the workflow active/published for automatic notifications;
+- modifying the existing queue reader workflow;
+- deleting any existing workflow;
+- exporting/importing workflow JSON with secrets;
+- committing secrets;
+- using provider API LLM;
+- introducing new billing;
+- modifying the app;
+- deploy/tag/rollback;
+- Browser Bridge real project-chat;
+- Ollama runtime;
+- Cursor CLI/headless runner.
+
+## Decision outcome
+
+Recorded by task 0165 on 2026-05-13: user response `D-0165-A = 1`.
+This opens only the n8n Telegram notifier workflow creation gate.
+It authorizes future user-supervised step-by-step n8n UI creation of `TEST - Alina task completion Telegram notifier`, with credential referenced by name only (`telegram_alina_notifier`), workflow kept manual-safe and not automatically active.
+No runtime was performed by this task. No workflow was created by this task.
+Test message requires a separate future explicit gate. Schedule activation requires a separate future explicit gate.
+No token or chat id stored in repo. No provider API LLM. No new billing. No app/deploy/tag/rollback.
+
+---
+
 ### D-0163-A — Open Telegram credential prerequisite manual gate
 
 **inbox_status:** decided

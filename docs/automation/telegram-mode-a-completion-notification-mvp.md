@@ -241,16 +241,19 @@ The future implementer must stop immediately and report — without executing �
 
 ## 13. Next implementation phases
 
-Task sequence (updated task 0163, 2026-05-13):
+Task sequence (updated task 0165, 2026-05-13):
 
 | Phase | Task | Type | Description |
 |-------|------|------|-------------|
 | Credential prerequisite guide | 0162 ✅ | docs-only | Credential prerequisite guide created: `docs/automation/telegram-mode-a-credential-prerequisite-guide.md` |
 | Credential prerequisite gate | 0163 ✅ | docs-only | `D-0163-A = 1` recorded; manual credential prerequisite gate open |
 | Manual credential prerequisite | 0164 ✅ | docs-only record | User reported: bot exists, `telegram_alina_notifier` credential in n8n tested OK, chat id saved privately; no token/chat id in repo |
-| n8n workflow creation | TBD | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; no exported JSON committed unless fully redacted; requires separate explicit gate |
-| Validation series | TBD | n8n UI (user) + Claude Code docs | Run testing ladder §9 steps 1–7 in order; stop at first failure; session record documents outcome |
-| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; observe one quiet cycle; update LLMS.md, current-state.md, candidate-gate-backlog.md with MVP active status |
+| Workflow creation gate decision | 0165 ✅ | docs-only | `D-0165-A = 1` recorded; n8n notifier workflow creation gate open |
+| n8n workflow creation | TBD | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; credential by name only; workflow kept manual-safe; allowed by `D-0165-A = 1` — no test message; no exported JSON committed unless fully redacted |
+| Validation / test message | TBD | n8n UI (user) + Claude Code docs | Run testing ladder §9; separately gated; requires explicit future gate before any test message is sent |
+| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; separately gated; observe one quiet cycle; update docs |
+
+**Note:** `D-0165-A = 1` opens workflow creation only. No Telegram test message is authorized. No Schedule Trigger activation is authorized. Both remain separately gated.
 
 **Critical files for future implementation tasks to read:**
 

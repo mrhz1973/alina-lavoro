@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0164** — Record Telegram Manual Credential Prerequisite Completion (2026-05-13) — docs-only; user reported: bot exists, n8n credential `telegram_alina_notifier` exists and connection test succeeded, chat id saved privately; no token/chat id in repo; no n8n workflow; no Telegram message; no Schedule Trigger; no provider API LLM; no new LLM billing; INBOX: 0 pending, 5 decided; Gate 7 closed |
+| Last completed | **0165** — Record n8n Telegram Notifier Workflow Creation Gate Decision (2026-05-13) — docs-only; `D-0165-A = 1` recorded; n8n notifier workflow creation gate open; test message, schedule activation, and active notifications remain separately gated; no runtime performed by implementer; no n8n workflow created/modified/exported; no Telegram test message sent; no token/chat id in repo; no provider API LLM; no new billing; INBOX: 0 pending, 6 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
