@@ -46,8 +46,8 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0133** — Ollama Classifier/Planner Feasibility Post-Wiki (2026-05-12) |
-| Next planned | **0134** — Windows Ollama Local Preflight (queued, docs-only preparation completed 2026-05-13) — runtime execution requires explicit manual gate; user-reported local state: Ollama 0.23.2 installed, qwen3:14b present; future gate is validation/documentation, not initial installation; target: Windows workstation (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria |
+| Last completed | **0134** — Windows Ollama Local Preflight manual validation (2026-05-13) — Ollama 0.23.2 + qwen3:14b validated locally; JSON strict works via local API format=json, not CLI; no n8n integration yet; ZERO API intact |
+| Next planned | No automatic runtime step; potential future docs-only local classifier wrapper / qwen-alina profile design, or docs/INBOX.md debt, only as separate task |
 | Queue location | `docs/tasks/queue/` |
 
 ---

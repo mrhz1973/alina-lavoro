@@ -5,7 +5,7 @@
 **Type:** runtime-gated-preflight  
 **Scope:** local-ai / low-touch / no-api  
 **Runtime:** future explicit gate required  
-**Status:** queued (docs-only preparation)
+**Status:** manual runtime validation completed; no integration authorized
 
 ---
 
@@ -49,6 +49,251 @@ When the runtime gate opens, the preflight should start with validation/document
 
 **Technical note (future option, not executed now):**
 Ollama supports custom models through `Modelfile` with instructions such as `FROM`, `PARAMETER`, and `SYSTEM`. In the future, a local custom model may be created from qwen3:14b, for example with low temperature and project-specific rules. Do not create that Modelfile now. Record this as a future option, not as an executed implementation.
+
+---
+
+## Manual Runtime Validation Results — 2026-05-13
+
+**Runtime gate was manually opened by the user in the orchestrator chat. The following validation was executed manually by the user in PowerShell. This implementer task only documents those pasted results.**
+
+### 1. Ollama Version
+
+Command executed by user:
+```
+ollama --version
+```
+
+Output:
+```
+ollama version is 0.23.2
+```
+
+**Result:** Ollama 0.23.2 confirmed on Windows.
+
+### 2. Ollama Model List
+
+Command executed by user:
+```
+ollama list
+```
+
+Output:
+```
+NAME         ID              SIZE      MODIFIED
+qwen3:14b    bdbd181c33f2    9.3 GB    About an hour ago
+```
+
+**Result:** qwen3:14b is present (9.3 GB). No other models installed.
+
+### 3. GPU / Driver / CUDA
+
+Command executed by user:
+```
+nvidia-smi
+```
+
+Relevant output:
+- NVIDIA-SMI 591.86
+- Driver Version: 591.86
+- CUDA Version: 13.1
+- GPU: NVIDIA GeForce RTX 3060
+- VRAM: 12288 MiB
+- Runtime baseline before tests showed around 1992 MiB used
+- Ollama processes were visible while the model was active
+
+**Result:** RTX 3060 12 GB with driver 591.86 and CUDA 13.1 confirmed.
+
+### 4. First CLI Test
+
+Command used:
+```
+ollama run qwen3:14b "You are a local routing classifier. Reply only with valid JSON. Classify this task: 'Update a Markdown roadmap file only, no runtime, no deploy'. Use fields: task_type, risk_level, needs_runtime_gate, recommended_implementer."
+```
+
+Result:
+- Model responded
+- It printed a "Thinking..." section
+- Final JSON content was semantically correct
+- Elapsed seconds: 24.94
+- **Conclusion:** Not suitable for strict JSON automation because thinking text appears in CLI output
+
+### 5. CLI Test with --think=false
+
+Command used:
+```
+ollama run qwen3:14b --think=false "You are a local routing classifier. Reply only with valid minified JSON, no markdown, no explanation. Classify this task: 'Update a Markdown roadmap file only, no runtime, no deploy'. Fields: task_type, risk_level, needs_runtime_gate, recommended_implementer."
+```
+
+Result:
+- Fast: 1.44 seconds
+- Output semantically correct but malformed/duplicated JSON
+- Captured output failed ConvertFrom-Json validation
+- Error example: `INVALID JSON Expected ':' or '}'`
+- **Conclusion:** Do not use `ollama run` CLI for JSON strict automation
+
+### 6. PowerShell Captured CLI Validation
+
+Result:
+- qwen3:14b --think=false
+- Elapsed seconds: 1.34
+- JSON invalid because output duplicated/interrupted: `{"task_type":"file_update","risk_level":"low","needs_runtime_gate":false,"r{"task_type":"file_update",...`
+- VRAM around 11472 MiB used
+- GPU utilization around 96%
+- Temperature around 62C
+
+**Conclusion:** CLI output is unreliable for strict JSON automation.
+
+### 7. Local Ollama HTTP API JSON Test
+
+Endpoint:
+```
+http://localhost:11434/api/generate
+```
+
+Parameters:
+- model = qwen3:14b
+- stream = false
+- think = false
+- format = json
+
+Result:
+- Valid JSON
+- Elapsed seconds: 3.92
+- Output:
+  ```json
+  {
+    "task_type": "documentation_update",
+    "risk_level": "low",
+    "needs_runtime_gate": false,
+    "recommended_implementer": "developer"
+  }
+  ```
+- VRAM around 11429 MiB used
+- GPU utilization after test around 9%
+- Temperature around 53C
+
+**Conclusion:** Local HTTP API with format=json is the correct path for future classifier use.
+
+### 8. Project-Aware Docs-Only Classifier Test
+
+Task classified:
+```
+Create docs/INBOX.md for future Decision Packets. Docs-only. No n8n runtime. No app changes. No deploy. No API.
+```
+
+Result:
+- Valid JSON
+- Elapsed seconds: 2.6
+- Output:
+  ```json
+  {
+    "task_type": "docs-only",
+    "risk_level": "low",
+    "needs_runtime_gate": false,
+    "recommended_implementer": "any",
+    "reason_short": "Docs-only change with no runtime, app, deploy, or API involvement."
+  }
+  ```
+- VRAM around 11434 MiB used
+- GPU utilization around 94%
+- Temperature around 65C
+
+**Conclusion:** qwen3:14b understands project docs-only/no-gate logic.
+
+### 9. Sensitive Gate Classifier Test
+
+Task classified:
+```
+Modify the n8n workflow to call OpenAI API from Telegram messages and deploy the workflow automatically.
+```
+
+Result:
+- Valid JSON
+- Elapsed seconds: 2.97
+- Output:
+  ```json
+  {
+    "task_type": "modify n8n workflow and deploy",
+    "risk_level": "high",
+    "needs_runtime_gate": true,
+    "recommended_implementer": "senior developer",
+    "reason_short": "Involves API keys, external API calls, and deployment automation which require runtime/sensitive gate approval."
+  }
+  ```
+
+**Conclusion:** qwen3:14b correctly identifies provider API + n8n runtime + deploy automation as high-risk and runtime-gated.
+
+### 10. Model Unload / Cleanup
+
+Commands executed by user:
+```
+ollama stop qwen3:14b
+ollama ps
+```
+
+Result:
+- `ollama ps` returned empty table (no processes)
+- qwen3:14b no longer loaded
+
+### 11. Final GPU Idle State
+
+Command:
+```
+nvidia-smi --query-gpu=name,memory.total,memory.used,utilization.gpu,temperature.gpu --format=csv
+```
+
+Output:
+```
+name, memory.total [MiB], memory.used [MiB], utilization.gpu [%], temperature.gpu
+NVIDIA GeForce RTX 3060, 12288 MiB, 1971 MiB, 2 %, 52
+```
+
+**Conclusion:** GPU returned to idle/baseline after stopping qwen3:14b. No persistent heavy Ollama load remained.
+
+---
+
+## Validation Summary
+
+**Windows Ollama Local Preflight manually validated.**
+
+- Ollama 0.23.2 works on Windows
+- qwen3:14b is installed/present (9.3 GB)
+- RTX 3060 12 GB supports qwen3:14b for short local classification tests
+- qwen3:14b is VRAM-heavy, using around 11.4 GB while active
+- It should be used in short bursts, not as a continuous worker while the user is actively working
+- CLI `ollama run` is not reliable for JSON strict automation because output may include thinking or duplicated/malformed JSON
+- Local Ollama HTTP API is reliable for strict JSON when using:
+  - endpoint: http://localhost:11434/api/generate
+  - stream=false
+  - think=false
+  - format=json
+- qwen3:14b correctly classifies docs-only low-risk tasks
+- qwen3:14b correctly flags OpenAI API / provider API / n8n runtime / deploy automation as high-risk and runtime-gated
+- No n8n/Ollama automation was created
+- No custom Modelfile/profile was created
+- No embeddings pipeline was created
+- No vector DB was created
+- No provider API was used or authorized
+- No API key was created
+- No billing or recurring cost was created
+- ZERO API policy remains intact
+
+**qwen3:14b may be considered suitable as local:**
+- token-efficiency assistant
+- router/classifier
+- prompt compressor
+- task risk scorer
+- Decision Packet draft helper
+- LLMS/wiki summarizer
+
+**qwen3:14b must NOT be treated as:**
+- autonomous main implementer
+- Claude Code/Cursor/Windsurf replacement
+- deploy tool
+- app modifier
+- unsupervised runner
+
+**No integration has been authorized.** This preflight only validated local feasibility. Any future n8n/Ollama integration requires a separate explicit manual gate.
 
 ---
 
