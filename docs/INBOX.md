@@ -52,7 +52,112 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-No pending decisions.
+### D-0154-A — Open Browser Bridge project-chat write gate
+
+**inbox_status:** pending
+**created_at:** 2026-05-13
+**source_task:** 0154-browser-bridge-project-chat-gate-decision-packet
+**source_document:** docs/automation/candidate-gate-backlog.md
+**response:**
+**decided_at:**
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0154-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0150 implemented the Browser Bridge dry-run.
+Task 0153 implemented the Browser Bridge sandbox with local `file://` sandbox only, `aggio` allowlist, idempotency, rate-limit, invalid-message rejection, and safety flags confirming no project chat, no ChatGPT / Claude.ai, no INBOX, and no external network.
+
+The remaining Browser Bridge phase is **project-chat write**: a future bridge that could write only the literal message `aggio` into the real ChatGPT / Claude.ai orchestration chat after an implementer task completes.
+
+This is the highest-risk Browser Bridge phase because it touches the real orchestration chat.
+
+## Perché serve decisione
+
+Project-chat write would move from local/sandbox validation to the real assistant conversation.
+Even if the bridge is limited to `aggio`, it could affect project orchestration if mis-scoped, duplicated, triggered at the wrong time, or pointed at the wrong browser context.
+
+Project rules require a separate explicit human gate before any automation writes to the real ChatGPT / Claude.ai project chat.
+
+Without this decision, no project-chat implementation prompt may be generated.
+
+## Opzioni
+
+1. **Open project-chat write gate only** — authorize a future narrow implementation task that may write only the literal message `aggio` to the real ChatGPT / Claude.ai orchestration chat, with strict safeguards: user-controlled target, no INBOX read/answer, no `D-NNNN-X`, no arbitrary text, idempotency, rate-limit, visible logging, fail-closed behavior, and no n8n/Telegram/Ollama/Cursor/API/billing/app/deploy/tag/rollback.
+2. **Defer project-chat write** — keep Browser Bridge at sandbox-only state for now; optionally do more hardening/docs/manual validation before any real chat write.
+3. **Stop Browser Bridge at sandbox for now** — treat dry-run and sandbox as sufficient for the current low-touch phase; keep project-chat automation blocked until a future explicit reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 2.
+The sandbox implementation is complete, but the optional real browser-open path was intentionally skipped in task 0153. Before touching the real project chat, the safer sequence is to defer project-chat write and, if needed, perform a separate manual/local verification or hardening step first.
+
+If the user prefers faster automation, Option 1 can be chosen, but the future implementation must be extremely narrow: `aggio` only, user-controlled visible browser context only, no INBOX, no decision responses, no hidden background action, no arbitrary text, no external provider API, and fail closed if the target chat is not explicitly recognized as the intended project chat.
+
+## Rischio principale
+
+The main risk is that automation writes into the wrong conversation, writes at the wrong time, writes more than `aggio`, or becomes a path for silently answering INBOX or triggering orchestration without human awareness.
+The implementation must therefore be designed as a visible, user-supervised bridge, not an autonomous chat controller.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: only the INBOX decision is added now.
+- Runtime: no runtime in this task; possible real project-chat write runtime only if Option 1 is later recorded as decided and a separate implementation task is generated.
+- Browser Bridge: dry-run and sandbox remain implemented; project-chat remains unimplemented until a future task.
+- INBOX: no bridge read/answer is authorized.
+- n8n: no impact.
+- Telegram: no impact.
+- Ollama / Gate 7: no impact.
+- Cursor CLI / Gate 7: no impact.
+
+## Micro-interazioni umane eliminate
+
+0 immediately.
+If later implemented and validated, project-chat write may reduce the need for the user to manually type `aggio` after task completion. This decision alone does not eliminate micro-interactions.
+
+## Scelta richiesta
+
+Scrivi: `D-0154-A = 1` per aprire solo il gate Browser Bridge project-chat write.
+Scrivi: `D-0154-A = 2` per rimandare.
+Scrivi: `D-0154-A = 3` per fermare per ora il Browser Bridge allo stato sandbox-only.
+In alternativa: `D-0154-A = defer`, `D-0154-A = skip`, oppure `D-0154-A = retry`.
+
+## Cosa succede dopo la scelta
+
+If `D-0154-A = 1` is recorded in `docs/INBOX.md`, the orchestrator may generate a future implementer prompt for a narrow project-chat implementation task. That future task must write only `aggio`, must be visibly user-supervised, must not answer INBOX, must not write any `D-NNNN-X = N` response, must not send arbitrary text, and must fail closed if the target context is not explicitly safe.
+If `D-0154-A = 2` or `defer`, Browser Bridge remains sandbox-only and no project-chat runtime prompt is generated.
+If `D-0154-A = 3` or `skip`, the project-chat write path remains blocked until explicitly reconsidered.
+If `D-0154-A = retry`, the orchestrator reformulates the Decision Packet.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- answering INBOX;
+- reading INBOX from the bridge;
+- writing any `D-NNNN-X = N` response;
+- arbitrary text entry;
+- hidden background chat control;
+- n8n runtime modification;
+- Telegram configuration;
+- Ollama install or model pull;
+- Cursor CLI/headless execution;
+- Gate 7;
+- provider API;
+- API key creation;
+- billing;
+- app source modification;
+- Apps Script deploy;
+- tag;
+- rollback.
+
+Even if Option 1 is approved, any future expansion beyond writing literal `aggio` remains a separate future gate.
 
 ---
 

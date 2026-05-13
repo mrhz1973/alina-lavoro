@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0153** — Browser Bridge Sandbox Implementation (2026-05-13) — `tools/browser-bridge-sandbox/` created (`browser-bridge-sandbox.py`, `sandbox.html`, `README.md`); Python stdlib only; target exclusively local `file://` to `tools/browser-bridge-sandbox/sandbox.html`; throwaway browser context only; `aggio` only; idempotency + rate-limit; forbidden substrings rejected (`chatgpt.com`, `chat.openai.com`, `claude.ai`, `openai.com`, `anthropic.com`); `--no-open` flag validated; optional browser-open run intentionally skipped (automated implementer context); no real ChatGPT/Claude.ai opened; no project chat; no INBOX read/answer; no external network/API/billing; no n8n/Telegram/Ollama/Cursor/Gate 7; no app/deploy/tag/rollback; INBOX: 0 pending |
+| Last completed | **0154** — Browser Bridge Project-Chat Gate Decision Packet (2026-05-13) — docs-only; D-0154-A added to INBOX `## Pending`; asks whether to open project-chat write gate, defer, or stop at sandbox; no gate opened; no project-chat code created; INBOX: 1 pending (D-0154-A), 2 decided |
 | Queue location | `docs/tasks/queue/` |
 
 ---
