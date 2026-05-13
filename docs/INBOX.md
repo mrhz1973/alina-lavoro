@@ -52,14 +52,20 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
+_No pending decisions._
+
+---
+
+## Decided
+
 ### D-0157-A — Open Telegram Mode A completion notification MVP gate
 
-**inbox_status:** pending
+**inbox_status:** decided
 **created_at:** 2026-05-13
 **source_task:** 0157-telegram-mode-a-completion-notification-decision-packet
 **source_document:** docs/automation/telegram-browser-bridge-trigger-coordination-design.md
-**response:**
-**decided_at:**
+**response:** 1
+**decided_at:** 2026-05-13
 **superseded_by:**
 **archive_policy:** keep
 
@@ -121,8 +127,8 @@ Credential handling is also a risk. Any future Telegram token must be handled on
 ## Impatto
 
 - App Alina: no impact.
-- GitHub docs: this task revises an existing pending INBOX decision only.
-- Runtime: no runtime in this task; possible Telegram runtime only if Option 1 is later recorded as decided and a separate implementation task is generated.
+- GitHub docs: this task records the user decision only.
+- Runtime: no runtime in this task; Telegram runtime requires a separate future implementation task.
 - INBOX: remains the source of truth; Telegram must not answer it.
 - Browser Bridge: no change; remains sandbox-only.
 - n8n: no change in this task.
@@ -170,9 +176,28 @@ This decision does not authorize:
 - tag;
 - rollback.
 
----
+## Decision outcome
 
-## Decided
+Recorded by task 0159 on 2026-05-13: user response `D-0157-A = 1`.
+This opens the Telegram Mode A completion notification MVP gate only.
+It authorizes only a future narrow implementation task.
+It does not implement Telegram.
+It does not create a bot.
+It does not create or store a Telegram token.
+It does not configure n8n runtime.
+It does not send Telegram messages.
+It does not answer INBOX.
+It does not create decisions.
+It does not use Browser Bridge.
+It does not use Ollama.
+It does not use Cursor.
+It does not touch app/deploy/tag/rollback.
+It does not use provider API LLM.
+It does not introduce new LLM billing.
+A separate future task/prompt is required to implement the MVP.
+Credential handling must be explicitly secured in the future implementation task and no secret may be committed.
+
+---
 
 ### D-0154-A — Open Browser Bridge project-chat write gate
 
