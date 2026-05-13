@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0149** — Record INBOX Decision D-0148-A (2026-05-13) — docs-only; recorded user response `D-0148-A = 1`; `D-0148-A` moved from `## Pending` to `## Decided` in `docs/INBOX.md` (`response: 1`, `decided_at: 2026-05-13`, `inbox_status: decided`); Browser Bridge dry-run gate now **open for future narrow implementation only** (local script writing to a local test file, no browser, no ChatGPT/Claude.ai write, no INBOX read/answer, no n8n runtime change, no Telegram, no Ollama, no Cursor CLI, no API key, no billing); no Browser Bridge code created; no runtime executed; a separate future task/prompt is required to implement the dry-run; sandbox and project-chat phases remain separate future gates; Gate 7 still closed; Browser Bridge still cannot answer INBOX; INBOX has no pending decisions |
+| Last completed | **0150** — Browser Bridge Dry-Run Implementation (2026-05-13) — local Python stdlib dry-run script; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; allows `aggio` only; rejects DP-like messages; idempotency + rate-limit; no browser / no ChatGPT write / no INBOX / no network; sandbox + project-chat remain gated |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided with response `1` on 2026-05-13 (task 0149) — Browser Bridge dry-run gate open for future narrow implementation only, no runtime executed | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending decisions**; `D-0148-A` decided with response `1` on 2026-05-13 (task 0149) — Browser Bridge dry-run gate open for narrow implementation only, no runtime executed | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
@@ -68,7 +68,8 @@ Building the autonomous low-touch task loop:
 | Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
 | Runtime Gate Checklist / Readiness Matrix | ✅ Created — 23 components mapped; 5 permanent hard constraints; Gate 7 defined (Ollama + Cursor CLI, not yet opened); no runtime | `docs/automation/runtime-gate-checklist-readiness-matrix.md` |
 | Runtime Gate Decision Packet / Gate Request Playbook | ✅ Created — pairs with readiness matrix; 8-step gate lifecycle; 13 gated categories; 7 DP variants with `D-EXAMPLE-*` reserved IDs; 8 anti-patterns; no runtime | `docs/automation/runtime-gate-decision-packet-playbook.md` |
-| Candidate Gate Backlog / Gate Queue Map | ✅ Created — planning backlog ranking future gate candidates; 6 states; 11 prioritization criteria; 14 candidates A–N; recommended next = Browser Bridge dry-run; 8 anti-creep rules; no INBOX pending added; no gate opened | `docs/automation/candidate-gate-backlog.md` |
+| Candidate Gate Backlog / Gate Queue Map | ✅ Created — planning backlog; candidate A (Browser Bridge dry-run) **implemented task 0150**; recommended next = Browser Bridge sandbox (B); 14 candidates A–N; 8 anti-creep rules | `docs/automation/candidate-gate-backlog.md` |
+| Browser Bridge Dry-Run | ✅ **Implemented** (task 0150) — `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; Python stdlib only; `aggio` only; idempotency + rate-limit; no browser/ChatGPT/INBOX/network; sandbox gate remains gated | `tools/browser-bridge-dry-run/README.md` |
 
 ---
 

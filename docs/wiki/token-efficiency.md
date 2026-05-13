@@ -52,6 +52,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Runtime gate checklist / which components are gated? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 | Runtime gate Decision Packet / gate request playbook? | `docs/automation/runtime-gate-decision-packet-playbook.md` | — |
 | Candidate gate backlog / which gate might be next? | `docs/automation/candidate-gate-backlog.md` | — |
+| Browser Bridge dry-run tool (implemented task 0150)? | `tools/browser-bridge-dry-run/README.md` | `docs/automation/candidate-gate-backlog.md` |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
 | Optional personal cockpit / Obsidian note? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |

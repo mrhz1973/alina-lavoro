@@ -3,7 +3,7 @@
 **Task:** 0147
 **Date:** 2026-05-13
 **Type:** docs-only / low-touch-loop planning
-**Status:** active reference document
+**Status:** active reference document — **updated task 0150 (2026-05-13): candidate A dry-run implemented**
 
 ---
 
@@ -87,8 +87,8 @@ The table below lists candidate gates currently visible from the design corpus. 
 
 | # | Candidate | Category | State | Why this state | Must remain gated? |
 |---|-----------|----------|-------|----------------|---------------------|
-| A | **Browser Bridge dry-run** (local script writes to a local test file, no browser) | local runtime | **gate open for future narrow implementation only** — Decision Packet `D-0148-A` decided with option 1 on 2026-05-13 (task 0149); dry-run **NOT** implemented or active; no runtime executed; a separate future task/prompt is required to implement the dry-run | Narrow scope, reversible, no browser, no ChatGPT write, no API key, no billing, validates the trigger pipeline. Safest first runtime-like step. Source: `docs/automation/local-browser-bridge-preflight-design.md` Section 6 MVP path. | Yes |
-| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **deferred** | Cannot proceed until dry-run succeeds. Introduces a real browser context — larger blast radius. | Yes |
+| A | **Browser Bridge dry-run** (local script writes to a local test file, no browser) | local runtime | **dry-run implemented** — task 0150 completed (2026-05-13); `tools/browser-bridge-dry-run/browser-bridge-dry-run.py`; writes only to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; no browser; no ChatGPT/Claude.ai write; no INBOX read/answer; no network; Decision Packet `D-0148-A = 1` (task 0149) opened the gate. Sandbox (B) is the natural next phase — requires user intent and a new DP. | Dry-run phase complete. Sandbox phase still gated. | Yes |
+| B | **Browser Bridge sandbox** (script runs against a throwaway browser session) | browser bridge runtime | **deferred** — promote to `candidate` only after user intent explicitly confirmed | Dry-run (A) succeeded (task 0150). Sandbox introduces a real browser context — larger blast radius. Do not auto-promote per Section 9 update protocol. | Yes |
 | C | **Browser Bridge project chat write `aggio` only** (script writes "aggio" to actual Claude.ai / ChatGPT) | browser bridge runtime | **deferred** | Cannot proceed until sandbox succeeds. Final phase of the 3-phase MVP. **Must never answer INBOX** (Hard Constraint #4). | Yes |
 | D | **Telegram notifier Mode A** (bot creation, token in n8n vault, first message) | Telegram runtime | **candidate** (not first if API key footprint is undesirable) | Functional value (INBOX-pending notifications), but introduces a new API key and a new external runtime channel. Lower priority than Bridge dry-run. Source: `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` Mode A. | Yes |
 | E | **n8n-to-local-bridge trigger** (n8n calls into local bridge endpoint when a task completes) | n8n + local runtime integration | **deferred** | Cannot proceed until Bridge dry-run/sandbox exists. Requires a local listener and an n8n outbound action — larger blast radius. | Yes |
@@ -106,27 +106,27 @@ The table below lists candidate gates currently visible from the design corpus. 
 
 ## 6. Recommended next gate candidate
 
-If — and only if — the orchestrator/user decides to open a new gate, the recommendation is:
+**Candidate A (Browser Bridge dry-run) is now implemented** (task 0150, 2026-05-13).
 
-**A. Browser Bridge dry-run.**
+If — and only if — the orchestrator/user decides to open a new gate, the natural next candidate is:
+
+**B. Browser Bridge sandbox.**
 
 **Reason:**
-- Narrow scope: writes to a local test file, no browser involved.
-- Reversible: the script can be deleted; no persistent runtime state.
-- No browser execution, no Claude.ai write, no INBOX read, no INBOX response.
-- No new API key, no new billing, no provider API.
-- No app, no deploy, no tag, no rollback impact.
-- Validates the trigger pipeline used later by sandbox and project chat phases.
-- High value to the low-touch loop because it is the first concrete runtime-like step in the Auto-Aggio activation chain.
+- Dry-run (A) succeeded: `aggio`-only message, local file, no browser, no ChatGPT write, idempotency and rate-limit verified.
+- Sandbox is the next phase: runs the script against a throwaway browser session.
+- No provider API, no new billing, no INBOX read/answer.
+- No app, no deploy, no tag, no rollback.
+- Validates the full pipeline before project-chat phase (C).
 
 **This recommendation is NOT authorization.** It is a ranking. If the user decides to proceed:
 
-1. The orchestrator MUST use the 0146 playbook to draft a real Decision Packet (e.g. `D-0147-A` based on a future task ID, or a future task-specific ID — **not** `D-EXAMPLE-Bridge-DryRun`, which is reserved for documentation in the playbook).
+1. The orchestrator MUST use the 0146 playbook to draft a real Decision Packet for B.
 2. The DP MUST be placed in `docs/INBOX.md` under `## Pending` with all 13 canonical DP fields and INBOX header fields.
 3. The user MUST respond manually with `D-NNNN-X = N | defer | skip | retry`.
 4. Only after the response is recorded in `## Decided` may the implementer prompt be generated.
 
-Until those four steps complete, the Browser Bridge dry-run gate is **not open**.
+Until those four steps complete, the Browser Bridge sandbox gate (B) is **not open**.
 
 ---
 
@@ -148,7 +148,7 @@ This document does NOT decide any of the following:
 - ❌ Deploy Apps Script (`clasp push`, `npm run deploy`)
 - ❌ Create any tag (`git tag`, `git push --tags`)
 - ❌ Roll back to any prior stable tag
-- ❌ Execute the Browser Bridge in any phase (dry-run, sandbox, project chat)
+- ❌ Execute the Browser Bridge sandbox (B) or project-chat (C) phases
 - ❌ Generate any runtime prompt
 - ❌ Add any pending Decision Packet to `docs/INBOX.md`
 
@@ -167,7 +167,7 @@ The candidate backlog has been seen before in other projects as an unintentional
 | 3 | **`recommended next` is not a gate opening.** It is the orchestrator's proposal for what to discuss first — nothing more. |
 | 4 | **No runtime prompt may be generated from this document alone.** Generating an implementer prompt for any candidate requires the full 0146 lifecycle (DP in INBOX → user response → recorded decision). |
 | 5 | **Every runtime candidate still needs a real Decision Packet and a recorded INBOX decision.** The example DPs in the 0146 playbook (`D-EXAMPLE-*`) are documentation, not requests. |
-| 6 | **No bundling.** A "recommended next" of A does not bring B, C, or any related candidate along with it. Each gate is a separate DP. |
+| 6 | **No bundling.** A "recommended next" of B does not bring C, or any related candidate along with it. Each gate is a separate DP. |
 | 7 | **No Obsidian shortcut.** A note in a personal Obsidian vault (see 0145) does not change any candidate's state or substitute for an INBOX decision. |
 | 8 | **No silent state change.** Changing a candidate's state in this table requires an explicit task or an explicit orchestrator decision recorded in a session file. |
 
@@ -210,6 +210,7 @@ This backlog is a living planning document. Update it when, and only when, one o
 | `docs/INBOX.md` | Human Decision Inbox (where real DPs are placed) |
 | `docs/ORCHESTRATOR_RULES.md` | Sensitive gates list (authoritative) |
 | `docs/AI_RULES.md` | Implementer rules, no provider APIs by default |
+| `tools/browser-bridge-dry-run/README.md` | Browser Bridge dry-run tool (candidate A — implemented task 0150) |
 
 ---
 

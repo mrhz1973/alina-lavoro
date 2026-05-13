@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0149 — Record INBOX Decision D-0148-A (2026-05-13) — docs-only; user response `D-0148-A = 1` recorded; `D-0148-A` moved from `## Pending` to `## Decided` in `docs/INBOX.md` (`response: 1`, `decided_at: 2026-05-13`); Browser Bridge dry-run gate open for future narrow implementation only (local script, no browser, no ChatGPT/Claude.ai write, no INBOX read/answer, no n8n/Telegram/Ollama/Cursor/API/billing); no runtime executed; sandbox and project-chat remain separate future gates; Gate 7 still closed; INBOX has no pending decisions |
+| Last completed | 0150 — Browser Bridge Dry-Run Implementation (2026-05-13) — local Python stdlib script; writes to `.local/browser-bridge-dry-run/dry-run-output.jsonl`; `aggio` only; rejects DP-like messages; idempotency + rate-limit; no browser/ChatGPT/INBOX/network; sandbox + project-chat gated |
 | Queue | `docs/tasks/queue/` |
 
 ---
