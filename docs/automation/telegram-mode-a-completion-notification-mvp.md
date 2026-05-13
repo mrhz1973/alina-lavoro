@@ -263,10 +263,13 @@ Task sequence (updated task 0167, 2026-05-13):
 | Idempotency implementation checklist | 0179 ✅ | docs-only | `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` created; step-by-step pre-runtime checklist; does not authorize runtime; requires D-0180-A |
 | Idempotency runtime gate Decision Packet | 0180 ✅ | docs-only | D-0180-A pending Decision Packet created in `docs/INBOX.md`; no decision made; pending user response |
 | Cross-references updated | 0181 ✅ | docs-only | LLMS.md, wiki, runbook, handoff, candidate-gate-backlog, roadmap updated |
-| Idempotency/state-store implementation | TBD (D-0180-A) | n8n UI + docs-only | Implement idempotency key, state-store, send/skip branch; no Schedule Trigger; per design and checklist |
+| D-0180-A = 1 decision recorded | 0182 ✅ | docs-only | `D-0180-A = 1` recorded (task 0182, 2026-05-13); D-0180-A moved from Pending to Decided; idempotency/state-store runtime gate open; no runtime; no Schedule Trigger |
+| Runtime UI handoff created | 0183 ✅ | docs-only | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` created; defines safe starting sequence; first step is inspection only (Data Store availability); no runtime |
+| Cross-references updated | 0184 ✅ | docs-only | LLMS.md, wiki, runbook, design, checklist, candidate-gate-backlog, roadmap updated; D-0180-A = 1 reflected throughout |
+| Idempotency/state-store implementation | TBD (post-D-0180-A) | n8n UI + docs-only | One-step-at-a-time supervised implementation; start with Data Store inspection; then per design and checklist; no Schedule Trigger |
 | Schedule activation + session record | TBD (post-idempotency gate) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and validated; separately gated |
 
-**Note (updated batch 0177–0181, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0173-A = 3 (task 0177). No Schedule Trigger is active. Idempotency design and checklist created (tasks 0178–0179). D-0180-A **pending** — idempotency/state-store runtime implementation gate. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
+**Note (updated batch 0182–0184, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred. D-0180-A = 1 decided (task 0182) — idempotency/state-store runtime gate is now open. Runtime UI handoff created (task 0183): `docs/automation/telegram-idempotency-runtime-ui-handoff.md`. Next runtime step is inspection only: check Data Store/Data Table availability in n8n, then stop and report before adding any nodes. No Schedule Trigger. No automatic INBOX responses. No provider API LLM. Chat id must not be recorded in repo/docs/AI chat.
 
 **Critical files for future implementation tasks to read:**
 

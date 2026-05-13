@@ -52,14 +52,20 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
+_No pending decisions._
+
+---
+
+## Decided
+
 ### D-0180-A — Open Telegram notifier idempotency/state-store runtime implementation gate
 
-**inbox_status:** pending
+**inbox_status:** decided
 **created_at:** 2026-05-13
 **source_task:** 0180-create-idempotency-runtime-implementation-decision-packet
 **source_document:** docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md
-**response:**
-**decided_at:**
+**response:** 1
+**decided_at:** 2026-05-13
 **archive_policy:** keep
 
 ---
@@ -139,9 +145,36 @@ If option 1 is chosen, the scope is limited to:
 - fail-closed paths;
 - workflow kept inactive (no Schedule Trigger).
 
----
+## Decision outcome
 
-## Decided
+Recorded by task 0182 on 2026-05-13: user response `D-0180-A = 1`.
+
+User selected D-0180-A = 1. The idempotency/state-store runtime implementation gate is open. Scope is limited to idempotency/state-store and duplicate-skip logic only.
+
+**Scope authorized by D-0180-A = 1:**
+- idempotency key computation node in n8n;
+- state-store lookup node (Data Store first choice, static data fallback);
+- send/skip IF branch;
+- state-write node (post-send only, after successful Telegram send);
+- fail-closed paths for all error conditions;
+- workflow kept inactive (manual-trigger only, no Schedule Trigger).
+
+**Scope forbidden (no change from prior state):**
+- No Schedule Trigger activation.
+- No automatic notifications.
+- No queue reader workflow modification.
+- No workflow JSON export/import with secrets.
+- No token or chat id in repo/docs/AI chat.
+- No provider API LLM.
+- No new billing.
+- No app/deploy/tag/rollback.
+- No automatic INBOX responses.
+- No automatic `D-NNNN-X = N` writing.
+- No runtime performed by this docs-only task.
+- Runtime implementation must happen later, one n8n UI step at a time, under ChatGPT supervision.
+- Schedule activation remains a separate gate after idempotency implementation and validation.
+
+**Next runtime micro-step:** open `TEST - Alina task completion Telegram notifier`, confirm inactive/no Schedule Trigger, inspect whether Data Store/Data Table node is available, then stop and report. Do not add nodes yet.
 
 ---
 

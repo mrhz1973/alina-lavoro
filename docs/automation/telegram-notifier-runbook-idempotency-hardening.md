@@ -6,10 +6,11 @@
 **Authorization:** D-0171-A = 3 (schedule deferred; hardening required before any Schedule Trigger)
 **Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A pending runtime gate for idempotency implementation
 
-**Cross-references (added 2026-05-13, batch 0177–0181):**
+**Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184):**
 - Idempotency/state-store implementation design: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` (task 0178)
 - Implementation checklist: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` (task 0179)
-- Pending runtime gate: D-0180-A in `docs/INBOX.md` (task 0180) — must be decided before any n8n implementation step
+- Runtime gate: D-0180-A = 1 decided (task 0182, 2026-05-13) — idempotency/state-store runtime gate is open
+- **Runtime UI handoff** (start here for n8n implementation): `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) — first step is inspection only
 
 ---
 

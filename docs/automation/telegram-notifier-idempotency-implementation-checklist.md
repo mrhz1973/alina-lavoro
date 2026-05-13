@@ -4,7 +4,9 @@
 **Date:** 2026-05-13
 **Type:** docs-only / pre-runtime implementation checklist
 **Authorization prerequisite:** D-0180-A must be decided (opened) before any n8n UI implementation step
-**Status:** checklist only — no runtime performed
+**Status:** checklist only — no runtime performed — **D-0180-A = 1 decided (task 0182, 2026-05-13); this checklist is now active for one-step-at-a-time supervised implementation**
+
+**Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. This checklist may now be followed under one-step-at-a-time ChatGPT supervision. The first step is Section 3.1 (verify topology) and Section 3.2 (check Data Store availability) — inspection only, no new nodes yet. No Schedule Trigger is included in or authorized by this checklist. Schedule activation remains a separate gate after idempotency is implemented and validated. Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md`.
 
 ---
 

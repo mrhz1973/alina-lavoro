@@ -4,7 +4,9 @@
 **Date:** 2026-05-13
 **Type:** docs-only / pre-runtime implementation design
 **Authorization prerequisite:** D-0180-A must be decided before any n8n UI implementation step
-**Status:** design only — no runtime performed
+**Status:** design only — no runtime performed — **D-0180-A = 1 decided (task 0182, 2026-05-13); idempotency/state-store runtime gate is now open**
+
+**Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Future n8n UI implementation of this design is now authorized under one-step-at-a-time supervision. The first runtime micro-step is inspection only: open the workflow, confirm inactive/no Schedule Trigger, check Data Store/Data Table availability, then stop and report. Do not add nodes until inspection result is known. Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md`.
 
 ---
 
