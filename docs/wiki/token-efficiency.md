@@ -52,6 +52,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Runtime gate checklist / which components are gated? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
+| Optional personal cockpit / Obsidian note? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 
 ---
 

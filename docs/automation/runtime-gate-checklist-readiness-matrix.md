@@ -293,6 +293,22 @@ The following n8n actions require a new explicit gate even though n8n runtime is
 
 ---
 
+## Optional personal local cockpit: Obsidian
+
+Obsidian is an **optional** private local notebook for the user. It is **not** part of the official workflow.
+
+| Rule | Detail |
+|------|--------|
+| Source of truth | **GitHub remains the project source of truth.** Obsidian does not replace it. |
+| Permitted use | Drafting prompts; rough ideas; personal procedures; recurring errors/fixes notes; organizing thoughts before they become official decisions. |
+| Forbidden content | No secrets, tokens, API keys, credentials, billing data, OAuth material, or sensitive operational material in the vault. |
+| Official decisions | No decision is official until it is written to GitHub through the normal orchestrator workflow. |
+| Gate bypass | Obsidian does **not** bypass INBOX, Decision Packets, runtime gates, deploy gates, tag gates, rollback gates, or app modification gates. |
+| Classification | Obsidian is **not** runtime, **not** automation, **not** a runner, and **not** source of truth. |
+| Dependency | No official workflow may depend on Obsidian. The project works identically without it. |
+
+---
+
 ## References
 
 | Document | Role |
