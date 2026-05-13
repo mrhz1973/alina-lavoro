@@ -58,6 +58,100 @@ _No pending decisions._
 
 ## Decided
 
+### D-0167-A — Open Telegram node addition gate
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0167-record-telegram-node-addition-gate-decision
+**source_document:** docs/automation/telegram-mode-a-completion-notification-mvp.md
+**response:** 1
+**decided_at:** 2026-05-13
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0167-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0161 created docs-only MVP scaffolding. Task 0162 created the credential prerequisite guide. Task 0163 recorded `D-0163-A = 1`. Task 0164 recorded user-reported credential prerequisite completion. Task 0165 recorded `D-0165-A = 1`, opening the workflow creation gate only. Task 0166 recorded user-reported workflow skeleton creation: `TEST - Alina task completion Telegram notifier` (Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload), no Telegram node.
+
+## Perché serve decisione
+
+Adding a Telegram node is an n8n workflow modification. Even without sending a message, it introduces Telegram send capability and must remain explicitly gated per project policy.
+
+## Opzioni
+
+1. **Open only Telegram node addition gate** — authorize future step-by-step user-supervised addition of a Telegram node after `Build notification payload`; credential by name only; no test message; no Execute/Test; no Schedule Trigger.
+2. **Defer Telegram node addition** — keep workflow at skeleton-only state; return to this gate later.
+3. **Cancel Telegram Mode A path** — block Telegram implementation entirely until explicit future reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1. The skeleton is in place. Adding only the Telegram node (without executing it) is the narrowest safe next step. No test message is sent. No schedule is enabled. The scope is narrow and reversible.
+
+## Rischio principale
+
+Scope creep toward executing/testing the Telegram node without a separate gate. The node addition must not trigger any send.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; node addition is a future manual user step.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After node addition and future test/schedule gates, Telegram Mode A may reduce manual checking burden.
+
+## Scelta richiesta
+
+`D-0167-A = 1` per aprire solo il gate aggiunta nodo Telegram.
+`D-0167-A = 2` per rimandare.
+`D-0167-A = 3` per annullare il percorso Telegram.
+
+## Cosa succede dopo la scelta
+
+If `D-0167-A = 1`, user may proceed step-by-step in n8n UI to add one Telegram node. No test message until a separate future gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- sending any Telegram test message;
+- executing/testing the workflow;
+- enabling Schedule Trigger;
+- making the workflow active/published for automatic notifications;
+- modifying the existing queue reader workflow;
+- deleting any existing workflow;
+- exporting/importing workflow JSON with secrets;
+- committing secrets;
+- using provider API LLM;
+- introducing new billing;
+- modifying the app;
+- deploy/tag/rollback;
+- Browser Bridge real project-chat;
+- Ollama runtime;
+- Cursor CLI/headless runner.
+
+## Decision outcome
+
+Recorded by task 0167 on 2026-05-13: user response `D-0167-A = 1`.
+This opens only the Telegram node addition gate.
+It authorizes future user-supervised step-by-step n8n UI addition of one Telegram node after `Build notification payload`, with credential referenced by name only (`telegram_alina_notifier`), chat id used only in n8n UI/runtime by the user (never in repo/docs/AI chat), and workflow kept manual-safe.
+No runtime was performed by this task. No Telegram node was created by this task.
+Test message requires a separate future explicit gate. Schedule activation requires a separate future explicit gate.
+No token or chat id stored in repo. No provider API LLM. No new billing. No app/deploy/tag/rollback.
+
+---
+
 ### D-0165-A — Open n8n Telegram notifier workflow creation gate
 
 **inbox_status:** decided

@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0166 — Record n8n Telegram Notifier Workflow Skeleton Creation (2026-05-13) — docs-only; workflow skeleton created by user report; workflow saved in n8n; no Telegram node/test message/schedule activation; test message remains separately gated; no token/chat id in repo; Gate 7 closed |
+| Last completed | 0167 — Record Telegram Node Addition Gate Decision (2026-05-13) — docs-only; `D-0167-A = 1` recorded; Telegram node addition gate open; test message/schedule activation remain gated; no runtime by implementer; no Telegram node created in this task; no token/chat id in repo; Gate 7 closed |
 | Queue | `docs/tasks/queue/` |
 
 ---

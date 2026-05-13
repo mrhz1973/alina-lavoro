@@ -187,6 +187,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 **Workflow skeleton creation (updated task 0166, 2026-05-13):** The user reported creating and saving the workflow skeleton `TEST - Alina task completion Telegram notifier` in n8n. Node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload. No Telegram node was added. No test message was sent. No Schedule Trigger was added. No token or chat id is stored in the repository. This credential guide remains the secret-handling boundary. Test message requires a separate future explicit gate.
 
+**Telegram node addition gate (updated task 0167, 2026-05-13):** `D-0167-A = 1` recorded. This opens only the future Telegram node addition gate. Chat id must be used only in n8n UI/runtime configuration by the user — never in repo/docs/AI chat. This credential guide remains the secret-handling boundary. No secrets in repo. Test message requires a separate future explicit gate.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0166** — Record n8n Telegram Notifier Workflow Skeleton Creation (2026-05-13) — docs-only; user reported workflow skeleton exists and was saved; workflow name: `TEST - Alina task completion Telegram notifier`; node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload; no Telegram node; no test message; no Schedule Trigger; no workflow JSON export; no token/chat id in repo; INBOX: 0 pending, 6 decided; Gate 7 closed |
+| Last completed | **0167** — Record Telegram Node Addition Gate Decision (2026-05-13) — docs-only; `D-0167-A = 1` recorded; Telegram node addition gate open; test message, Execute/Test, Schedule Trigger, and active notifications remain separately gated; no runtime performed by implementer; no Telegram node created by this task; no workflow JSON export; no token/chat id in repo; INBOX: 0 pending, 7 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
