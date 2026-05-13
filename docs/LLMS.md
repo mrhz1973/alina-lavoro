@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0155** — Record INBOX Decision D-0154-A (2026-05-13) — docs-only; `D-0154-A = 2` recorded; D-0154-A moved to `## Decided`; Browser Bridge project-chat write **deferred**; Browser Bridge remains sandbox-only for now; no project-chat gate open; no project-chat code; INBOX: 0 pending, 3 decided (D-0154-A, D-0151-A, D-0148-A) |
+| Last completed | **0156** — Browser Bridge Sandbox Hardening Plan (2026-05-13) — docs-only; `docs/automation/browser-bridge-sandbox-hardening-plan.md` created; static inspection checklist + optional manual verification + hardening checks + reconsideration criteria + anti-creep rules; no runtime executed; no browser opened; no project-chat write; project-chat remains deferred; INBOX: 0 pending, 3 decided |
 | Queue location | `docs/tasks/queue/` |
 
 ---

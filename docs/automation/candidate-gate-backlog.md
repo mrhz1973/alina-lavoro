@@ -3,7 +3,7 @@
 **Task:** 0147
 **Date:** 2026-05-13
 **Type:** docs-only / low-touch-loop planning
-**Status:** active reference document — **updated task 0155 (2026-05-13): D-0154-A decided with response 2 — candidate C project-chat write deferred**
+**Status:** active reference document — **updated task 0156 (2026-05-13): hardening/manual verification plan added for sandbox; candidate C project-chat write remains deferred**
 
 ---
 
@@ -116,7 +116,7 @@ The table below lists candidate gates currently visible from the design corpus. 
 - No project chat used. No INBOX read or answered.
 - No external network. No API key. No billing. No n8n / Telegram / Ollama / Cursor change.
 
-**Candidate C (Browser Bridge project-chat write) is deferred** — `D-0154-A = 2` decided (task 0155, 2026-05-13). Browser Bridge remains sandbox-only for now. No project-chat implementation is authorized. Future reconsideration requires a new or reopened Decision Packet and an explicit user response. Project-chat cannot read or answer INBOX. Anti-creep rules intact. No runtime next step until a new decision.
+**Candidate C (Browser Bridge project-chat write) is deferred** — `D-0154-A = 2` decided (task 0155, 2026-05-13). Browser Bridge remains sandbox-only for now. No project-chat implementation is authorized. Task 0156 (2026-05-13) added `docs/automation/browser-bridge-sandbox-hardening-plan.md` as a readiness reference for future reconsideration. Future reconsideration requires a new or reopened Decision Packet and an explicit user response. Project-chat cannot read or answer INBOX. Anti-creep rules intact. No runtime next step without new decision.
 
 ---
 
