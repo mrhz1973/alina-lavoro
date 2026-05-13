@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0163 — Record Telegram Credential Prerequisite Gate Decision (2026-05-13) — docs-only; `D-0163-A = 1` recorded; manual Telegram credential prerequisite gate open; no runtime; no bot/token/chat id; no n8n workflow; no Telegram message; INBOX: 0 pending, 5 decided; Gate 7 closed |
+| Last completed | 0164 — Record Telegram Manual Credential Prerequisite Completion (2026-05-13) — docs-only; user reported: bot exists, `telegram_alina_notifier` credential in n8n tested OK, chat id saved privately; no token/chat id in repo; no n8n workflow; no Telegram message; INBOX: 0 pending, 5 decided; Gate 7 closed |
 | Queue | `docs/tasks/queue/` |
 
 ---

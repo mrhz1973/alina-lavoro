@@ -174,6 +174,15 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 **Gate status (updated task 0163, 2026-05-13):** `D-0163-A = 1` recorded. This opens only the manual credential prerequisite gate described in this guide. The user may proceed with BotFather bot creation and n8n credential vault setup (§4–§6). A separate future explicit manual gate is still required before any n8n workflow creation or test message.
 
+**Completion status (updated task 0164, 2026-05-13):** The user reported completing the manual credential prerequisite phase:
+- Telegram bot exists (created via BotFather).
+- n8n credential `telegram_alina_notifier` exists; connection test succeeded.
+- Chat id saved privately by the user.
+- No token or chat id is stored in the repository.
+- No n8n workflow was created.
+- No Telegram message was sent.
+- Workflow creation / test message / schedule activation remain separately gated.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

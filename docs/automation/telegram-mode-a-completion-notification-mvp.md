@@ -247,6 +247,7 @@ Task sequence (updated task 0163, 2026-05-13):
 |-------|------|------|-------------|
 | Credential prerequisite guide | 0162 ✅ | docs-only | Credential prerequisite guide created: `docs/automation/telegram-mode-a-credential-prerequisite-guide.md` |
 | Credential prerequisite gate | 0163 ✅ | docs-only | `D-0163-A = 1` recorded; manual credential prerequisite gate open |
+| Manual credential prerequisite | 0164 ✅ | docs-only record | User reported: bot exists, `telegram_alina_notifier` credential in n8n tested OK, chat id saved privately; no token/chat id in repo |
 | n8n workflow creation | TBD | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; no exported JSON committed unless fully redacted; requires separate explicit gate |
 | Validation series | TBD | n8n UI (user) + Claude Code docs | Run testing ladder §9 steps 1–7 in order; stop at first failure; session record documents outcome |
 | Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; observe one quiet cycle; update LLMS.md, current-state.md, candidate-gate-backlog.md with MVP active status |

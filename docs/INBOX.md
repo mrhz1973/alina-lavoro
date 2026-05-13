@@ -155,6 +155,8 @@ It does not authorize n8n workflow creation, test messages, Schedule Trigger act
 No runtime was performed by this task.
 A separate future gated task is required before any n8n workflow creation or test message.
 
+**Follow-up status (task 0164, 2026-05-13):** The user reported completing the manual credential prerequisite phase. Telegram bot exists. n8n credential `telegram_alina_notifier` exists and connection test succeeded. Chat id saved privately by user. No token or chat id is stored in the repository. No n8n workflow was created. No Telegram message was sent. Workflow creation / test message / schedule activation remain separately gated.
+
 ---
 
 ### D-0157-A — Open Telegram Mode A completion notification MVP gate
