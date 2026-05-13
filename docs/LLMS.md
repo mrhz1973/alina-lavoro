@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0141** — Decision Inbox MVP File Creation (2026-05-13) — creates `docs/INBOX.md` as the single file-based human decision inbox; Pending/Decided/Deferred/Superseded sections; response convention; DP template; no runtime; closes open technical debt |
+| Last completed | **0142** — Local Browser Bridge Preflight Design (2026-05-13) — designs future local bridge ("automatic finger") that writes only `aggio` in ChatGPT web; candidate technologies (AutoHotkey/Playwright/Selenium); safety controls (kill switch, visible browser, rate limit, fail closed); MVP path (dry-run → sandbox → project chat); no runtime; no browser automation executed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -64,6 +64,7 @@ Building the autonomous low-touch task loop:
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
 | Ollama Classifier/Planner | ✅ Feasibility done — preflight runtime-gated pending Gate 7 — **target: Windows workstation** (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria | `docs/automation/ollama-classifier-planner-feasibility-post-wiki.md` |
 | Local Cursor Dual-Agent Loop | ✅ Designed — Agent 1 Implementer + Agent 2 Reviewer; ~10-day fallback Claude Code/Windsurf; no runtime | `docs/automation/local-cursor-dual-agent-loop-design.md` |
+| Local Browser Bridge Preflight | ✅ Designed — "automatic finger" writes only `aggio`; safety controls defined; MVP path (dry-run → sandbox → project chat); no runtime | `docs/automation/local-browser-bridge-preflight-design.md` |
 
 ---
 

@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0141 — Decision Inbox MVP File Creation (2026-05-13) — creates `docs/INBOX.md`; Pending/Decided/Deferred/Superseded; response convention; DP template; no runtime; closes INBOX open debt |
+| Last completed | 0142 — Local Browser Bridge Preflight Design (2026-05-13) — designs future local bridge ("automatic finger") that writes only `aggio` in ChatGPT web; candidate technologies; safety controls; MVP path; no runtime; no browser automation |
 | Queue | `docs/tasks/queue/` |
 
 ---
