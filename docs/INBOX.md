@@ -52,11 +52,156 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-_No pending decisions._
+### D-0173-A — Authorize Telegram notifier schedule activation after hardening
+
+**inbox_status:** pending
+**created_at:** 2026-05-13
+**source_task:** 0173-create-telegram-schedule-activation-decision-packet
+**source_document:** docs/automation/telegram-notifier-runbook-idempotency-hardening.md
+**response:**
+**decided_at:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0173-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0170 recorded that one manual Telegram test message arrived successfully by user report. D-0171-A = 3 (task 0171) deferred schedule activation pending hardening. Task 0172 created the runbook and idempotency hardening documentation (`docs/automation/telegram-notifier-runbook-idempotency-hardening.md`). Workflow `TEST - Alina task completion Telegram notifier` exists by user report but is inactive. No Schedule Trigger is active.
+
+## Perché serve decisione
+
+Schedule activation introduces automatic recurring runtime behavior. The workflow can send duplicate notifications unless idempotency state-store logic is implemented and validated first. This is a new runtime gate requiring explicit human decision.
+
+## Opzioni
+
+1. **Open a narrow schedule activation implementation gate** — authorize a future step-by-step user-supervised implementation of idempotency state-store in n8n, followed by Schedule Trigger activation. Only after state-store/idempotency path is explicitly present and validated.
+2. **Keep Telegram notifier manual-only** — no Schedule Trigger; continue using Manual Trigger only when the user wants a notification; no further implementation.
+3. **Defer schedule activation and add an intermediate idempotency implementation task first** — do not activate schedule now; create a separate task to implement the idempotency/state-store path in n8n before returning to this gate.
+
+## Raccomandazione orchestratore
+
+Option 3 if the idempotency state-store is not yet implemented in n8n.
+Option 1 only after the state-store/idempotency path is explicitly present, implemented, and validated in n8n.
+
+## Rischio principale
+
+Sending duplicate Telegram notifications if the schedule is activated before idempotency logic exists. Also: schedule running silently without user awareness after initial activation.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; schedule activation is a future manual user step.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After schedule activation with idempotency, Telegram Mode A may reduce manual checking burden by notifying the user automatically when a task is done.
+
+## Scelta richiesta
+
+`D-0173-A = 1` per aprire il gate di implementazione schedule (solo dopo idempotency/state-store validato).
+`D-0173-A = 2` per mantenere il notifier solo manuale.
+`D-0173-A = 3` per rimandare e creare prima un task di implementazione idempotency.
+
+## Cosa succede dopo la scelta
+
+If `D-0173-A = 1`: a future supervised step-by-step n8n UI task may implement the state-store and enable the Schedule Trigger. Must observe first scheduled run manually.
+If `D-0173-A = 2`: Telegram notifier remains manual-trigger only. No schedule implementation.
+If `D-0173-A = 3`: a new task is created to implement idempotency/state-store first; this gate returns after that task is complete.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- sending duplicate Telegram messages;
+- activating Schedule Trigger without idempotency/state-store in place;
+- modifying the existing queue reader workflow;
+- answering INBOX;
+- writing any `D-NNNN-X = N` response;
+- workflow JSON export/import with secrets;
+- token or chat id in repo;
+- provider API LLM;
+- new billing;
+- app/deploy/tag/rollback;
+- automatic INBOX responses;
+- automatic `D-NNNN-X = N` writing.
 
 ---
 
 ## Decided
+
+### D-0171-A — Defer Telegram schedule activation and consolidate hardening first
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0171-record-telegram-schedule-deferral-and-hardening-decision
+**source_document:** docs/automation/telegram-mode-a-completion-notification-mvp.md
+**response:** 3
+**decided_at:** 2026-05-13
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0171-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0170 recorded that one manual Telegram test message arrived successfully by user report. Workflow `TEST - Alina task completion Telegram notifier` exists by user report and remains inactive / not automatic. No Schedule Trigger is active. No token or chat id is stored in the repository.
+
+## Perché serve decisione
+
+Schedule activation would introduce automatic recurring runtime behavior. The current workflow has no idempotency/anti-duplication logic implemented in n8n. Without this, automatic schedule could produce duplicate notifications.
+
+## Opzioni
+
+1. **Open schedule activation gate immediately** — authorize next step-by-step n8n UI steps to enable Schedule Trigger; risk of duplicates without idempotency.
+2. **Defer schedule activation; add intermediate idempotency implementation task first** — do not activate schedule now; return to gate after idempotency task.
+3. **Defer schedule activation; consolidate documentation, runbook, idempotency and anti-duplication logic first** — complete hardening docs before any schedule gate is opened.
+
+## Raccomandazione orchestratore
+
+Option 3. Manual test succeeded. Next step is not to activate schedule but to consolidate the minimum safety documentation: runbook, idempotency key definition, state-store selection, and duplicate-prevention rules. Once hardening is documented, a separate activation gate can be opened cleanly.
+
+## Decision outcome
+
+Recorded by task 0171 on 2026-05-13: user response `D-0171-A = 3`.
+
+**Scope allowed:**
+- Documentation, runbook, idempotency, and anti-duplication design consolidation (tasks 0172 and 0173 in this batch).
+- Future Decision Packet for schedule activation after hardening.
+
+**Scope forbidden:**
+- No Schedule Trigger.
+- No automatic notifications.
+- No repeated test messages.
+- No workflow JSON export/import.
+- No token or chat id in repo/docs/AI chat.
+- No provider API LLM.
+- No new billing.
+- No app/deploy/tag/rollback.
+- No automatic INBOX responses.
+- No automatic `D-NNNN-X = N` writing.
+
+**Follow-up (tasks 0172 and 0173, 2026-05-13):**
+- Task 0172 created `docs/automation/telegram-notifier-runbook-idempotency-hardening.md` with idempotency model, state-store options, duplicate-prevention rules, stop conditions, recovery/rollback, and schedule activation checklist.
+- Task 0173 created pending Decision Packet D-0173-A for future schedule activation choice.
+- Telegram Mode A remains manual-tested but not automatic.
+- No Schedule Trigger. No automatic notifications. No token/chat id in repo.
+
+**User architecture note:**
+The user stated that historically they follow the orchestrator's recommendations almost 100% of the time and suggested that future automation could potentially auto-select the orchestrator's recommendation when the choice is clear. This is recorded as a future architecture consideration only. It does NOT authorize: automatic INBOX responses, automatic `D-NNNN-X = N` writing, automatic schedule activation, or runtime execution without a future explicit policy gate. Any future auto-acceptance policy requires a separate explicit design, risk scoring, allowlist, and manual opt-in.
+
+---
 
 ### D-0169-A — Authorize one manual Telegram test message
 

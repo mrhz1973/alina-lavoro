@@ -4,6 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / user-guided prerequisite
 **Depends on:** `docs/automation/telegram-mode-a-completion-notification-mvp.md` (task 0161)
+**Status update (tasks 0170–0173, 2026-05-13):** Manual Telegram test succeeded by user report (task 0170). Credential remains a secret boundary — no token or chat id in repo. Schedule activation deferred by D-0171-A = 3 (task 0171). Runbook/idempotency hardening doc created: `docs/automation/telegram-notifier-runbook-idempotency-hardening.md` (task 0172). D-0173-A pending Decision Packet for future schedule activation (task 0173). No secrets were introduced into the repository at any phase.
 
 ---
 

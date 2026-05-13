@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0170** — Record Single Manual Telegram Test Success (2026-05-13) — docs-only; user reported one manual Telegram test message arrived successfully; workflow `TEST - Alina task completion Telegram notifier` executed manually once under D-0169-A = 1; workflow remains inactive / not automatic; no Schedule Trigger; no workflow JSON export; no token/chat id in repo; INBOX: 0 pending, 8 decided; Gate 7 closed |
+| Last completed | **0173** — Create Telegram Schedule Activation Decision Packet (2026-05-13) — docs-only batch (0171–0173); D-0171-A = 3 recorded (schedule deferred; hardening first); runbook/idempotency hardening doc created (`docs/automation/telegram-notifier-runbook-idempotency-hardening.md`); D-0173-A pending Decision Packet created; Telegram Mode A manual test succeeded (task 0170) but workflow remains inactive / not automatic; no Schedule Trigger; no token/chat id in repo; user auto-follow note recorded as future consideration only; INBOX: 1 pending (D-0173-A), 9 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---

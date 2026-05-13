@@ -254,9 +254,12 @@ Task sequence (updated task 0167, 2026-05-13):
 | Telegram node addition completion | 0168 ✅ | docs-only record | User reported: Telegram node added and saved; credential by name only (`telegram_alina_notifier`); text `{{ $json.telegram_message }}`; chat id entered in n8n UI only, not in repo; no test message; no Execute/Test; no Schedule Trigger |
 | Single manual test message gate decision | 0169 ✅ | docs-only | `D-0169-A = 1` recorded; exactly one future manual test message gate open |
 | Single manual test execution | 0170 ✅ | docs-only record | User reported: one manual Telegram test message arrived successfully; executed once under D-0169-A = 1; workflow remains inactive / not automatic; no Schedule Trigger |
-| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after test succeeds; separately gated |
+| Schedule deferral + hardening decision | 0171 ✅ | docs-only | D-0171-A = 3 recorded; schedule activation deferred; hardening/runbook/idempotency required first; user auto-follow note recorded as future consideration only |
+| Runbook / idempotency hardening doc | 0172 ✅ | docs-only | `docs/automation/telegram-notifier-runbook-idempotency-hardening.md` created; idempotency model, state-store options, duplicate-prevention rules, stop conditions, checklist |
+| Schedule activation Decision Packet | 0173 ✅ | docs-only | D-0173-A pending Decision Packet created in `docs/INBOX.md`; no decision made; 3 options + orchestrator recommendation |
+| Schedule activation + session record | TBD (D-0173-A) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and D-0173-A decided; separately gated |
 
-**Note:** As of task 0170, one manual Telegram test message succeeded by user report. The workflow remains inactive / not automatic. No Schedule Trigger activation is authorized or performed. Schedule activation requires a future explicit manual gate. Chat id must not be recorded in repo/docs/AI chat.
+**Note (updated task 0173, 2026-05-13):** Telegram Mode A is manually validated (task 0170) but not automatic. Schedule activation is deferred by D-0171-A = 3. No Schedule Trigger is active. Runbook and idempotency hardening doc created (task 0172): `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`. Pending Decision Packet D-0173-A exists for future schedule activation. No automatic INBOX responses or auto-follow of orchestrator recommendations is authorized by any record in this history. Chat id must not be recorded in repo/docs/AI chat. No provider API LLM.
 
 **Critical files for future implementation tasks to read:**
 

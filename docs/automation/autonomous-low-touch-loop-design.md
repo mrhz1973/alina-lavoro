@@ -52,6 +52,19 @@ Obiettivo operativo: l'utente esegue solo:
 
 ---
 
+## Telegram Mode A — notification friction reduction (task 0173 update, 2026-05-13)
+
+Telegram Mode A can reduce notification friction in the low-touch loop: instead of the user manually checking GitHub/INBOX, a Telegram message signals that a task is done and prompts the user to run the post-check.
+
+**Current status:** manual test succeeded (task 0170). Schedule activation deferred by D-0171-A = 3. Runbook/idempotency hardening doc created: `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`. Pending D-0173-A for future schedule activation.
+
+**Constraints:**
+- Automatic schedule remains deferred until idempotency/anti-duplicate controls exist in n8n.
+- Telegram Mode A must remain notification-only; it must not answer INBOX or write `D-NNNN-X = N`.
+- Future auto-acceptance of orchestrator recommendations is out of current scope and must be designed separately (see `docs/automation/auto-aggio-design.md` — Future consideration section).
+
+---
+
 ## Architettura Target
 
 ```

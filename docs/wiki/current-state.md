@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0170 — Record Single Manual Telegram Test Success (2026-05-13) — docs-only; single manual Telegram test succeeded by user report; workflow remains inactive; schedule activation remains gated; no token/chat id in repo; Gate 7 closed |
+| Last completed | 0173 — batch (0171–0173) docs-only (2026-05-13): D-0171-A = 3 recorded (schedule deferred; hardening first); runbook/idempotency doc created; D-0173-A pending; Telegram manual test succeeded; workflow inactive; no Schedule Trigger; no token/chat id in repo |
 | Queue | `docs/tasks/queue/` |
 
 ---

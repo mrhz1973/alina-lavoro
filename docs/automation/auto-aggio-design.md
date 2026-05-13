@@ -58,6 +58,24 @@ Il termine "aggio" nel contesto del progetto è la formula breve con cui l'utent
 
 ---
 
+## Future consideration — Auto-follow of orchestrator recommendations (task 0171, 2026-05-13)
+
+The user noted that historically they follow the orchestrator's recommendations almost 100% of the time and suggested that a future automation layer might allow the orchestrator to auto-select its recommendation when the choice is clear.
+
+**This is a future architecture consideration only.** The current system must not auto-answer INBOX decisions or write `D-NNNN-X = N` automatically.
+
+Any future auto-acceptance policy would require:
+- a separate explicit design task defining which decision types are safe to auto-accept
+- an allowlist of approved-for-auto-accept decision categories
+- a risk-scoring mechanism to identify decisions that must remain manual
+- a rollback path if an auto-decision is incorrect
+- a manual opt-in per decision type
+- a full audit trail of auto-accepted decisions
+
+Sensitive gates (runtime, VPS, n8n runtime, deploy, tag, rollback, API key, login, credentials, physical tests) remain manual unconditionally. The current architecture does not change.
+
+---
+
 ## Architettura Target
 
 ```
