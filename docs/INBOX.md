@@ -154,6 +154,8 @@ No runtime was performed by this task. No workflow was created by this task.
 Test message requires a separate future explicit gate. Schedule activation requires a separate future explicit gate.
 No token or chat id stored in repo. No provider API LLM. No new billing. No app/deploy/tag/rollback.
 
+**Follow-up status (task 0166, 2026-05-13):** The user reported creating and saving the n8n workflow skeleton. Workflow name: `TEST - Alina task completion Telegram notifier`. Node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload. No Telegram node was added. No Telegram test message was sent. No Schedule Trigger was added or enabled. No workflow JSON was exported. No token or chat id is stored in the repository. Test message and schedule activation remain separately gated.
+
 ---
 
 ### D-0163-A — Open Telegram credential prerequisite manual gate

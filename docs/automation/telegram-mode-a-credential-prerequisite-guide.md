@@ -185,6 +185,8 @@ These checks do not require installing new tools — they use Git only. Do not r
 
 **Workflow creation gate (updated task 0165, 2026-05-13):** `D-0165-A = 1` recorded. This opens only the future n8n workflow creation gate. The credential guide remains the secret-handling boundary. No secrets in repo. Test message requires a separate future explicit gate. Schedule activation requires a separate future explicit gate.
 
+**Workflow skeleton creation (updated task 0166, 2026-05-13):** The user reported creating and saving the workflow skeleton `TEST - Alina task completion Telegram notifier` in n8n. Node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload. No Telegram node was added. No test message was sent. No Schedule Trigger was added. No token or chat id is stored in the repository. This credential guide remains the secret-handling boundary. Test message requires a separate future explicit gate.
+
 After completing the manual prerequisite steps (§4, §5, §6), a future explicit manual gate is required before any runtime configuration or test message. This guide does not authorize any of the following:
 
 - Creating the n8n notifier workflow (`TEST - Alina task completion Telegram notifier`)

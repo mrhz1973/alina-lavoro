@@ -241,7 +241,7 @@ The future implementer must stop immediately and report — without executing �
 
 ## 13. Next implementation phases
 
-Task sequence (updated task 0165, 2026-05-13):
+Task sequence (updated task 0166, 2026-05-13):
 
 | Phase | Task | Type | Description |
 |-------|------|------|-------------|
@@ -249,11 +249,11 @@ Task sequence (updated task 0165, 2026-05-13):
 | Credential prerequisite gate | 0163 ✅ | docs-only | `D-0163-A = 1` recorded; manual credential prerequisite gate open |
 | Manual credential prerequisite | 0164 ✅ | docs-only record | User reported: bot exists, `telegram_alina_notifier` credential in n8n tested OK, chat id saved privately; no token/chat id in repo |
 | Workflow creation gate decision | 0165 ✅ | docs-only | `D-0165-A = 1` recorded; n8n notifier workflow creation gate open |
-| n8n workflow creation | TBD | n8n UI step-by-step (PRIORITÀ 0) | User creates `TEST - Alina task completion Telegram notifier` workflow in n8n UI under Claude Code guidance; each node is a separate step; credential by name only; workflow kept manual-safe; allowed by `D-0165-A = 1` — no test message; no exported JSON committed unless fully redacted |
-| Validation / test message | TBD | n8n UI (user) + Claude Code docs | Run testing ladder §9; separately gated; requires explicit future gate before any test message is sent |
+| Workflow skeleton creation | 0166 ✅ | docs-only record | User reported: workflow `TEST - Alina task completion Telegram notifier` created and saved; node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload; no Telegram node; no test message; no Schedule Trigger |
+| Telegram node / test message | TBD | n8n UI + separately gated | Add Telegram node; run testing ladder §9; requires explicit future gate before any test message is sent |
 | Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; separately gated; observe one quiet cycle; update docs |
 
-**Note:** `D-0165-A = 1` opens workflow creation only. No Telegram test message is authorized. No Schedule Trigger activation is authorized. Both remain separately gated.
+**Note:** `D-0165-A = 1` authorized workflow creation only. As of task 0166, the skeleton workflow exists by user report — no Telegram node and no test message yet. Next test-message phase remains gated.
 
 **Critical files for future implementation tasks to read:**
 
