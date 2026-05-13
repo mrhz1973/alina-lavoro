@@ -52,7 +52,102 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-No pending decisions.
+### D-0148-A — Open Browser Bridge dry-run gate
+
+**inbox_status:** pending
+**created_at:** 2026-05-13
+**source_task:** 0148-browser-bridge-dry-run-gate-decision-packet
+**source_document:** docs/automation/candidate-gate-backlog.md
+**response:**
+**decided_at:**
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0148-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0147 created the Candidate Gate Backlog and ranked **Browser Bridge dry-run** as the recommended next gate candidate.
+The Browser Bridge design defines a phased path: dry-run → sandbox → project chat.
+This decision concerns only the **dry-run** phase: a local test that writes to a local test file, with no browser and no ChatGPT / Claude.ai write.
+
+## Perché serve decisione
+
+Even though dry-run is the safest first phase, it is still a runtime step because it would create and execute local automation logic later.
+The project rules require an explicit human gate before any runtime activation.
+Without this decision, no Browser Bridge dry-run implementation prompt may be generated.
+
+## Opzioni
+
+1. **Open Browser Bridge dry-run gate only** — authorize a future implementation task that creates a local dry-run script writing only to a local test file. No browser, no ChatGPT / Claude.ai write, no INBOX read, no INBOX response, no n8n runtime change.
+2. **Defer Browser Bridge dry-run** — keep Browser Bridge fully design-only; continue with docs-only planning or another candidate gate later.
+3. **Reject Browser Bridge path for now** — keep all Browser Bridge phases blocked until a future explicit reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1.
+It is the narrowest and most reversible runtime-adjacent step: local file output only, no browser, no API key, no billing, no provider API, no app impact, and no n8n modification.
+It validates the future Auto-Aggio trigger path without touching the actual ChatGPT / Claude.ai project chat.
+
+## Rischio principale
+
+Even a dry-run introduces a local automation surface. The risk is small but real: a future script could be expanded incorrectly if scope controls are not enforced.
+The implementation prompt must therefore keep the output to a local test file only and must explicitly forbid browser automation, INBOX decisions, API keys, billing, app changes, deploy, tag, rollback, and n8n runtime changes.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: only the INBOX decision is added now.
+- Runtime: no runtime in this task; possible runtime only if Option 1 is later recorded as decided.
+- n8n: no impact.
+- Telegram: no impact.
+- Ollama / Gate 7: no impact.
+- Cursor CLI / Gate 7: no impact.
+
+## Micro-interazioni umane eliminate
+
+0 immediately.
+If later implemented and then advanced through sandbox/project-chat gates, the Browser Bridge path may reduce the need for the user to manually type `aggio` after future task completions. This decision alone does not eliminate micro-interactions.
+
+## Scelta richiesta
+
+Scrivi: `D-0148-A = 1` per aprire solo il gate Browser Bridge dry-run.
+Scrivi: `D-0148-A = 2` per rimandare.
+Scrivi: `D-0148-A = 3` per respingere il percorso Browser Bridge per ora.
+In alternativa: `D-0148-A = defer`, `D-0148-A = skip`, oppure `D-0148-A = retry`.
+
+## Cosa succede dopo la scelta
+
+If `D-0148-A = 1` is recorded in `docs/INBOX.md`, the orchestrator may generate a future implementer prompt for a narrow dry-run implementation task. That future task may create a local script that writes only to a local test file and includes idempotency/rate-limit/logging checks.
+If `D-0148-A = 2` or `defer`, Browser Bridge remains design-only and no runtime prompt is generated.
+If `D-0148-A = 3` or `skip`, the Browser Bridge path remains blocked until explicitly reconsidered.
+If `D-0148-A = retry`, the orchestrator reformulates the Decision Packet.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- browser automation;
+- writing to ChatGPT / Claude.ai;
+- answering INBOX;
+- reading INBOX from the bridge;
+- Telegram configuration;
+- n8n runtime modification;
+- Ollama install or model pull;
+- Cursor CLI/headless execution;
+- Gate 7;
+- provider API;
+- API key creation;
+- billing;
+- app source modification;
+- Apps Script deploy;
+- tag;
+- rollback.
+
+Even if Option 1 is approved, sandbox and project-chat Browser Bridge phases remain separate future gates.
 
 ---
 
