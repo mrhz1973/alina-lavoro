@@ -53,7 +53,7 @@
 
 ## Commit Hash
 
-`[to fill after commit]`
+`70d4dd6`
 
 ---
 
