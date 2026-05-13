@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0142** — Local Browser Bridge Preflight Design (2026-05-13) — designs future local bridge ("automatic finger") that writes only `aggio` in ChatGPT web; candidate technologies (AutoHotkey/Playwright/Selenium); safety controls (kill switch, visible browser, rate limit, fail closed); MVP path (dry-run → sandbox → project chat); no runtime; no browser automation executed |
+| Last completed | **0143** — Telegram + Browser Bridge Trigger Coordination Design (2026-05-13) — defines coordination between future Telegram notification and Local Browser Bridge for same task completion event; three operating modes (A: Telegram-only current primary, B: Telegram+Bridge future MVP, C: Bridge-only deferred); trigger rules, idempotency key `(task_id, commit_hash)`, duplicate prevention, INBOX-aware Telegram templates; 15 failure modes; no runtime; no browser automation |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -65,6 +65,7 @@ Building the autonomous low-touch task loop:
 | Ollama Classifier/Planner | ✅ Feasibility done — preflight runtime-gated pending Gate 7 — **target: Windows workstation** (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria | `docs/automation/ollama-classifier-planner-feasibility-post-wiki.md` |
 | Local Cursor Dual-Agent Loop | ✅ Designed — Agent 1 Implementer + Agent 2 Reviewer; ~10-day fallback Claude Code/Windsurf; no runtime | `docs/automation/local-cursor-dual-agent-loop-design.md` |
 | Local Browser Bridge Preflight | ✅ Designed — "automatic finger" writes only `aggio`; safety controls defined; MVP path (dry-run → sandbox → project chat); no runtime | `docs/automation/local-browser-bridge-preflight-design.md` |
+| Telegram + Bridge Trigger Coordination | ✅ Designed — Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` |
 
 ---
 

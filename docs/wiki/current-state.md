@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0142 — Local Browser Bridge Preflight Design (2026-05-13) — designs future local bridge ("automatic finger") that writes only `aggio` in ChatGPT web; candidate technologies; safety controls; MVP path; no runtime; no browser automation |
+| Last completed | 0143 — Telegram + Browser Bridge Trigger Coordination Design (2026-05-13) — coordination model between future Telegram notification and Local Browser Bridge; Mode A (Telegram-only, current primary), Mode B (Telegram+Bridge, future MVP), Mode C (deferred); idempotency key; INBOX-aware templates; no runtime |
 | Queue | `docs/tasks/queue/` |
 
 ---
