@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0140 — Local Cursor Dual-Agent Loop Design (2026-05-13) — docs-only; formalizes dual-agent Cursor architecture (Agent 1: Implementer, Agent 2: Reviewer); ~10-day fallback Claude Code/Windsurf; anti-loop guards; branch policy ai/<id>-<slug>; Decision Packet integration; no-API/no-billing; no runtime |
+| Last completed | 0141 — Decision Inbox MVP File Creation (2026-05-13) — creates `docs/INBOX.md`; Pending/Decided/Deferred/Superseded; response convention; DP template; no runtime; closes INBOX open debt |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -54,7 +54,7 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | Debt | Status | Task |
 |------|--------|------|
 | PROJECT_STATE.md / CHECKPOINT.md physical compression | Completed 2026-05-13 | History moved to docs/history/PROJECT_LOG.md (audit-only) |
-| `docs/INBOX.md` not created | Pending | Future mixed/runtime-gated task |
+| `docs/INBOX.md` not created | **Resolved 2026-05-13** | Created in task 0141 |
 
 ---
 

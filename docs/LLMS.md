@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0140** — Local Cursor Dual-Agent Loop Design (2026-05-13) — docs-only design completed; formalizes dual-agent Cursor architecture (Agent 1: Implementer, Agent 2: Reviewer/Orchestrator-Lite); documents ~10-day fallback (Claude Code main, Windsurf backup); anti-loop guards; branch policy; Decision Packet integration; no-API/no-billing policy; no runtime/Cursor/n8n/Telegram/deploy/tag |
+| Last completed | **0141** — Decision Inbox MVP File Creation (2026-05-13) — creates `docs/INBOX.md` as the single file-based human decision inbox; Pending/Decided/Deferred/Superseded sections; response convention; DP template; no runtime; closes open technical debt |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox design | ✅ Designed — `docs/INBOX.md` NOT created | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
@@ -99,7 +99,7 @@ Agent-facing operational rules (`docs/AI_RULES.md`, `docs/WORKFLOW.md`) are norm
 
 ## Open Technical Debts
 
-- `docs/INBOX.md` not yet created → reserved for future mixed/runtime-gated task
+_No open technical debts. `docs/INBOX.md` created in task 0141 (2026-05-13)._
 
 ---
 
