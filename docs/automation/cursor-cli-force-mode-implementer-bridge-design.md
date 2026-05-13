@@ -463,3 +463,9 @@ The architecture is fundamental for the project and must become an explicit arch
 ---
 
 **Cursor CLI Force-Mode Implementer Bridge Design completato — task 0135 docs-only**
+
+---
+
+## Cross-reference: task 0140
+
+Task 0140 (`docs/automation/local-cursor-dual-agent-loop-design.md`) extends this architecture by adding a second Cursor agent (Reviewer / Orchestrator-Lite) and formalizing the full dual-agent loop including branch policy, anti-loop guards, and Decision Packet integration. The 0135 branching model, Ollama JSON schema, and task class taxonomy (A/B/C/D/E) remain canonical.

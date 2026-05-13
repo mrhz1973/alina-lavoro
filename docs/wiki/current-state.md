@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0139 — Auto-Aggio Prompt-Generation Handshake Design (2026-05-13) — docs-only design completed; clarifies that "aggio" is not only status refresh but prompt-generation handshake; defines flows with/without decisions; activation channels; hybrid architecture; Ollama role; security rules; no runtime/integration/API |
+| Last completed | 0140 — Local Cursor Dual-Agent Loop Design (2026-05-13) — docs-only; formalizes dual-agent Cursor architecture (Agent 1: Implementer, Agent 2: Reviewer); ~10-day fallback Claude Code/Windsurf; anti-loop guards; branch policy ai/<id>-<slug>; Decision Packet integration; no-API/no-billing; no runtime |
 | Queue | `docs/tasks/queue/` |
 
 ---

@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0139** — Auto-Aggio Prompt-Generation Handshake Design (2026-05-13) — docs-only design completed; clarifies that "aggio" is not only status refresh but prompt-generation handshake; defines flows with/without decisions; activation channels; hybrid architecture; Ollama role; security rules; no runtime/integration/API |
+| Last completed | **0140** — Local Cursor Dual-Agent Loop Design (2026-05-13) — docs-only design completed; formalizes dual-agent Cursor architecture (Agent 1: Implementer, Agent 2: Reviewer/Orchestrator-Lite); documents ~10-day fallback (Claude Code main, Windsurf backup); anti-loop guards; branch policy; Decision Packet integration; no-API/no-billing policy; no runtime/Cursor/n8n/Telegram/deploy/tag |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -63,6 +63,7 @@ Building the autonomous low-touch task loop:
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
 | Ollama Classifier/Planner | ✅ Feasibility done — preflight runtime-gated pending Gate 7 — **target: Windows workstation** (Ryzen 9 3900X / RTX 3060 12 GB); Mac M2 opzione secondaria | `docs/automation/ollama-classifier-planner-feasibility-post-wiki.md` |
+| Local Cursor Dual-Agent Loop | ✅ Designed — Agent 1 Implementer + Agent 2 Reviewer; ~10-day fallback Claude Code/Windsurf; no runtime | `docs/automation/local-cursor-dual-agent-loop-design.md` |
 
 ---
 
