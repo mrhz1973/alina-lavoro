@@ -58,6 +58,100 @@ _No pending decisions._
 
 ## Decided
 
+### D-0169-A — Authorize one manual Telegram test message
+
+**inbox_status:** decided
+**created_at:** 2026-05-13
+**source_task:** 0169-record-single-manual-telegram-test-message-gate-decision
+**source_document:** docs/automation/telegram-mode-a-completion-notification-mvp.md
+**response:** 1
+**decided_at:** 2026-05-13
+**superseded_by:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0169-A
+**Kind:** automation
+**Data:** 2026-05-13
+
+## Contesto
+
+Task 0166 recorded workflow skeleton creation. Task 0167 recorded `D-0167-A = 1`, opening Telegram node addition gate. Task 0168 recorded user-reported Telegram node addition completion. Current workflow by user report: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload → Telegram. No test message has been sent. No Execute/Test has been performed. No Schedule Trigger exists or is enabled.
+
+## Perché serve decisione
+
+A Telegram test message is real runtime behavior. Even one manual test message requires explicit human gate per project policy.
+
+## Opzioni
+
+1. **Authorize exactly one future manual test message** — user may manually execute the existing workflow once under supervision; verify whether one Telegram message arrives; report result as text only; workflow remains inactive; no Schedule Trigger.
+2. **Defer test message** — keep workflow at node-only state; return to this gate later.
+3. **Cancel Telegram Mode A path** — block Telegram implementation entirely until explicit future reconsideration.
+
+## Raccomandazione orchestratore
+
+Option 1. The workflow is fully configured. A single manual test message is the narrowest safe validation step: user executes once, verifies arrival, reports result. No automatic behavior is enabled.
+
+## Rischio principale
+
+Scope creep: repeated messages or schedule activation without separate gates. The test must be exactly once, with the result reported before any next step.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the decision only.
+- Runtime: no runtime performed by this task; test execution is a future manual user step.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After test succeeds and schedule is activated, Telegram Mode A may reduce manual checking burden.
+
+## Scelta richiesta
+
+`D-0169-A = 1` per autorizzare esattamente un test message manuale futuro.
+`D-0169-A = 2` per rimandare.
+`D-0169-A = 3` per annullare il percorso Telegram.
+
+## Cosa succede dopo la scelta
+
+If `D-0169-A = 1`, user may manually execute the workflow once. If the message arrives correctly, a separate gate for schedule activation may follow.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- repeated test messages;
+- Schedule Trigger activation;
+- making the workflow active/published for automatic notifications;
+- modification of the existing queue reader workflow;
+- workflow deletion;
+- workflow JSON export/import;
+- token/chat id in repo/docs/AI chat;
+- provider API LLM;
+- new billing;
+- app/deploy/tag/rollback;
+- Browser Bridge project-chat;
+- Ollama runtime;
+- Cursor CLI/headless runner.
+
+## Decision outcome
+
+Recorded by task 0169 on 2026-05-13: user response `D-0169-A = 1`.
+This authorizes exactly one future manual Telegram test message under user supervision.
+The user may manually execute the existing workflow once and verify whether one Telegram message arrives.
+Workflow must remain inactive. No Schedule Trigger. No automatic notifications.
+Retry (if test fails) requires a separate explicit gate.
+No runtime was performed by this task. No Telegram message was sent by this task.
+Schedule activation requires a separate future explicit gate.
+No token or chat id stored in repo. No provider API LLM. No new billing. No app/deploy/tag/rollback.
+
+---
+
 ### D-0167-A — Open Telegram node addition gate
 
 **inbox_status:** decided

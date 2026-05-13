@@ -252,10 +252,11 @@ Task sequence (updated task 0167, 2026-05-13):
 | Workflow skeleton creation | 0166 ✅ | docs-only record | User reported: workflow `TEST - Alina task completion Telegram notifier` created and saved; node chain: Manual Trigger → List done files → Pick latest done file → Get done file → Build notification payload; no Telegram node; no test message; no Schedule Trigger |
 | Telegram node addition gate decision | 0167 ✅ | docs-only | `D-0167-A = 1` recorded; Telegram node addition gate open |
 | Telegram node addition completion | 0168 ✅ | docs-only record | User reported: Telegram node added and saved; credential by name only (`telegram_alina_notifier`); text `{{ $json.telegram_message }}`; chat id entered in n8n UI only, not in repo; no test message; no Execute/Test; no Schedule Trigger |
-| Validation / single test message | TBD | n8n UI (user) + separately gated | Run testing ladder §9; requires explicit future gate before any test message is sent |
-| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after validation passes; separately gated |
+| Single manual test message gate decision | 0169 ✅ | docs-only | `D-0169-A = 1` recorded; exactly one future manual test message gate open |
+| Single manual test execution | TBD | n8n UI (user), once only | User executes workflow once manually; verifies one Telegram message arrives; reports result as text; workflow remains inactive; allowed by `D-0169-A = 1`; retry requires separate gate |
+| Schedule activation + session record | TBD | n8n UI + docs-only | Enable Schedule Trigger after test succeeds; separately gated |
 
-**Note:** As of task 0168, the Telegram node exists by user report. No Telegram test message is authorized or sent. No Execute/Test is authorized or performed. No Schedule Trigger activation is authorized or performed. Chat id must not be recorded in repo/docs/AI chat.
+**Note:** `D-0169-A = 1` authorizes exactly one future manual test message. This task does not send the message. No Schedule Trigger activation is authorized. Chat id must not be recorded in repo/docs/AI chat.
 
 **Critical files for future implementation tasks to read:**
 
