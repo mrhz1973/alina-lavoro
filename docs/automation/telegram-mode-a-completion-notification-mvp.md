@@ -263,4 +263,16 @@ Indicative future task sequence (task numbers may change):
 
 ---
 
+---
+
+## Credential prerequisite guide (task 0162 pointer)
+
+A companion user-guided prerequisite guide exists at:
+
+**`docs/automation/telegram-mode-a-credential-prerequisite-guide.md`** (task 0162, 2026-05-13)
+
+It documents how a future human operator will create the Telegram bot, obtain the token, identify the chat id, and store both in the n8n credential vault — without committing secrets to the repository. Read that guide before beginning any future runtime task.
+
+---
+
 *This document is docs-only. No Telegram bot was created. No token was stored. No runtime was activated. No n8n workflow was modified. Authorization: D-0157-A = 1 (task 0159, 2026-05-13).*

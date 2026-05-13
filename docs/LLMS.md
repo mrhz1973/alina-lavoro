@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 | State | Info |
 |-------|------|
-| Last completed | **0161** — Telegram Mode A MVP Docs-Only Scaffolding (2026-05-13) — docs-only; MVP design pinned in `docs/automation/telegram-mode-a-completion-notification-mvp.md`; message template, trigger model, idempotency key, credential boundary, test sequence, stop conditions fixed; no Telegram implemented; no bot/token/config; no n8n runtime modification; no provider API LLM; no new LLM billing; INBOX: 0 pending, 4 decided; Browser Bridge sandbox-only; project-chat deferred; Gate 7 closed |
+| Last completed | **0162** — Telegram Mode A Credential Prerequisite Guide (2026-05-13) — docs-only; user-guided credential prerequisite guide created at `docs/automation/telegram-mode-a-credential-prerequisite-guide.md`; documents BotFather setup, chat id, n8n vault, secret handling, leak-prevention checks; no Telegram bot/token/config; no n8n runtime modification; no provider API LLM; no new LLM billing; INBOX: 0 pending, 4 decided; Gate 7 closed |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -58,7 +58,7 @@ Building the autonomous low-touch task loop:
 | n8n queue reader | ✅ Operational (5-min schedule, Europe/Berlin) | `docs/automation/n8n-workflows/queue-reader.md` |
 | n8n schedule polling | ✅ Validated end-to-end | — |
 | Decision Packet Format | ✅ Canonical | `docs/automation/decision-packet-format.md` |
-| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending**; `D-0157-A` decided = 1 (task 0159; task 0161 created docs-only MVP scaffolding; no Telegram implemented; no bot/token/config; no provider API LLM; no new LLM billing); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate); `D-0154-A` decided = 2 (project-chat deferred) | `docs/automation/human-decision-inbox-design.md` |
+| Human Decision Inbox | ✅ Designed + **MVP file created** — `docs/INBOX.md` active; **0 pending**; `D-0157-A` decided = 1 (tasks 0159–0162: MVP scaffolding + credential guide; no Telegram implemented; no bot/token/config; no provider API LLM; no new LLM billing); `D-0148-A` decided (dry-run gate); `D-0151-A` decided = 1 (sandbox gate); `D-0154-A` decided = 2 (project-chat deferred) | `docs/automation/human-decision-inbox-design.md` |
 | Auto-Aggio design | ✅ Designed (zero runtime, discipline) | `docs/automation/auto-aggio-design.md` |
 | n8n DP Generator design | ✅ Designed | `docs/automation/n8n-decision-packet-generator-design.md` |
 | LLM Wiki (this layer) | ✅ Active | `docs/wiki/` |
