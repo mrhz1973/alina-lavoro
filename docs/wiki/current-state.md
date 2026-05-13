@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0136 — Local Classifier Wrapper / Qwen-Alina Profile Design (2026-05-13) — docs-only design completed; builds on 0134 qwen3:14b validation and 0135 Cursor bridge; wrapper design with JSON schema v1, prompt template strategy, validation/retry rules; qwen-alina is optional/future; no Modelfile/profile created; no runtime integration; future wrapper/profile creation is runtime-gated |
+| Last completed | 0137 — Local Classifier Wrapper Script Design (2026-05-13) — docs-only script design completed; operationalizes 0136 wrapper concept but no executable code created; Python recommended for portability; CLI shape defined; input assembly, prompt construction, Ollama API request, JSON schema validation, normalization, gate detection, retry/fallback, output modes, test strategy designed; future implementation/dry-run is runtime-gated |
 | Next planned | No automatic runtime step; potential future docs-only local classifier wrapper / qwen-alina profile design, or docs/INBOX.md debt, only as separate task |
 | Queue | `docs/tasks/queue/` |
 
