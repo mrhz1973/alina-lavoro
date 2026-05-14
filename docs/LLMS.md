@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0278** — Post-Cleanup Pointer and Template Drift Check (2026-05-15): docs-only; fixed `AGENTS.md` Docs ROI Gate attribution (token-efficiency.md, not prompt-routing.md); trimmed duplicate New-doc gate wording in `prompt-routing.md`; removed stale post-cleanup roadmap NOW row; no new doc; no runtime. |
-| Previous | **0277** — Guidance Redundancy Cleanup and Roadmap (2026-05-15): docs-only; trimmed duplicated guidance across AGENTS.md, LLMS.md, current-state.md, token-efficiency.md, implementer-standard.md, prompt-routing.md, task templates; added compact post-cleanup roadmap to roadmap.md; no new doc; no runtime. |
+| Last completed | **0279** — Short-Prompt Implementer Flow Smoke Test (2026-05-15): docs-only; minimal task verifying that the implementer can complete a docs-only task from a short orchestrator prompt by reading AGENTS.md and standard templates; no new doc; no runtime. |
+| Previous | **0278** — Post-Cleanup Pointer and Template Drift Check (2026-05-15): docs-only; fixed `AGENTS.md` Docs ROI Gate attribution (token-efficiency.md, not prompt-routing.md); trimmed duplicate New-doc gate wording in `prompt-routing.md`; removed stale post-cleanup roadmap NOW row; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
