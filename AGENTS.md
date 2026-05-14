@@ -14,9 +14,12 @@ For full state, read `docs/LLMS.md`.
 ## For task routing
 
 - `docs/wiki/task-id-preflight.md` — run before assigning any task ID
-- `docs/wiki/prompt-routing.md` — template selection table
+- `docs/wiki/prompt-routing.md` — template selection table + Prompt Size Guard + Docs ROI Gate
 - `docs/wiki/template-pack-index.md` — all available implementer templates
-- `docs/wiki/v31-enforcement-checklist.md` — Prompt Size Guard (apply if prompt >~80–100 lines)
+
+## Local clone preflight
+
+`docs/tasks/templates/implementer-standard.md` § Local clone preflight · `docs/COMMANDS.md` § Mandatory local preflight
 
 ## Use templates
 

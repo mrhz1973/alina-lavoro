@@ -30,8 +30,8 @@ Current posture: **stable monitoring + subtraction**. Do not open new automation
 
 | Item | Value |
 |---|---|
-| Last completed | **0274 — Local Clone Preflight Standardization** (2026-05-14): docs-only; added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`; prevents stale clones, wrong folders, duplicate task IDs; no new guidance doc; no runtime, no n8n, no app, no secrets. |
-| Previous | **0273 — V3.1 Measure-First Subtraction Pass**: compressed derived state files; consolidated cold-start measurement and Docs ROI Gate into routing docs. |
+| Last completed | **0275 — AGENTS.md Compact Routing Pointer Cleanup** (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime. |
+| Previous | **0274 — Local Clone Preflight Standardization**: added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`. |
 | Queue | `docs/tasks/queue/` |
 
 ---

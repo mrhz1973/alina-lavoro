@@ -48,7 +48,7 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0274** — Local Clone Preflight Standardization (2026-05-14): docs-only; added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`; prevents stale clones, wrong folders, duplicate task IDs in multi-workstation setup; no new guidance doc created; no runtime, no n8n, no app, no secrets. |
+| Last completed | **0275** — AGENTS.md Compact Routing Pointer Cleanup (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md` (which already contains Prompt Size Guard + Docs ROI Gate); added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime, no n8n, no app, no secrets. |
 | Previous | **0272** — Anti-bureaucracy Docs ROI rule enforced (batch 0267–0272): Docs ROI Gate added/propagated; new docs that only add files to read are regressions; AGENTS.md remains pointer-only; CLI Printing Press remains future-only; Telegram Mode A stable-after-fix; INBOX 0 pending. |
 | Queue location | `docs/tasks/queue/` |
 
