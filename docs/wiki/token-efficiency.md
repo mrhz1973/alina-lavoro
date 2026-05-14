@@ -58,6 +58,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Runtime gate Decision Packet / gate request playbook? | `docs/automation/runtime-gate-decision-packet-playbook.md` | — |
 | Candidate gate backlog / which gate might be next? | `docs/automation/candidate-gate-backlog.md` | — |
 | Browser Bridge dry-run tool (implemented task 0150)? | `tools/browser-bridge-dry-run/README.md` | `docs/automation/candidate-gate-backlog.md` |
+| V3.1 delta-based prompt example? | `docs/wiki/examples/delta-based-prompt-example.md` | — |
 | Task-ID preflight / LLM Wiki V3.1 guard? | `docs/wiki/task-id-preflight.md` | — |
 | Prompt routing + context budget policy? | `docs/wiki/prompt-routing.md` | `docs/wiki/context-budget-policy.md` |
 | Template pack index (implementer templates)? | `docs/wiki/template-pack-index.md` | `docs/tasks/templates/` |
