@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0281** — Template Overlay Minimization Audit (2026-05-15): docs-only; added uniform "Base rules" pointer in 6 V3.1 overlays (`docs-only-task`, `runtime-gated-task`, `state-update-batch`, `inbox-decision-recording`, `n8n-template-first-task`, `n8n-ui-supervised-cleanup`) so shared preflight/prohibitions/git/final-report rules live only in `implementer-standard.md`; no template deleted; no new doc; no runtime. |
-| Previous | **0280** — Short Prompt Examples Compression Check (2026-05-15): docs-only; added `@AGENTS.md` to all example prompt blocks in `docs/wiki/examples/delta-based-prompt-example.md` and added explicit Forbidden paths + Runtime line to the canonical docs-only example so it carries every field listed in `prompt-routing.md`; no new doc; no runtime. |
+| Last completed | **0282** — Orchestrator-Lite Readiness Audit (2026-05-15): docs-only; verified current GitHub instructions are sufficient for a future orchestrator-lite/dual CLI loop across 7 readiness criteria (state read, task-ID choice, template selection, local preflight, gate enforcement, GitHub epilogue, dirty-tree/runtime stop); no new doc; no pointer fix required; dual CLI loop remains LATER/GATED; no runtime. |
+| Previous | **0281** — Template Overlay Minimization Audit (2026-05-15): docs-only; added uniform "Base rules" pointer in 6 V3.1 overlays so shared preflight/prohibitions/git/final-report rules live only in `implementer-standard.md`; no template deleted; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
