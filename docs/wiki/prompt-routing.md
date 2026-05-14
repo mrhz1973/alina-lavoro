@@ -54,8 +54,7 @@ TASK DELTA:
 
 - Prompts over ~80–100 lines must be justified or trimmed.
 - Do not repeat git/security/final-report boilerplate already covered by templates.
-- Before adding new guidance docs, measure cold-start file/line count and prefer consolidation.
-- A new document that only adds another file to read is a regression.
+- For new guidance docs, apply the New-doc gate in `docs/wiki/token-efficiency.md` (canonical home).
 
 ## Non-goals
 

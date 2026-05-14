@@ -18,10 +18,9 @@ Stack:
 
 | Priority | Item | Trigger | Gate |
 |---|---|---|---|
-| NOW | Complete docs guidance redundancy cleanup; fix pointers; no new guidance docs | Task 0277 | None — docs-only |
 | NOW | Keep AGENTS.md pointer-only | Ongoing | None |
 | NOW | Keep local preflight mandatory in all implementers | Ongoing | None |
-| NEXT | Verify cold-start is lighter after cleanup | After 0277 | None |
+| NEXT | Verify cold-start is lighter after cleanup | After 0278 | None |
 | NEXT | Mini-audit recent DPs: distinguish real decisions from status/debug notes | When convenient | None |
 | NEXT | Evaluate whether task templates remain too many; if yes, run template consolidation batch | Explicit need | None |
 | NEXT | Monitor Telegram Mode A passively; no runtime changes unless anomaly | Ongoing | Anomaly only |

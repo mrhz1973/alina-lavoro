@@ -9,12 +9,12 @@ For full state, read `docs/LLMS.md`.
 
 1. `docs/LLMS.md` — compact state + task info (≤150 lines)
 2. `docs/wiki/current-state.md` — state snapshot (≤100 lines)
-3. `docs/wiki/token-efficiency.md` — navigation rules and what NOT to read
+3. `docs/wiki/token-efficiency.md` — navigation rules, New-doc gate / Docs ROI Gate, what NOT to read
 
 ## For task routing
 
 - `docs/wiki/task-id-preflight.md` — run before assigning any task ID
-- `docs/wiki/prompt-routing.md` — template selection table + Prompt Size Guard + Docs ROI Gate
+- `docs/wiki/prompt-routing.md` — prompt shape, template selection table, Prompt Size Guard
 - `docs/wiki/template-pack-index.md` — all available implementer templates
 
 ## Local clone preflight

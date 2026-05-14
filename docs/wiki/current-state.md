@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0277)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0278)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0277 — Guidance Redundancy Cleanup and Roadmap** (2026-05-15): docs-only; trimmed duplicated guidance, removed stale Measurement Snapshot, merged New-doc gate in token-efficiency.md, added compact roadmap; no new doc; no runtime. |
-| Previous | **0276 — Implementer GitHub Epilogue Standardization** (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md`. |
+| Last completed | **0278 — Post-Cleanup Pointer and Template Drift Check** (2026-05-15): docs-only; re-attributed `AGENTS.md` Docs ROI Gate pointer to token-efficiency.md; trimmed duplicate New-doc gate bullets in prompt-routing.md; removed stale NOW row from post-cleanup roadmap; no new doc; no runtime. |
+| Previous | **0277 — Guidance Redundancy Cleanup and Roadmap** (2026-05-15): docs-only; trimmed duplicated guidance, removed stale Measurement Snapshot, merged New-doc gate in token-efficiency.md, added compact roadmap; no new doc; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---
