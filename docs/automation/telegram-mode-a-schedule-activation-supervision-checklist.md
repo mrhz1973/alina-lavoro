@@ -4,7 +4,7 @@
 **Date:** 2026-05-14
 **Type:** docs-only / operational checklist
 **Authorization:** This checklist is docs-only. It does not authorize any activation. **D-0221-A = 3 decided** (2026-05-14, batch 0224–0226) — cleanup-first path selected; user conditional follow-on activation intent recorded (after cleanup succeeds and no new risk is found, proceed toward activation without re-asking the strategic choice — intent itself does NOT activate). Activation may proceed using this checklist **only after** the cleanup plan (`docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md`) is closed and the user explicitly confirms no new risk was found.
-**Status:** created; awaiting completion of cleanup-first path before any activation step is executed.
+**Status:** ✅ **COMPLETED** — batch 0227–0231 (2026-05-14). Cleanup-first path completed (task 0227). Conditional follow-on activation intent applied. Schedule Trigger activated by user on `TEST - Alina task completion Telegram notifier` (every 5 minutes). First scheduled tick: success / Telegram arrived (task 0228). Telegram Mode A is now active scheduled notification-only. Monitoring: `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md`.
 
 ---
 

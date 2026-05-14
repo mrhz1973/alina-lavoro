@@ -4,7 +4,7 @@
 **Date:** 2026-05-14
 **Type:** docs-only / cleanup planning before Schedule activation
 **Authorization:** D-0221-A = 3 (decided/applied, task 0224). Cleanup-first path selected. Conditional follow-on activation intent recorded.
-**Status:** active reference. No runtime. No n8n UI action by this document.
+**Status:** ✅ **CLOSED / COMPLETED** — batch 0227–0231 (2026-05-14). Both cleanup candidates completed by user in n8n UI. Cleanup-first requirement from D-0221-A = 3 satisfied. Conditional follow-on activation intent applied. Schedule Trigger activation succeeded (task 0228). No new risk found during cleanup. No runtime by implementer.
 
 ---
 

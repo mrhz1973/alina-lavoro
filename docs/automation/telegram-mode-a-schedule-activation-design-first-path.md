@@ -179,6 +179,8 @@ Stage 3 (template-first activation plan) is superseded by the supervision checkl
 
 **D-0221-A = 3 decided (2026-05-14, batch 0224–0226):** cleanup-first path selected. User conditional follow-on activation intent recorded (after cleanup succeeds and no new risk is found, proceed toward controlled Schedule Trigger activation without re-asking the strategic choice). Cleanup plan: `docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md`. Cleanup precedes Stage 4 activation.
 
+**Stage 4–6 completed (batch 0227–0231, 2026-05-14):** cleanup succeeded (task 0227) — both candidates addressed, no new risk found. Conditional follow-on activation intent applied. Schedule Trigger added and configured on `TEST - Alina task completion Telegram notifier` (every 5 minutes; Schedule Trigger → List done files; Manual Trigger retained). Workflow activated. First scheduled tick result: **success / Telegram arrived**. Classification: **controlled Telegram Mode A Schedule activation succeeded**. Telegram Mode A is now active as scheduled notification-only automation. Telegram does not answer INBOX. Queue reader untouched. No manual Execute pressed. No secrets recorded. Monitoring checklist: `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md`.
+
 ---
 
 ## Related documents
