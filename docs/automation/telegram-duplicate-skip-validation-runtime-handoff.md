@@ -3,7 +3,7 @@
 **Document:** Runtime handoff for duplicate-skip validation  
 **Authorization:** D-0187-A = 1 (recorded batch 0188–0190, 2026-05-14)  
 **Type:** docs-only / runtime handoff document  
-**Status:** **consumed/inconclusive** (batch 0191–0193, 2026-05-14) — one run executed, result inconclusive due to new done file 0190; D-0187-A now consumed; D-0193-A pending for retry against same 0190 key
+**Status:** **consumed/inconclusive** for both D-0187-A (batch 0191–0193) and D-0193-A (batch 0194–0198, 2026-05-14) — two runs executed, both routed TRUE / Telegram arrived due to latest-done drift; NOT confirmed idempotency bug; this handoff is now superseded for same-key validation by `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md` (D-0197-A pending)
 
 ---
 

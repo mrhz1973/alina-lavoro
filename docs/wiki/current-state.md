@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0193 — batch (0191–0193) docs-only (2026-05-14): 0191 recorded D-0187-A consumed and inconclusive (validation run used new done file 0190, not same-key test); 0192 updated Telegram/idempotency documentation to clarify same-key requirement; 0193 created D-0193-A pending Decision Packet for one retry against same 0190 key; Data Table `alina_telegram_notifier_state` has one row for task 0190; workflow inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0193-A), 13 decided (D-0187-A consumed/inconclusive) |
+| Last completed | 0198 — batch (0194–0198) docs-only (2026-05-14): 0194 recorded D-0193-A retry attempt inconclusive due to latest-done drift (TRUE branch / Telegram arrived / likely new-key send, not confirmed idempotency bug); 0195 documented root cause and 3 result categories (a same-key success, b new-key send, c true idempotency failure); 0196 created pinned-file duplicate-skip validation design; 0197 created D-0197-A pending; 0198 propagated state updates; D-0193-A moved to Decided (= 1, inconclusive); duplicate-skip remains NOT conclusively validated; next valid gate = pinned-file validation; workflow inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0197-A), 14 decided |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -56,16 +56,18 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | Telegram workflow | Inactive — no Schedule Trigger |
 | D-0173-A | Decided = 3 (task 0177, 2026-05-13) — schedule deferred; implement idempotency first |
 | D-0180-A | Decided = 1 (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened |
-| D-0187-A | **Decided = 1, consumed/inconclusive** (batch 0188–0190, 2026-05-14; result recorded batch 0191–0193) — duplicate-skip validation gate opened, one run executed, result inconclusive due to new done file 0190; D-0187-A now consumed; D-0193-A pending for retry against same 0190 key |
+| D-0187-A | **Decided = 1, consumed/inconclusive** (batch 0188–0190, 2026-05-14; result recorded batch 0191–0193) — duplicate-skip validation gate opened, one run executed, result inconclusive due to latest-done drift |
+| D-0193-A | **Decided = 1, consumed/inconclusive** (batch 0194–0198, 2026-05-14) — retry applied per user's prior conditional order; runtime TRUE branch / Telegram arrived / likely new-key send due to latest-done drift; NOT a confirmed idempotency bug |
+| D-0197-A | **Pending** (batch 0194–0198, 2026-05-14) — one future manual pinned-file duplicate-skip validation run; design: `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md` |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
 | Data Table | `alina_telegram_notifier_state` — created and one row written (user report 2026-05-14) |
-| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; duplicate-skip validation run executed but inconclusive (new done file 0190 used) |
+| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; two duplicate-skip validation attempts (D-0187-A, D-0193-A) both inconclusive due to latest-done drift; structurally requires pinned-file input |
 | Token / chat id in repo | None |
-| INBOX pending count | 1 (D-0193-A) |
-| INBOX decided count | 13 (D-0187-A consumed/inconclusive) |
-| Next step | User decision on D-0193-A: Option 1 (authorize one retry against same 0190 key) or Option 2 (do not retry) |
+| INBOX pending count | 1 (D-0197-A) |
+| INBOX decided count | 14 (D-0193-A inconclusive, D-0187-A inconclusive) |
+| Next step | User decision on D-0197-A: Option 1 (authorize one pinned-file run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`), Option 2 (do not run now), Option 3 (defer and refine design) |
 
 ---
 

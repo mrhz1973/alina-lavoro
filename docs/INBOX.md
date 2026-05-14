@@ -52,14 +52,115 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0193-A — Authorize one duplicate-skip retry against the same 0190 idempotency key
+### D-0197-A — Authorize one pinned-file duplicate-skip validation run
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0193-create-duplicate-skip-retry-same-key-decision-packet
-**source_document:** docs/tasks/done/0191-record-duplicate-skip-validation-inconclusive-due-to-new-latest-done-file.md
+**source_task:** 0197-create-pinned-duplicate-skip-validation-decision-packet
+**source_document:** docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md
 **response:**
 **decided_at:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0197-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+D-0187-A = 1 (batch 0188–0190) and D-0193-A = 1 (applied in this batch under the user's prior conditional order) each authorized one duplicate-skip validation run. Both runs were inconclusive (recorded in tasks 0191 and 0194) because the workflow uses dynamic "Pick latest done file" and docs-only batches between attempts kept changing which file was latest, so neither run actually tested the same key.
+
+Task 0195 documents the root cause: latest-done drift makes dynamic-input same-key validation structurally unstable. Task 0196 creates the pinned-file design (`docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`), which describes how to run validation against an explicitly chosen fixed done file/key already present in `alina_telegram_notifier_state`.
+
+A new explicit gate is required because any further runtime run is forbidden until the user decides D-0197-A.
+
+## Perché serve decisione
+
+A pinned-file validation run is a runtime action in n8n UI. It requires:
+- temporary override / duplicate workflow / fixed filter to bypass the dynamic latest-file picker;
+- a pinned `(done_file_path, done_file_sha)` corresponding to an existing row in `alina_telegram_notifier_state`;
+- one manual Execute workflow only;
+- clean restoration of the workflow after the run.
+
+Per project policy these steps require an explicit human gate.
+
+## Opzioni
+
+1. **Authorize exactly one pinned-file duplicate-skip validation run.** One manual Execute workflow only, manual-only, no Schedule Trigger, no automatic notification, no workflow JSON export/import, no token/chat id in docs or chat, no app/deploy/tag/rollback, stop immediately if Telegram sends or a new row is written. Expected: false branch, no Telegram message, no new Data Table row.
+
+2. **Do not run pinned validation now.** Keep Telegram notifier manual-only and continue docs/design. Duplicate-skip remains not conclusively validated. Schedule activation remains separately gated.
+
+3. **Defer and first refine the pinned-file design further.** No runtime run. Refine the design (e.g., narrow Option A/B/C, add operator checklists) before opening the gate.
+
+## Raccomandazione orchestratore
+
+Option 1, but only when the user is ready to perform a carefully guided pinned-file run. This is the first structurally valid way to test same-key duplicate-skip. The recommendation is conditional on the user being available to follow the pinned-file design step-by-step and to stop immediately if any fail-closed condition fires.
+
+## Rischio principale
+
+The main risk is scope creep: that a pinned validation morphs into schedule activation, repeated runs, or workflow JSON export. The design and this Decision Packet limit the scope to exactly one manual run with hard stop conditions. A secondary risk is that the operator forgets to revert the temporary override / duplicate workflow / fixed filter — the design requires explicit restoration.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this Decision Packet only.
+- Runtime: no runtime performed by this packet; one manual run authorized only if D-0197-A = 1.
+- n8n: no workflow modification by this packet. If D-0197-A = 1, a temporary, reversible change is authorized for one run.
+- INBOX: source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: forbidden by default.
+- Billing: no new billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. A category (a) success would unblock the eventual schedule-activation gate (separate, future).
+
+## Scelta richiesta
+
+`D-0197-A = 1` per autorizzare esattamente una pinned-file duplicate-skip validation run.
+`D-0197-A = 2` per non eseguire ora; il notifier resta manual-only.
+`D-0197-A = 3` per rinviare e raffinare ulteriormente il design.
+
+## Cosa succede dopo la scelta
+
+If `D-0197-A = 1`: the user may execute exactly one pinned-file validation run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`. Expected: category (a) — false branch, no send, no new row. Any other outcome triggers fail-closed and a new Decision Packet.
+
+If `D-0197-A = 2`: no run is authorized. Duplicate-skip remains not validated. Schedule activation remains separately gated.
+
+If `D-0197-A = 3`: design is refined first. A future Decision Packet may then re-open the gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- More than one run;
+- Schedule Trigger activation;
+- Automatic notifications;
+- Queue reader workflow modification;
+- Workflow JSON export/import;
+- Token or chat id in repo/docs/AI chat;
+- Provider API LLM;
+- New billing;
+- App/deploy/tag/rollback/merge;
+- Browser Bridge runtime;
+- Ollama runtime;
+- Cursor CLI/headless;
+- Automatic INBOX responses;
+- Automatic `D-NNNN-X = N` writing.
+
+---
+
+## Decided
+
+### D-0193-A — Authorize one duplicate-skip retry against the same 0190 idempotency key
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0193-create-duplicate-skip-retry-same-key-decision-packet
+**source_document:** docs/tasks/done/0191-record-duplicate-skip-validation-inconclusive-due-to-new-latest-done-file.md
+**response:** 1
+**decided_at:** 2026-05-14
 **archive_policy:** keep
 
 ---
@@ -70,79 +171,44 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Contesto
 
-D-0187-A = 1 authorized exactly one duplicate-skip validation run. The run was executed (task 0191, 2026-05-14). The result was INCONCLUSIVE because "Pick latest done file" selected task 0190 (the most recent done file at execution time), which generated a different idempotency key from the original test. The workflow correctly executed the send/store path for the new 0190 key. The duplicate-skip logic (false branch) was not tested. D-0187-A is now consumed. A new Decision Packet is required to authorize a retry against the same 0190 idempotency key.
+D-0187-A = 1 authorized exactly one duplicate-skip validation run; the run was inconclusive (recorded in task 0191 due to latest-done drift). D-0193-A was created to authorize a retry against the same 0190 idempotency key. The user gave a prior conditional order: if batch 0191–0193 was correct, apply D-0193-A = 1 directly. ChatGPT verified the condition on GitHub via LLMS-first routing and applied D-0193-A = 1.
 
-## Perché serve decisione
+## Decision outcome
 
-A duplicate-skip retry against the same 0190 key is a runtime action. Even though it is the same workflow and the same done file, it requires an explicit human gate per project policy. The retry would test the duplicate-skip logic by re-executing the workflow with an idempotency key that already exists in the Data Table.
+Recorded by batch 0194–0198 on 2026-05-14: response `D-0193-A = 1`, applied per the user's conditional order.
 
-## Opzioni
+**Runtime attempt result: INCONCLUSIVE (likely new-key send due to latest-done drift).**
 
-1. **Authorize exactly one duplicate-skip retry against the same 0190 key** — authorize one future manual Execute workflow with the same done file (task 0190) that was just sent/stored. Expected result: duplicate detection, false branch routing, no Telegram message, no new Data Table row. This would validate the duplicate-skip logic conclusively.
+User executed exactly one manual run of `TEST - Alina task completion Telegram notifier`. Screenshot evidence and user report ("è arrivato il messaggio") show:
+- Manual Trigger executed
+- List done files / Pick latest done file / Get done file executed
+- Build idempotency key / Load notification state / Normalize notification state executed
+- Decide send or skip routed **TRUE**
+- Build notification payload / Send a text message / Store notification state executed
+- Telegram message arrived
 
-2. **Do not retry duplicate-skip now** — skip the retry for now. The duplicate-skip logic remains unvalidated. Schedule activation remains separately gated. The workflow remains manual-only. The user may return to this gate later if desired.
+Because docs-only batch 0191–0193 added new done files after the original 0190 idempotency key was stored, `Pick latest done file` most likely selected a newer file than 0190, generating a new key. A TRUE branch on a new key is correct new-key behavior (category (b) in task 0195), **not** a confirmed idempotency bug (category (c)).
 
-## Raccomandazione orchestratore
+**Classification:** inconclusive / likely new-key send due to latest-done drift.
 
-Option 1, as a narrow runtime gate for duplicate-skip validation only. The retry would conclusively test the duplicate-skip logic by using the same 0190 idempotency key that is already stored. If the retry succeeds (false branch, no Telegram send, no new row), the duplicate-skip implementation is validated and schedule activation can proceed as a separate future gate. If the retry fails (duplicate Telegram message), the idempotency implementation must be investigated and fixed before proceeding.
+**D-0193-A is consumed.** No further runtime is authorized under D-0193-A.
 
-## Rischio principale
+**Next gate:** D-0197-A (pinned-file duplicate-skip validation), pending in the section above.
 
-Scope creep from retry toward schedule activation or repeated Telegram messages without separate gates. The retry must be exactly once, with the same 0190 done file, and must stop immediately if a duplicate message is sent.
-
-## Impatto
-
-- App Alina: no impact.
-- GitHub docs: this task records the Decision Packet creation only.
-- Runtime: no runtime performed by this task; retry execution is a future manual user step if D-0193-A = 1.
-- n8n: no workflow modification by this task.
-- INBOX: remains source of truth; Telegram must not answer it.
-- Gate 7: no impact; remains closed.
-- Provider API LLM: no impact; still forbidden by default.
-- Billing: no new LLM billing.
-
-## Micro-interazioni umane eliminate
-
-0 immediately. After duplicate-skip is validated and schedule is activated, Telegram Mode A may reduce manual checking burden.
-
-## Scelta richiesta
-
-`D-0193-A = 1` per autorizzare esattamente un retry duplicate-skip contro la stessa chiave 0190.
-`D-0193-A = 2` per non riprovare ora; la validazione duplicate-skip rimane non conclusa.
-
-## Cosa succede dopo la scelta
-
-If `D-0193-A = 1`: user may manually execute the workflow once with the same 0190 done file. Expected: duplicate detection, false branch, no Telegram send, no new Data Table row. If successful, duplicate-skip logic is validated. Schedule activation gate may follow as a separate future Decision Packet.
-
-If `D-0193-A = 2`: no retry is authorized. Duplicate-skip logic remains unvalidated. Schedule activation remains separately gated. The workflow remains manual-only.
-
-## Cosa NON verrà fatto senza ulteriore gate
-
-This decision does not authorize:
-- Second retry run (only one is authorized if Option 1 is chosen);
-- Schedule Trigger activation;
-- Automatic notifications;
-- Queue reader workflow modification;
-- Workflow JSON export/import;
-- Token or chat id in repo/docs/AI chat;
-- Provider API LLM;
-- New billing;
-- App/deploy/tag/rollback;
-- Automatic INBOX responses;
-- Automatic `D-NNNN-X = N` writing.
-
-If option 1 is chosen, the scope is limited to:
-- One manual Execute workflow only;
-- Same done file (task 0190) that was just sent/stored;
-- Expected duplicate detection for same idempotency key;
-- Expected false branch routing;
-- Expected no Telegram message;
-- Expected no new Data Table row;
-- Stop immediately if duplicate message is sent.
+**Scope NOT authorized by D-0193-A = 1:**
+- Second retry run
+- Schedule Trigger activation
+- Automatic notifications
+- Queue reader modification
+- Workflow JSON export/import
+- Token/chat id in repo/docs/AI chat
+- Provider API LLM
+- New billing
+- App/deploy/tag/rollback
+- Automatic INBOX responses
+- Automatic `D-NNNN-X = N` writing
 
 ---
-
-## Decided
 
 ### D-0187-A — Authorize one duplicate-skip validation run for Telegram idempotency
 

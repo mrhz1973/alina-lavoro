@@ -12,7 +12,7 @@
 - Runtime gate: D-0180-A = 1 decided (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened
 - Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183)
 - Duplicate-skip validation handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (batch 0188–0190, D-0187-A = 1)
-- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A = 1 decided and consumed** (batch 0188–0190), result INCONCLUSIVE (batch 0191–0193) — validation run used task 0190 as latest done file, generating new idempotency key; workflow correctly sent/stored for new key; duplicate-skip logic not tested; **D-0193-A pending** for retry against same 0190 key; no Schedule Trigger; schedule activation checklist (§13) not yet complete
+- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A = 1** and **D-0193-A = 1** both decided/consumed with INCONCLUSIVE outcomes due to latest-done drift (batches 0191–0193 and 0194–0198); duplicate-skip logic still NOT conclusively validated; **D-0197-A pending** for one pinned-file validation run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`; no Schedule Trigger; schedule activation checklist (§13) blocked until pinned-file category (a) success is recorded
 
 ---
 

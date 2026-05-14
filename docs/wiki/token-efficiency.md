@@ -51,7 +51,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Telegram/browser bridge trigger coordination? | `docs/automation/telegram-browser-bridge-trigger-coordination-design.md` | — |
 | Telegram idempotency/state-store implementation design? | `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` | — |
 | Telegram idempotency implementation checklist (pre-runtime)? | `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` | — |
-| Telegram idempotency runtime UI handoff (D-0180-A = 1, first step inspection)? | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` | `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (D-0187-A = 1, consumed/inconclusive; D-0193-A pending for retry) |
+| Telegram idempotency runtime UI handoff (D-0180-A = 1, first step inspection)? | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` | `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (D-0187-A = 1 and D-0193-A = 1 both consumed/inconclusive); pinned-file design: `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md` (D-0197-A pending) |
 | Runtime gate checklist / which components are gated? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |
 | Runtime gate Decision Packet / gate request playbook? | `docs/automation/runtime-gate-decision-packet-playbook.md` | — |
 | Candidate gate backlog / which gate might be next? | `docs/automation/candidate-gate-backlog.md` | — |
