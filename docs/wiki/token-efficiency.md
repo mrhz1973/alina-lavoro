@@ -66,6 +66,9 @@ Open only when restart context is explicitly required. If you open it, justify i
 | How to create tasks with V3.1 (orchestrator)? | `docs/wiki/compact-task-creation-workflow.md` | — |
 | How to generate compact implementer prompts? | `docs/wiki/compact-implementer-prompt-workflow.md` | — |
 | When to batch docs-only sub-tasks vs single tasks? | `docs/wiki/multi-step-batch-planning-rules.md` | — |
+| How to choose the next task (V3.1 rubric)? | `docs/wiki/v31-next-task-selection-rubric.md` | — |
+| Telegram Mode A stabilization posture? | `docs/automation/telegram-mode-a-post-activation-stabilization-plan.md` | `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md` |
+| Next low-touch runtime gate candidates? | `docs/automation/next-low-touch-runtime-gate-backlog.md` | `docs/automation/candidate-gate-backlog.md` |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
 | Optional personal cockpit / Obsidian note? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |

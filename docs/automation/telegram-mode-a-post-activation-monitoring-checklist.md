@@ -109,6 +109,8 @@ Any incident must be recorded in docs before further activation changes:
 
 ## 9. References
 
+- `docs/automation/telegram-mode-a-post-activation-stabilization-plan.md` — **stabilization plan (task 0241, 2026-05-14): observation window, anomaly conditions, stable posture**
+- `docs/automation/next-low-touch-runtime-gate-backlog.md` — next candidate gates after Mode A activation
 - `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md` — original supervision checklist
 - `docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md` — cleanup plan (closed)
 - `docs/automation/telegram-idempotency-runtime-ui-handoff.md`
