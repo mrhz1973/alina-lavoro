@@ -38,6 +38,7 @@ It should not repeat hundreds of lines of boilerplate already present in the rep
 - Do not paste repeated git workflow, security rules, or final report format if a template can cover them.
 - Do not duplicate bilingual blocks.
 - Use technical English for agent-facing templates and Italian for final user summaries.
+- Before creating a new document: apply the Docs ROI Gate — at least one must apply (reduces token usage / user time / ambiguity / repeated errors / future manual work). A new doc that only adds another file to read is a regression. Full gate: `docs/wiki/v31-enforcement-checklist.md` § F.
 
 ## Exception
 

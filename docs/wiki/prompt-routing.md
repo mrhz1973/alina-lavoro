@@ -72,3 +72,4 @@ For complete orchestrator guidance on applying this routing:
 - Do not hide runtime risk behind short prompts.
 - Do not use templates to bypass INBOX decisions.
 - Do not write to INBOX unless a real decision is required.
+- Do not create new documents that only add another file to read — apply the Docs ROI Gate (`docs/wiki/v31-enforcement-checklist.md` § F) before any new doc creation.

@@ -93,6 +93,7 @@ The remaining sub-tasks after the gate remain in the queue and resume after the 
 | Including runtime and docs in one task without gating the runtime | Mixes risk profiles; runtime must be single-step |
 | Asking «proceed?» at the end of a docs-only batch final report | The batch is done; no confirmation needed unless a new gate appears |
 | Creating an INBOX entry for a docs-only continuation | INBOX is for real decisions only |
+| Creating a new policy doc that only restates existing rules | Regression — update the existing rule instead; apply Docs ROI Gate (`v31-enforcement-checklist.md` § F) |
 
 ---
 

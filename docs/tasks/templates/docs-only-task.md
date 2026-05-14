@@ -14,6 +14,7 @@ Use for tasks that touch only `docs/`, `docs/tasks/`, `docs/sessions/`, `docs/wi
 - Confirm working tree is clean or contains only allowed modifications.
 - Read `docs/LLMS.md` → `docs/wiki/current-state.md` → `docs/wiki/token-efficiency.md`.
 - Do not read `docs/PROJECT_STATE.md` or `docs/CHECKPOINT.md` by default.
+- If this task creates a new document (beyond done marker and session note): apply the Docs ROI Gate (`docs/wiki/v31-enforcement-checklist.md` § F) before proceeding.
 
 ## Allowed paths
 

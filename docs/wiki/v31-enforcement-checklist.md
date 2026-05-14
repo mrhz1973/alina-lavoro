@@ -123,6 +123,40 @@ Apply this checklist. Remove duplicated content. Reference templates instead.
 
 ---
 
+## F. Docs ROI Gate
+
+Before creating any new document, apply this gate:
+
+| Question | Criterion |
+|----------|-----------|
+| Does it reduce token usage? | e.g. replaces a large repeated block, removes a default read |
+| Does it reduce user time? | e.g. prevents repeated manual steps or confirmations |
+| Does it reduce ambiguity? | e.g. removes conflicting interpretations between docs |
+| Does it prevent repeated errors? | e.g. a pattern that keeps breaking without a written rule |
+| Does it reduce future manual work? | e.g. a rule that would be re-derived each session |
+
+**If none apply: do not create the document.**
+
+**A new document that only adds another file to read is a regression.**
+
+Prefer updating an existing routing, template, or checklist doc when that is sufficient.
+
+**Do not create "policy around policy"** — a rule that only restates another rule without compressing or replacing it.
+
+### Permanent constraints (Docs ROI)
+
+| Constraint | Rule |
+|---|---|
+| `docs/LLMS.md` | State + pointers only; must remain ≤200 lines |
+| `docs/PROJECT_STATE.md` / `docs/CHECKPOINT.md` | Fallback/audit only; do not read by default |
+| `docs/INBOX.md` | Real human decisions only (≥2 non-equivalent options) |
+| Prompt Size Guard | Active at ~80–100 lines; see Section B |
+| `AGENTS.md` | Pointer-only (≤50 lines); not duplicated memory |
+| CLI Printing Press | Future/low-priority only; no code |
+| Repo hygiene scanner | Future/report-only; no implementation |
+
+---
+
 ## Related documents
 
 - `docs/wiki/task-id-preflight.md` — task-ID guard

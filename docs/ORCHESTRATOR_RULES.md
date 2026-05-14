@@ -63,6 +63,9 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Claude Code large-file warnings may remain until a future physical compression task; this rule reduces real context consumption independently.
 - **LLM Wiki V3.1 (task 0232, 2026-05-14):** additional wiki files active — `docs/wiki/task-id-preflight.md` (task-ID guard), `docs/wiki/prompt-routing.md` (context router), `docs/wiki/context-budget-policy.md` (budget rules), `docs/wiki/template-pack-index.md` (template index); implementer templates in `docs/tasks/templates/`; use for delta-based short prompts and task-ID preflight before any new task creation.
 
+**Docs ROI Gate (batch 0267–0272, 2026-05-14):**
+Before creating a new document: at least one must apply — reduces token usage, user time, ambiguity, repeated errors, or future manual work. If none apply, do not create the document. A new doc that only adds another file to read is a regression. Prefer updating an existing doc. Full gate: `docs/wiki/v31-enforcement-checklist.md` § F.
+
 ## PRIORITÀ 0B — n8n template-first (priorità tempo e risultati)
 
 **Regola globale del progetto (adottata 2026-05-14, batch 0204–0208).**

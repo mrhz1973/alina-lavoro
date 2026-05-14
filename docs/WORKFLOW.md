@@ -45,6 +45,10 @@ Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **Batch size policy** and 
 - Do not invent user decisions to fill a batch.
 - Pending Decision Packets stay pending until explicit user response.
 
+## Docs ROI Gate (batch 0267–0272, 2026-05-14)
+
+Before creating a new document: at least one must apply — reduces token usage, user time, ambiguity, repeated errors, or future manual work. If none apply, do not create the document. A new doc that only adds another file to read is a regression. Full gate: `docs/wiki/v31-enforcement-checklist.md` § F.
+
 ## Roles
 
 - **User**: talks with the orchestrator and with Cursor when needed, but does not normally run terminal commands.

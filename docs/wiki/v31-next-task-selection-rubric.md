@@ -109,6 +109,7 @@ If the user previously said «if X succeeds, do Y» and X has now succeeded:
 | Invent tasks to fill a batch | Do not pad; batch is a maximum, not a target |
 | Re-ask a conditional decision that was already given | If condition met, encode as sequence |
 | Open a gate without a real DP and INBOX decision | Anti-creep rule; never from backlog alone |
+| Create a new doc without ROI justification | Regression; adds another file to read without reducing token/time/ambiguity/errors/manual work — apply Docs ROI Gate |
 
 ---
 

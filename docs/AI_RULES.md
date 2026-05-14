@@ -153,6 +153,10 @@ Rules:
 - User decisions must not be invented to fill a batch.
 - Pending Decision Packets remain pending until explicit user response. Never record `D-NNNN-X = N` without an explicit user choice.
 
+## Docs ROI Gate
+
+Before creating any new document: confirm that at least one applies — reduces token usage, user time, ambiguity, repeated errors, or future manual work. If none apply, **do not create the document.** A new doc that only adds another file to read is a regression. Prefer updating an existing doc. Full gate and permanent constraints: `docs/wiki/v31-enforcement-checklist.md` § F.
+
 ## Quality and output
 
 - Prefer **small, reviewable** blocks of changes.

@@ -73,6 +73,8 @@ runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script
 
 Use the minimum delta for each task. Do not repeat boilerplate already in templates.
 
+**Docs ROI Gate:** if this task creates a new document (beyond the standard done marker and session note), confirm at least one ROI criterion applies before proceeding — see `docs/wiki/v31-enforcement-checklist.md` § F. Prefer updating an existing doc over creating a new one.
+
 ```text
 @docs/wiki/task-id-preflight.md
 @docs/tasks/templates/implementer-standard.md

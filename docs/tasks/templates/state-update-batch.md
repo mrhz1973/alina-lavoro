@@ -26,6 +26,10 @@ Use when a task's primary goal is updating state documentation to reflect comple
 | `docs/tasks/done/<id>-<slug>.md` | Done marker for this task |
 | `docs/sessions/YYYY-MM-DD-<slug>.md` | Session note |
 
+## Docs ROI Gate
+
+If this state-update batch creates a new document (beyond the standard done marker and session note), confirm at least one ROI criterion applies before proceeding — see `docs/wiki/v31-enforcement-checklist.md` § F. Standard state updates (LLMS.md, current-state.md, roadmap.md, token-efficiency.md, done marker, session note) are always in scope and do not need ROI justification.
+
 ## Compact update rule
 
 Do not rewrite docs wholesale. Apply targeted inserts or single-line updates.
