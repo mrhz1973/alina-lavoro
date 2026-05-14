@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0285** — Decision Gate Boundary Audit (2026-05-15): docs-only; verified six boundary lines (docs-only autonomy, runtime/manual gates, INBOX DPs for real choices only, future/gated workstreams, debug/status to session not INBOX, INBOX never bypasses gates) all asserted in two+ canonical files with consistent wording; no new DP created; no policy doc; no runtime. |
-| Previous | **0284** — Implementer Failure Modes Audit (2026-05-15): docs-only; mapped 10 failure modes to existing canonical handling; added one-line "push rejected" rule to `implementer-standard.md` § Git rules; no runtime. |
+| Last completed | **0286** — Dual CLI Readiness Roadmap Compression (2026-05-15): docs-only; refined `docs/roadmap.md` dual-agent loop row to answer the three readiness questions (prerequisites, what is not authorized, first design-only step) and trimmed three completed NEXT rows (cold-start verification closed by 0283, DP mini-audit closed by 0285, template consolidation evaluation closed by 0281); dual CLI remains LATER/GATED; no design doc; no runner; no runtime. |
+| Previous | **0285** — Decision Gate Boundary Audit (2026-05-15): docs-only; verified six boundary lines consistent across canonical files; no new DP created; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---

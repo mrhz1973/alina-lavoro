@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0285)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0286)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0285 — Decision Gate Boundary Audit** (2026-05-15): docs-only; verified six boundary lines (autonomy, gates, INBOX DPs, future/gated, debug→session, INBOX never bypasses) consistent across canonical files; no new DP; no runtime. |
-| Previous | **0284 — Implementer Failure Modes Audit** (2026-05-15): docs-only; mapped 10 failure modes to existing handling; added one-line "push rejected" rule to `implementer-standard.md`; no runtime. |
+| Last completed | **0286 — Dual CLI Readiness Roadmap Compression** (2026-05-15): docs-only; refined dual-agent loop row in `docs/roadmap.md` to answer prerequisites + not-authorized + first-design-only-step; trimmed three completed NEXT rows; dual CLI remains LATER/GATED; no runtime. |
+| Previous | **0285 — Decision Gate Boundary Audit** (2026-05-15): docs-only; verified six boundary lines consistent across canonical files; no new DP; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---

@@ -20,16 +20,13 @@ Stack:
 |---|---|---|---|
 | NOW | Keep AGENTS.md pointer-only | Ongoing | None |
 | NOW | Keep local preflight mandatory in all implementers | Ongoing | None |
-| NEXT | Verify cold-start is lighter after cleanup | After 0278 | None |
-| NEXT | Mini-audit recent DPs: distinguish real decisions from status/debug notes | When convenient | None |
-| NEXT | Evaluate whether task templates remain too many; if yes, run template consolidation batch | Explicit need | None |
 | NEXT | Monitor Telegram Mode A passively; no runtime changes unless anomaly | Ongoing | Anomaly only |
 | LATER | Repo hygiene scanner — report-only, manual | Explicit open | Runtime gate |
 | LATER | n8n health check or backup plan | Explicit open | Runtime gate |
 | LATER | CLI Printing Press — read-only only, if measured need exists | Explicit open | Runtime gate |
 | LATER | Local AI/Ollama router — consultive only, not decision-making | Explicit open | Runtime gate |
 | LATER | Browser bridge — only if still needed | Explicit open | Runtime gate |
-| LATER | Dual-agent loop | Future only | Runtime gate |
+| LATER | Dual-agent loop / orchestrator-lite CLI — design-only first step; no runner, no scripts, no autonomous runtime | Explicit user request after baseline-stable implementer flow; pending DPs = 0; no current friction the manual loop fails to handle | Runtime gate (first step is a design doc, not a runner) |
 | DO NOT | New framework, runtime, tool, or automation | — | Blocked |
 | DO NOT | App work (V1.9.2 stable) | — | User explicit only |
 | DO NOT | Deploy/tag/rollback | — | Explicit only |
