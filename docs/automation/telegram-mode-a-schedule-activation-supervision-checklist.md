@@ -3,8 +3,8 @@
 **Task:** 0222
 **Date:** 2026-05-14
 **Type:** docs-only / operational checklist
-**Authorization:** This checklist is docs-only. It does not authorize any activation. Activation requires `D-0221-A = 1` explicit user decision before any step below is executed.
-**Status:** created — not yet executed. Pending D-0221-A decision.
+**Authorization:** This checklist is docs-only. It does not authorize any activation. **D-0221-A = 3 decided** (2026-05-14, batch 0224–0226) — cleanup-first path selected; user conditional follow-on activation intent recorded (after cleanup succeeds and no new risk is found, proceed toward activation without re-asking the strategic choice — intent itself does NOT activate). Activation may proceed using this checklist **only after** the cleanup plan (`docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md`) is closed and the user explicitly confirms no new risk was found.
+**Status:** created; awaiting completion of cleanup-first path before any activation step is executed.
 
 ---
 

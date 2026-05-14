@@ -52,17 +52,29 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0221-A — Authorize Controlled Telegram Mode A Schedule Trigger Activation
+_No pending Decision Packets._
 
-**inbox_status:** pending
+---
+
+## Decided
+
+### D-0221-A — Authorize Controlled Telegram Mode A Schedule Trigger Activation (DECIDED)
+
+**inbox_status:** decided
 **created_at:** 2026-05-14
 **source_task:** 0221-create-controlled-schedule-activation-decision-packet
 **source_document:** docs/automation/telegram-mode-a-schedule-activation-design-first-path.md
-**response:**
-**decided_at:**
+**response:** 3
+**decided_at:** 2026-05-14
+**recorded_by_task:** 0224-record-d0221a-cleanup-first-conditional-activation-intent
+**result:** cleanup-first path selected; user also recorded conditional follow-on intent to proceed toward controlled Schedule Trigger activation after cleanup succeeds and no new risk is found — cleanup plan: `docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md`
 **archive_policy:** keep
 
+**Important interpretation note:** the user said "subito D-0221-A = 3 insieme a D-0221-A = 1". This is **NOT** a simultaneous response 3+1. A Decision Packet has exactly one formal `response` value. The formal response is **3**. The user's "insieme a 1" is recorded as a **conditional follow-on activation intent** (not authorization): after cleanup succeeds and no new risk is found, proceed toward controlled Schedule Trigger activation per the supervision checklist without re-asking the same strategic choice. The conditional intent does NOT activate Schedule Trigger and does NOT authorize Execute. Runtime safety remains step-by-step and supervised.
+
 ---
+
+#### Original Decision Packet (preserved for audit)
 
 **Decision ID:** D-0221-A
 **Kind:** automation
@@ -159,8 +171,6 @@ If `D-0221-A = 3`: cleanup is performed first (separate docs-only batch); then a
 - No additional Execute test.
 
 ---
-
-## Decided
 
 ### D-0217-A — Authorize Telegram Mode A Schedule Activation Readiness Inspection (DECIDED)
 

@@ -175,7 +175,9 @@ This document explicitly does **not** authorize:
 
 **No Schedule Trigger was authorized or activated by this inspection.**
 
-Stage 3 (template-first activation plan) is superseded by the supervision checklist approach (`docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`, task 0222). Stage 4 activation is gated by D-0221-A (Pending).
+Stage 3 (template-first activation plan) is superseded by the supervision checklist approach (`docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`, task 0222). Stage 4 activation is gated by D-0221-A.
+
+**D-0221-A = 3 decided (2026-05-14, batch 0224–0226):** cleanup-first path selected. User conditional follow-on activation intent recorded (after cleanup succeeds and no new risk is found, proceed toward controlled Schedule Trigger activation without re-asking the strategic choice). Cleanup plan: `docs/automation/telegram-mode-a-pre-schedule-cleanup-plan.md`. Cleanup precedes Stage 4 activation.
 
 ---
 
