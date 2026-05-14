@@ -10,9 +10,55 @@
 
 ## 1. What this doc covers
 
-The CLI-based orchestrator-lite model: supervised implementer CLIs (Claude Code, Windsurf) coordinated via GitHub queue, short prompts, and explicit user gates. This is a simpler, lower-infrastructure path than the Cursor/n8n dual-agent loop (task 0140).
+The CLI-based orchestrator-lite model: supervised implementer CLIs (Claude Code, Windsurf, Antigravity, Cursor) coordinated via GitHub queue, short prompts, and explicit user gates. This is a simpler, lower-infrastructure path than the fully automated n8n + Ollama dual-agent loop.
 
 **Relationship to task 0140:** task 0140 uses n8n + Ollama + Cursor CLI force-mode. This doc covers the manual/supervised variant that is already operational and defines what could be incrementally automated from it.
+
+---
+
+## 1a. Target architecture (full intended pipeline)
+
+When the design is fully implemented, the intended pipeline is:
+
+```
+n8n supervised queue/scheduler
+  → local Ollama / Qwen (router · classifier · risk scorer · prompt compressor)
+  → orchestrator-lite CLI
+  → implementer CLI  (tool-agnostic — see §1b)
+  → GitHub session/done epilogue
+  → ChatGPT web verification via aggio
+  → user gate (real decisions and sensitive actions only)
+```
+
+Each stage is a gate or transform; no stage is bypassed. The pipeline is incremental: the supervised manual loop (orchestrator-lite = ChatGPT-web, implementer = Claude Code supervised) is already the current baseline. Automation layers are added from left to right only as each upstream stage is stable.
+
+**This doc designs the full intended shape; runtime implementation of each stage remains LATER/GATED until the user explicitly opens it.**
+
+---
+
+## 1b. Tool-agnostic implementer layer
+
+The implementer CLI slot is tool-agnostic. Any of the following may fill it in a given run, depending on what the user has available and authorized:
+
+| Implementer | Status |
+|---|---|
+| Claude Code | Principal supervised implementer (current) |
+| Windsurf / Cascade | Backup supervised implementer |
+| Antigravity | Supervised implementer (installed 2026-05-14) |
+| Cursor / Agent | Supervised implementer; also usable as orchestrator-lite / reviewer (see §1c) |
+
+The task file format, commit/push protocol, and stop conditions (§7) are the same for all implementers. Implementer-specific prompt length rules remain (see `docs/ORCHESTRATOR_RULES.md` — Regola lunghezza prompt).
+
+---
+
+## 1c. Cursor dual-agent option (one possible future implementation)
+
+One valid future implementation of the orchestrator-lite + implementer split using Cursor:
+
+- **Cursor / Agent 1** = implementer (executes task, commits, pushes, writes epilogue)
+- **Cursor / Agent 2** = orchestrator-lite / reviewer (reads queue, produces prompt for Agent 1, checks done marker)
+
+This option is **not the only path** and is not authorized now. It is recorded here so the design remains coherent when the user decides to evaluate it. The tool-agnostic framing in §1b takes precedence: any pairing of supported implementers may be used.
 
 ---
 

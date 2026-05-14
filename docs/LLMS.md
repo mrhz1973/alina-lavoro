@@ -48,7 +48,7 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0288** — Dual CLI / Orchestrator-Lite Design Gate (2026-05-15): docs-only; created `docs/automation/dual-cli-orchestrator-lite-design.md` (~118 lines; passed Docs ROI Gate); answers 11 boundary questions for CLI-based orchestrator-lite path; dual CLI remains LATER/GATED — design only; no runtime. |
+| Last completed | **0288 + clarification** — Dual CLI / Orchestrator-Lite Design Gate (2026-05-15): docs-only; `docs/automation/dual-cli-orchestrator-lite-design.md` updated with full target pipeline (n8n → Ollama/Qwen → orchestrator-lite CLI → implementer CLI → GitHub epilogue → ChatGPT aggio → user gate), tool-agnostic implementer layer (§1b), and Cursor dual-agent option as one non-authoritative path (§1c); dual CLI remains LATER/GATED — design only; no runtime. |
 | Previous | **0287** — Baseline Stable Implementer Flow Marker (2026-05-15): docs-only / marker; short-prompt flow validated; posture: baseline stable / monitor; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
