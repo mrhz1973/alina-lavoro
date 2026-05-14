@@ -121,14 +121,14 @@ After initial activation, scheduled executions succeeded but sent no new Telegra
 - Node-level validation confirmed task_id 0245 selected correctly.
 - One manual full execution performed: **Telegram 0245 arrived** (user report).
 
-**Current status:**
+**Current status — RESOLVED (tasks 0251–0253, 2026-05-14):**
 - Root cause resolved.
-- Manual validation succeeded.
-- First **scheduled tick post-fix** is still **pending observation**.
-- Expected behavior: next scheduled tick should duplicate-skip task 0245 (already notified by manual run) and send no Telegram.
-- Telegram Mode A is **not declared stable-after-fix** until the scheduled post-fix tick is confirmed.
+- Manual validation succeeded (Telegram 0245 arrived, task 0248).
+- First scheduled tick post-fix: Telegram sent for **task 0250** (new latest done after docs batch 0246–0250 was committed between manual run and first tick). Correct behavior.
+- Second scheduled tick post-fix: **duplicate-skip** for task 0250 (already notified). Correct behavior.
+- **Telegram Mode A is declared stable-after-fix.**
 
-**If scheduled tick fails or duplicates:** disable immediately and record incident. Do not re-enable without an orchestrator decision.
+Post-fix validation is complete. Mode A transitions from active-watch to routine-check posture (see Section 3).
 
 See: `docs/automation/telegram-mode-a-latest-done-selection-fix.md`
 

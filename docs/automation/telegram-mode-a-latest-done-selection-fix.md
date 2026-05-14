@@ -82,7 +82,7 @@ Before declaring fix stable after reactivation:
 - [ ] Manual execution sends Telegram for that task (if not previously notified).
 - [ ] Next scheduled tick duplicate-skips that task (FALSE branch, no Telegram, no new Data Table row).
 
-## Current validation status (2026-05-14)
+## Current validation status (2026-05-14) — COMPLETE
 
 | Check | Status |
 |-------|--------|
@@ -90,9 +90,12 @@ Before declaring fix stable after reactivation:
 | `Get done file` reads task 0245 | ✅ Validated (node-level test) |
 | `Build idempotency key` ready for 0245 | ✅ Validated (node-level test) |
 | Manual execution: Telegram 0245 arrived | ✅ Validated (user report, task 0248) |
-| First scheduled tick post-fix: duplicate-skip 0245 | ⏳ **Pending observation** |
+| First scheduled tick post-fix: Telegram for new task 0250 | ✅ Validated (user report, task 0251) |
+| Second scheduled tick post-fix: duplicate-skip task 0250 | ✅ Validated (user report, task 0252) |
 
-Telegram Mode A is **not declared stable-after-fix** until the scheduled post-fix tick is confirmed.
+**Note on first scheduled tick:** Between the manual validation run and the first scheduled tick, docs batch 0246–0250 was committed, creating newer done markers. The first scheduled tick correctly selected task 0250 (the new latest), sent a Telegram (unnotified task), and the second tick correctly skipped it (duplicate-skip).
+
+**Telegram Mode A is declared stable-after-fix** as of 2026-05-14 (tasks 0251–0253).
 
 ## Monitoring reference
 

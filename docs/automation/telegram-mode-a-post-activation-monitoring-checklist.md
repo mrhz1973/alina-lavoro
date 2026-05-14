@@ -3,7 +3,7 @@
 **Task:** 0229
 **Date:** 2026-05-14
 **Type:** docs-only / operational monitoring reference
-**Status:** active — Telegram Mode A schedule is now active as of 2026-05-14 (batch 0227–0231).
+**Status:** active — Telegram Mode A schedule active (batch 0227–0231). Latest-done fix stable-after-fix (batch 0246–0253, 2026-05-14). Post-fix scheduled validation complete: first tick sent Telegram for task 0250; second tick duplicate-skipped 0250. Routine-check posture.
 
 ---
 
