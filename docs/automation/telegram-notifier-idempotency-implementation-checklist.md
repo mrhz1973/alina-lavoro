@@ -4,7 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / pre-runtime implementation checklist
 **Authorization prerequisite:** D-0180-A must be decided (opened) before any n8n UI implementation step
-**Status:** checklist only — no runtime performed — **D-0180-A = 1 decided (task 0182, 2026-05-13); this checklist is now active for one-step-at-a-time supervised implementation**
+**Status:** checklist only — implementation complete by user report (task 0185, 2026-05-14); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`, 2026-05-14) — **duplicate-skip conclusively validated** on fully-pinned harness; production-like Telegram notifier remains manual-only/inactive; **D-0213-A pending** for Telegram Mode A schedule activation (notification-only; separate gate)
 
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Checklist activated.
 

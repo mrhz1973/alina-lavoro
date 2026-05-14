@@ -6,6 +6,8 @@
 **Authorization prerequisite for import/inspection:** `D-0206-A = 1` in `docs/INBOX.md`.
 **Authorization for any Execute:** NOT granted by this template. A separate future Decision Packet is required.
 
+**Status update (batch 0211–0214, 2026-05-14):** **D-0206-A = 1 decided/applied/completed** (`import/inspection ok`); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`) — exactly one manual Execute run of imported fully-pinned harness; `Load notification state` found existing row; FALSE branch followed; no Telegram message; no new Data Table row written; **duplicate-skip conclusively validated** on fully-pinned harness. The original production-like Telegram notifier remains manual-only/inactive. **D-0213-A pending** for Telegram Mode A schedule activation (notification-only; separate gate).
+
 ---
 
 ## 1. Purpose

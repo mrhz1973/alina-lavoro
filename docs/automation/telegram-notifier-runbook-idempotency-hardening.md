@@ -4,7 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / pre-schedule-activation hardening
 **Authorization:** D-0171-A = 3 (schedule deferred; hardening required before any Schedule Trigger)
-**Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A pending runtime gate for idempotency implementation
+**Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A = 1 decided (task 0182); idempotency implemented (task 0185); D-0187-A/D-0193-A inconclusive; D-0197-A not successful; D-0202-A superseded; D-0206-A = 1 decided/applied (import/inspection ok, 2026-05-14); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`, 2026-05-14) — **duplicate-skip conclusively validated** on fully-pinned harness; production-like Telegram notifier remains manual-only/inactive; **D-0213-A pending** for Telegram Mode A schedule activation (notification-only; separate gate)
 
 **Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184; updated batch 0185–0187; updated batch 0188–0190; updated batch 0191–0193; updated batch 0199–0203):**
 - Idempotency/state-store implementation design: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` (task 0178)

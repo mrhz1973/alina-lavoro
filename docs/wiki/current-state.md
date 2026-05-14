@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0208–0210)**
+**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0211–0214)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0210 — batch (0208–0210) docs-only (2026-05-14): D-0206-A = 1 decided/applied/completed with result `import/inspection ok` (user report); fully-pinned TEST-only n8n harness imported into n8n UI as `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY` (`active=false`, Manual Trigger only, no Schedule Trigger); no Execute authorized by D-0206-A; no Telegram send/test performed; new D-0209-A pending (authorize exactly one manual Execute run of imported harness, no schedule); D-0202-A remains superseded; duplicate-skip still NOT conclusively validated; next valid step = user decision on D-0209-A; INBOX: 1 pending (D-0209-A), 1 superseded (D-0202-A), 16 decided (D-0206-A added) |
+| Last completed | 0214 — batch (0211–0214) docs-only (2026-05-14): D-0209-A = 1 decided/applied/completed with result `fully pinned duplicate skip succeeded` (user report); exactly one manual Execute run of imported fully-pinned harness; `Load notification state` found existing row; duplicate-skip path followed; no Telegram message arrived; `Store notification state` did not write a new row; duplicate-skip **conclusively validated** on fully-pinned harness; original production-like Telegram notifier remains manual-only/inactive; no Schedule Trigger activated; no automatic Telegram notification active; new D-0213-A pending (authorize Telegram Mode A schedule activation gate, notification-only); D-0206-A remains decided/completed; D-0202-A remains superseded; next valid step = user decision on D-0213-A; INBOX: 1 pending (D-0213-A), 1 superseded (D-0202-A), 17 decided (D-0209-A added) |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -61,19 +61,22 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | D-0197-A | **Decided = 1, not successful** (batch 0199–0203, 2026-05-14) — one manual pinned run executed; override node output correct for 0193; but downstream nodes used dynamic values; `Store notification state` wrote task 0198 (not 0193); `Load notification state` did not find existing 0193 row; classification: partial pinning / dynamic reference leakage, NOT confirmed pure idempotency bug |
 | D-0202-A | **Superseded by D-0206-A** (batch 0204–0208, 2026-05-14) — template-first policy makes inspection/repair slower than importing a clean fully-pinned template; original design preserved at `docs/automation/telegram-fully-pinned-validation-harness-design.md` |
 | D-0206-A | **Decided = 1, applied/completed** (batch 0208–0210, 2026-05-14) — import and inspection of fully-pinned n8n template authorized and performed; user report `import/inspection ok`; workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY` present in n8n UI (`active=false`); no Execute performed |
-| D-0209-A | **Pending** (batch 0208–0210, 2026-05-14) — authorize exactly one manual Execute run of the imported fully-pinned harness; no schedule activation; no second run; success criterion = duplicate-skip (FALSE branch, no Telegram, no new Data Table row) |
+| D-0209-A | **Decided = 1, applied/completed** (batch 0211–0214, 2026-05-14) — exactly one manual Execute run of imported fully-pinned harness; result `fully pinned duplicate skip succeeded`: `Load notification state` found existing row, FALSE branch, no Telegram message, no new Data Table row; duplicate-skip conclusively validated on fully-pinned harness |
+| D-0213-A | **Pending** (batch 0211–0214, 2026-05-14) — authorize Telegram Mode A schedule activation gate (notification-only); options: 1 controlled schedule activation, 2 keep manual-only, 3 defer for safer template-first design; recommendation = Option 3 if more design is needed, Option 1 only if workflow is clear and idempotency path present |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
 | Data Table | `alina_telegram_notifier_state` — created and one row written (user report 2026-05-14) |
-| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; three duplicate-skip validation attempts (D-0187-A, D-0193-A, D-0197-A) all failed to validate: D-0187-A/D-0193-A inconclusive (latest-done drift), D-0197-A not successful (partial pinning / dynamic reference leakage); requires fully-pinned harness with `$json.*` only |
+| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; three duplicate-skip validation attempts (D-0187-A, D-0193-A, D-0197-A) all failed to validate (latest-done drift / partial pinning); **D-0209-A duplicate-skip validation succeeded on fully-pinned harness (`fully pinned duplicate skip succeeded`, 2026-05-14)** — duplicate-skip conclusively validated |
+| Duplicate-skip validation | **Conclusively validated** on fully-pinned harness (D-0209-A, 2026-05-14). Principle: same idempotency_key already present in `alina_telegram_notifier_state` ⇒ skip path, no Telegram, no new row |
 | Token / chat id in repo | None |
-| INBOX pending count | 1 (D-0209-A) |
+| INBOX pending count | 1 (D-0213-A) |
 | INBOX superseded count | 1 (D-0202-A → D-0206-A) |
-| INBOX decided count | 16 (D-0206-A = 1 import/inspection ok added; D-0197-A not successful; D-0193-A inconclusive; D-0187-A inconclusive) |
+| INBOX decided count | 17 (D-0209-A = 1 fully pinned duplicate skip succeeded added; D-0206-A = 1 import/inspection ok; D-0197-A not successful; D-0193-A inconclusive; D-0187-A inconclusive) |
 | n8n template-first policy | Adopted (batch 0204–0208, 2026-05-14) — importable template preferred; manual node-by-node = fallback; templates inactive by default, no real secrets |
-| Fully-pinned n8n template | Imported into n8n UI (D-0206-A = 1, user report 2026-05-14, task 0208) — workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`; `active=false`; Manual Trigger only; no Schedule Trigger; `$json.*`-only |
-| Next step | User decision on D-0209-A: Option 1 (authorize exactly one Execute run of imported fully-pinned harness, no schedule), Option 2 (do not execute now), Option 3 (defer and refine harness) |
+| Fully-pinned n8n template | Imported into n8n UI and Execute-validated (D-0206-A = 1 + D-0209-A = 1, user report 2026-05-14, tasks 0208/0211) — workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`; `active=false`; Manual Trigger only; no Schedule Trigger; `$json.*`-only; duplicate-skip validated |
+| Production-like Telegram notifier | Manual-only / inactive — remains so unless D-0213-A is later decided to activate |
+| Next step | User decision on D-0213-A: Option 1 (authorize controlled schedule activation gate for Telegram Mode A, notification-only), Option 2 (keep manual-only), Option 3 (defer and design safer schedule activation template/import path) |
 
 ---
 

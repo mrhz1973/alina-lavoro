@@ -52,15 +52,139 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0209-A — Authorize one Execute run of imported fully-pinned n8n harness
+### D-0213-A — Authorize Telegram Mode A Schedule Activation After Validated Duplicate-Skip
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0209-create-fully-pinned-harness-execute-decision-packet
-**source_document:** docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md
+**source_task:** 0213-create-schedule-activation-decision-packet-after-validated-idempotency
+**source_document:** docs/automation/telegram-idempotency-runtime-ui-handoff.md
 **response:**
 **decided_at:**
 **archive_policy:** keep
+
+---
+
+**Decision ID:** D-0213-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+D-0209-A = 1 was selected and the user performed exactly one manual Execute run of the imported fully-pinned TEST-only n8n harness (`TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`). `Load notification state` found the existing row, the run followed the duplicate-skip path, no Telegram message arrived, and `Store notification state` did not write a new row. Result: `fully pinned duplicate skip succeeded`. Duplicate-skip is now **conclusively validated** on the fully-pinned harness.
+
+The validated principle is:
+
+`same idempotency_key already present in alina_telegram_notifier_state => skip path, no Telegram, no new row.`
+
+The original production-like Telegram notifier remains manual-only / inactive. Schedule activation was deliberately excluded from D-0209-A. D-0213-A is the next valid gate for schedule activation of Telegram Mode A.
+
+## Perché serve decisione
+
+Adding or enabling a Schedule Trigger on a Telegram notifier workflow introduces automatic recurring runtime behavior. This is a runtime gate and must be explicitly authorized by the user.
+
+## Opzioni
+
+1. **Authorize a controlled schedule activation implementation gate for Telegram Mode A.** Scope:
+   - Open the relevant Telegram notifier workflow in n8n.
+   - Keep the queue reader workflow untouched.
+   - Confirm idempotency / state-store path exists in the targeted Telegram notifier workflow.
+   - Confirm the D-0209-A duplicate-skip validation result is recorded.
+   - Add or enable a Schedule Trigger only in the intended Telegram notifier workflow.
+   - Choose a conservative interval, preferably aligned with existing low-touch cadence unless docs specify otherwise.
+   - Keep Telegram Mode A as **notification-only**.
+   - Telegram must NOT answer INBOX.
+   - Observe the first scheduled tick manually.
+   - Stop and report.
+
+2. **Keep Telegram notifier manual-only for now.** No Schedule Trigger; continue using Manual Trigger only.
+
+3. **Defer and design a safer schedule activation template/import path** before any schedule activation, consistent with the n8n template-first policy.
+
+## Raccomandazione orchestratore
+
+Option 3 if schedule activation still requires more template-first design. Option 1 only if the existing workflow is clear, the idempotency path is present, and the user wants immediate schedule activation.
+
+## Rischio principale
+
+- Duplicate notifications if the wrong workflow is scheduled or the idempotency path is bypassed.
+- Schedule running silently if the first tick is not observed.
+- Wrong workflow activation (e.g. activating the harness instead of the production-like notifier).
+- Telegram must remain notification-only and must not answer INBOX.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this Decision Packet plus the recording entries.
+- Runtime: depends on the chosen option; Option 1 introduces a recurring schedule under supervision; Options 2 and 3 introduce no runtime.
+- n8n: only the targeted Telegram notifier workflow is touched under Option 1; queue reader workflow untouched.
+- INBOX: source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: forbidden by default.
+- Billing: no new billing.
+
+## Micro-interazioni umane eliminate
+
+If Option 1 is later authorized and executed safely, automatic Telegram notifications reduce the manual checking burden after task completion.
+
+## Scelta richiesta
+
+`D-0213-A = 1` per autorizzare un gate controllato di attivazione Schedule Trigger per Telegram Mode A (notification-only).
+`D-0213-A = 2` per mantenere il notifier manual-only per ora.
+`D-0213-A = 3` per rinviare e progettare un percorso template-first più sicuro per l'attivazione schedule.
+
+## Cosa succede dopo la scelta
+
+If `D-0213-A = 1`: a future supervised step-by-step user task adds or enables the Schedule Trigger on the intended Telegram notifier workflow with a conservative interval; the first tick is observed manually; report follows.
+
+If `D-0213-A = 2`: notifier remains manual-only; no Schedule Trigger; future schedule activation requires a new gate.
+
+If `D-0213-A = 3`: a template-first schedule activation design is produced before any runtime; a future Decision Packet may then re-open the gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Schedule Trigger activation until D-0213-A is explicitly decided;
+- automatic INBOX response;
+- queue reader modification unless explicitly scoped in a future gate;
+- provider API LLM;
+- app / deploy / tag / rollback;
+- a second duplicate-skip validation run;
+- workflow export with secrets;
+- token / chat id in repo / docs / chat;
+- automatic notifications outside the Telegram notification-only scope;
+- automatic `D-NNNN-X = N` writing.
+
+---
+
+## Decided
+
+### D-0209-A — Authorize one Execute run of imported fully-pinned n8n harness
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0209-create-fully-pinned-harness-execute-decision-packet
+**source_document:** docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md
+**response:** 1
+**decided_at:** 2026-05-14
+**result:** fully pinned duplicate skip succeeded
+**recorded_by_task:** 0211-record-d0209a-fully-pinned-duplicate-skip-success
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0209-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Decision outcome
+
+The user selected `D-0209-A = 1` and performed exactly one manual Execute run of the imported fully-pinned TEST-only n8n harness (`TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`). `Load notification state` found the existing row, the run followed the duplicate-skip path, no Telegram message arrived, and `Store notification state` did not write a new row. Recorded in task 0211 as **fully pinned duplicate skip succeeded**.
+
+Duplicate-skip is now **conclusively validated** on the fully-pinned harness. The validated principle: `same idempotency_key already present in alina_telegram_notifier_state => skip path, no Telegram, no new row.`
+
+The next valid gate for any schedule activation is D-0213-A (created in task 0213, currently Pending).
+
+## Original Decision Packet (preserved for audit)
 
 ---
 

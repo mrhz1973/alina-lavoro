@@ -4,7 +4,7 @@
 **Date:** 2026-05-14
 **Type:** docs-only / pre-runtime harness design
 **Authorization prerequisite:** D-0202-A must be decided before any n8n UI step described here
-**Status:** design only — no runtime authorized — **D-0202-A pending** in `docs/INBOX.md`
+**Status:** design preserved for audit — **D-0202-A SUPERSEDED** by D-0206-A (template-first policy, batch 0204–0208, 2026-05-14); **D-0206-A = 1 decided/applied** (import/inspection ok, 2026-05-14); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`, 2026-05-14) — duplicate-skip **conclusively validated** on fully-pinned harness; **D-0213-A pending** for Telegram Mode A schedule activation (notification-only; separate gate)
 
 ---
 
