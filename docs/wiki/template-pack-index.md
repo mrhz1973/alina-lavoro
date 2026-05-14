@@ -26,6 +26,17 @@ Index reusable task templates so future prompts can be short and delta-based.
 
 A future prompt should reference only the templates needed for the task and then provide a small `TASK DELTA`.
 
+## Companion workflow docs (batch 0236–0240)
+
+These are not templates but complement the template pack:
+
+| Document | Purpose |
+|---|---|
+| `docs/wiki/compact-task-creation-workflow.md` | How the orchestrator creates tasks using templates |
+| `docs/wiki/compact-implementer-prompt-workflow.md` | How to generate compact implementer prompts |
+| `docs/wiki/multi-step-batch-planning-rules.md` | When to batch vs single task; batch size rules |
+| `docs/wiki/examples/v31-compact-workflow-cookbook.md` | Practical examples for all common task types |
+
 ## Maintenance
 
 When a prompt repeats a block more than twice, extract it into a template and add it here.

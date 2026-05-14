@@ -59,9 +59,13 @@ Open only when restart context is explicitly required. If you open it, justify i
 | Candidate gate backlog / which gate might be next? | `docs/automation/candidate-gate-backlog.md` | — |
 | Browser Bridge dry-run tool (implemented task 0150)? | `tools/browser-bridge-dry-run/README.md` | `docs/automation/candidate-gate-backlog.md` |
 | V3.1 delta-based prompt example? | `docs/wiki/examples/delta-based-prompt-example.md` | — |
+| V3.1 compact workflow cookbook (practical examples)? | `docs/wiki/examples/v31-compact-workflow-cookbook.md` | — |
 | Task-ID preflight / LLM Wiki V3.1 guard? | `docs/wiki/task-id-preflight.md` | — |
 | Prompt routing + context budget policy? | `docs/wiki/prompt-routing.md` | `docs/wiki/context-budget-policy.md` |
 | Template pack index (implementer templates)? | `docs/wiki/template-pack-index.md` | `docs/tasks/templates/` |
+| How to create tasks with V3.1 (orchestrator)? | `docs/wiki/compact-task-creation-workflow.md` | — |
+| How to generate compact implementer prompts? | `docs/wiki/compact-implementer-prompt-workflow.md` | — |
+| When to batch docs-only sub-tasks vs single tasks? | `docs/wiki/multi-step-batch-planning-rules.md` | — |
 | Roadmap and app history? | `docs/roadmap.md` | — |
 | App rollback references? | `docs/LLMS.md` | `docs/PROJECT_STATE.md` |
 | Optional personal cockpit / Obsidian note? | `docs/automation/runtime-gate-checklist-readiness-matrix.md` | — |

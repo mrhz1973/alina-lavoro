@@ -53,6 +53,17 @@ TASK DELTA:
 | State update batch | `docs/tasks/templates/state-update-batch.md` |
 | Final report | `docs/tasks/templates/final-report-contract.md` |
 
+## Companion workflow documents (batch 0236–0240)
+
+For complete orchestrator guidance on applying this routing:
+
+| Question | Document |
+|---|---|
+| How to create tasks (task-ID preflight + batch rules)? | `docs/wiki/compact-task-creation-workflow.md` |
+| How to write compact implementer prompts? | `docs/wiki/compact-implementer-prompt-workflow.md` |
+| When to batch vs single task? | `docs/wiki/multi-step-batch-planning-rules.md` |
+| Practical examples for all task types? | `docs/wiki/examples/v31-compact-workflow-cookbook.md` |
+
 ## Non-goals
 
 - Do not remove necessary gate details.
