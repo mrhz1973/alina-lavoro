@@ -4,7 +4,7 @@
 **Date:** 2026-05-14
 **Type:** docs-only / pre-runtime validation design
 **Authorization prerequisite:** D-0197-A must be decided (opened) before any n8n UI step described here
-**Status:** design only — no runtime authorized — **D-0197-A pending** in `docs/INBOX.md`
+**Status:** **superseded for harness approach** — D-0197-A = 1 decided/consumed, result NOT SUCCESSFUL (partial pinning insufficient, downstream dynamic reference leakage). This partial-override design is superseded by the fully-pinned harness design: `docs/automation/telegram-fully-pinned-validation-harness-design.md` (D-0202-A pending: inspection/repair, no Execute)
 
 ---
 

@@ -52,62 +52,69 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0197-A — Authorize one pinned-file duplicate-skip validation run
+### D-0202-A — Authorize controlled fully-pinned harness inspection and repair
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0197-create-pinned-duplicate-skip-validation-decision-packet
-**source_document:** docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md
+**source_task:** 0202-create-fully-pinned-harness-repair-decision-packet
+**source_document:** docs/automation/telegram-fully-pinned-validation-harness-design.md
 **response:**
 **decided_at:**
 **archive_policy:** keep
 
 ---
 
-**Decision ID:** D-0197-A
+**Decision ID:** D-0202-A
 **Kind:** automation
 **Data:** 2026-05-14
 
 ## Contesto
 
-D-0187-A = 1 (batch 0188–0190) and D-0193-A = 1 (applied in this batch under the user's prior conditional order) each authorized one duplicate-skip validation run. Both runs were inconclusive (recorded in tasks 0191 and 0194) because the workflow uses dynamic "Pick latest done file" and docs-only batches between attempts kept changing which file was latest, so neither run actually tested the same key.
+D-0197-A = 1 authorized one pinned-file duplicate-skip validation run. The user executed the duplicate TEST-only workflow `TEST - Alina Telegram notifier PINNED VALIDATION ONLY` with an override node (`Override pinned idempotency key`) that correctly output pinned values for task 0193. However, the run routed TRUE / sent Telegram / wrote a new Data Table row for task 0198 (not 0193). `Load notification state` did not return the existing 0193 row fields.
 
-Task 0195 documents the root cause: latest-done drift makes dynamic-input same-key validation structurally unstable. Task 0196 creates the pinned-file design (`docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`), which describes how to run validation against an explicitly chosen fixed done file/key already present in `alina_telegram_notifier_state`.
+Root cause hypothesis (task 0200): the partial override approach is insufficient because downstream nodes still reference dynamic upstream node outputs by name instead of `$json.*` current item fields. The override changes current item data but does not change the stored output of previously executed nodes.
 
-A new explicit gate is required because any further runtime run is forbidden until the user decides D-0197-A.
+Task 0201 creates a fully-pinned harness design (`docs/automation/telegram-fully-pinned-validation-harness-design.md`) that removes all dynamic upstream nodes and requires all downstream nodes to use `$json.*` only.
+
+The next safe step is **inspection and repair** of the TEST-only workflow expressions — not another Execute run.
 
 ## Perché serve decisione
 
-A pinned-file validation run is a runtime action in n8n UI. It requires:
-- temporary override / duplicate workflow / fixed filter to bypass the dynamic latest-file picker;
-- a pinned `(done_file_path, done_file_sha)` corresponding to an existing row in `alina_telegram_notifier_state`;
-- one manual Execute workflow only;
-- clean restoration of the workflow after the run.
-
-Per project policy these steps require an explicit human gate.
+Inspection and repair of the TEST-only workflow requires opening n8n UI and modifying node expressions. Per project policy, any n8n UI action requires an explicit human gate — even when no Execute is involved.
 
 ## Opzioni
 
-1. **Authorize exactly one pinned-file duplicate-skip validation run.** One manual Execute workflow only, manual-only, no Schedule Trigger, no automatic notification, no workflow JSON export/import, no token/chat id in docs or chat, no app/deploy/tag/rollback, stop immediately if Telegram sends or a new row is written. Expected: false branch, no Telegram message, no new Data Table row.
+1. **Authorize controlled n8n UI inspection and repair of the duplicate TEST-only pinned workflow, with no Execute run.** Scope:
+   - Inspect node expressions in `Load notification state`, `Normalize notification state`, `Decide send or skip`, `Build notification payload`, `Send a text message`, `Store notification state`.
+   - Ensure the pinned harness uses only `$json.*` current item fields.
+   - Remove or bypass dynamic upstream references (`List done files`, `Pick latest done file`, `Get done file`, `Build idempotency key`, `Override pinned idempotency key`).
+   - Replace with a single `Static pinned input` node per the fully-pinned harness design.
+   - Keep workflow inactive/manual-only.
+   - No Telegram run.
+   - No Schedule Trigger.
+   - No workflow JSON export/import.
+   - No token/chat id in docs or chat.
+   - Stop before any Execute.
+   - Report findings (which expressions were changed, which were already correct).
 
-2. **Do not run pinned validation now.** Keep Telegram notifier manual-only and continue docs/design. Duplicate-skip remains not conclusively validated. Schedule activation remains separately gated.
+2. **Do not repair now.** Keep Telegram notifier manual-only and continue docs/design only. Duplicate-skip remains not conclusively validated. Schedule activation remains separately gated.
 
-3. **Defer and first refine the pinned-file design further.** No runtime run. Refine the design (e.g., narrow Option A/B/C, add operator checklists) before opening the gate.
+3. **Defer and refine the fully-pinned harness design further.** No n8n UI action. Refine the design before opening the inspection/repair gate.
 
 ## Raccomandazione orchestratore
 
-Option 1, but only when the user is ready to perform a carefully guided pinned-file run. This is the first structurally valid way to test same-key duplicate-skip. The recommendation is conditional on the user being available to follow the pinned-file design step-by-step and to stop immediately if any fail-closed condition fires.
+Option 1. The next safe step is NOT another run. It is only inspection/repair of the TEST-only pinned harness without execution. After inspection/repair, a separate future Decision Packet will be needed to authorize one Execute run.
 
 ## Rischio principale
 
-The main risk is scope creep: that a pinned validation morphs into schedule activation, repeated runs, or workflow JSON export. The design and this Decision Packet limit the scope to exactly one manual run with hard stop conditions. A secondary risk is that the operator forgets to revert the temporary override / duplicate workflow / fixed filter — the design requires explicit restoration.
+The main risk is that inspection morphs into an Execute run. This Decision Packet explicitly prohibits Execute. The operator must stop before pressing Execute. A secondary risk is that the expression audit reveals complex references that cannot be safely rewritten — in that case, stop and report.
 
 ## Impatto
 
 - App Alina: no impact.
 - GitHub docs: this Decision Packet only.
-- Runtime: no runtime performed by this packet; one manual run authorized only if D-0197-A = 1.
-- n8n: no workflow modification by this packet. If D-0197-A = 1, a temporary, reversible change is authorized for one run.
+- Runtime: no Execute run authorized by this packet. Inspection/repair only.
+- n8n: node expression changes in TEST-only duplicate workflow only; original workflow untouched.
 - INBOX: source of truth; Telegram must not answer it.
 - Gate 7: no impact; remains closed.
 - Provider API LLM: forbidden by default.
@@ -115,26 +122,27 @@ The main risk is scope creep: that a pinned validation morphs into schedule acti
 
 ## Micro-interazioni umane eliminate
 
-0 immediately. A category (a) success would unblock the eventual schedule-activation gate (separate, future).
+0 immediately. Successful inspection/repair unblocks a future Execute gate, which if successful unblocks the schedule-activation gate (both separate, future).
 
 ## Scelta richiesta
 
-`D-0197-A = 1` per autorizzare esattamente una pinned-file duplicate-skip validation run.
-`D-0197-A = 2` per non eseguire ora; il notifier resta manual-only.
-`D-0197-A = 3` per rinviare e raffinare ulteriormente il design.
+`D-0202-A = 1` per autorizzare inspection/repair controllato del test workflow pinned (senza Execute).
+`D-0202-A = 2` per non riparare ora; il notifier resta manual-only.
+`D-0202-A = 3` per rinviare e raffinare ulteriormente il design.
 
 ## Cosa succede dopo la scelta
 
-If `D-0197-A = 1`: the user may execute exactly one pinned-file validation run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`. Expected: category (a) — false branch, no send, no new row. Any other outcome triggers fail-closed and a new Decision Packet.
+If `D-0202-A = 1`: the user may open the duplicate TEST-only workflow in n8n UI, inspect and repair expressions per `docs/automation/telegram-fully-pinned-validation-harness-design.md`, and report findings. No Execute is authorized. A separate future Decision Packet is required for one Execute run.
 
-If `D-0197-A = 2`: no run is authorized. Duplicate-skip remains not validated. Schedule activation remains separately gated.
+If `D-0202-A = 2`: no n8n UI action is authorized. Duplicate-skip remains not validated. Schedule activation remains separately gated.
 
-If `D-0197-A = 3`: design is refined first. A future Decision Packet may then re-open the gate.
+If `D-0202-A = 3`: design is refined first. A future Decision Packet may then re-open the gate.
 
 ## Cosa NON verrà fatto senza ulteriore gate
 
 This decision does not authorize:
-- More than one run;
+- Execute run;
+- Telegram message send;
 - Schedule Trigger activation;
 - Automatic notifications;
 - Queue reader workflow modification;
@@ -152,6 +160,59 @@ This decision does not authorize:
 ---
 
 ## Decided
+
+### D-0197-A — Authorize one pinned-file duplicate-skip validation run
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0197-create-pinned-duplicate-skip-validation-decision-packet
+**source_document:** docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md
+**response:** 1
+**decided_at:** 2026-05-14
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0197-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+D-0187-A and D-0193-A both resulted in inconclusive outcomes due to latest-done drift (dynamic file picker). D-0197-A authorized one pinned-file validation run using a duplicate TEST-only workflow with a partial override node.
+
+## Decision outcome
+
+Recorded by batch 0199–0203 on 2026-05-14: response `D-0197-A = 1`.
+
+**Runtime attempt result: NOT SUCCESSFUL / inconclusive due to partial pinning and downstream dynamic reference leakage.**
+
+User executed exactly one manual run of `TEST - Alina Telegram notifier PINNED VALIDATION ONLY`. The `Override pinned idempotency key` node correctly output pinned values for task 0193. However:
+- `Load notification state` output did not contain existing 0193 row fields (only pinned input fields).
+- `Decide send or skip` routed **TRUE**.
+- `Build notification payload`, `Send a text message`, `Store notification state` all executed.
+- Telegram message arrived.
+- New Data Table row written for task **0198** (not 0193), proving downstream nodes used dynamic values, not pinned ones.
+
+**Classification:** not successful / inconclusive due to partial pinning and downstream dynamic reference leakage. NOT classified as confirmed pure idempotency bug — the harness failure (partial pinning) prevents drawing conclusions about the idempotency logic itself.
+
+**D-0197-A is consumed.** No further runtime is authorized under D-0197-A.
+
+**Next gate:** D-0202-A (controlled fully-pinned harness inspection/repair without Execute), pending in the section above.
+
+**Scope NOT authorized by D-0197-A = 1:**
+- Second run
+- Schedule Trigger activation
+- Automatic notifications
+- Queue reader modification
+- Workflow JSON export/import
+- Token/chat id in repo/docs/AI chat
+- Provider API LLM
+- New billing
+- App/deploy/tag/rollback
+- Automatic INBOX responses
+
+---
 
 ### D-0193-A — Authorize one duplicate-skip retry against the same 0190 idempotency key
 

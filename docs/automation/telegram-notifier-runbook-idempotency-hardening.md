@@ -6,13 +6,14 @@
 **Authorization:** D-0171-A = 3 (schedule deferred; hardening required before any Schedule Trigger)
 **Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A pending runtime gate for idempotency implementation
 
-**Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184; updated batch 0185–0187; updated batch 0188–0190; updated batch 0191–0193):**
+**Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184; updated batch 0185–0187; updated batch 0188–0190; updated batch 0191–0193; updated batch 0199–0203):**
 - Idempotency/state-store implementation design: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` (task 0178)
 - Implementation checklist: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` (task 0179)
 - Runtime gate: D-0180-A = 1 decided (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened
 - Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183)
 - Duplicate-skip validation handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (batch 0188–0190, D-0187-A = 1)
-- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A = 1** and **D-0193-A = 1** both decided/consumed with INCONCLUSIVE outcomes due to latest-done drift (batches 0191–0193 and 0194–0198); duplicate-skip logic still NOT conclusively validated; **D-0197-A pending** for one pinned-file validation run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`; no Schedule Trigger; schedule activation checklist (§13) blocked until pinned-file category (a) success is recorded
+- Fully-pinned harness design: `docs/automation/telegram-fully-pinned-validation-harness-design.md` (batch 0199–0203)
+- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A**, **D-0193-A**, **D-0197-A** all consumed: D-0187-A/D-0193-A inconclusive (latest-done drift), D-0197-A not successful (partial pinning / dynamic reference leakage); duplicate-skip logic still NOT conclusively validated; **D-0202-A pending** for controlled fully-pinned harness inspection/repair (no Execute) per `docs/automation/telegram-fully-pinned-validation-harness-design.md`; no Schedule Trigger; schedule activation checklist (§13) blocked until fully-pinned category (a) success is recorded
 
 ---
 

@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0198 — batch (0194–0198) docs-only (2026-05-14): 0194 recorded D-0193-A retry attempt inconclusive due to latest-done drift (TRUE branch / Telegram arrived / likely new-key send, not confirmed idempotency bug); 0195 documented root cause and 3 result categories (a same-key success, b new-key send, c true idempotency failure); 0196 created pinned-file duplicate-skip validation design; 0197 created D-0197-A pending; 0198 propagated state updates; D-0193-A moved to Decided (= 1, inconclusive); duplicate-skip remains NOT conclusively validated; next valid gate = pinned-file validation; workflow inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0197-A), 14 decided |
+| Last completed | 0203 — batch (0199–0203) docs-only (2026-05-14): 0199 recorded D-0197-A pinned validation not successful (TRUE branch / Telegram arrived / Store wrote task 0198 not 0193 / partial pinning insufficient); 0200 documented root cause (partial override does not prevent downstream dynamic references); 0201 created fully-pinned harness design; 0202 created D-0202-A pending (inspection/repair, no Execute); 0203 propagated state updates; D-0197-A moved to Decided (= 1, not successful); D-0202-A pending; duplicate-skip remains NOT conclusively validated; next valid step = controlled harness inspection/repair (no Execute); workflow inactive/manual-only; no Schedule Trigger; no token/chat id in repo; INBOX: 1 pending (D-0202-A), 15 decided |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -58,16 +58,17 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | D-0180-A | Decided = 1 (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened |
 | D-0187-A | **Decided = 1, consumed/inconclusive** (batch 0188–0190, 2026-05-14; result recorded batch 0191–0193) — duplicate-skip validation gate opened, one run executed, result inconclusive due to latest-done drift |
 | D-0193-A | **Decided = 1, consumed/inconclusive** (batch 0194–0198, 2026-05-14) — retry applied per user's prior conditional order; runtime TRUE branch / Telegram arrived / likely new-key send due to latest-done drift; NOT a confirmed idempotency bug |
-| D-0197-A | **Pending** (batch 0194–0198, 2026-05-14) — one future manual pinned-file duplicate-skip validation run; design: `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md` |
+| D-0197-A | **Decided = 1, not successful** (batch 0199–0203, 2026-05-14) — one manual pinned run executed; override node output correct for 0193; but downstream nodes used dynamic values; `Store notification state` wrote task 0198 (not 0193); `Load notification state` did not find existing 0193 row; classification: partial pinning / dynamic reference leakage, NOT confirmed pure idempotency bug |
+| D-0202-A | **Pending** (batch 0199–0203, 2026-05-14) — controlled fully-pinned harness inspection/repair without Execute; design: `docs/automation/telegram-fully-pinned-validation-harness-design.md` |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
 | Data Table | `alina_telegram_notifier_state` — created and one row written (user report 2026-05-14) |
-| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; two duplicate-skip validation attempts (D-0187-A, D-0193-A) both inconclusive due to latest-done drift; structurally requires pinned-file input |
+| Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; three duplicate-skip validation attempts (D-0187-A, D-0193-A, D-0197-A) all failed to validate: D-0187-A/D-0193-A inconclusive (latest-done drift), D-0197-A not successful (partial pinning / dynamic reference leakage); requires fully-pinned harness with `$json.*` only |
 | Token / chat id in repo | None |
-| INBOX pending count | 1 (D-0197-A) |
-| INBOX decided count | 14 (D-0193-A inconclusive, D-0187-A inconclusive) |
-| Next step | User decision on D-0197-A: Option 1 (authorize one pinned-file run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`), Option 2 (do not run now), Option 3 (defer and refine design) |
+| INBOX pending count | 1 (D-0202-A) |
+| INBOX decided count | 15 (D-0197-A not successful, D-0193-A inconclusive, D-0187-A inconclusive) |
+| Next step | User decision on D-0202-A: Option 1 (authorize controlled inspection/repair of TEST-only pinned workflow, no Execute), Option 2 (do not repair now), Option 3 (defer and refine design) |
 
 ---
 

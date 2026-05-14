@@ -3,7 +3,7 @@
 **Document:** Runtime handoff for duplicate-skip validation  
 **Authorization:** D-0187-A = 1 (recorded batch 0188–0190, 2026-05-14)  
 **Type:** docs-only / runtime handoff document  
-**Status:** **consumed/inconclusive** for both D-0187-A (batch 0191–0193) and D-0193-A (batch 0194–0198, 2026-05-14) — two runs executed, both routed TRUE / Telegram arrived due to latest-done drift; NOT confirmed idempotency bug; this handoff is now superseded for same-key validation by `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md` (D-0197-A pending)
+**Status:** **consumed/inconclusive** for D-0187-A (batch 0191–0193), D-0193-A (batch 0194–0198), and D-0197-A (batch 0199–0203) — three runs executed, all routed TRUE / Telegram arrived: D-0187-A/D-0193-A due to latest-done drift, D-0197-A due to partial pinning / dynamic reference leakage; NOT confirmed idempotency bug; this handoff is superseded for same-key validation by `docs/automation/telegram-fully-pinned-validation-harness-design.md` (D-0202-A pending: inspection/repair, no Execute)
 
 ---
 

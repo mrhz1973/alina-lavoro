@@ -4,7 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / runtime handoff document
 **Authorization:** D-0180-A = 1 (recorded task 0182, 2026-05-13)
-**Status:** ✅ **Implementation complete by user report (2026-05-14, task 0185)** — Data Table path implemented; one send/write test succeeded; **D-0187-A consumed/INCONCLUSIVE (batch 0191–0193)** and **D-0193-A consumed/INCONCLUSIVE (batch 0194–0198)** — both runs hit TRUE branch and sent Telegram due to latest-done drift, NOT confirmed idempotency bug; **D-0197-A pending** for one pinned-file duplicate-skip validation run per `docs/automation/telegram-pinned-file-duplicate-skip-validation-design.md`
+**Status:** ✅ **Implementation complete by user report (2026-05-14, task 0185)** — Data Table path implemented; one send/write test succeeded; **D-0187-A**, **D-0193-A**, **D-0197-A** all consumed: D-0187-A/D-0193-A INCONCLUSIVE (latest-done drift), D-0197-A NOT SUCCESSFUL (partial pinning / dynamic reference leakage — Store wrote task 0198 not 0193); NOT confirmed idempotency bug — harness failure prevents conclusions; **D-0202-A pending** for controlled fully-pinned harness inspection/repair (no Execute) per `docs/automation/telegram-fully-pinned-validation-harness-design.md`
 
 **Implementation update (task 0185, 2026-05-14):** User implemented idempotency/state-store logic per this handoff. Data Table `alina_telegram_notifier_state` created. Implemented node chain:
 ```
