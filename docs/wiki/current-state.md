@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0284)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0285)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0284 — Implementer Failure Modes Audit** (2026-05-15): docs-only; mapped 10 failure modes to existing canonical handling; added one-line "push rejected: do not force-push or skip hooks" rule to `implementer-standard.md` § Git rules; no runtime. |
-| Previous | **0283 — Cold Start File Count Validation** (2026-05-15): docs-only; measured cold-start ≈ 632 lines effective minimum; habit reads already suppressed; no runtime. |
+| Last completed | **0285 — Decision Gate Boundary Audit** (2026-05-15): docs-only; verified six boundary lines (autonomy, gates, INBOX DPs, future/gated, debug→session, INBOX never bypasses) consistent across canonical files; no new DP; no runtime. |
+| Previous | **0284 — Implementer Failure Modes Audit** (2026-05-15): docs-only; mapped 10 failure modes to existing handling; added one-line "push rejected" rule to `implementer-standard.md`; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---

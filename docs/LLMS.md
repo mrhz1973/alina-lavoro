@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0284** — Implementer Failure Modes Audit (2026-05-15): docs-only; mapped 10 failure modes (wrong repo/branch, dirty tree, behind origin, task-ID collision, forbidden path, runtime gate, report-only-in-chat, push rejected, PROJECT_STATE/CHECKPOINT default reads) to existing canonical handling; added a one-line "push rejected: do not force-push or skip hooks; stop, report, wait" rule to `implementer-standard.md` § Git rules; no new troubleshooting guide; no runtime. |
-| Previous | **0283** — Cold Start File Count Validation (2026-05-15): docs-only; measured cold-start ≈ 632 lines effective minimum; habit reads already suppressed; no pointer fix needed; no runtime. |
+| Last completed | **0285** — Decision Gate Boundary Audit (2026-05-15): docs-only; verified six boundary lines (docs-only autonomy, runtime/manual gates, INBOX DPs for real choices only, future/gated workstreams, debug/status to session not INBOX, INBOX never bypasses gates) all asserted in two+ canonical files with consistent wording; no new DP created; no policy doc; no runtime. |
+| Previous | **0284** — Implementer Failure Modes Audit (2026-05-15): docs-only; mapped 10 failure modes to existing canonical handling; added one-line "push rejected" rule to `implementer-standard.md` § Git rules; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
