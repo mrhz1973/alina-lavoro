@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0279** — Short-Prompt Implementer Flow Smoke Test (2026-05-15): docs-only; minimal task verifying that the implementer can complete a docs-only task from a short orchestrator prompt by reading AGENTS.md and standard templates; no new doc; no runtime. |
-| Previous | **0278** — Post-Cleanup Pointer and Template Drift Check (2026-05-15): docs-only; fixed `AGENTS.md` Docs ROI Gate attribution (token-efficiency.md, not prompt-routing.md); trimmed duplicate New-doc gate wording in `prompt-routing.md`; removed stale post-cleanup roadmap NOW row; no new doc; no runtime. |
+| Last completed | **0280** — Short Prompt Examples Compression Check (2026-05-15): docs-only; added `@AGENTS.md` to all example prompt blocks in `docs/wiki/examples/delta-based-prompt-example.md` and added explicit Forbidden paths + Runtime line to the canonical docs-only example so it carries every field listed in `prompt-routing.md`; no new doc; no runtime. |
+| Previous | **0279** — Short-Prompt Implementer Flow Smoke Test (2026-05-15): docs-only; minimal task verifying that the implementer can complete a docs-only task from a short orchestrator prompt by reading AGENTS.md and standard templates; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---

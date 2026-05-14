@@ -48,6 +48,7 @@ Problems with this style:
 
 ```text
 @docs/roadmap.md
+@AGENTS.md
 @docs/wiki/task-id-preflight.md
 @docs/wiki/prompt-routing.md
 @docs/tasks/templates/implementer-standard.md
@@ -68,11 +69,10 @@ No runtime. No src/. No deploy/tag/rollback. No secrets.
 ```
 
 Why this is better:
-- Total prompt: ~15 lines of delta instead of 200+ lines of boilerplate.
-- All standard rules (git, security, report format, forbidden actions) are in the templates.
-- `task-id-preflight.md` ensures no stale task ID.
-- `roadmap.md` gives the implementer current workstream context.
-- Final report format is entirely covered by `final-report-contract.md`.
+- ~15 lines of delta instead of 200+ lines of boilerplate.
+- Standard git/security/report-format rules live in the templates.
+- `AGENTS.md` is the pointer-only entry; `task-id-preflight.md` prevents stale IDs.
+- `roadmap.md` gives current workstream context; `final-report-contract.md` covers report format.
 
 ---
 
@@ -80,6 +80,7 @@ Why this is better:
 
 ```text
 @docs/roadmap.md
+@AGENTS.md
 @docs/wiki/task-id-preflight.md
 @docs/wiki/prompt-routing.md
 @docs/tasks/templates/implementer-standard.md
@@ -98,14 +99,20 @@ Goal:
 Allowed paths:
 - docs/ only (list specific files if relevant)
 
+Forbidden paths:
+- src/**, gas-current/**, appsscript.json, package.json
+- docs/PROJECT_STATE.md, docs/CHECKPOINT.md (unless explicitly justified)
+
+Runtime: forbidden.
+
 Expected result:
 - <file A> updated: <what changes>
 - docs/tasks/done/XXXX-<slug>.md created
 - docs/sessions/YYYY-MM-DD-<slug>.md created
 - docs/LLMS.md and docs/wiki/current-state.md: Last completed = XXXX
 
-No runtime. No n8n UI. No Execute. No Telegram send. No Schedule change.
-No src/. No deploy/tag/rollback. No provider API LLM. No secrets.
+No n8n UI. No Execute. No Telegram send. No Schedule change.
+No deploy/tag/rollback. No provider API LLM. No secrets.
 ```
 
 ---
@@ -114,6 +121,7 @@ No src/. No deploy/tag/rollback. No provider API LLM. No secrets.
 
 ```text
 @docs/roadmap.md
+@AGENTS.md
 @docs/wiki/task-id-preflight.md
 @docs/tasks/templates/implementer-standard.md
 @docs/tasks/templates/state-update-batch.md
