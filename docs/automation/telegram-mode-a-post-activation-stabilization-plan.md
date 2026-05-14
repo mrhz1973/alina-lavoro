@@ -108,6 +108,32 @@ See: `docs/automation/next-low-touch-runtime-gate-backlog.md` for the candidate 
 
 ---
 
+## 10. Latest done selection anomaly — resolved / pending scheduled observation
+
+**Date:** 2026-05-14 (tasks 0246–0248)
+
+After initial activation, scheduled executions succeeded but sent no new Telegram notifications. Root cause: `Pick latest done file` used order-dependent selection (`files[files.length - 1]`), which returned an older task (0232) instead of the actual latest task (0245).
+
+**Resolution:**
+- Node `Pick latest done file` was fixed in n8n UI by user under orchestrator supervision.
+- Workflow was kept inactive during fix and validation.
+- Fix: select highest numeric task ID from `docs/tasks/done/*.md` (sort descending by four-digit prefix).
+- Node-level validation confirmed task_id 0245 selected correctly.
+- One manual full execution performed: **Telegram 0245 arrived** (user report).
+
+**Current status:**
+- Root cause resolved.
+- Manual validation succeeded.
+- First **scheduled tick post-fix** is still **pending observation**.
+- Expected behavior: next scheduled tick should duplicate-skip task 0245 (already notified by manual run) and send no Telegram.
+- Telegram Mode A is **not declared stable-after-fix** until the scheduled post-fix tick is confirmed.
+
+**If scheduled tick fails or duplicates:** disable immediately and record incident. Do not re-enable without an orchestrator decision.
+
+See: `docs/automation/telegram-mode-a-latest-done-selection-fix.md`
+
+---
+
 ## 9. References
 
 - `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md` — operational disable checklist

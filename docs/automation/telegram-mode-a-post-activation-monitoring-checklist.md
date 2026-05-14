@@ -48,6 +48,27 @@ Duplicate-skip is conclusively validated on the fully-pinned harness (D-0209-A, 
 
 ---
 
+## 3b. Diagnostic: silent success with no Telegram (latest-done selection staleness)
+
+**Pattern:** workflow executions show Succeeded but no new Telegram notifications arrive.
+
+Diagnostic steps:
+
+1. Open a recent succeeded execution in n8n UI.
+2. Check `Pick latest done file` output — note the `task_id` value.
+3. Compare against `Last completed` in `docs/LLMS.md`.
+4. If `task_id` is **lower than** `Last completed`:
+   - The selection logic is stale or order-dependent.
+   - Inspect the `Pick latest done file` Code node.
+   - Ensure it uses numeric sort descending (highest task ID), not order-dependent selection like `files[files.length - 1]`.
+5. If `task_id` matches `Last completed` but still no Telegram:
+   - Check `Decide send or skip` — if FALSE, the task was already notified (correct duplicate-skip).
+   - Check `alina_telegram_notifier_state` for a row with the current idempotency key.
+
+**Reference:** `docs/automation/telegram-mode-a-latest-done-selection-fix.md`
+
+---
+
 ## 4. Immediate abort / disable criteria
 
 Stop and disable immediately and report if any of the following is observed:
