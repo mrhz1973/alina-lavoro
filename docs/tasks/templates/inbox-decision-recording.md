@@ -1,53 +1,51 @@
 # INBOX Decision Recording Template
 
-**Task:** 0234 (introduced)
 **Status:** active template
 
 ## When to use
 
-Use when a human decision has been made and needs to be recorded:
-- A Decision Packet (D-NNNN-A) answer received from the user (option 1, 2, or 3).
-- The outcome of a runtime gate (success, failure, inconclusive).
-- A superseded or deferred decision that needs to be marked.
+Use only when a real human decision has been made or must be recorded:
 
-Do NOT use for:
-- Logging all-green status or routine events that require no human decision.
-- Creating a new INBOX entry unless a real new decision point exists.
-- Recording automated actions that don't require user authorization.
+- a Pending Decision Packet answer from the user;
+- a gate decision for runtime, n8n UI, Execute, Schedule, credentials, Telegram send, app changes, deploy, tag, rollback, provider API, billing, secrets, or another irreversible/sensitive action;
+- a superseded/deferred decision that changes the decision state.
 
-## Decision Packet recording rules
+Do **not** use for:
+- routine all-green status;
+- debug notes;
+- inconclusive retries without a new human choice;
+- inspection-ok or validation-ok logs;
+- automated actions that do not require user authorization.
 
-1. Confirm the Decision Packet ID from `docs/INBOX.md` (section: Pending).
-2. Confirm the user's explicit answer: option 1, 2, or 3.
-3. Move the entry from Pending to Decided in `docs/INBOX.md`.
-4. Record outcome: `D-NNNN-A = N` where N is the user's answer.
-5. Add result/notes (e.g. success criterion met, inconclusive, partial).
-6. Update INBOX pending count and decided count.
-7. Do not invent decisions. If no user answer exists, leave DP as pending.
+Put those in task/session notes instead.
+
+## Recording rules
+
+1. Confirm the Decision Packet ID from `docs/INBOX.md` Pending.
+2. Confirm the user's explicit answer.
+3. Move the entry from Pending to Decided, Deferred, or Superseded.
+4. Record result and decided_at.
+5. Update counts.
+6. Do not invent decisions. If no user answer exists, leave DP pending.
 
 ## New Decision Packet creation rules
 
-Only create a new DP if:
-- A real irreversible or sensitive action is about to be authorized.
-- The user must choose between two or more non-equivalent paths.
-- A runtime gate is about to open for the first time.
+Create a new DP only if:
+- a real sensitive/irreversible action is about to be authorized;
+- the user must choose between non-equivalent paths;
+- a runtime gate is about to open.
 
-Do not create a DP for:
-- Docs-only changes with no real choice.
-- Actions already authorized by a prior gate in scope.
-- Routine state updates.
+Do not create a DP for docs-only work, routine state updates, or actions already authorized in scope.
 
-## Required state doc updates
+## Required state updates
 
 After recording a decision:
-- `docs/INBOX.md` — move entry, update counts.
-- `docs/LLMS.md` — update INBOX state in Human Decision Inbox row.
-- `docs/wiki/current-state.md` — update INBOX counts + DP row if significant.
-- Done marker: `docs/tasks/done/<task-id>-<slug>.md`.
-- Session note: `docs/sessions/YYYY-MM-DD-<slug>.md`.
+- `docs/INBOX.md`;
+- `docs/LLMS.md` INBOX summary if counts changed;
+- `docs/wiki/current-state.md` if counts or major gate state changed;
+- done marker and session note when tracked.
 
 ## Forbidden
 
-- No token, real chat_id, credential secret, or OAuth material in INBOX entries.
+- No token, real chat_id, credential secret, OAuth material, or tokenized URL.
 - Do not mark a DP as decided without explicit user confirmation.
-- Do not create a new DP to record an automated success that required no user choice.
