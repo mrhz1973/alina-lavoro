@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0289)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0290)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0289 — current-state header alignment** (2026-05-15): docs-only / micro-fix; aligned `current-state.md` header from task 0287 to 0288/0289 after task 0288 + clarification. |
-| Previous | **0288 — Dual CLI / Orchestrator-Lite Design Gate + clarification** (2026-05-15): docs-only; created and extended `docs/automation/dual-cli-orchestrator-lite-design.md`; full target pipeline, tool-agnostic implementer layer, Cursor dual-agent option; LATER/GATED. |
+| Last completed | **0290 — implementer CLI capability assumption guard** (2026-05-15): docs-only; `dual-cli-orchestrator-lite-design.md` §1b updated with CLI capability column and guard note; Claude Code confirmed; Windsurf/Antigravity/Cursor unverified for runtime; dual CLI LATER/GATED. |
+| Previous | **0289 — current-state header alignment** (2026-05-15): docs-only / micro-fix. |
 | Queue | `docs/tasks/queue/` |
 
 ---

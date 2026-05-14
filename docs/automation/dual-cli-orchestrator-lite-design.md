@@ -40,14 +40,16 @@ Each stage is a gate or transform; no stage is bypassed. The pipeline is increme
 
 The implementer CLI slot is tool-agnostic. Any of the following may fill it in a given run, depending on what the user has available and authorized:
 
-| Implementer | Status |
-|---|---|
-| Claude Code | Principal supervised implementer (current) |
-| Windsurf / Cascade | Backup supervised implementer |
-| Antigravity | Supervised implementer (installed 2026-05-14) |
-| Cursor / Agent | Supervised implementer; also usable as orchestrator-lite / reviewer (see §1c) |
+| Implementer | Status | CLI capability |
+|---|---|---|
+| Claude Code | Principal supervised implementer (current) | **Confirmed** — CLI confirmed in current environment |
+| Windsurf / Cascade | Backup supervised implementer | **Unverified** — must verify CLI suitability before runtime automation |
+| Antigravity | Supervised implementer (installed 2026-05-14) | **Unverified** — must verify CLI suitability before runtime automation |
+| Cursor / Agent | Suspended; future option (see §1c) | **Unverified** — verify when Cursor is available and unsuspended |
 
 The task file format, commit/push protocol, and stop conditions (§7) are the same for all implementers. Implementer-specific prompt length rules remain (see `docs/ORCHESTRATOR_RULES.md` — Regola lunghezza prompt).
+
+**Capability guard:** the tool-agnostic framing does not mean every listed implementer can be used for runtime automation today. Before any implementer other than Claude Code is placed in the runtime implementer slot, its CLI interface must be verified on the user's machine and an explicit user gate obtained. Do not assume CLI availability from supervised-implementer status alone.
 
 ---
 

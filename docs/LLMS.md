@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0289** — current-state header alignment (2026-05-15): docs-only / micro-fix; stale task 0287 header in `current-state.md` aligned to current task. |
-| Previous | **0288** — Dual CLI / Orchestrator-Lite Design Gate + clarification (2026-05-15): docs-only; `docs/automation/dual-cli-orchestrator-lite-design.md` updated with full target pipeline, tool-agnostic implementer layer (§1b), Cursor dual-agent option (§1c); LATER/GATED. |
+| Last completed | **0290** — implementer CLI capability assumption guard (2026-05-15): docs-only; `docs/automation/dual-cli-orchestrator-lite-design.md` §1b updated with CLI capability column and guard note; Claude Code CLI confirmed; Windsurf/Antigravity/Cursor unverified for runtime; dual CLI LATER/GATED. |
+| Previous | **0289** — current-state header alignment (2026-05-15): docs-only / micro-fix. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
