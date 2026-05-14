@@ -1,6 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0286)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0287)**
+**Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0286 — Dual CLI Readiness Roadmap Compression** (2026-05-15): docs-only; refined dual-agent loop row in `docs/roadmap.md` to answer prerequisites + not-authorized + first-design-only-step; trimmed three completed NEXT rows; dual CLI remains LATER/GATED; no runtime. |
-| Previous | **0285 — Decision Gate Boundary Audit** (2026-05-15): docs-only; verified six boundary lines consistent across canonical files; no new DP; no runtime. |
+| Last completed | **0287 — Baseline Stable Implementer Flow Marker** (2026-05-15): docs-only / marker; short-prompt flow validated by 0279 smoke + 0280–0286 chain; posture baseline stable / monitor; dual CLI remains LATER/GATED; no runtime. |
+| Previous | **0286 — Dual CLI Readiness Roadmap Compression** (2026-05-15): docs-only; refined dual-agent loop row; trimmed three completed NEXT rows; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---

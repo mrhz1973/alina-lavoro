@@ -40,7 +40,7 @@ Constraint: do not return to app work until the automation/watcher/runner/low-to
 
 **automation / watcher / runner / low-touch**
 
-Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is active and stable-after-fix; avoid new runtime or new tooling unless it demonstrably removes user friction.
+Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt implementer flow is validated; Telegram Mode A is active and stable-after-fix; avoid new runtime or new tooling unless it demonstrably removes user friction.
 
 ---
 
@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0286** — Dual CLI Readiness Roadmap Compression (2026-05-15): docs-only; refined `docs/roadmap.md` dual-agent loop row to answer the three readiness questions (prerequisites, what is not authorized, first design-only step) and trimmed three completed NEXT rows (cold-start verification closed by 0283, DP mini-audit closed by 0285, template consolidation evaluation closed by 0281); dual CLI remains LATER/GATED; no design doc; no runner; no runtime. |
-| Previous | **0285** — Decision Gate Boundary Audit (2026-05-15): docs-only; verified six boundary lines consistent across canonical files; no new DP created; no runtime. |
+| Last completed | **0287** — Baseline Stable Implementer Flow Marker (2026-05-15): docs-only / marker; short-prompt implementer flow validated by 0279 smoke test + the 0280–0286 docs-only chain (Opus 4.7); posture: **baseline stable / monitor**; dual CLI / orchestrator-lite remains LATER/GATED; no policy doc created during this chain; no runtime. |
+| Previous | **0286** — Dual CLI Readiness Roadmap Compression (2026-05-15): docs-only; refined dual-agent loop row to answer three readiness questions; trimmed completed NEXT rows; dual CLI remains LATER/GATED; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
