@@ -1,11 +1,10 @@
 # Docs-Only Task Template
 
-**Task:** 0234 (introduced)
 **Status:** active template
 
 ## When to use
 
-Use for tasks that touch only `docs/`, `docs/tasks/`, `docs/sessions/`, `docs/wiki/`, `docs/automation/` (design docs only), or `tools/` (read-only inspection). No `src/` changes, no n8n UI, no runtime of any kind.
+Use for tasks that touch only documentation, task markers, session notes, wiki docs, or design docs. No `src/` changes, no n8n UI, no runtime.
 
 ## Mandatory preflight
 
@@ -14,15 +13,14 @@ Use for tasks that touch only `docs/`, `docs/tasks/`, `docs/sessions/`, `docs/wi
 - Confirm working tree is clean or contains only allowed modifications.
 - Read `docs/LLMS.md` → `docs/wiki/current-state.md` → `docs/wiki/token-efficiency.md`.
 - Do not read `docs/PROJECT_STATE.md` or `docs/CHECKPOINT.md` by default.
-- If this task creates a new document (beyond done marker and session note): apply the Docs ROI Gate (`docs/wiki/v31-enforcement-checklist.md` § F) before proceeding.
+- If creating a new guidance doc beyond done/session markers, apply the Measure-First Rule and Docs ROI Gate in `docs/wiki/token-efficiency.md`.
 
 ## Allowed paths
 
-- `docs/**` (excluding `docs/PROJECT_STATE.md` and `docs/CHECKPOINT.md` as default reads)
-- `docs/tasks/done/` (new done marker only)
-- `docs/sessions/` (new session file only)
-- `docs/wiki/` (state updates only)
-- `tools/` (if task scope explicitly covers it)
+- `docs/**`
+- `docs/tasks/done/` for done marker
+- `docs/sessions/` for session note
+- `docs/wiki/` for state/routing updates
 
 ## Forbidden actions
 
@@ -39,7 +37,7 @@ Use for tasks that touch only `docs/`, `docs/tasks/`, `docs/sessions/`, `docs/wi
 ## Expected output
 
 - Docs changes committed selectively.
-- `docs/tasks/done/<task-id>-<slug>.md` created.
-- `docs/sessions/YYYY-MM-DD-<slug>.md` created.
-- State docs updated: `docs/LLMS.md` + `docs/wiki/current-state.md` (Last completed = this task ID).
+- Done marker created when this is a tracked task.
+- Session note created when this is a tracked task.
+- State docs updated if project state changed.
 - Final report per `docs/tasks/templates/final-report-contract.md`.
