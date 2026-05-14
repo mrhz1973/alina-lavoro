@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0283)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0284)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0283 — Cold Start File Count Validation** (2026-05-15): docs-only; measured cold-start ≈ 632 lines effective minimum; habit reads already suppressed; no pointer fix needed; no runtime. |
-| Previous | **0282 — Orchestrator-Lite Readiness Audit** (2026-05-15): docs-only; confirmed current GitHub instructions sufficient for future orchestrator-lite across 7 criteria; no new doc; no runtime. |
+| Last completed | **0284 — Implementer Failure Modes Audit** (2026-05-15): docs-only; mapped 10 failure modes to existing canonical handling; added one-line "push rejected: do not force-push or skip hooks" rule to `implementer-standard.md` § Git rules; no runtime. |
+| Previous | **0283 — Cold Start File Count Validation** (2026-05-15): docs-only; measured cold-start ≈ 632 lines effective minimum; habit reads already suppressed; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---

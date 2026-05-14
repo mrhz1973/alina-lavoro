@@ -33,6 +33,8 @@ No app changes, deploy, tag, rollback, provider API LLM, new billing, new API ke
 
 Use selective staging only. Do not use `git add .`. Final state must report checks, commit hash, push result, and workspace cleanliness.
 
+If `git push` is rejected (non-fast-forward, hook failure, network), do **not** force-push or skip hooks. Stop, report the rejection reason, and wait for instructions.
+
 ## Final report persistence
 
 The final report must **not** remain only in terminal output or chat. After every completed task:
