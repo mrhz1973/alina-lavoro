@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0287** — Baseline Stable Implementer Flow Marker (2026-05-15): docs-only / marker; short-prompt implementer flow validated by 0279 smoke test + the 0280–0286 docs-only chain (Opus 4.7); posture: **baseline stable / monitor**; dual CLI / orchestrator-lite remains LATER/GATED; no policy doc created during this chain; no runtime. |
-| Previous | **0286** — Dual CLI Readiness Roadmap Compression (2026-05-15): docs-only; refined dual-agent loop row to answer three readiness questions; trimmed completed NEXT rows; dual CLI remains LATER/GATED; no runtime. |
+| Last completed | **0288** — Dual CLI / Orchestrator-Lite Design Gate (2026-05-15): docs-only; created `docs/automation/dual-cli-orchestrator-lite-design.md` (~118 lines; passed Docs ROI Gate); answers 11 boundary questions for CLI-based orchestrator-lite path; dual CLI remains LATER/GATED — design only; no runtime. |
+| Previous | **0287** — Baseline Stable Implementer Flow Marker (2026-05-15): docs-only / marker; short-prompt flow validated; posture: baseline stable / monitor; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---

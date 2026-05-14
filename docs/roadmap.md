@@ -26,7 +26,7 @@ Stack:
 | LATER | CLI Printing Press — read-only only, if measured need exists | Explicit open | Runtime gate |
 | LATER | Local AI/Ollama router — consultive only, not decision-making | Explicit open | Runtime gate |
 | LATER | Browser bridge — only if still needed | Explicit open | Runtime gate |
-| LATER | Dual-agent loop / orchestrator-lite CLI — design-only first step; no runner, no scripts, no autonomous runtime | Explicit user request after baseline-stable implementer flow; pending DPs = 0; no current friction the manual loop fails to handle | Runtime gate (first step is a design doc, not a runner) |
+| LATER | Dual-agent loop / orchestrator-lite CLI — **design gate opened (task 0288, 2026-05-15)**; `docs/automation/dual-cli-orchestrator-lite-design.md` answers 11 boundary questions; runtime implementation remains LATER/GATED | Runtime activation requires explicit user request | Runtime gate |
 | DO NOT | New framework, runtime, tool, or automation | — | Blocked |
 | DO NOT | App work (V1.9.2 stable) | — | User explicit only |
 | DO NOT | Deploy/tag/rollback | — | Explicit only |
