@@ -158,6 +158,10 @@ For permanent boundaries and schedule activation requirements:
 
 → `docs/automation/telegram-notifier-runbook-idempotency-hardening.md` (task 0172)
 
+For duplicate-skip validation runtime handoff (D-0187-A = 1):
+
+→ `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (batch 0188–0190)
+
 ---
 
 *This document is docs-only. No runtime was performed. No n8n UI action. No Telegram message. No Schedule Trigger. No token or chat id in repo. Authorization: D-0180-A = 1 (task 0182, 2026-05-13).*

@@ -8,7 +8,8 @@
 
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Implementation authorized.
 
-**Implementation update (task 0185, 2026-05-14):** User implemented Data Table path. Data Table `alina_telegram_notifier_state` created with all columns from §6 schema. Idempotency nodes implemented per §3 target shape. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One manual send/write test succeeded by user report. Duplicate-skip validation pending (D-0187-A — `docs/INBOX.md`). No Schedule Trigger. No token/chat id in repo.
+**Implementation update (task 0185, 2026-05-14):** User implemented Data Table path. Data Table `alina_telegram_notifier_state` created with all columns from §6 schema. Idempotency nodes implemented per §3 target shape. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One manual send/write test succeeded by user report.  
+**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — exactly one duplicate-skip validation run authorized. Runtime handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md`. Next: one manual Execute workflow, expected false branch (skip_duplicate), no Telegram send, no new Data Table row.
 
 ---
 

@@ -56,16 +56,16 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | Telegram workflow | Inactive — no Schedule Trigger |
 | D-0173-A | Decided = 3 (task 0177, 2026-05-13) — schedule deferred; implement idempotency first |
 | D-0180-A | Decided = 1 (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened |
-| D-0187-A | **Pending** — duplicate-skip validation gate (task 0187, 2026-05-14) |
+| D-0187-A | **Decided = 1** (batch 0188–0190, 2026-05-14) — duplicate-skip validation gate open for exactly one manual run |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
 | Data Table | `alina_telegram_notifier_state` — created and one row written (user report 2026-05-14) |
 | Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; duplicate-skip not yet validated |
 | Token / chat id in repo | None |
-| INBOX pending count | 1 (D-0187-A) |
-| INBOX decided count | 11 |
-| Next step | Resolve D-0187-A — if option 1, perform one duplicate-skip validation run |
+| INBOX pending count | 0 |
+| INBOX decided count | 12 |
+| Next step | Perform exactly one duplicate-skip validation run (expected: false branch, no Telegram, no new state row) |
 
 ---
 

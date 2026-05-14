@@ -267,11 +267,14 @@ Task sequence (updated task 0167, 2026-05-13):
 | Runtime UI handoff created | 0183 ✅ | docs-only | `docs/automation/telegram-idempotency-runtime-ui-handoff.md` created; defines safe starting sequence; first step is inspection only (Data Store availability); no runtime |
 | Cross-references updated | 0184 ✅ | docs-only | LLMS.md, wiki, runbook, design, checklist, candidate-gate-backlog, roadmap updated; D-0180-A = 1 reflected throughout |
 | Idempotency/state-store implementation | 0185 ✅ | n8n UI (user) + docs-only record | Data Table `alina_telegram_notifier_state` created; idempotency nodes implemented; IF condition corrected; one send/write test succeeded by user report (2026-05-14) |
-| Duplicate-skip validation Decision Packet | 0187 ✅ | docs-only | D-0187-A pending in `docs/INBOX.md`; awaiting user authorization for one duplicate-skip validation run |
-| Duplicate-skip validation | TBD (D-0187-A) | n8n UI (user) | One manual Execute workflow for same done file; expected: false branch, no Telegram send, no new state row |
+| Duplicate-skip validation Decision Packet | 0187 ✅ | docs-only | D-0187-A pending created in `docs/INBOX.md` |
+| Duplicate-skip validation gate decision | 0188 ✅ | docs-only | D-0187-A = 1 recorded — exactly one duplicate-skip validation run authorized |
+| Duplicate-skip validation handoff | 0189 ✅ | docs-only | `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` created |
+| Cross-references updated | 0190 ✅ | docs-only | LLMS.md, wiki, runbook, design, checklist, candidate-gate-backlog, roadmap updated |
+| Duplicate-skip validation execution | TBD (post D-0187-A = 1) | n8n UI (user) | One manual Execute workflow for same done file; expected: false branch, no Telegram send, no new state row |
 | Schedule activation + session record | TBD (post-idempotency gate) | n8n UI + docs-only | Enable Schedule Trigger only after idempotency/state-store implemented and validated; separately gated |
 
-**Note (updated batch 0185–0187, 2026-05-14):** Idempotency/state-store implemented by user (task 0185). Data Table `alina_telegram_notifier_state` created. One send/write test succeeded. D-0187-A **pending** — duplicate-skip validation gate. Next: resolve D-0187-A. If option 1, user performs one duplicate-skip validation run (expected: no Telegram send). Schedule activation remains separately gated after duplicate-skip validation. No Schedule Trigger. No automatic notifications. No provider API LLM. Chat id must not be recorded in repo/docs/AI chat.
+**Note (updated batch 0188–0190, 2026-05-14):** Idempotency/state-store implemented by user (task 0185). Data Table `alina_telegram_notifier_state` created. One send/write test succeeded. **D-0187-A = 1 decided** — duplicate-skip validation gate open for exactly one manual run. Runtime handoff created: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md`. Next: user performs one duplicate-skip validation run (expected: false branch, no Telegram send, no new Data Table row). Schedule activation remains separately gated after duplicate-skip validation. No Schedule Trigger. No automatic notifications. No provider API LLM. Chat id must not be recorded in repo/docs/AI chat.
 
 **Critical files for future implementation tasks to read:**
 

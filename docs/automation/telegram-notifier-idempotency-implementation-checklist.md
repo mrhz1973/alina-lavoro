@@ -8,7 +8,8 @@
 
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Checklist activated.
 
-**Implementation update (task 0185, 2026-05-14):** Sections 3.1–3.10 completed by user report. Data Table path chosen (§3.2: Data Store available). All nodes implemented per checklist. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One send/write test succeeded (§6, partial). Duplicate-skip validation (§6 full) pending — D-0187-A in `docs/INBOX.md`. Fail-closed validation (§7) not yet performed. Secret hygiene (§8) maintained — no token/chat id in repo. Schedule activation still excluded and separately gated.
+**Implementation update (task 0185, 2026-05-14):** Sections 3.1–3.10 completed by user report. Data Table path chosen (§3.2: Data Store available). All nodes implemented per checklist. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One send/write test succeeded (§6, partial).  
+**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — duplicate-skip validation authorized exactly once. Next: one manual Execute workflow run, expected false branch, no Telegram send, no new Data Table row. Schedule Trigger remains excluded and separately gated.
 
 ---
 
