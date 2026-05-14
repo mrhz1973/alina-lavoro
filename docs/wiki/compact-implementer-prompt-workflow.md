@@ -170,11 +170,19 @@ Close with selective commit and push per workflow.
 
 ---
 
+## Prompt size guard
+
+Before sending any prompt that exceeds ~80–100 lines, apply the enforcement checklist:
+→ `docs/wiki/v31-enforcement-checklist.md`
+
+---
+
 ## Related documents
 
 - `docs/wiki/task-id-preflight.md`
 - `docs/wiki/prompt-routing.md`
 - `docs/wiki/context-budget-policy.md`
 - `docs/wiki/compact-task-creation-workflow.md`
+- `docs/wiki/v31-enforcement-checklist.md`
 - `docs/wiki/examples/delta-based-prompt-example.md`
 - `docs/wiki/examples/v31-compact-workflow-cookbook.md`

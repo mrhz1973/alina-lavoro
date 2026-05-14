@@ -63,6 +63,7 @@ For complete orchestrator guidance on applying this routing:
 | How to write compact implementer prompts? | `docs/wiki/compact-implementer-prompt-workflow.md` |
 | When to batch vs single task? | `docs/wiki/multi-step-batch-planning-rules.md` |
 | Practical examples for all task types? | `docs/wiki/examples/v31-compact-workflow-cookbook.md` |
+| Prompt too long? Apply the size guard first. | `docs/wiki/v31-enforcement-checklist.md` |
 
 ## Non-goals
 

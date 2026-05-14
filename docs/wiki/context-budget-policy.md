@@ -42,3 +42,8 @@ It should not repeat hundreds of lines of boilerplate already present in the rep
 ## Exception
 
 Long prompts are still allowed when fresh runtime evidence exists only in chat and must be preserved before documentation catches up.
+
+## Enforcement
+
+If a future prompt exceeds ~80–100 lines, apply the Prompt Size Guard before sending:
+→ `docs/wiki/v31-enforcement-checklist.md`

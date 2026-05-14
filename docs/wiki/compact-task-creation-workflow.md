@@ -154,5 +154,6 @@ Every task batch closes with:
 - `docs/wiki/prompt-routing.md` — context router
 - `docs/wiki/context-budget-policy.md` — budget policy
 - `docs/wiki/multi-step-batch-planning-rules.md` — batch planning rules
+- `docs/wiki/v31-enforcement-checklist.md` — Prompt Size Guard (apply if prompt >~80–100 lines)
 - `docs/wiki/examples/delta-based-prompt-example.md` — example prompts
 - `docs/wiki/examples/v31-compact-workflow-cookbook.md` — practical cookbook

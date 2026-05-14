@@ -36,6 +36,7 @@ These are not templates but complement the template pack:
 | `docs/wiki/compact-implementer-prompt-workflow.md` | How to generate compact implementer prompts |
 | `docs/wiki/multi-step-batch-planning-rules.md` | When to batch vs single task; batch size rules |
 | `docs/wiki/examples/v31-compact-workflow-cookbook.md` | Practical examples for all common task types |
+| `docs/wiki/v31-enforcement-checklist.md` | **Prompt Size Guard** — apply when a prompt exceeds ~80–100 lines |
 
 ## Maintenance
 

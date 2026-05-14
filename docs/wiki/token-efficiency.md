@@ -67,6 +67,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | How to generate compact implementer prompts? | `docs/wiki/compact-implementer-prompt-workflow.md` | — |
 | When to batch docs-only sub-tasks vs single tasks? | `docs/wiki/multi-step-batch-planning-rules.md` | — |
 | How to choose the next task (V3.1 rubric)? | `docs/wiki/v31-next-task-selection-rubric.md` | — |
+| Prompt over ~80–100 lines? Apply Prompt Size Guard. | `docs/wiki/v31-enforcement-checklist.md` | — |
 | Telegram Mode A stabilization posture? | `docs/automation/telegram-mode-a-post-activation-stabilization-plan.md` | `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md` |
 | Telegram Mode A latest-done selection bug/fix? | `docs/automation/telegram-mode-a-latest-done-selection-fix.md` | — |
 | Next low-touch runtime gate candidates? | `docs/automation/next-low-touch-runtime-gate-backlog.md` | `docs/automation/candidate-gate-backlog.md` |
