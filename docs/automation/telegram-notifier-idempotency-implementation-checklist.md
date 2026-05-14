@@ -4,7 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / pre-runtime implementation checklist
 **Authorization prerequisite:** D-0180-A must be decided (opened) before any n8n UI implementation step
-**Status:** checklist only — implementation complete by user report (task 0185, 2026-05-14); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`, 2026-05-14) — **duplicate-skip conclusively validated** on fully-pinned harness; production-like Telegram notifier remains manual-only/inactive; **D-0213-A pending** for Telegram Mode A schedule activation (notification-only; separate gate)
+**Status:** checklist only — implementation complete by user report (task 0185, 2026-05-14); **D-0209-A = 1 decided/applied/completed** (`fully pinned duplicate skip succeeded`, 2026-05-14) — **duplicate-skip conclusively validated** on fully-pinned harness; **D-0217-A = 1 decided/applied/completed** (readiness inspection succeeded, 2026-05-14, batch 0219–0223) — target workflow `TEST - Alina task completion Telegram notifier` confirmed ready; production-like Telegram notifier remains manual-only/inactive; **D-0221-A pending** for Telegram Mode A Schedule Trigger activation (notification-only; separate gate; supervision checklist at `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`)
 
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Checklist activated.
 

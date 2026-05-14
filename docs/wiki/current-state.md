@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0215–0218)**
+**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0219–0223)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0218 — batch (0215–0218) docs-only (2026-05-14): D-0213-A = 3 decided (schedule activation deferred; design-first path opened); design document `docs/automation/telegram-mode-a-schedule-activation-design-first-path.md` created (task 0216); new D-0217-A pending (authorize controlled n8n UI readiness inspection only; no Execute, no Schedule Trigger, no Telegram send); Telegram Mode A remains manual-only/inactive; duplicate-skip remains conclusively validated (D-0209-A); D-0209-A/D-0206-A remain decided; D-0202-A remains superseded; next valid step = user decision on D-0217-A; INBOX: 1 pending (D-0217-A), 1 superseded (D-0202-A), 18 decided (D-0213-A = 3 added) |
+| Last completed | 0223 — batch (0219–0223) docs-only (2026-05-14): D-0217-A = 1 decided/applied/completed (readiness inspection succeeded; target workflow `TEST - Alina task completion Telegram notifier` confirmed inactive, idempotency path wired, Data Table `alina_telegram_notifier_state` confirmed, Telegram notification-only, no INBOX-answering logic, queue reader untouched); new D-0221-A pending (authorize controlled Schedule Trigger activation; supervision checklist: `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`); Telegram Mode A remains manual-only/inactive; duplicate-skip remains conclusively validated (D-0209-A); D-0213-A/D-0209-A/D-0206-A remain decided; D-0202-A remains superseded; next valid step = user decision on D-0221-A; INBOX: 1 pending (D-0221-A), 1 superseded (D-0202-A), 19 decided (D-0217-A = 1 added) |
 | Queue | `docs/tasks/queue/` |
 
 ---
@@ -63,7 +63,8 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | D-0206-A | **Decided = 1, applied/completed** (batch 0208–0210, 2026-05-14) — import and inspection of fully-pinned n8n template authorized and performed; user report `import/inspection ok`; workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY` present in n8n UI (`active=false`); no Execute performed |
 | D-0209-A | **Decided = 1, applied/completed** (batch 0211–0214, 2026-05-14) — exactly one manual Execute run of imported fully-pinned harness; result `fully pinned duplicate skip succeeded`: `Load notification state` found existing row, FALSE branch, no Telegram message, no new Data Table row; duplicate-skip conclusively validated on fully-pinned harness |
 | D-0213-A | **Decided = 3** (batch 0215–0218, 2026-05-14) — schedule activation deferred; design-first path opened (`docs/automation/telegram-mode-a-schedule-activation-design-first-path.md`); next narrower gate is D-0217-A |
-| D-0217-A | **Pending** (batch 0215–0218, 2026-05-14) — authorize controlled n8n UI readiness inspection only for the intended Telegram Mode A notifier workflow; no Execute, no Schedule Trigger, no Telegram send, no workflow import/export, queue reader untouched |
+| D-0217-A | **Decided = 1, applied/completed** (batch 0219–0223, 2026-05-14) — readiness inspection succeeded; target workflow `TEST - Alina task completion Telegram notifier` confirmed inactive, no Schedule Trigger, idempotency path wired, Data Table `alina_telegram_notifier_state` confirmed, Telegram notification-only, no INBOX-answering logic; minor cleanup candidates: stale D-0165-A scope_note, short_hash empty mapping (non-blocking); queue reader untouched; no Execute; no Telegram send |
+| D-0221-A | **Pending** (batch 0219–0223, 2026-05-14) — authorize controlled Schedule Trigger activation for Telegram Mode A (supervision checklist: `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`); no activation by this docs-only batch |
 | Idempotency design | Exists: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` |
 | Idempotency checklist | Exists: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` |
 | Runtime UI handoff | Exists: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183) |
@@ -71,13 +72,14 @@ Node.js 18.19.1 | Claude Code CLI 2.1.139 | login blocked | no runner
 | Idempotency implementation | Done by user report (2026-05-14) — send/write test succeeded; three duplicate-skip validation attempts (D-0187-A, D-0193-A, D-0197-A) all failed to validate (latest-done drift / partial pinning); **D-0209-A duplicate-skip validation succeeded on fully-pinned harness (`fully pinned duplicate skip succeeded`, 2026-05-14)** — duplicate-skip conclusively validated |
 | Duplicate-skip validation | **Conclusively validated** on fully-pinned harness (D-0209-A, 2026-05-14). Principle: same idempotency_key already present in `alina_telegram_notifier_state` ⇒ skip path, no Telegram, no new row |
 | Token / chat id in repo | None |
-| INBOX pending count | 1 (D-0217-A) |
+| INBOX pending count | 1 (D-0221-A) |
 | INBOX superseded count | 1 (D-0202-A → D-0206-A) |
-| INBOX decided count | 18 (D-0213-A = 3 schedule activation deferred / design-first path opened added; D-0209-A = 1 fully pinned duplicate skip succeeded; D-0206-A = 1 import/inspection ok; D-0197-A not successful; D-0193-A inconclusive; D-0187-A inconclusive) |
+| INBOX decided count | 19 (D-0217-A = 1 readiness inspection succeeded added; D-0213-A = 3 schedule activation deferred / design-first path opened; D-0209-A = 1 fully pinned duplicate skip succeeded; D-0206-A = 1 import/inspection ok; D-0197-A not successful; D-0193-A inconclusive; D-0187-A inconclusive) |
 | n8n template-first policy | Adopted (batch 0204–0208, 2026-05-14) — importable template preferred; manual node-by-node = fallback; templates inactive by default, no real secrets |
 | Fully-pinned n8n template | Imported into n8n UI and Execute-validated (D-0206-A = 1 + D-0209-A = 1, user report 2026-05-14, tasks 0208/0211) — workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`; `active=false`; Manual Trigger only; no Schedule Trigger; `$json.*`-only; duplicate-skip validated |
-| Production-like Telegram notifier | Manual-only / inactive — remains so; D-0213-A = 3 deferred schedule activation; D-0217-A is the next narrower gate (readiness inspection only) |
-| Next step | User decision on D-0217-A: Option 1 (authorize controlled n8n UI readiness inspection only — no Execute, no Schedule, no Telegram send), Option 2 (keep manual-only and skip inspection), Option 3 (defer and refine design further) |
+| Production-like Telegram notifier | Manual-only / inactive — remains so; D-0217-A = 1 confirmed readiness; D-0221-A is the next gate (controlled Schedule Trigger activation) |
+| Supervision checklist | Created: `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md` |
+| Next step | User decision on D-0221-A: Option 1 (authorize controlled Schedule Trigger activation — supervised first tick, notification-only), Option 2 (keep manual-only), Option 3 (defer and clean up stale wording/short_hash first) |
 
 ---
 

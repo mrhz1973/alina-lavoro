@@ -146,12 +146,46 @@ This document explicitly does **not** authorize:
 
 ---
 
+## Stage 2 — Inspection result (D-0217-A = 1, 2026-05-14)
+
+**D-0217-A = 1 decided/applied/completed** (2026-05-14, batch 0219–0223, task 0219).
+
+**Inspection result:** succeeded.
+
+| Item | Finding |
+|------|---------|
+| Target workflow | `TEST - Alina task completion Telegram notifier` |
+| Workflow active at inspection | No (inactive) |
+| Schedule Trigger visible | No |
+| Idempotency/state-store path | Present and wired: Load → Normalize → Decide → (TRUE) Build → Send → Store |
+| Data Table target | `alina_telegram_notifier_state` ✅ |
+| Telegram node | Notification-only confirmed ✅ |
+| No INBOX-answering logic | Confirmed ✅ |
+| Reply Markup | None ✅ |
+| Queue reader | Untouched ✅ |
+| Execute | Not pressed ✅ |
+| Telegram send | Not sent ✅ |
+| Schedule Trigger | Not added/enabled ✅ |
+| Workflow import/export | Not performed ✅ |
+| Real Chat ID | Visible in n8n UI; not recorded ✅ |
+
+**Minor cleanup candidates (non-blocking):**
+1. Stale `D-0165-A` wording in `Build notification payload` scope_note.
+2. `short_hash` mapped to empty string in `Store notification state`.
+
+**No Schedule Trigger was authorized or activated by this inspection.**
+
+Stage 3 (template-first activation plan) is superseded by the supervision checklist approach (`docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`, task 0222). Stage 4 activation is gated by D-0221-A (Pending).
+
+---
+
 ## Related documents
 
 - `docs/automation/telegram-idempotency-runtime-ui-handoff.md`
 - `docs/automation/telegram-fully-pinned-validation-harness-design.md`
 - `docs/automation/telegram-notifier-runbook-idempotency-hardening.md`
 - `docs/automation/telegram-notifier-idempotency-implementation-checklist.md`
+- `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`
 - `docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md`
 - `docs/automation/candidate-gate-backlog.md`
-- `docs/INBOX.md` (D-0209-A decided/applied; D-0213-A decided = 3; D-0217-A pending)
+- `docs/INBOX.md` (D-0209-A decided/applied; D-0213-A decided = 3; D-0217-A decided = 1; D-0221-A pending)

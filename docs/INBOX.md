@@ -52,11 +52,11 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0217-A — Authorize Telegram Mode A Schedule Activation Readiness Inspection
+### D-0221-A — Authorize Controlled Telegram Mode A Schedule Trigger Activation
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0217-create-schedule-activation-readiness-inspection-decision-packet
+**source_task:** 0221-create-controlled-schedule-activation-decision-packet
 **source_document:** docs/automation/telegram-mode-a-schedule-activation-design-first-path.md
 **response:**
 **decided_at:**
@@ -64,60 +64,68 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ---
 
-**Decision ID:** D-0217-A
+**Decision ID:** D-0221-A
 **Kind:** automation
 **Data:** 2026-05-14
 
 ## Contesto
 
-Following `D-0213-A = 3` (defer schedule activation; design safer path first, recorded in task 0215), the design-first path has been written in `docs/automation/telegram-mode-a-schedule-activation-design-first-path.md` (task 0216). Stage 2 of that path requires a controlled n8n UI **readiness inspection only** of the intended Telegram Mode A notifier workflow, **before** any schedule activation.
+D-0217-A = 1 was selected and the user performed the authorized controlled n8n UI readiness inspection of the intended Telegram Mode A notifier workflow. The inspection succeeded:
 
-D-0217-A is that narrower gate. It authorizes only inspection. No Execute, no Schedule Trigger, no Telegram send, no workflow import/export.
+- Target workflow identified: `TEST - Alina task completion Telegram notifier`
+- Workflow is inactive; no Schedule Trigger is active.
+- Idempotency/state-store path is present and wired.
+- Data Table `alina_telegram_notifier_state` confirmed.
+- Telegram node is notification-only; no INBOX-answering logic observed.
+- Queue reader untouched; no Execute; no Telegram send.
+
+D-0221-A is the next gate to authorize actual Schedule Trigger activation.
 
 ## Perché serve decisione
 
-Opening the Telegram notifier workflow in the n8n UI — even for inspection only — is a runtime / UI interaction. The user must explicitly authorize it and choose between proceeding now, staying manual-only, or further refining the design.
+Enabling a Schedule Trigger on the Telegram notifier workflow introduces automatic recurring runtime behaviour. This is a runtime gate and must be explicitly authorized by the user.
 
 ## Opzioni
 
-1. **Authorize controlled n8n UI readiness inspection only.** Scope:
-   - Open the intended Telegram Mode A notifier workflow.
+1. **Authorize controlled Schedule Trigger activation for Telegram Mode A.** Scope:
+   - Open only: `TEST - Alina task completion Telegram notifier`
    - Do not open or modify the queue reader workflow.
-   - Confirm workflow name and purpose.
-   - Confirm `active=false` before any action.
+   - Confirm workflow is inactive before changes.
    - Confirm no Schedule Trigger is currently active.
-   - Confirm idempotency / state-store nodes are present and wired.
-   - Confirm Data Table target is `alina_telegram_notifier_state`.
-   - Confirm Telegram node remains notification-only.
-   - Confirm no automatic INBOX response logic exists.
-   - Confirm D-0209-A duplicate-skip success is recorded in docs.
-   - No Execute.
-   - No Telegram send.
-   - No Schedule Trigger.
-   - No workflow import / export.
-   - Stop and report findings.
+   - Add or enable one conservative Schedule Trigger only on this workflow (conservative interval, preferably 5 min Europe/Berlin or aligned with existing cadence).
+   - Keep Telegram Mode A notification-only.
+   - Telegram must NOT answer INBOX.
+   - Do not press Execute manually.
+   - Activate only the intended workflow if required by n8n for schedule operation.
+   - Observe the first scheduled tick manually.
+   - Stop and report: `schedule activation succeeded` or `schedule activation failed / aborted`.
+   - If unexpected Telegram duplicates occur, disable/stop and report.
+   - Supervision procedure: `docs/automation/telegram-mode-a-schedule-activation-supervision-checklist.md`
 
-2. **Keep Telegram notifier manual-only and skip readiness inspection for now.** No n8n UI action.
+2. **Keep Telegram notifier manual-only for now.** No Schedule Trigger; no runtime changes.
 
-3. **Defer and refine the design further** before any n8n UI inspection.
+3. **Defer and perform cleanup first.** Clean stale D-0165-A scope_note and/or short_hash mapping before schedule activation. No Schedule Trigger; no runtime activation now.
 
 ## Raccomandazione orchestratore
 
-Option 1 only if the user wants to continue toward schedule activation soon. Option 3 if the workflow identity or activation strategy is still unclear. Option 2 if automatic Telegram notifications are not needed now.
+Option 1 if the user wants automatic Telegram notifications now and accepts a supervised first tick.
+Option 3 if the user wants to clean minor stale wording/short_hash mapping before activation.
+Option 2 if automatic Telegram notifications are not needed now.
 
 ## Rischio principale
 
-- Human may inspect or modify the wrong workflow.
-- Inspection may accidentally become activation.
-- Existing schedule state may be misunderstood.
+- Duplicate notifications if the schedule fires on a new key or if idempotency is bypassed.
+- Wrong workflow activation.
+- Schedule running silently if first tick is not observed.
 - Telegram must remain notification-only and must not answer INBOX.
+- Real Chat ID exists only in n8n UI and must not be exported or documented.
 
 ## Impatto
 
 - App Alina: no impact.
 - GitHub docs: this Decision Packet plus recording entries when decided.
-- Runtime: Option 1 introduces a controlled inspection action only (no schedule, no Execute); Options 2 and 3 introduce no runtime.
-- n8n: only the targeted Telegram notifier workflow is opened under Option 1; queue reader workflow untouched.
+- Runtime: Option 1 introduces a recurring schedule under supervision; Options 2 and 3 introduce no runtime.
+- n8n: only `TEST - Alina task completion Telegram notifier` is touched under Option 1; queue reader untouched.
 - INBOX: source of truth; Telegram must not answer it.
 - Gate 7: no impact; remains closed.
 - Provider API LLM: forbidden by default.
@@ -125,39 +133,48 @@ Option 1 only if the user wants to continue toward schedule activation soon. Opt
 
 ## Micro-interazioni umane eliminate
 
-If Option 1 succeeds, it confirms the conditions required for a future activation gate without committing to activation.
+If Option 1 succeeds, automatic Telegram notifications reduce the manual checking burden after each task completion.
 
 ## Scelta richiesta
 
-`D-0217-A = 1` per autorizzare un'inspection controllata in n8n UI del workflow Telegram Mode A target (solo lettura/conferma, niente Execute, niente Schedule).
-`D-0217-A = 2` per mantenere il notifier manual-only e rinviare anche l'inspection.
-`D-0217-A = 3` per rinviare e raffinare ulteriormente il design prima di qualunque azione in n8n UI.
+`D-0221-A = 1` per autorizzare l'attivazione controllata Schedule Trigger per Telegram Mode A (supervised first tick, notification-only).
+`D-0221-A = 2` per mantenere il notifier manual-only per ora.
+`D-0221-A = 3` per rinviare e fare prima la pulizia dei cleanup candidates (stale wording / short_hash).
 
 ## Cosa succede dopo la scelta
 
-If `D-0217-A = 1`: a future supervised step-by-step user task performs the readiness inspection per the scope above and reports findings; no schedule activation; no Execute; no Telegram send.
-
-If `D-0217-A = 2`: notifier remains manual-only; no n8n UI inspection now; a future Decision Packet may re-open the gate.
-
-If `D-0217-A = 3`: the design is refined first; a future Decision Packet may then re-open the gate.
+If `D-0221-A = 1`: a future supervised step-by-step user task activates the Schedule Trigger per the supervision checklist; the first tick is observed; report follows.
+If `D-0221-A = 2`: notifier remains manual-only; no Schedule Trigger; future activation requires a new gate.
+If `D-0221-A = 3`: cleanup is performed first (separate docs-only batch); then a future DP re-opens the activation gate.
 
 ## Cosa NON verrà fatto senza ulteriore gate
 
-This decision does not authorize:
-- Schedule Trigger activation;
-- Execute of any workflow;
-- Telegram send / test;
-- workflow import / export;
-- queue reader modification;
-- provider API LLM;
-- app / deploy / tag / rollback;
-- token / chat id / secrets in repo / docs / chat;
-- automatic INBOX response;
-- automatic `D-NNNN-X = N` writing.
+- No provider API LLM.
+- No app/deploy/tag/rollback.
+- No queue reader modification.
+- No workflow export with secrets.
+- No token/chat id in repo/docs/chat.
+- No automatic INBOX response.
+- No automatic decision writing.
+- No additional Execute test.
 
 ---
 
 ## Decided
+
+### D-0217-A — Authorize Telegram Mode A Schedule Activation Readiness Inspection (DECIDED)
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0217-create-schedule-activation-readiness-inspection-decision-packet
+**source_document:** docs/automation/telegram-mode-a-schedule-activation-design-first-path.md
+**response:** 1
+**decided_at:** 2026-05-14
+**recorded_by_task:** 0219-record-d0217a-readiness-inspection-success
+**result:** readiness inspection succeeded — target workflow `TEST - Alina task completion Telegram notifier` confirmed inactive, no Schedule Trigger, idempotency/state-store path wired, Data Table `alina_telegram_notifier_state` confirmed, Telegram node notification-only, no INBOX-answering logic, queue reader untouched; minor cleanup candidates: stale D-0165-A scope_note, short_hash empty mapping (non-blocking); next gate D-0221-A (Pending) for controlled Schedule Trigger activation
+**archive_policy:** keep
+
+---
 
 ### D-0213-A — Authorize Telegram Mode A Schedule Activation After Validated Duplicate-Skip (DECIDED)
 
