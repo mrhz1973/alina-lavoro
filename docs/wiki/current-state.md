@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0280)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0281)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0280 — Short Prompt Examples Compression Check** (2026-05-15): docs-only; added `@AGENTS.md` to all example blocks in `docs/wiki/examples/delta-based-prompt-example.md`; added explicit Forbidden paths + Runtime line to canonical docs-only example; no new doc; no runtime. |
-| Previous | **0279 — Short-Prompt Implementer Flow Smoke Test** (2026-05-15): docs-only; minimal task validating short-prompt implementer flow (AGENTS.md → templates → preflight → marker → session → commit/push); no new doc; no runtime. |
+| Last completed | **0281 — Template Overlay Minimization Audit** (2026-05-15): docs-only; added Base rules pointer in 6 V3.1 overlays so shared rules live only in `implementer-standard.md`; no template deleted; no new doc; no runtime. |
+| Previous | **0280 — Short Prompt Examples Compression Check** (2026-05-15): docs-only; added `@AGENTS.md` to all example blocks in `docs/wiki/examples/delta-based-prompt-example.md`; added explicit Forbidden paths + Runtime line to canonical docs-only example; no new doc; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---

@@ -11,24 +11,20 @@ For n8n, the default is **TEMPLATE-FIRST / JSON-FIRST** whenever a workflow is s
 
 Prefer an importable n8n JSON template plus companion documentation before asking the user to rebuild nodes manually.
 
-## Template safety requirements
+## Base rules
 
-Every n8n template committed to the repo must satisfy:
+Shared preflight, prohibitions (including tokens / real chat_id / credentials / OAuth / provider API keys / tokenized URLs / no app source / no deploy/tag/rollback), git rules, and final-report persistence come from `docs/tasks/templates/implementer-standard.md`.
+
+## n8n-template-specific safety requirements
+
+Every n8n template committed to the repo must additionally satisfy:
 
 - `active=false`;
 - no active Schedule Trigger by default;
-- no real Telegram bot token;
-- no real Telegram Chat ID;
-- no credential secret export;
-- no OAuth material;
-- no password;
-- no provider API key;
-- no URL containing `token=`;
 - no node that answers INBOX;
 - no Browser Bridge project-chat write;
 - no queue reader modification unless explicitly scoped;
-- no app source modification;
-- no deploy/tag/rollback.
+- credential references use placeholders only (real values bound inside n8n only).
 
 ## Manual UI fallback
 

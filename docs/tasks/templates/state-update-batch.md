@@ -7,12 +7,13 @@
 
 Use when a task's primary goal is updating state documentation to reflect completed work: LLMS.md, wiki/current-state.md, token-efficiency.md, roadmap.md, operational docs, done marker, and session note. Typically triggered after a batch of runtime or docs tasks that were completed but whose state docs were not yet updated.
 
-## Mandatory preflight
+## Base rules
 
-- Run `docs/wiki/task-id-preflight.md`.
-- Confirm branch is `main` and tree is clean.
-- Read `docs/LLMS.md` → `docs/wiki/current-state.md` to identify what is stale.
-- Do not read `docs/PROJECT_STATE.md` or `docs/CHECKPOINT.md` by default.
+Shared preflight, prohibitions, git rules, and final-report persistence come from `docs/tasks/templates/implementer-standard.md`. This overlay only adds state-update specifics.
+
+## State-update additions to preflight
+
+- After standard reads, scan `docs/LLMS.md` and `docs/wiki/current-state.md` to identify what is stale.
 
 ## Standard update targets
 
@@ -39,15 +40,13 @@ Do not rewrite docs wholesale. Apply targeted inserts or single-line updates.
 - Roadmap automation section: append a compact paragraph; do not restructure existing paragraphs.
 - Operational docs: add a single bullet or line; do not rewrite sections.
 
-## Forbidden
+## State-update specific forbidden
 
 - No `src/**` changes.
-- No `git add .`.
-- No deploy, tag, rollback.
-- No n8n runtime, Execute, Telegram send, Schedule change.
-- No provider API LLM, no new billing.
-- No token, real chat_id, credential secret, OAuth material.
+- No n8n runtime, Execute, Telegram send, or Schedule change as part of a state-update batch.
 - Do not read `docs/PROJECT_STATE.md` or `docs/CHECKPOINT.md` unless absolutely necessary (justify if opened).
+
+(Other prohibitions — `git add .`, deploy/tag/rollback, provider API, billing, tokens/chat_id/credentials/OAuth — are in `implementer-standard.md`.)
 
 ## Expected output
 

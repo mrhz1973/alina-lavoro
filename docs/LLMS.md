@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0280** — Short Prompt Examples Compression Check (2026-05-15): docs-only; added `@AGENTS.md` to all example prompt blocks in `docs/wiki/examples/delta-based-prompt-example.md` and added explicit Forbidden paths + Runtime line to the canonical docs-only example so it carries every field listed in `prompt-routing.md`; no new doc; no runtime. |
-| Previous | **0279** — Short-Prompt Implementer Flow Smoke Test (2026-05-15): docs-only; minimal task verifying that the implementer can complete a docs-only task from a short orchestrator prompt by reading AGENTS.md and standard templates; no new doc; no runtime. |
+| Last completed | **0281** — Template Overlay Minimization Audit (2026-05-15): docs-only; added uniform "Base rules" pointer in 6 V3.1 overlays (`docs-only-task`, `runtime-gated-task`, `state-update-batch`, `inbox-decision-recording`, `n8n-template-first-task`, `n8n-ui-supervised-cleanup`) so shared preflight/prohibitions/git/final-report rules live only in `implementer-standard.md`; no template deleted; no new doc; no runtime. |
+| Previous | **0280** — Short Prompt Examples Compression Check (2026-05-15): docs-only; added `@AGENTS.md` to all example prompt blocks in `docs/wiki/examples/delta-based-prompt-example.md` and added explicit Forbidden paths + Runtime line to the canonical docs-only example so it carries every field listed in `prompt-routing.md`; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---

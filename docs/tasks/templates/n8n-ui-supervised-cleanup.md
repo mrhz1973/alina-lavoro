@@ -50,7 +50,10 @@ The task prompt must explicitly list:
 - State docs updated: `docs/LLMS.md` + `docs/wiki/current-state.md`.
 - Final report per `docs/tasks/templates/final-report-contract.md`.
 
-## Forbidden
+## Base rules
 
-- No token, real chat_id, credential secret, or OAuth material documented in repo or chat.
+Shared preflight, prohibitions (including tokens / real chat_id / credentials / OAuth / tokenized URLs / no app source / no deploy/tag/rollback), git rules, and final-report persistence come from `docs/tasks/templates/implementer-standard.md`.
+
+## n8n-UI-cleanup specific forbidden
+
 - Do not describe the cleanup as complete until the operator confirms the save.

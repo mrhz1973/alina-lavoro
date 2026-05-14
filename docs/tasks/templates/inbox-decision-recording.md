@@ -45,10 +45,14 @@ After recording a decision:
 - `docs/wiki/current-state.md` if counts or major gate state changed;
 - done marker and session note when tracked.
 
-## Forbidden
+## Base rules
 
-- No token, real chat_id, credential secret, OAuth material, or tokenized URL.
+Shared preflight, prohibitions (including tokens / chat_id / credentials / OAuth / tokenized URLs), git rules, and final-report persistence come from `docs/tasks/templates/implementer-standard.md`.
+
+## INBOX-specific forbidden
+
 - Do not mark a DP as decided without explicit user confirmation.
+- Do not invent a Decision Packet to fit a docs-only batch.
 
 ## Final report
 
