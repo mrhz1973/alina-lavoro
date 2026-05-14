@@ -52,7 +52,93 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-_(Empty — no pending decisions. D-0187-A decided below.)_
+### D-0193-A — Authorize one duplicate-skip retry against the same 0190 idempotency key
+
+**inbox_status:** pending
+**created_at:** 2026-05-14
+**source_task:** 0193-create-duplicate-skip-retry-same-key-decision-packet
+**source_document:** docs/tasks/done/0191-record-duplicate-skip-validation-inconclusive-due-to-new-latest-done-file.md
+**response:**
+**decided_at:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0193-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+D-0187-A = 1 authorized exactly one duplicate-skip validation run. The run was executed (task 0191, 2026-05-14). The result was INCONCLUSIVE because "Pick latest done file" selected task 0190 (the most recent done file at execution time), which generated a different idempotency key from the original test. The workflow correctly executed the send/store path for the new 0190 key. The duplicate-skip logic (false branch) was not tested. D-0187-A is now consumed. A new Decision Packet is required to authorize a retry against the same 0190 idempotency key.
+
+## Perché serve decisione
+
+A duplicate-skip retry against the same 0190 key is a runtime action. Even though it is the same workflow and the same done file, it requires an explicit human gate per project policy. The retry would test the duplicate-skip logic by re-executing the workflow with an idempotency key that already exists in the Data Table.
+
+## Opzioni
+
+1. **Authorize exactly one duplicate-skip retry against the same 0190 key** — authorize one future manual Execute workflow with the same done file (task 0190) that was just sent/stored. Expected result: duplicate detection, false branch routing, no Telegram message, no new Data Table row. This would validate the duplicate-skip logic conclusively.
+
+2. **Do not retry duplicate-skip now** — skip the retry for now. The duplicate-skip logic remains unvalidated. Schedule activation remains separately gated. The workflow remains manual-only. The user may return to this gate later if desired.
+
+## Raccomandazione orchestratore
+
+Option 1, as a narrow runtime gate for duplicate-skip validation only. The retry would conclusively test the duplicate-skip logic by using the same 0190 idempotency key that is already stored. If the retry succeeds (false branch, no Telegram send, no new row), the duplicate-skip implementation is validated and schedule activation can proceed as a separate future gate. If the retry fails (duplicate Telegram message), the idempotency implementation must be investigated and fixed before proceeding.
+
+## Rischio principale
+
+Scope creep from retry toward schedule activation or repeated Telegram messages without separate gates. The retry must be exactly once, with the same 0190 done file, and must stop immediately if a duplicate message is sent.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this task records the Decision Packet creation only.
+- Runtime: no runtime performed by this task; retry execution is a future manual user step if D-0193-A = 1.
+- n8n: no workflow modification by this task.
+- INBOX: remains source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: no impact; still forbidden by default.
+- Billing: no new LLM billing.
+
+## Micro-interazioni umane eliminate
+
+0 immediately. After duplicate-skip is validated and schedule is activated, Telegram Mode A may reduce manual checking burden.
+
+## Scelta richiesta
+
+`D-0193-A = 1` per autorizzare esattamente un retry duplicate-skip contro la stessa chiave 0190.
+`D-0193-A = 2` per non riprovare ora; la validazione duplicate-skip rimane non conclusa.
+
+## Cosa succede dopo la scelta
+
+If `D-0193-A = 1`: user may manually execute the workflow once with the same 0190 done file. Expected: duplicate detection, false branch, no Telegram send, no new Data Table row. If successful, duplicate-skip logic is validated. Schedule activation gate may follow as a separate future Decision Packet.
+
+If `D-0193-A = 2`: no retry is authorized. Duplicate-skip logic remains unvalidated. Schedule activation remains separately gated. The workflow remains manual-only.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Second retry run (only one is authorized if Option 1 is chosen);
+- Schedule Trigger activation;
+- Automatic notifications;
+- Queue reader workflow modification;
+- Workflow JSON export/import;
+- Token or chat id in repo/docs/AI chat;
+- Provider API LLM;
+- New billing;
+- App/deploy/tag/rollback;
+- Automatic INBOX responses;
+- Automatic `D-NNNN-X = N` writing.
+
+If option 1 is chosen, the scope is limited to:
+- One manual Execute workflow only;
+- Same done file (task 0190) that was just sent/stored;
+- Expected duplicate detection for same idempotency key;
+- Expected false branch routing;
+- Expected no Telegram message;
+- Expected no new Data Table row;
+- Stop immediately if duplicate message is sent.
 
 ---
 

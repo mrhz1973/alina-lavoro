@@ -9,7 +9,9 @@
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Implementation authorized.
 
 **Implementation update (task 0185, 2026-05-14):** User implemented Data Table path. Data Table `alina_telegram_notifier_state` created with all columns from §6 schema. Idempotency nodes implemented per §3 target shape. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One manual send/write test succeeded by user report.  
-**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — exactly one duplicate-skip validation run authorized. Runtime handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md`. Next: one manual Execute workflow, expected false branch (skip_duplicate), no Telegram send, no new Data Table row.
+**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — exactly one duplicate-skip validation run authorized. Runtime handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md`.  
+**Validation outcome (batch 0191–0193, 2026-05-14):** D-0187-A consumed, result INCONCLUSIVE. Validation run used task 0190 as latest done file (different from original test), generating new idempotency key. Workflow correctly executed send/store for new key. Duplicate-skip logic not tested. D-0193-A pending for retry against same 0190 key.  
+**Same-key requirement (§10 clarification):** Duplicate-skip validation requires testing with the same idempotency key that was previously sent/stored. If "Pick latest done file" selects a newer file, the idempotency key changes and the send branch executes. This is correct new-key behavior but does not validate duplicate-skip path. For validation, either pause new done file creation or manually select the previously sent file.
 
 ---
 

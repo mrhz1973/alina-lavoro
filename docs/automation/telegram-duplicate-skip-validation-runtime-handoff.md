@@ -3,7 +3,7 @@
 **Document:** Runtime handoff for duplicate-skip validation  
 **Authorization:** D-0187-A = 1 (recorded batch 0188–0190, 2026-05-14)  
 **Type:** docs-only / runtime handoff document  
-**Status:** active — awaiting one manual duplicate-skip validation run
+**Status:** **consumed/inconclusive** (batch 0191–0193, 2026-05-14) — one run executed, result inconclusive due to new done file 0190; D-0187-A now consumed; D-0193-A pending for retry against same 0190 key
 
 ---
 

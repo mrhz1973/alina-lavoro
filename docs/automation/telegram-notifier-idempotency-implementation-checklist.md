@@ -9,7 +9,9 @@
 **Gate update (task 0182, 2026-05-13):** D-0180-A = 1 recorded. Checklist activated.
 
 **Implementation update (task 0185, 2026-05-14):** Sections 3.1–3.10 completed by user report. Data Table path chosen (§3.2: Data Store available). All nodes implemented per checklist. IF condition corrected to `{{ $json.notification_state_decision === "send" }}`. One send/write test succeeded (§6, partial).  
-**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — duplicate-skip validation authorized exactly once. Next: one manual Execute workflow run, expected false branch, no Telegram send, no new Data Table row. Schedule Trigger remains excluded and separately gated.
+**Duplicate-skip validation update (batch 0188–0190, 2026-05-14):** D-0187-A = 1 decided — duplicate-skip validation authorized exactly once.  
+**Validation outcome (batch 0191–0193, 2026-05-14):** D-0187-A consumed, result INCONCLUSIVE. Validation run used task 0190 as latest done file (different from original test), generating new idempotency key. Workflow correctly executed send/store for new key. Duplicate-skip logic not tested. D-0193-A pending for retry against same 0190 key.  
+**Same-key requirement:** Duplicate-skip validation requires using the same done file that was previously sent/stored. "Pick latest done file" is dynamic; a new done file changes the idempotency key and triggers legitimate new-key send. This is correct behavior but does not validate duplicate-skip path. For validation, either pause new done file creation or manually select the previously sent file.
 
 ---
 

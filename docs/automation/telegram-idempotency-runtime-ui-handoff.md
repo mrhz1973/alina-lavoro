@@ -4,7 +4,7 @@
 **Date:** 2026-05-13
 **Type:** docs-only / runtime handoff document
 **Authorization:** D-0180-A = 1 (recorded task 0182, 2026-05-13)
-**Status:** ✅ **Implementation complete by user report (2026-05-14, task 0185)** — Data Table path implemented; one send/write test succeeded; duplicate-skip validation pending (D-0187-A)
+**Status:** ✅ **Implementation complete by user report (2026-05-14, task 0185)** — Data Table path implemented; one send/write test succeeded; **D-0187-A consumed, result INCONCLUSIVE (batch 0191–0193)** — validation run used task 0190 as latest done file, generating new idempotency key; workflow correctly sent/stored for new key; duplicate-skip logic not tested; **D-0193-A pending** for retry against same 0190 key
 
 **Implementation update (task 0185, 2026-05-14):** User implemented idempotency/state-store logic per this handoff. Data Table `alina_telegram_notifier_state` created. Implemented node chain:
 ```

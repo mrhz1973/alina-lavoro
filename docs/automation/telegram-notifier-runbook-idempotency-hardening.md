@@ -6,13 +6,13 @@
 **Authorization:** D-0171-A = 3 (schedule deferred; hardening required before any Schedule Trigger)
 **Status:** active reference document — D-0173-A = 3 decided (task 0177); D-0180-A pending runtime gate for idempotency implementation
 
-**Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184; updated batch 0185–0187; updated batch 0188–0190):**
+**Cross-references (added 2026-05-13, batch 0177–0181; updated batch 0182–0184; updated batch 0185–0187; updated batch 0188–0190; updated batch 0191–0193):**
 - Idempotency/state-store implementation design: `docs/automation/telegram-notifier-idempotency-state-store-implementation-design.md` (task 0178)
 - Implementation checklist: `docs/automation/telegram-notifier-idempotency-implementation-checklist.md` (task 0179)
 - Runtime gate: D-0180-A = 1 decided (task 0182, 2026-05-13) — idempotency/state-store runtime gate opened
 - Runtime UI handoff: `docs/automation/telegram-idempotency-runtime-ui-handoff.md` (task 0183)
 - Duplicate-skip validation handoff: `docs/automation/telegram-duplicate-skip-validation-runtime-handoff.md` (batch 0188–0190, D-0187-A = 1)
-- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A = 1 decided** — duplicate-skip validation gate open for exactly one manual run; no Schedule Trigger; schedule activation checklist (§13) not yet complete
+- **Implementation status (2026-05-14):** Data Table `alina_telegram_notifier_state` implemented by user; one send/write test succeeded; **D-0187-A = 1 decided and consumed** (batch 0188–0190), result INCONCLUSIVE (batch 0191–0193) — validation run used task 0190 as latest done file, generating new idempotency key; workflow correctly sent/stored for new key; duplicate-skip logic not tested; **D-0193-A pending** for retry against same 0190 key; no Schedule Trigger; schedule activation checklist (§13) not yet complete
 
 ---
 
