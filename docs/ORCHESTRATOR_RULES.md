@@ -62,6 +62,44 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules — this routing rule does not change that.
 - Claude Code large-file warnings may remain until a future physical compression task; this rule reduces real context consumption independently.
 
+## PRIORITÀ 0B — n8n template-first (priorità tempo e risultati)
+
+**Regola globale del progetto (adottata 2026-05-14, batch 0204–0208).**
+
+La priorità del progetto è **TEMPO E RISULTATI**. La configurazione manuale n8n nodo-per-nodo si è dimostrata troppo lenta ed errore-prone (caso D-0197-A, dove un Set/override parziale non è bastato a forzare l'uso dei valori pinned nei nodi downstream).
+
+**Regola:**
+
+- Quando serve un workflow o test n8n, il deliverable preferito è un **template JSON importabile** (più una companion `.md`).
+- La configurazione manuale nodo-per-nodo è **fallback**, usata solo quando l'import non è fattibile.
+- I template devono essere **il più completi possibile** per ridurre i click manuali: wiring, nodi Telegram, nodi Data Table, espressioni, Schedule Trigger disabilitato (se utile), credential reference names o placeholder.
+- I template sono **inattivi di default** (`active: false`).
+- L'**Execute** del workflow importato resta un **gate separato**, mai concesso dal solo import.
+
+**Vietato nei template/repo/chat:**
+
+- token Telegram reale;
+- password reali;
+- OAuth material reale;
+- API key reali;
+- credential secret esportati;
+- URL contenenti `token=`;
+- chat_id reali;
+- qualsiasi credential export con segreti.
+
+**Permesso nei template/repo:**
+
+- struttura workflow completa;
+- nomi nodo, parametri, espressioni;
+- credential reference names o placeholder ("REPLACE_WITH_…");
+- chat_id placeholder o espressione;
+- Schedule Trigger solo se inattivo e a scopo documentale;
+- pinned test values con dati già pubblici nel repo (path file done, SHA pubblici).
+
+**Convivenza:** la modalità passo-passo (**PRIORITÀ 0**) resta obbligatoria quando l'utente sta operando manualmente in n8n UI dopo un eventuale import. L'**import** stesso resta un'azione runtime/UI e richiede sempre un Decision Packet esplicito (es. D-0206-A).
+
+**Documenti correlati:** `docs/AI_RULES.md` (regola implementatore), `docs/WORKFLOW.md` (nota workflow), `docs/automation/n8n-workflows/templates/` (template attivi).
+
 ## PRIORITÀ 0A — Avanzamento senza conferme inutili
 
 **Regola globale del progetto.** Vale per ChatGPT orchestratore, implementatori (Windsurf/Cascade, Cursor, Claude Code, Agent), prompt generati da n8n, workflow documentale n8n / watcher / runner, politiche VPS/runner, documentazione di stato e ripartenza.

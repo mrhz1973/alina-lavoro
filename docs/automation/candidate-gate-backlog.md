@@ -3,7 +3,7 @@
 **Task:** 0147
 **Date:** 2026-05-13
 **Type:** docs-only / low-touch-loop planning
-**Status:** active reference document — **updated batch 0199–0203 (2026-05-14): D-0187-A, D-0193-A, D-0197-A all consumed: D-0187-A/D-0193-A inconclusive (latest-done drift), D-0197-A not successful (partial pinning / dynamic reference leakage); D-0202-A pending (controlled fully-pinned harness inspection/repair, no Execute); fully-pinned harness design: `docs/automation/telegram-fully-pinned-validation-harness-design.md`; duplicate-skip NOT conclusively validated; schedule activation blocked until fully-pinned category (a) success; no token/chat id in repo**
+**Status:** active reference document — **updated batch 0204–0208 (2026-05-14):** project adopted n8n **template-first policy** (priority TIME AND RESULTS); D-0202-A **superseded** by D-0206-A; D-0206-A **pending** (authorize import and inspection of fully-pinned n8n template into n8n UI, no Execute); template artifact: `docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.json` + companion `.md`; D-0187-A, D-0193-A, D-0197-A all consumed (D-0187-A/D-0193-A inconclusive due to latest-done drift; D-0197-A not successful due to partial pinning / dynamic reference leakage); duplicate-skip NOT conclusively validated; schedule activation blocked until fully-pinned category (a) success; no token/chat id in repo; no real secrets in templates
 
 ---
 

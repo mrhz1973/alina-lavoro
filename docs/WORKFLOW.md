@@ -14,6 +14,19 @@ Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.
 - The cycle closes with **commit/push** and subsequent **`aggio`** or auto-aggio for verification, **not** with «shall I proceed?» requests.
 - Step-by-step mode (PRIORITY 0) is mandatory only when the user is manually operating n8n/VPS/browser/terminal/Apps Script.
 
+## n8n template-first workflow (batch 0204–0208, 2026-05-14)
+
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0B** · `docs/AI_RULES.md` — **n8n template-first**.
+
+When the next step involves an n8n workflow or test:
+
+1. **Docs-first template creation.** Produce a complete importable JSON template plus a companion `.md` in `docs/automation/n8n-workflows/templates/`. Template ships with `active: false`, no real secrets, credential names/placeholders only. This is a docs-only batch step — no runtime.
+2. **Gate import/inspection.** Open a Decision Packet (e.g. D-NNNN-A) authorizing import of the template into the local supervised n8n instance and inspection of node expressions. No Execute is authorized by this gate. The user binds the real Telegram credential and real chat_id **inside n8n only** (never in repo/chat).
+3. **Gate Execute (separate, future).** A successful import/inspection is the prerequisite for a separate future Decision Packet that may authorize **exactly one** Execute run with success/failure criteria documented in the companion `.md`.
+4. **Gate schedule activation (separate, future).** A successful Execute with duplicate-skip confirmed is the prerequisite for any schedule-activation gate.
+
+Manual node-by-node setup is fallback only, used when import is not feasible.
+
 ## Batch size policy (task 0175, 2026-05-13)
 
 Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **Batch size policy** and `docs/AI_RULES.md` — **Batch size policy**.

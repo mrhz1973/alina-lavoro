@@ -2,6 +2,21 @@
 
 These rules complement the repository constraints and reduce operational ambiguity.
 
+## Implementer rule — n8n template-first (priority time and results)
+
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0B**.
+
+When asked to design or deliver an n8n workflow or test:
+
+- Prefer an **importable n8n JSON template** plus a companion `.md` doc over long manual UI procedures.
+- Make templates as **complete as possible**: full node wiring, parameters, expressions, credential reference names/placeholders, chat_id placeholders, inactive Schedule Trigger (if useful at all).
+- Ship templates **inactive by default** (`active: false`).
+- Templates live under `docs/automation/n8n-workflows/templates/`.
+- Manual node-by-node setup is **fallback**, used only when import is not feasible.
+- **Never commit real secrets in templates:** no Telegram bot token, no password, no OAuth material, no API key, no credential secret export, no `token=` URL, no real chat_id. Credential names and chat_id are placeholders; real values are bound inside n8n only.
+- **Import is a runtime/UI gate.** A template alone does not authorize import. Import requires an explicit Decision Packet (see D-0206-A pattern).
+- **Execute is a separate gate.** Import does not authorize Execute. A future separate Decision Packet is required.
+
 ## Implementer rule — No unnecessary confirmations
 
 Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.

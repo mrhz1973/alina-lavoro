@@ -1,0 +1,193 @@
+{
+  "name": "TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "ManualTrigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            { "name": "task_id", "value": "0193" },
+            { "name": "done_file_path", "value": "docs/tasks/done/0193-create-duplicate-skip-retry-same-key-decision-packet.md" },
+            { "name": "done_file_sha", "value": "5d8b3a23c286ae0bc52c041ae789f4a02ee9754e" },
+            { "name": "idempotency_key", "value": "docs/tasks/done/0193-create-duplicate-skip-retry-same-key-decision-packet.md::5d8b3a23c286ae0bc52c041ae789f4a02ee9754e" },
+            { "name": "message_preview_safe", "value": "TEST pinned harness: task 0193 done (no real notification intent)" },
+            { "name": "workflow_name", "value": "TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY" }
+          ]
+        },
+        "options": {
+          "dotNotation": false,
+          "keepOnlySet": true
+        }
+      },
+      "id": "StaticPinnedInput",
+      "name": "Static pinned input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [420, 300],
+      "notes": "ALL pinned values originate here. No dynamic upstream nodes. Downstream nodes MUST use $json.* only."
+    },
+    {
+      "parameters": {
+        "operation": "getRows",
+        "dataTableId": "alina_telegram_notifier_state",
+        "filters": {
+          "conditions": [
+            {
+              "column": "idempotency_key",
+              "operator": "equals",
+              "value": "={{ $json.idempotency_key }}"
+            }
+          ]
+        },
+        "options": {
+          "limit": 1,
+          "alwaysOutputData": true
+        }
+      },
+      "id": "LoadNotificationState",
+      "name": "Load notification state",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [640, 300],
+      "notes": "Lookup by current item idempotency_key only. NEVER reference dynamic upstream nodes by name."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize lookup output using ONLY current item fields and the lookup row if present.\n// No references to $('Static pinned input') or any other node by name.\nconst incoming = $input.all();\nconst item = incoming[0] && incoming[0].json ? incoming[0].json : {};\n\n// Pinned identity fields are flowed via $json (Data Table node passes them through current item)\nconst task_id = item.task_id;\nconst done_file_path = item.done_file_path;\nconst done_file_sha = item.done_file_sha;\nconst idempotency_key = item.idempotency_key;\nconst message_preview_safe = item.message_preview_safe;\nconst workflow_name = item.workflow_name;\n\n// Data Table fields if a matching row exists\nconst existing_id = item.id ?? null;\nconst existing_notification_status = item.notification_status ?? null;\nconst existing_notified_at = item.notified_at ?? null;\n\nconst row_exists = existing_id !== null && existing_notification_status !== null;\nconst notification_state_decision = row_exists ? 'skip' : 'send';\n\nreturn [{\n  json: {\n    task_id,\n    done_file_path,\n    done_file_sha,\n    idempotency_key,\n    message_preview_safe,\n    workflow_name,\n    row_exists,\n    existing_id,\n    existing_notification_status,\n    existing_notified_at,\n    notification_state_decision\n  }\n}];"
+      },
+      "id": "NormalizeNotificationState",
+      "name": "Normalize notification state",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [860, 300],
+      "notes": "Uses $input/$json only. No references to Static pinned input or any upstream node by name."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.notification_state_decision === 'send' }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "DecideSendOrSkip",
+      "name": "Decide send or skip",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1080, 300],
+      "notes": "TRUE = send (no existing row). FALSE = skip (duplicate-skip confirmed)."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build a safe Telegram payload using ONLY $json.* fields.\nconst item = $input.first().json;\nconst text = `[TEST pinned harness] task ${item.task_id} done\\nidempotency_key:\\n${item.idempotency_key}`;\nreturn [{\n  json: {\n    text,\n    task_id: item.task_id,\n    done_file_path: item.done_file_path,\n    done_file_sha: item.done_file_sha,\n    idempotency_key: item.idempotency_key,\n    message_preview_safe: item.message_preview_safe,\n    workflow_name: item.workflow_name\n  }\n}];"
+      },
+      "id": "BuildNotificationPayload",
+      "name": "Build notification payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 200]
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_WITH_CHAT_ID_PLACEHOLDER",
+        "text": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "id": "SendATextMessage",
+      "name": "Send a text message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1520, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_REFERENCE",
+          "name": "telegram-alina-bot-credential-placeholder"
+        }
+      },
+      "notes": "Credential is a placeholder. Real Telegram bot credential must be bound manually inside n8n. Real chat_id must be set manually inside n8n. No secrets in this template."
+    },
+    {
+      "parameters": {
+        "operation": "appendRow",
+        "dataTableId": "alina_telegram_notifier_state",
+        "columns": {
+          "values": [
+            { "column": "task_id", "value": "={{ $json.task_id }}" },
+            { "column": "done_file_path", "value": "={{ $json.done_file_path }}" },
+            { "column": "done_file_sha", "value": "={{ $json.done_file_sha }}" },
+            { "column": "idempotency_key", "value": "={{ $json.idempotency_key }}" },
+            { "column": "notification_status", "value": "sent" },
+            { "column": "notified_at", "value": "={{ $now.toISO() }}" },
+            { "column": "message_preview_safe", "value": "={{ $json.message_preview_safe }}" },
+            { "column": "workflow_name", "value": "={{ $json.workflow_name }}" }
+          ]
+        }
+      },
+      "id": "StoreNotificationState",
+      "name": "Store notification state",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [1740, 200],
+      "notes": "All columns sourced from $json.* current item only."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Duplicate-skip confirmed: no Telegram send, no row write.\nreturn [{ json: { result: 'duplicate_skip_confirmed', task_id: $input.first().json.task_id, idempotency_key: $input.first().json.idempotency_key } }];"
+      },
+      "id": "DuplicateSkipNoOp",
+      "name": "Duplicate skip (no-op)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 400]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Static pinned input", "type": "main", "index": 0 }]]
+    },
+    "Static pinned input": {
+      "main": [[{ "node": "Load notification state", "type": "main", "index": 0 }]]
+    },
+    "Load notification state": {
+      "main": [[{ "node": "Normalize notification state", "type": "main", "index": 0 }]]
+    },
+    "Normalize notification state": {
+      "main": [[{ "node": "Decide send or skip", "type": "main", "index": 0 }]]
+    },
+    "Decide send or skip": {
+      "main": [
+        [{ "node": "Build notification payload", "type": "main", "index": 0 }],
+        [{ "node": "Duplicate skip (no-op)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build notification payload": {
+      "main": [[{ "node": "Send a text message", "type": "main", "index": 0 }]]
+    },
+    "Send a text message": {
+      "main": [[{ "node": "Store notification state", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "tags": [
+    { "name": "TEST-only" },
+    { "name": "pinned-harness" },
+    { "name": "alina-telegram" }
+  ],
+  "meta": {
+    "templateNotes": "TEST-only fully-pinned harness. Inactive by default. No real secrets. Real Telegram bot credential and chat_id must be bound manually inside n8n after import. No Schedule Trigger. No Execute authorized by template import alone. Schema details may need minor adjustment in the n8n UI depending on n8n version; see companion .md."
+  }
+}

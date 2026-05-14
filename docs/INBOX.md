@@ -52,15 +52,123 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0202-A — Authorize controlled fully-pinned harness inspection and repair
+### D-0206-A — Authorize import and inspection of fully-pinned n8n harness template
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0202-create-fully-pinned-harness-repair-decision-packet
-**source_document:** docs/automation/telegram-fully-pinned-validation-harness-design.md
+**source_task:** 0206-create-template-import-inspection-decision-packet
+**source_document:** docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md
 **response:**
 **decided_at:**
 **archive_policy:** keep
+
+---
+
+**Decision ID:** D-0206-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+Batch 0204–0208 adopted the **n8n template-first policy** (priority: time and results). Task 0205 produced an importable fully-pinned TEST-only n8n template at `docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.json` with a companion `.md`. The template enforces the rule from `docs/automation/telegram-fully-pinned-validation-harness-design.md` section 2: no downstream node may reference any dynamic upstream node by name; only `$json.*` and static literals.
+
+D-0202-A (controlled inspection/repair of the existing duplicate workflow) is **superseded** by this new gate: importing a clean fully-pinned template is faster and removes the risk of reintroducing dynamic-reference leakage during manual edits.
+
+## Perché serve decisione
+
+Importing a workflow into n8n UI is a runtime/UI gate even when no Execute is performed. The user must explicitly authorize this action.
+
+## Opzioni
+
+1. **Authorize import and inspection of the fully-pinned TEST-only n8n harness template, with no Execute run.** Scope:
+   - Import `telegram-fully-pinned-validation-harness.template.json` into the local supervised n8n instance.
+   - Confirm workflow name = `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`.
+   - Confirm `active = false`.
+   - Confirm no Schedule Trigger.
+   - In `Send a text message`: replace `REPLACE_WITH_CHAT_ID_PLACEHOLDER` with the real chat id **inside n8n only** (never paste in repo/chat) and bind the existing real Telegram credential (do not create a new one with the placeholder name).
+   - Verify Data Table nodes point to `alina_telegram_notifier_state`.
+   - Verify all downstream expressions use `$json.*` only (no references to `$('Pick latest done file')`, `$('Get done file')`, `$('Build idempotency key')`, `$('Override pinned idempotency key')`).
+   - Stop before any Execute.
+   - Report findings (which nodes required schema adjustments, which credential bindings were applied).
+
+2. **Do not import now.** Keep Telegram notifier manual-only and continue docs/design only. Duplicate-skip remains not conclusively validated. Schedule activation remains separately gated.
+
+3. **Defer and refine template/design further** before opening the import gate.
+
+## Raccomandazione orchestratore
+
+Option 1. The next safe fast step is **not** another run. It is **import/inspection** of a fully pinned TEST-only template with no Execute.
+
+## Rischio principale
+
+The main risk is that import morphs into Execute. This Decision Packet explicitly prohibits Execute. The operator must stop before pressing Execute. A secondary risk is n8n schema mismatches requiring post-import adjustment in the UI; permitted as long as the chain shape, the `$json.*`-only rule, inactive state, and absence of Schedule Trigger are preserved (see companion `.md` section 9).
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this Decision Packet plus the template artifacts already committed.
+- Runtime: no Execute authorized by this packet. Import/inspection only.
+- n8n: one new TEST-only inactive workflow imported; existing validated workflows untouched.
+- INBOX: source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: forbidden by default.
+- Billing: no new billing.
+
+## Micro-interazioni umane eliminate
+
+Many compared to D-0202-A: import collapses node-by-node manual configuration into a single action. Successful import/inspection unblocks a future Execute gate, which if successful unblocks the schedule-activation gate (both separate, future).
+
+## Scelta richiesta
+
+`D-0206-A = 1` per autorizzare import/inspection del template fully-pinned TEST-only (no Execute).
+`D-0206-A = 2` per non importare ora; il notifier resta manual-only.
+`D-0206-A = 3` per rinviare e raffinare ulteriormente template/design.
+
+## Cosa succede dopo la scelta
+
+If `D-0206-A = 1`: the user may import the template into the local supervised n8n instance, bind the existing Telegram credential and real chat_id inside n8n only, verify fields per the companion `.md`, and report findings. No Execute is authorized. A separate future Decision Packet is required for one Execute run.
+
+If `D-0206-A = 2`: no n8n UI action is authorized. Duplicate-skip remains not validated. Schedule activation remains separately gated.
+
+If `D-0206-A = 3`: template/design is refined first. A future Decision Packet may then re-open the gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Execute run;
+- Telegram message send;
+- Schedule Trigger activation;
+- Automatic notifications;
+- Queue reader workflow modification;
+- Workflow JSON export from n8n (only import is in scope);
+- Token or chat id in repo/docs/AI chat;
+- Provider API LLM;
+- New billing;
+- App/deploy/tag/rollback/merge;
+- Browser Bridge runtime;
+- Ollama runtime;
+- Cursor CLI/headless;
+- Automatic INBOX responses;
+- Automatic `D-NNNN-X = N` writing.
+
+---
+
+## Superseded
+
+### D-0202-A — Authorize controlled fully-pinned harness inspection and repair (SUPERSEDED)
+
+**inbox_status:** superseded
+**created_at:** 2026-05-14
+**source_task:** 0202-create-fully-pinned-harness-repair-decision-packet
+**source_document:** docs/automation/telegram-fully-pinned-validation-harness-design.md
+**response:** superseded
+**decided_at:** 2026-05-14
+**superseded_by:** D-0206-A
+**archive_policy:** keep
+
+**Supersession reason:** Batch 0204–0208 adopted the n8n template-first policy (priority: time and results). Inspecting and repairing the existing duplicate TEST-only workflow in n8n UI is slower than importing a clean fully-pinned template, and carries the risk of reintroducing dynamic-reference leakage during manual node-by-node edits. The template-first deliverable (task 0205) provides an importable artifact that collapses the manual chain into a single Import action. D-0206-A replaces this gate.
+
+No runtime action was taken under D-0202-A. The original inspection/repair scope is preserved for audit below.
 
 ---
 
@@ -1536,9 +1644,9 @@ _No deferred decisions._
 
 ---
 
-## Superseded
+## Superseded (legacy placeholder)
 
-_No superseded decisions._
+_See the Superseded section above for D-0202-A (superseded by D-0206-A, 2026-05-14)._
 
 ---
 
