@@ -52,11 +52,11 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0206-A — Authorize import and inspection of fully-pinned n8n harness template
+### D-0209-A — Authorize one Execute run of imported fully-pinned n8n harness
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0206-create-template-import-inspection-decision-packet
+**source_task:** 0209-create-fully-pinned-harness-execute-decision-packet
 **source_document:** docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md
 **response:**
 **decided_at:**
@@ -64,51 +64,54 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ---
 
-**Decision ID:** D-0206-A
+**Decision ID:** D-0209-A
 **Kind:** automation
 **Data:** 2026-05-14
 
 ## Contesto
 
-Batch 0204–0208 adopted the **n8n template-first policy** (priority: time and results). Task 0205 produced an importable fully-pinned TEST-only n8n template at `docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.json` with a companion `.md`. The template enforces the rule from `docs/automation/telegram-fully-pinned-validation-harness-design.md` section 2: no downstream node may reference any dynamic upstream node by name; only `$json.*` and static literals.
+D-0206-A = 1 was selected and the user reported `import/inspection ok` (task 0208). The fully-pinned TEST-only n8n harness was imported into the supervised n8n UI as workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`. The workflow is currently inactive (`active = false`), uses a Manual Trigger only, has no Schedule Trigger, uses pinned static input for `task_id = 0193` and `idempotency_key = docs/tasks/done/0193-create-duplicate-skip-retry-same-key-decision-packet.md::5d8b3a23c286ae0bc52c041ae789f4a02ee9754e`, and all downstream nodes consume `$json.*` only.
 
-D-0202-A (controlled inspection/repair of the existing duplicate workflow) is **superseded** by this new gate: importing a clean fully-pinned template is faster and removes the risk of reintroducing dynamic-reference leakage during manual edits.
+D-0206-A did not authorize Execute. Execute is a separate gate. This Decision Packet is that gate.
+
+The duplicate-skip behavior remains NOT conclusively validated. The fully-pinned harness was built precisely to remove the partial-pinning / dynamic-reference leakage failure mode observed under D-0197-A. One controlled Execute run is the next valid validation step.
 
 ## Perché serve decisione
 
-Importing a workflow into n8n UI is a runtime/UI gate even when no Execute is performed. The user must explicitly authorize this action.
+Executing a workflow that contains a real Telegram credential reference and a real chat id (bound inside n8n only) can cause a Telegram message to be sent if the duplicate-skip logic does not route FALSE. Running the workflow is a runtime gate and must be explicitly authorized by the user.
 
 ## Opzioni
 
-1. **Authorize import and inspection of the fully-pinned TEST-only n8n harness template, with no Execute run.** Scope:
-   - Import `telegram-fully-pinned-validation-harness.template.json` into the local supervised n8n instance.
-   - Confirm workflow name = `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`.
-   - Confirm `active = false`.
-   - Confirm no Schedule Trigger.
-   - In `Send a text message`: replace `REPLACE_WITH_CHAT_ID_PLACEHOLDER` with the real chat id **inside n8n only** (never paste in repo/chat) and bind the existing real Telegram credential (do not create a new one with the placeholder name).
-   - Verify Data Table nodes point to `alina_telegram_notifier_state`.
-   - Verify all downstream expressions use `$json.*` only (no references to `$('Pick latest done file')`, `$('Get done file')`, `$('Build idempotency key')`, `$('Override pinned idempotency key')`).
-   - Stop before any Execute.
-   - Report findings (which nodes required schema adjustments, which credential bindings were applied).
+1. **Authorize exactly one manual Execute run of the imported TEST-only fully-pinned harness.** Scope:
+   - Open workflow: `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`.
+   - Confirm `active = false` (workflow remains inactive even during Execute).
+   - Confirm no Schedule Trigger is active.
+   - Confirm the pinned static input still uses:
+     - `task_id` = `0193`
+     - `idempotency_key` = `docs/tasks/done/0193-create-duplicate-skip-retry-same-key-decision-packet.md::5d8b3a23c286ae0bc52c041ae789f4a02ee9754e`
+   - Confirm a Data Table row in `alina_telegram_notifier_state` for this idempotency_key exists pre-run (if visible in UI).
+   - Execute the workflow exactly once.
+   - Stop immediately after one run.
+   - Report either `fully pinned duplicate skip succeeded` or `fully pinned duplicate skip failed`.
 
-2. **Do not import now.** Keep Telegram notifier manual-only and continue docs/design only. Duplicate-skip remains not conclusively validated. Schedule activation remains separately gated.
+2. **Do not execute now.** Keep the imported harness inactive and continue docs/design only.
 
-3. **Defer and refine template/design further** before opening the import gate.
+3. **Defer and refine the imported template/harness** before any Execute.
 
 ## Raccomandazione orchestratore
 
-Option 1. The next safe fast step is **not** another run. It is **import/inspection** of a fully pinned TEST-only template with no Execute.
+Option 1, because import/inspection has completed and the next validation step is exactly one controlled Execute run.
 
 ## Rischio principale
 
-The main risk is that import morphs into Execute. This Decision Packet explicitly prohibits Execute. The operator must stop before pressing Execute. A secondary risk is n8n schema mismatches requiring post-import adjustment in the UI; permitted as long as the chain shape, the `$json.*`-only rule, inactive state, and absence of Schedule Trigger are preserved (see companion `.md` section 9).
+The main risk is that a Telegram message is sent if the Data Table lookup still fails or the TRUE branch runs. If Telegram arrives: stop, do not retry, record failure. A secondary risk is n8n credential or chat id binding errors causing a runtime exception; report and stop without retry.
 
 ## Impatto
 
 - App Alina: no impact.
-- GitHub docs: this Decision Packet plus the template artifacts already committed.
-- Runtime: no Execute authorized by this packet. Import/inspection only.
-- n8n: one new TEST-only inactive workflow imported; existing validated workflows untouched.
+- GitHub docs: this Decision Packet plus the recording entries.
+- Runtime: exactly one Execute run authorized; no schedule activation.
+- n8n: only the imported TEST-only harness is executed; existing validated workflows untouched.
 - INBOX: source of truth; Telegram must not answer it.
 - Gate 7: no impact; remains closed.
 - Provider API LLM: forbidden by default.
@@ -116,31 +119,42 @@ The main risk is that import morphs into Execute. This Decision Packet explicitl
 
 ## Micro-interazioni umane eliminate
 
-Many compared to D-0202-A: import collapses node-by-node manual configuration into a single action. Successful import/inspection unblocks a future Execute gate, which if successful unblocks the schedule-activation gate (both separate, future).
+If Option 1 succeeds, the duplicate-skip behavior is conclusively validated, which unblocks the future schedule-activation gate. Success therefore reduces future micro-interactions by enabling automated duplicate handling once schedule activation is later authorized by a separate gate.
 
 ## Scelta richiesta
 
-`D-0206-A = 1` per autorizzare import/inspection del template fully-pinned TEST-only (no Execute).
-`D-0206-A = 2` per non importare ora; il notifier resta manual-only.
-`D-0206-A = 3` per rinviare e raffinare ulteriormente template/design.
+`D-0209-A = 1` per autorizzare un singolo Execute manuale dell'harness fully-pinned già importato.
+`D-0209-A = 2` per non eseguire ora; mantenere l'harness inattivo e proseguire solo con docs/design.
+`D-0209-A = 3` per rinviare e raffinare ulteriormente il template/harness importato prima di qualsiasi Execute.
 
 ## Cosa succede dopo la scelta
 
-If `D-0206-A = 1`: the user may import the template into the local supervised n8n instance, bind the existing Telegram credential and real chat_id inside n8n only, verify fields per the companion `.md`, and report findings. No Execute is authorized. A separate future Decision Packet is required for one Execute run.
+Expected success criteria for Option 1:
 
-If `D-0206-A = 2`: no n8n UI action is authorized. Duplicate-skip remains not validated. Schedule activation remains separately gated.
+- `Load notification state` finds the existing row.
+- `Normalize notification state` sets `notification_state_decision = skip`.
+- `Decide send or skip` routes FALSE.
+- `Build notification payload` does NOT execute.
+- `Send a text message` does NOT execute.
+- `Store notification state` does NOT execute.
+- No Telegram message arrives.
+- No new Data Table row is created.
 
-If `D-0206-A = 3`: template/design is refined first. A future Decision Packet may then re-open the gate.
+If `D-0209-A = 1` and the run matches the success criteria above, duplicate-skip is recorded as conclusively validated. If the run fails any criterion (especially if Telegram arrives or a new Data Table row is written), the result is recorded as failure; no retry is performed under this Decision Packet.
+
+If `D-0209-A = 2`, the harness remains inactive and no Execute occurs. Duplicate-skip remains NOT validated.
+
+If `D-0209-A = 3`, the template/harness is refined before any Execute and a future Decision Packet re-opens the Execute gate.
 
 ## Cosa NON verrà fatto senza ulteriore gate
 
 This decision does not authorize:
-- Execute run;
-- Telegram message send;
-- Schedule Trigger activation;
+- A second Execute run;
+- Schedule Trigger activation (even on success);
 - Automatic notifications;
+- Modification of the original idempotency workflow;
 - Queue reader workflow modification;
-- Workflow JSON export from n8n (only import is in scope);
+- Workflow JSON export from n8n;
 - Token or chat id in repo/docs/AI chat;
 - Provider API LLM;
 - New billing;
@@ -268,6 +282,72 @@ This decision does not authorize:
 ---
 
 ## Decided
+
+### D-0206-A — Authorize import and inspection of fully-pinned n8n harness template
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0206-create-template-import-inspection-decision-packet
+**source_document:** docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.md
+**response:** 1
+**decided_at:** 2026-05-14
+**result:** import/inspection ok (user report)
+**recorded_by_task:** 0208-record-d0206a-import-inspection-ok
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0206-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Decision outcome
+
+The user selected `D-0206-A = 1` and reported `import/inspection ok` (recorded in task 0208). The fully-pinned TEST-only n8n template was imported into the supervised n8n UI as workflow `TEST - Alina Telegram notifier FULLY PINNED HARNESS ONLY`. Inspection completed successfully by user report. No Execute was performed under this packet. No Telegram message was sent. No Schedule Trigger was activated. No new Data Table row was written by this gate.
+
+The next valid gate for any Execute run is D-0209-A (created in task 0209, currently Pending).
+
+## Original Decision Packet (preserved for audit)
+
+## Contesto
+
+Batch 0204–0208 adopted the **n8n template-first policy** (priority: time and results). Task 0205 produced an importable fully-pinned TEST-only n8n template at `docs/automation/n8n-workflows/templates/telegram-fully-pinned-validation-harness.template.json` with a companion `.md`. The template enforces the rule from `docs/automation/telegram-fully-pinned-validation-harness-design.md` section 2: no downstream node may reference any dynamic upstream node by name; only `$json.*` and static literals.
+
+D-0202-A (controlled inspection/repair of the existing duplicate workflow) is **superseded** by this gate: importing a clean fully-pinned template is faster and removes the risk of reintroducing dynamic-reference leakage during manual edits.
+
+## Perché serve decisione
+
+Importing a workflow into n8n UI is a runtime/UI gate even when no Execute is performed.
+
+## Opzioni (original)
+
+1. Authorize import and inspection of the fully-pinned TEST-only n8n harness template, with no Execute run.
+2. Do not import now. Keep Telegram notifier manual-only and continue docs/design only.
+3. Defer and refine template/design further before opening the import gate.
+
+## Raccomandazione orchestratore (original)
+
+Option 1.
+
+## Cosa NON è stato autorizzato da D-0206-A
+
+- Execute run;
+- Telegram message send;
+- Schedule Trigger activation;
+- Automatic notifications;
+- Queue reader workflow modification;
+- Workflow JSON export from n8n;
+- Token or chat id in repo/docs/AI chat;
+- Provider API LLM;
+- New billing;
+- App/deploy/tag/rollback/merge;
+- Browser Bridge runtime;
+- Ollama runtime;
+- Cursor CLI/headless;
+- Automatic INBOX responses;
+- Automatic `D-NNNN-X = N` writing.
+
+---
 
 ### D-0197-A — Authorize one pinned-file duplicate-skip validation run
 
