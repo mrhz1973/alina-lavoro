@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0282** — Orchestrator-Lite Readiness Audit (2026-05-15): docs-only; verified current GitHub instructions are sufficient for a future orchestrator-lite/dual CLI loop across 7 readiness criteria (state read, task-ID choice, template selection, local preflight, gate enforcement, GitHub epilogue, dirty-tree/runtime stop); no new doc; no pointer fix required; dual CLI loop remains LATER/GATED; no runtime. |
-| Previous | **0281** — Template Overlay Minimization Audit (2026-05-15): docs-only; added uniform "Base rules" pointer in 6 V3.1 overlays so shared preflight/prohibitions/git/final-report rules live only in `implementer-standard.md`; no template deleted; no new doc; no runtime. |
+| Last completed | **0283** — Cold Start File Count Validation (2026-05-15): docs-only; measured cold-start reading burden for a standard docs-only task; effective minimum ≈ 632 lines with section-scoped COMMANDS.md read; habit reads (`PROJECT_STATE.md`, `CHECKPOINT.md`, automation, sessions, overlay templates not in scope) already suppressed by current pointers; no new measurement framework; no pointer fix required; no runtime. |
+| Previous | **0282** — Orchestrator-Lite Readiness Audit (2026-05-15): docs-only; verified current GitHub instructions are sufficient for a future orchestrator-lite/dual CLI loop across 7 readiness criteria; dual CLI loop remains LATER/GATED; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---

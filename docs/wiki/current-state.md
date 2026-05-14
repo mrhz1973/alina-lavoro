@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0282)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0283)**
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -23,8 +23,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0282 — Orchestrator-Lite Readiness Audit** (2026-05-15): docs-only; confirmed current GitHub instructions sufficient for future orchestrator-lite across 7 criteria; dual CLI loop remains LATER/GATED; no new doc; no pointer fix needed; no runtime. |
-| Previous | **0281 — Template Overlay Minimization Audit** (2026-05-15): docs-only; added Base rules pointer in 6 V3.1 overlays; no template deleted; no new doc; no runtime. |
+| Last completed | **0283 — Cold Start File Count Validation** (2026-05-15): docs-only; measured cold-start ≈ 632 lines effective minimum; habit reads already suppressed; no pointer fix needed; no runtime. |
+| Previous | **0282 — Orchestrator-Lite Readiness Audit** (2026-05-15): docs-only; confirmed current GitHub instructions sufficient for future orchestrator-lite across 7 criteria; no new doc; no runtime. |
 | Queue | `docs/tasks/queue/` |
 
 ---
