@@ -7,7 +7,7 @@ For full state, read `docs/LLMS.md`.
 
 ## Read first (mandatory order)
 
-1. `docs/LLMS.md` — compact state + task info (≤200 lines)
+1. `docs/LLMS.md` — compact state + task info (≤150 lines)
 2. `docs/wiki/current-state.md` — state snapshot (≤100 lines)
 3. `docs/wiki/token-efficiency.md` — navigation rules and what NOT to read
 

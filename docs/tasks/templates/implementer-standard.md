@@ -19,18 +19,11 @@ All are supervised implementers — not autonomous runners. GitHub is the source
 
 ### Local clone preflight (run before any edit)
 
-```bash
-git rev-parse --show-toplevel
-git remote -v
-git branch --show-current
-git status --short
-git log --oneline -5
-```
+Full command block: `docs/COMMANDS.md` § "Mandatory local preflight".
 
 - Verify repository is `mrhz1973/alina-lavoro` and branch is `main`. If not, stop and report.
-- If `git status --short` shows tracked changes (dirty tree): **do not pull, reset, stash, or delete**. Run `git diff --stat` and `git diff --check`, then stop and report.
-- If working tree is clean: run `git pull origin main`, then `git status --short` and `git log --oneline -5`. Report final status before starting edits.
-- See `docs/COMMANDS.md` § "Mandatory local preflight" for the reusable command block.
+- If dirty tree: **do not pull, reset, stash, or delete**. Run `git diff --stat` and `git diff --check`, then stop and report.
+- If clean: run `git pull origin main`, then `git status --short` and `git log --oneline -5`. Report before starting edits.
 
 ## Permanent prohibitions without explicit gate
 

@@ -23,44 +23,23 @@ If these are opened, justify why in the final report.
 
 ---
 
-## Measure-First Rule
+## New-doc gate
 
-Before adding a new guidance doc, measure the cold-start impact:
+Before adding a new guidance doc or creating any new document:
 
-- mandatory files read;
-- approximate line count, or token count if a local counter is available;
-- what duplication the new text removes;
-- whether an existing doc can be edited instead.
+- Measure cold-start impact: mandatory files read, approximate line/token count, what duplication the new text removes, whether an existing doc can be edited instead.
+- Confirm at least one applies: reduces token usage, user time, ambiguity, repeated errors, or future manual work.
+- If none apply, update or delete existing material instead. Prefer deletion, shortening, or consolidation.
 
-Prefer deletion, shortening, or consolidation over enforcement. A new guidance doc that only adds another file to read is a regression.
+A new guidance doc that only adds another file to read is a regression.
 
 ---
 
 ## Prompt Size Guard
 
-Implementer prompts over ~80–100 lines must be justified or trimmed.
+Canonical rule: `docs/wiki/prompt-routing.md` — size and subtraction rules.
 
-Trim by:
-- removing duplicated boilerplate already covered by templates;
-- using Template Pack + `TASK DELTA`;
-- linking to `docs/tasks/templates/*`;
-- moving persistent rules into existing docs only if they reduce future repetition.
-
-Long prompts are allowed only when fresh runtime evidence exists in chat and is not yet in GitHub.
-
----
-
-## Docs ROI Gate
-
-Create a new document only if at least one applies:
-
-1. reduces token usage;
-2. reduces user time;
-3. reduces ambiguity;
-4. prevents repeated errors;
-5. reduces future manual work.
-
-If none apply, update or delete existing material instead.
+Summary: implementer prompts over ~80–100 lines must be justified or trimmed. Use Template Pack + `TASK DELTA`. Long prompts only when fresh runtime evidence is not yet in GitHub.
 
 ---
 
@@ -93,27 +72,9 @@ Do not use INBOX/DP for routine status, all-green notifications, debug notes, in
 
 ---
 
-## Template Use
+## Template use
 
-Default implementer prompt:
-
-```text
-@docs/roadmap.md
-@AGENTS.md
-@docs/wiki/task-id-preflight.md
-@docs/wiki/prompt-routing.md
-@docs/tasks/templates/implementer-standard.md
-@docs/tasks/templates/<task-type>.md
-@docs/tasks/templates/final-report-contract.md
-
-TASK DELTA:
-- Verified Last completed: XXXX
-- Task ID: XXXX
-- Goal: ...
-- Allowed paths: ...
-- Runtime: forbidden / gated
-- Expected result: ...
-```
+Canonical prompt shape and template routing: `docs/wiki/prompt-routing.md`.
 
 Use only the templates needed for the task. Do not include every template by habit.
 

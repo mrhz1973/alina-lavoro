@@ -49,3 +49,7 @@ After recording a decision:
 
 - No token, real chat_id, credential secret, OAuth material, or tokenized URL.
 - Do not mark a DP as decided without explicit user confirmation.
+
+## Final report
+
+Per `docs/tasks/templates/final-report-contract.md`.

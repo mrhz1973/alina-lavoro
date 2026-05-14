@@ -37,3 +37,9 @@ Manual n8n UI is allowed only for credential binding, Data Table selection, acti
 ## Runtime gates
 
 Import, Execute, Telegram send, Schedule activation, and workflow activation are runtime/UI gates and require explicit user authorization.
+
+## Expected output
+
+- Done marker: `docs/tasks/done/<task-id>-<slug>.md`.
+- Session note: `docs/sessions/YYYY-MM-DD-<slug>.md`.
+- Final report per `docs/tasks/templates/final-report-contract.md`.

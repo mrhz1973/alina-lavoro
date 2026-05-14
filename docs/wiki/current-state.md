@@ -1,6 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-14 (task 0276)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0277)**
+**Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
 ---
@@ -18,40 +19,13 @@
 
 ---
 
-## Active Workstream
-
-**automation / watcher / runner / low-touch**
-
-Current posture: **stable monitoring + subtraction**. Do not open new automation branches unless they remove proven user friction.
-
----
-
 ## Task State
 
 | Item | Value |
 |---|---|
-| Last completed | **0276 — Implementer GitHub Epilogue Standardization** (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md` to make GitHub report persistence explicit for all four implementers; no new doc; no runtime. |
-| Previous | **0275 — AGENTS.md Compact Routing Pointer Cleanup**: docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only. |
+| Last completed | **0277 — Guidance Redundancy Cleanup and Roadmap** (2026-05-15): docs-only; trimmed duplicated guidance, removed stale Measurement Snapshot, merged New-doc gate in token-efficiency.md, added compact roadmap; no new doc; no runtime. |
+| Previous | **0276 — Implementer GitHub Epilogue Standardization** (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md`. |
 | Queue | `docs/tasks/queue/` |
-
----
-
-## Measurement Snapshot — 0273
-
-Approximate line-count proxy from fetched GitHub contents; no local tokenizer was available through the connector.
-
-| Area | Before | After |
-|---|---:|---:|
-| Mandatory cold-start (`LLMS.md`, `current-state.md`, `token-efficiency.md`) | ~420 lines | ~290 lines |
-| Core V3.1 routing files (`prompt-routing`, `context-budget`, `template-pack-index`, `task-id-preflight`) | ~210 lines | ~145 lines |
-| Template pack (`docs/tasks/templates/*`) | ~345 lines | ~330 lines |
-| Total measured guidance set | ~975 lines | ~765 lines |
-
-Consolidated duplication:
-- repeated long history in `LLMS.md` and `current-state.md`;
-- Prompt Size Guard references that required opening the enforcement checklist;
-- Decision Packet rules that could accidentally include routine runtime outcomes;
-- Docs ROI Gate references that pointed to a separate checklist instead of the active routing guide.
 
 ---
 
@@ -67,18 +41,6 @@ Consolidated duplication:
 | Telegram scope | Must not answer INBOX or record decisions |
 
 Routine posture: monitor passively. Check logs only when Telegram arrives unexpectedly, duplicates, or anomaly appears.
-
----
-
-## Automation Done Criteria
-
-Automation is considered sufficiently stable when:
-- Telegram Mode A is active and monitored;
-- INBOX pending count is manageable;
-- template-first policy is stable;
-- no new runtime is required.
-
-Any new automation workstream must show which repeated manual interaction it removes.
 
 ---
 

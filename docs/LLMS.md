@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0276** — Implementer GitHub Epilogue Standardization (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md` to make GitHub report persistence explicit for all four implementers (Claude Code, Windsurf/Cascade, Cursor, Antigravity); no new doc; no runtime, no n8n, no app, no secrets. |
-| Previous | **0275** — AGENTS.md Compact Routing Pointer Cleanup (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime. |
+| Last completed | **0277** — Guidance Redundancy Cleanup and Roadmap (2026-05-15): docs-only; trimmed duplicated guidance across AGENTS.md, LLMS.md, current-state.md, token-efficiency.md, implementer-standard.md, prompt-routing.md, task templates; added compact post-cleanup roadmap to roadmap.md; no new doc; no runtime. |
+| Previous | **0276** — Implementer GitHub Epilogue Standardization (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md`. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -106,7 +106,7 @@ Provider APIs are out of scope by default. ChatGPT = web/on-demand; Claude Code/
 
 | Implementer | Status |
 |---|---|
-| Claude Code local | Principal supervised implementer |
+| Claude Code | Principal supervised implementer |
 | Windsurf/Cascade | Backup supervised implementer |
 | Cursor | Suspended until reset |
 | Antigravity | Supervised implementer (installed 2026-05-14) |
