@@ -52,14 +52,123 @@ ChatGPT records the response by moving the block from Pending to Decided and upd
 
 ## Pending
 
-### D-0213-A — Authorize Telegram Mode A Schedule Activation After Validated Duplicate-Skip
+### D-0217-A — Authorize Telegram Mode A Schedule Activation Readiness Inspection
 
 **inbox_status:** pending
 **created_at:** 2026-05-14
-**source_task:** 0213-create-schedule-activation-decision-packet-after-validated-idempotency
-**source_document:** docs/automation/telegram-idempotency-runtime-ui-handoff.md
+**source_task:** 0217-create-schedule-activation-readiness-inspection-decision-packet
+**source_document:** docs/automation/telegram-mode-a-schedule-activation-design-first-path.md
 **response:**
 **decided_at:**
+**archive_policy:** keep
+
+---
+
+**Decision ID:** D-0217-A
+**Kind:** automation
+**Data:** 2026-05-14
+
+## Contesto
+
+Following `D-0213-A = 3` (defer schedule activation; design safer path first, recorded in task 0215), the design-first path has been written in `docs/automation/telegram-mode-a-schedule-activation-design-first-path.md` (task 0216). Stage 2 of that path requires a controlled n8n UI **readiness inspection only** of the intended Telegram Mode A notifier workflow, **before** any schedule activation.
+
+D-0217-A is that narrower gate. It authorizes only inspection. No Execute, no Schedule Trigger, no Telegram send, no workflow import/export.
+
+## Perché serve decisione
+
+Opening the Telegram notifier workflow in the n8n UI — even for inspection only — is a runtime / UI interaction. The user must explicitly authorize it and choose between proceeding now, staying manual-only, or further refining the design.
+
+## Opzioni
+
+1. **Authorize controlled n8n UI readiness inspection only.** Scope:
+   - Open the intended Telegram Mode A notifier workflow.
+   - Do not open or modify the queue reader workflow.
+   - Confirm workflow name and purpose.
+   - Confirm `active=false` before any action.
+   - Confirm no Schedule Trigger is currently active.
+   - Confirm idempotency / state-store nodes are present and wired.
+   - Confirm Data Table target is `alina_telegram_notifier_state`.
+   - Confirm Telegram node remains notification-only.
+   - Confirm no automatic INBOX response logic exists.
+   - Confirm D-0209-A duplicate-skip success is recorded in docs.
+   - No Execute.
+   - No Telegram send.
+   - No Schedule Trigger.
+   - No workflow import / export.
+   - Stop and report findings.
+
+2. **Keep Telegram notifier manual-only and skip readiness inspection for now.** No n8n UI action.
+
+3. **Defer and refine the design further** before any n8n UI inspection.
+
+## Raccomandazione orchestratore
+
+Option 1 only if the user wants to continue toward schedule activation soon. Option 3 if the workflow identity or activation strategy is still unclear. Option 2 if automatic Telegram notifications are not needed now.
+
+## Rischio principale
+
+- Human may inspect or modify the wrong workflow.
+- Inspection may accidentally become activation.
+- Existing schedule state may be misunderstood.
+- Telegram must remain notification-only and must not answer INBOX.
+
+## Impatto
+
+- App Alina: no impact.
+- GitHub docs: this Decision Packet plus recording entries when decided.
+- Runtime: Option 1 introduces a controlled inspection action only (no schedule, no Execute); Options 2 and 3 introduce no runtime.
+- n8n: only the targeted Telegram notifier workflow is opened under Option 1; queue reader workflow untouched.
+- INBOX: source of truth; Telegram must not answer it.
+- Gate 7: no impact; remains closed.
+- Provider API LLM: forbidden by default.
+- Billing: no new billing.
+
+## Micro-interazioni umane eliminate
+
+If Option 1 succeeds, it confirms the conditions required for a future activation gate without committing to activation.
+
+## Scelta richiesta
+
+`D-0217-A = 1` per autorizzare un'inspection controllata in n8n UI del workflow Telegram Mode A target (solo lettura/conferma, niente Execute, niente Schedule).
+`D-0217-A = 2` per mantenere il notifier manual-only e rinviare anche l'inspection.
+`D-0217-A = 3` per rinviare e raffinare ulteriormente il design prima di qualunque azione in n8n UI.
+
+## Cosa succede dopo la scelta
+
+If `D-0217-A = 1`: a future supervised step-by-step user task performs the readiness inspection per the scope above and reports findings; no schedule activation; no Execute; no Telegram send.
+
+If `D-0217-A = 2`: notifier remains manual-only; no n8n UI inspection now; a future Decision Packet may re-open the gate.
+
+If `D-0217-A = 3`: the design is refined first; a future Decision Packet may then re-open the gate.
+
+## Cosa NON verrà fatto senza ulteriore gate
+
+This decision does not authorize:
+- Schedule Trigger activation;
+- Execute of any workflow;
+- Telegram send / test;
+- workflow import / export;
+- queue reader modification;
+- provider API LLM;
+- app / deploy / tag / rollback;
+- token / chat id / secrets in repo / docs / chat;
+- automatic INBOX response;
+- automatic `D-NNNN-X = N` writing.
+
+---
+
+## Decided
+
+### D-0213-A — Authorize Telegram Mode A Schedule Activation After Validated Duplicate-Skip (DECIDED)
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0213-create-schedule-activation-decision-packet-after-validated-idempotency
+**source_document:** docs/automation/telegram-idempotency-runtime-ui-handoff.md
+**response:** 3
+**decided_at:** 2026-05-14
+**recorded_by_task:** 0215-record-d0213a-schedule-activation-design-first-decision
+**result:** schedule activation deferred; design-first path opened (`docs/automation/telegram-mode-a-schedule-activation-design-first-path.md`, task 0216); next narrower gate `D-0217-A` (task 0217) created as Pending for controlled readiness inspection only
 **archive_policy:** keep
 
 ---
@@ -155,8 +264,6 @@ This decision does not authorize:
 - automatic `D-NNNN-X = N` writing.
 
 ---
-
-## Decided
 
 ### D-0209-A — Authorize one Execute run of imported fully-pinned n8n harness
 
