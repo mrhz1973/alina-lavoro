@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-14 (batch 0227–0231)**
+**Derived memory (Level 2) — last updated: 2026-05-14 (task 0233)**
 **Canonical source:** `docs/PROJECT_STATE.md`
 
 ---
@@ -29,7 +29,7 @@ Constraint: do not return to Alina app work until this workstream is closed.
 
 | Item | Value |
 |------|-------|
-| Last completed | 0231 — batch (0227–0231) docs-only (2026-05-14): cleanup performed by user in n8n UI (task 0227) — scope_note updated, short_hash mapping updated, no Execute during cleanup; conditional follow-on activation intent applied; Schedule Trigger activated on `TEST - Alina task completion Telegram notifier` (every 5 minutes; Schedule Trigger → List done files; Manual Trigger retained); first scheduled tick: **success / Telegram arrived** (task 0228); Telegram Mode A is now **active scheduled notification-only automation**; D-0221-A = 3 remains decided (cleanup-first + conditional activation intent applied); duplicate-skip remains conclusively validated (D-0209-A); D-0217-A/D-0213-A/D-0209-A/D-0206-A remain decided; D-0202-A remains superseded; queue reader untouched; no secrets recorded; INBOX: 0 pending, 1 superseded (D-0202-A), 20 decided; next valid posture: monitor active Telegram Mode A; disable/report on anomaly; no immediate decision pending |
+| Last completed | 0233 — task 0233 (2026-05-14): consolidate direct GitHub 0232 policy patch; 0232 created LLM Wiki V3.1 (task-id-preflight, prompt-routing, context-budget-policy, template-pack-index) + implementer templates (implementer-standard, n8n-template-first-task, final-report-contract); no implementer for 0232; state docs updated to 0233; Telegram Mode A remains active scheduled notification-only; INBOX: 0 pending, 20 decided; no runtime; no secrets. **Previous 0231 — batch (0227–0231) docs-only (2026-05-14):** cleanup performed by user in n8n UI (task 0227) — scope_note updated, short_hash mapping updated, no Execute during cleanup; conditional follow-on activation intent applied; Schedule Trigger activated on `TEST - Alina task completion Telegram notifier` (every 5 minutes; Schedule Trigger → List done files; Manual Trigger retained); first scheduled tick: **success / Telegram arrived** (task 0228); Telegram Mode A is now **active scheduled notification-only automation**; D-0221-A = 3 remains decided (cleanup-first + conditional activation intent applied); duplicate-skip remains conclusively validated (D-0209-A); D-0217-A/D-0213-A/D-0209-A/D-0206-A remain decided; D-0202-A remains superseded; queue reader untouched; no secrets recorded; INBOX: 0 pending, 1 superseded (D-0202-A), 20 decided; next valid posture: monitor active Telegram Mode A; disable/report on anomaly; no immediate decision pending |
 | Queue | `docs/tasks/queue/` |
 
 ---

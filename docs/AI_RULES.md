@@ -62,6 +62,7 @@ For **determined docs-only tasks**, the absence of a real choice equals **operat
     - **Do NOT read `docs/PROJECT_STATE.md` by default** — it is a large fallback/audit file; open only if LLMS.md + wiki cannot answer your question; if you open it, say why in your final report.
     - **Do NOT read `docs/CHECKPOINT.md` by default** — restart context only; open only when explicitly required; if you open it, say why in your final report.
     - Claude Code large-file warnings may remain until a future physical compression task; this routing rule reduces real context consumption independently.
+    - **LLM Wiki V3.1 (task 0232):** additional wiki files active — `docs/wiki/task-id-preflight.md`, `docs/wiki/prompt-routing.md`, `docs/wiki/context-budget-policy.md`, `docs/wiki/template-pack-index.md`; implementer templates in `docs/tasks/templates/`; run task-ID preflight before assigning any new task ID.
 
 1. **Do not invent state** of the project, deploy, or branch: verify with `git status`, `git branch`, docs in `docs/`, and if useful, `npm run aggio`.
 2. **Read** `docs/ORCHESTRATOR_RULES.md` and `docs/AI_RULES.md` always. Read `docs/roadmap.md` only when the task requires product context. Read `docs/PROJECT_STATE.md` / `docs/CHECKPOINT.md` only as fallback — see 0a above.

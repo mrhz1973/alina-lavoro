@@ -61,6 +61,7 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Canonicals win over wiki if there is a conflict — update the wiki, not the canonicals.
 - Task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules — this routing rule does not change that.
 - Claude Code large-file warnings may remain until a future physical compression task; this rule reduces real context consumption independently.
+- **LLM Wiki V3.1 (task 0232, 2026-05-14):** additional wiki files active — `docs/wiki/task-id-preflight.md` (task-ID guard), `docs/wiki/prompt-routing.md` (context router), `docs/wiki/context-budget-policy.md` (budget rules), `docs/wiki/template-pack-index.md` (template index); implementer templates in `docs/tasks/templates/`; use for delta-based short prompts and task-ID preflight before any new task creation.
 
 ## PRIORITÀ 0B — n8n template-first (priorità tempo e risultati)
 

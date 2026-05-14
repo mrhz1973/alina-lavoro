@@ -77,6 +77,7 @@ npm run aggio
 5. Read only task-specific canonical docs.
 6. **Do NOT read `docs/PROJECT_STATE.md` by default** — fallback/audit only; if you open it, justify in final report.
 7. **Do NOT read `docs/CHECKPOINT.md` by default** — restart context only; if you open it, justify in final report.
+8. **LLM Wiki V3.1 (task 0232):** run task-ID preflight (`docs/wiki/task-id-preflight.md`) before assigning any new task ID; use prompt-routing + context-budget policy for delta-based short prompts; implementer templates in `docs/tasks/templates/`.
 
 Note: task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules. This routing rule does not change the update obligation — only the default startup read path.
 
