@@ -64,6 +64,7 @@ For complete orchestrator guidance on applying this routing:
 | When to batch vs single task? | `docs/wiki/multi-step-batch-planning-rules.md` |
 | Practical examples for all task types? | `docs/wiki/examples/v31-compact-workflow-cookbook.md` |
 | Prompt too long? Apply the size guard first. | `docs/wiki/v31-enforcement-checklist.md` |
+| AGENTS.md as repo-root pointer? | `AGENTS.md` — pointer-only; does NOT replace LLMS.md (which remains the real state entry point) |
 
 ## Non-goals
 

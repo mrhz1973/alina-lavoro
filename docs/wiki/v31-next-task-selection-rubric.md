@@ -41,7 +41,7 @@ Check Telegram Mode A status, any open incidents.
 
 | Batch type | Max sub-tasks |
 |---|---|
-| docs-only pure | 6 |
+| docs-only pure | **8** (prefer 6–8; lower when fewer meaningful units exist) |
 | docs + Decision Packet | 5 |
 | docs + small technical design | 4 |
 | runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback | 1 step only |

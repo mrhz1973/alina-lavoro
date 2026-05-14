@@ -92,7 +92,7 @@ In all other cases: reduce to delta + template references.
 
 | Rule | Standard |
 |------|----------|
-| Docs-only coherent work | Batch per `docs/wiki/multi-step-batch-planning-rules.md`; max 6 sub-tasks |
+| Docs-only coherent work | Batch per `docs/wiki/multi-step-batch-planning-rules.md`; prefer 6–8 sub-tasks; max 8 |
 | Runtime/manual UI | One step at a time; wait for outcome |
 | INBOX entries | Only for real human decisions with ≥2 non-equivalent options |
 | Task-ID guard | Always run before assigning any new task ID |

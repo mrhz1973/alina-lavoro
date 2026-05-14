@@ -68,6 +68,7 @@ Open only when restart context is explicitly required. If you open it, justify i
 | When to batch docs-only sub-tasks vs single tasks? | `docs/wiki/multi-step-batch-planning-rules.md` | — |
 | How to choose the next task (V3.1 rubric)? | `docs/wiki/v31-next-task-selection-rubric.md` | — |
 | Prompt over ~80–100 lines? Apply Prompt Size Guard. | `docs/wiki/v31-enforcement-checklist.md` | — |
+| AGENTS.md pointer-only entry point? | `AGENTS.md` (repo root) — pointer-only; does not replace LLMS.md | — |
 | Telegram Mode A stabilization posture? | `docs/automation/telegram-mode-a-post-activation-stabilization-plan.md` | `docs/automation/telegram-mode-a-post-activation-monitoring-checklist.md` |
 | Telegram Mode A latest-done selection bug/fix? | `docs/automation/telegram-mode-a-latest-done-selection-fix.md` | — |
 | Next low-touch runtime gate candidates? | `docs/automation/next-low-touch-runtime-gate-backlog.md` | `docs/automation/candidate-gate-backlog.md` |
@@ -113,7 +114,7 @@ Avoid duplicated bilingual blocks. One language per context.
 15. If an agent reads PROJECT_STATE.md or CHECKPOINT.md, it must justify why in the final report.
 16. `docs/history/PROJECT_LOG.md` (audit-only) — do not read by default. Contains migrated long historical content from PROJECT_STATE.md and CHECKPOINT.md.
 17. Provider APIs are not part of default architecture; Local AI means Ollama/local models; ChatGPT = web/on-demand, Claude Code = supervised usage.
-18. **Batch size policy (task 0175):** docs-only pure ≤ 6; docs + DP ≤ 5; docs + design ≤ 4; runtime = 1 step only. Full rule: `docs/ORCHESTRATOR_RULES.md` and `docs/AI_RULES.md`.
+18. **Batch size policy (updated task 0262):** docs-only pure ≤ 8 (prefer 6–8); docs + DP ≤ 5; docs + design ≤ 4; runtime = 1 step only. Full rule: `docs/ORCHESTRATOR_RULES.md` and `docs/AI_RULES.md`.
 
 ---
 

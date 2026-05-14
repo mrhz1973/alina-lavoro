@@ -1,62 +1,40 @@
-# AGENTS.md — Alina Lavoro
+# AGENTS.md — Alina Lavoro Agent Entry Point
 
-You are an implementation assistant for the Alina Lavoro project.
+This file is pointer-only. Do not duplicate project rules here.
+For full state, read `docs/LLMS.md`.
 
-GitHub is the source of truth. ChatGPT is the orchestrator. Cursor is the preferred implementer; Claude Code is the temporary primary fallback; Windsurf/Cascade may be used only as a reserve implementer for short task-scoped work.
+---
 
-## Required reading
+## Read first (mandatory order)
 
-Before acting, read:
+1. `docs/LLMS.md` — compact state + task info (≤200 lines)
+2. `docs/wiki/current-state.md` — state snapshot (≤100 lines)
+3. `docs/wiki/token-efficiency.md` — navigation rules and what NOT to read
 
-- `docs/ORCHESTRATOR_RULES.md`
-- `docs/orchestrator/prompt-sequence-gate.md`
-- `docs/orchestrator/claude-code-usage-budget.md`
-- `docs/PROJECT_STATE.md`
-- `docs/CHECKPOINT.md`
-- `docs/WORKFLOW.md`
-- `docs/AI_RULES.md`
-- `docs/COMMANDS.md`
-- `docs/roadmap.md`
+## For task routing
 
-When working on automation tasks, also read:
+- `docs/wiki/task-id-preflight.md` — run before assigning any task ID
+- `docs/wiki/prompt-routing.md` — template selection table
+- `docs/wiki/template-pack-index.md` — all available implementer templates
+- `docs/wiki/v31-enforcement-checklist.md` — Prompt Size Guard (apply if prompt >~80–100 lines)
 
-- `docs/tasks/README.md`
-- the current task in `docs/tasks/queue/`
-- relevant files in `docs/automation/n8n-workflows/`
+## Use templates
 
-## Hard rules
+`docs/tasks/templates/` — implementer-standard, docs-only-task, state-update-batch, runtime-gated-task, final-report-contract, and others
 
-- Work only on branch `main`.
-- `dev` is legacy/inactive.
-- Never use `git add .`.
-- Commit selectively.
-- Do not modify `gas-current/` as source.
-- Do not deploy, tag, or rollback unless explicitly requested by the orchestrator.
-- Do not modify `src/**`, `.gas/**`, `appsscript.json`, or `package.json` unless the current task explicitly allows it.
-- For docs-only/design tasks, touch only allowed documentation paths.
-- Do not modify n8n runtime unless the current task explicitly says so.
-- Do not execute n8n unless the current task explicitly says so.
-- Never commit secrets, credentials, tokens, raw URLs with token query strings, or unredacted n8n exports.
+## Do NOT read by default
 
-## Work discipline
+- `docs/PROJECT_STATE.md` — fallback/audit only; justify in final report if opened
+- `docs/CHECKPOINT.md` — restart context only; justify in final report if opened
 
-One session = one task.
+## Hard gate reminder
 
-After completing a task:
+No runtime, n8n UI, workflow Execute, Schedule change, Telegram send, deploy, tag, rollback, provider API, billing, secrets, or app source changes (`src/**`) without an explicit gate.
 
-1. run required checks;
-2. commit selectively;
-3. push to `origin main`;
-4. report changed files, checks, commit hash, final `git status --short`, and whether the workspace is clean.
+## Batch reminder
 
-Do not continue to a new task in the same session unless the orchestrator explicitly instructs it after `aggio`.
+Docs-only coherent work: prefer batches of 6–8 sub-tasks when safe and meaningful. Do not invent tasks to fill a batch. Runtime / manual UI: one step at a time.
 
-## Prompt length and model selection
+## Canonical rules
 
-Canonical rule: `docs/orchestrator/claude-code-usage-budget.md` — **Prompt discipline**.
-
-Summary:
-
-- **Claude Code receives short prompts.** It reads GitHub and canonical docs autonomously. If the task exists in `docs/tasks/queue/`, the prompt is: task path + apply CLAUDE/AGENTS/canonical rules + close with selective commit and push.
-- **Cursor and Windsurf/Cascade receive complete prompts.** Do not shorten operational blocks for these implementers.
-- **Model preference for Claude Code:** Sonnet for ordinary execution and docs-only tasks; Opus only for complex planning, difficult analysis, or architectural decisions.
+`docs/ORCHESTRATOR_RULES.md` · `docs/AI_RULES.md` · `docs/WORKFLOW.md`

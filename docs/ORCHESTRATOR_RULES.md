@@ -43,8 +43,8 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Full prompt: only when needed data is not yet on GitHub.
 - Sonnet for ordinary tasks; Opus only for complex planning or architectural decisions.
 
-**Batch size policy (task 0175, 2026-05-13):**
-- docs-only pure: up to 6 sub-tasks per batch
+**Batch size policy (updated task 0262, 2026-05-14):**
+- docs-only pure: **up to 8 sub-tasks per batch** (prefer 6–8 when coherent and safe; lower when fewer meaningful units exist; do not exceed 8 without explicit reason)
 - docs + Decision Packet: up to 5 sub-tasks per batch
 - docs + small technical design: up to 4 sub-tasks per batch
 - runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback: **1 step only**

@@ -247,7 +247,51 @@ No runtime. No src/. No deploy/tag/rollback. No secrets.
 
 ---
 
-## Example 7 — Bad vs good V3.1 compact prompt
+## Example 7 — Large docs-only batch (6–8 sub-tasks)
+
+**Situation:** eight related docs-only files need to be created/updated as part of propagating a new project-wide rule. No real decision pending. Batch all eight.
+
+```text
+@docs/roadmap.md
+@docs/wiki/task-id-preflight.md
+@docs/tasks/templates/implementer-standard.md
+@docs/tasks/templates/docs-only-task.md
+@docs/tasks/templates/final-report-contract.md
+
+TASK DELTA:
+
+Repository: mrhz1973/alina-lavoro
+Tasks: 0259–0266
+Verified Last completed: 0258 (from docs/LLMS.md on main)
+
+Goal:
+Batch 0259–0266: record D-0259-A, create AGENTS.md pointer-only, propagate 6–8 batch priority project-wide.
+
+Sub-tasks:
+0259: Record D-0259-A = 1 in docs/INBOX.md
+0260: Replace AGENTS.md with pointer-only version (~38 lines)
+0261: Update V3.1 routing docs (prompt-routing, token-efficiency, template-pack-index)
+0262: Propagate 6–8 batch priority to ORCHESTRATOR_RULES, AI_RULES, WORKFLOW, multi-step-batch-planning-rules, v31-next-task-selection-rubric, v31-enforcement-checklist
+0263: Add 6–8 batch example to v31-compact-workflow-cookbook.md
+0264: Record AGENTS.md pointer-only safety contract
+0265: Record batch priority safety contract
+0266: Final state update (LLMS.md, current-state.md, roadmap.md, session)
+
+Allowed paths:
+- AGENTS.md
+- docs/**/*.md (excluding PROJECT_STATE.md, CHECKPOINT.md)
+
+No runtime. No src/. No deploy/tag/rollback. No secrets.
+```
+
+Notes on this example:
+- 8 sub-tasks is the maximum for docs-only pure. It is used here because all 8 form a natural coherent sequence.
+- If 5 meaningful tasks exist, use 5. Do not pad to 8.
+- The batch does not include runtime steps — those remain single-step.
+
+---
+
+## Example 8 — Bad vs good V3.1 compact prompt (old style vs V3.1)
 
 ### Bad (old style — avoid)
 

@@ -33,12 +33,13 @@ Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **Batch size policy** and 
 
 | Batch type | Max sub-tasks |
 |------------|--------------|
-| docs-only pure | 6 |
+| docs-only pure | **8** (prefer 6–8; lower when fewer meaningful units exist) |
 | docs + Decision Packet | 5 |
 | docs + small technical design | 4 |
 | runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback | **1 step only** |
 
 - Limits are maximums, not targets. Split if ambiguous.
+- Docs-only coherent work: prefer batches of 6–8 sub-tasks when safe and meaningful. Do not invent tasks to fill a batch.
 - Runtime or secrets in any sub-task → that portion is single-step and separately gated.
 - Selective staging and path allowlists remain mandatory.
 - Do not invent user decisions to fill a batch.

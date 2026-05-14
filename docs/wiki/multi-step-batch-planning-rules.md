@@ -38,12 +38,12 @@ Batch when ALL of the following are true:
 
 | Batch type | Max sub-tasks |
 |---|---|
-| docs-only pure | 6 |
+| docs-only pure | **8** (prefer 6–8; lower when fewer meaningful units exist; do not exceed 8 without explicit reason) |
 | docs + Decision Packet | 5 |
 | docs + small technical design | 4 |
 | runtime / n8n UI / credentials / Telegram / Schedule / app / deploy / tag / rollback | **1 step only** |
 
-Limits are maximums. Use fewer if the scope is naturally smaller. Split if ambiguous.
+Limits are maximums. Prefer 6–8 for docs-only coherent work. Use fewer if the scope is naturally smaller. Split if ambiguous. Do not invent tasks to fill a batch.
 
 ---
 

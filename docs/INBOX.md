@@ -58,6 +58,19 @@ _No pending Decision Packets._
 
 ## Decided
 
+### D-0259-A — Create AGENTS.md Pointer-Only (DECIDED)
+
+**inbox_status:** decided
+**created_at:** 2026-05-14
+**source_task:** 0259-record-d0259a-agents-pointer-only-decision
+**response:** 1
+**decided_at:** 2026-05-14
+**recorded_by_task:** 0259
+**result:** authorized; AGENTS.md replaced with pointer-only version (~38 lines); read-first order, task routing, template pointer, gate/batch reminders; does not duplicate LLMS.md or canonical rules
+**archive_policy:** keep
+
+---
+
 ### D-0221-A — Authorize Controlled Telegram Mode A Schedule Trigger Activation (DECIDED)
 
 **inbox_status:** decided
