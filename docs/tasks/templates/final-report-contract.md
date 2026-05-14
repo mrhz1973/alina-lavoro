@@ -5,6 +5,16 @@
 
 Every implementer final report must include:
 
+**Applies to:** Claude Code, Windsurf/Cascade, Cursor, and Antigravity.
+
+**The final report must not remain only in terminal output or chat.** Write it to GitHub so the orchestrator can read it via `aggio` without user copy/paste:
+
+- Create `docs/sessions/YYYY-MM-DD-<slug>.md` with the full report.
+- If this is a numbered completed task, also create `docs/tasks/done/<task-id>-<slug>.md`.
+- Stage and push these files selectively (not `git add .`).
+
+Report content must include:
+
 - files created;
 - files modified;
 - task ID used;

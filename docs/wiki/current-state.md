@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-14 (task 0273)**
+**Derived memory (Level 2) — last updated: 2026-05-14 (task 0276)**
 **Canonical sources win on conflict.**
 
 ---
@@ -30,8 +30,8 @@ Current posture: **stable monitoring + subtraction**. Do not open new automation
 
 | Item | Value |
 |---|---|
-| Last completed | **0275 — AGENTS.md Compact Routing Pointer Cleanup** (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime. |
-| Previous | **0274 — Local Clone Preflight Standardization**: added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`. |
+| Last completed | **0276 — Implementer GitHub Epilogue Standardization** (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md` to make GitHub report persistence explicit for all four implementers; no new doc; no runtime. |
+| Previous | **0275 — AGENTS.md Compact Routing Pointer Cleanup**: docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only. |
 | Queue | `docs/tasks/queue/` |
 
 ---

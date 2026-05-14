@@ -48,8 +48,8 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0275** — AGENTS.md Compact Routing Pointer Cleanup (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md` (which already contains Prompt Size Guard + Docs ROI Gate); added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime, no n8n, no app, no secrets. |
-| Previous | **0272** — Anti-bureaucracy Docs ROI rule enforced (batch 0267–0272): Docs ROI Gate added/propagated; new docs that only add files to read are regressions; AGENTS.md remains pointer-only; CLI Printing Press remains future-only; Telegram Mode A stable-after-fix; INBOX 0 pending. |
+| Last completed | **0276** — Implementer GitHub Epilogue Standardization (2026-05-14): docs-only; updated `implementer-standard.md`, `final-report-contract.md`, `docs-only-task.md` to make GitHub report persistence explicit for all four implementers (Claude Code, Windsurf/Cascade, Cursor, Antigravity); no new doc; no runtime, no n8n, no app, no secrets. |
+| Previous | **0275** — AGENTS.md Compact Routing Pointer Cleanup (2026-05-14): docs-only; replaced `v31-enforcement-checklist.md` pointer with `prompt-routing.md`; added local clone preflight pointer; AGENTS.md remains pointer-only; no new doc; no runtime. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -109,6 +109,7 @@ Provider APIs are out of scope by default. ChatGPT = web/on-demand; Claude Code/
 | Claude Code local | Principal supervised implementer |
 | Windsurf/Cascade | Backup supervised implementer |
 | Cursor | Suspended until reset |
+| Antigravity | Supervised implementer (installed 2026-05-14) |
 
 ---
 

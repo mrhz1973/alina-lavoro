@@ -37,7 +37,8 @@ Use for tasks that touch only documentation, task markers, session notes, wiki d
 ## Expected output
 
 - Docs changes committed selectively.
-- Done marker created when this is a tracked task.
-- Session note created when this is a tracked task.
+- Done marker created when this is a tracked task: `docs/tasks/done/<task-id>-<slug>.md`.
+- Session note created when this is a tracked task: `docs/sessions/YYYY-MM-DD-<slug>.md`.
 - State docs updated if project state changed.
+- **Both done marker and session note pushed to GitHub** so the orchestrator can read the result via `aggio` without user copy/paste.
 - Final report per `docs/tasks/templates/final-report-contract.md`.
