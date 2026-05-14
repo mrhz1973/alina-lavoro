@@ -30,8 +30,8 @@ Current posture: **stable monitoring + subtraction**. Do not open new automation
 
 | Item | Value |
 |---|---|
-| Last completed | **0273 — V3.1 Measure-First Subtraction Pass** (2026-05-14): docs-only; measured cold-start guidance size with line-count proxy; compressed derived state files; consolidated cold-start measurement, Prompt Size Guard, Docs ROI Gate, and DP discipline into existing V3.1 routing docs; no runtime, no n8n UI, no app, no secrets. |
-| Previous | **0272 — Anti-bureaucracy Docs ROI rule enforced**: new docs must reduce token usage, user time, ambiguity, repeated errors, or future manual work; otherwise do not create them. |
+| Last completed | **0274 — Local Clone Preflight Standardization** (2026-05-14): docs-only; added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`; prevents stale clones, wrong folders, duplicate task IDs; no new guidance doc; no runtime, no n8n, no app, no secrets. |
+| Previous | **0273 — V3.1 Measure-First Subtraction Pass**: compressed derived state files; consolidated cold-start measurement and Docs ROI Gate into routing docs. |
 | Queue | `docs/tasks/queue/` |
 
 ---

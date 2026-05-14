@@ -12,7 +12,21 @@ You are the supervised implementer. GitHub is the source of truth. The user make
 - Run the task-ID guard in `docs/wiki/task-id-preflight.md`.
 - Read `docs/LLMS.md`, then `docs/wiki/current-state.md`, then `docs/wiki/token-efficiency.md`.
 - Do not read `docs/PROJECT_STATE.md` or `docs/CHECKPOINT.md` by default.
-- Verify repository, branch, latest state, and working tree before changes.
+
+### Local clone preflight (run before any edit)
+
+```bash
+git rev-parse --show-toplevel
+git remote -v
+git branch --show-current
+git status --short
+git log --oneline -5
+```
+
+- Verify repository is `mrhz1973/alina-lavoro` and branch is `main`. If not, stop and report.
+- If `git status --short` shows tracked changes (dirty tree): **do not pull, reset, stash, or delete**. Run `git diff --stat` and `git diff --check`, then stop and report.
+- If working tree is clean: run `git pull origin main`, then `git status --short` and `git log --oneline -5`. Report final status before starting edits.
+- See `docs/COMMANDS.md` § "Mandatory local preflight" for the reusable command block.
 
 ## Permanent prohibitions without explicit gate
 

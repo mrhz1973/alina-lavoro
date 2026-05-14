@@ -55,6 +55,24 @@ npm run checkpoint
 npm run finito -- "Messaggio commit descrittivo" percorso/file1.md percorso/file2.sh
 ```
 
+## Mandatory local preflight
+
+Run before any edit in Claude Code / Windsurf / Cursor sessions. Prevents stale clones, wrong folders, and duplicate task IDs.
+
+```bash
+git rev-parse --show-toplevel
+git remote -v
+git branch --show-current
+git status --short
+git log --oneline -5
+```
+
+- Verify repo is `mrhz1973/alina-lavoro`, branch is `main`. If not: stop and report.
+- If dirty tree: **do not pull, reset, stash, or delete**. Run only `git diff --stat` and `git diff --check`, then stop and report.
+- If clean: `git pull origin main`, then `git status --short` and `git log --oneline -5`. Report before edits.
+
+Reference: `docs/tasks/templates/implementer-standard.md` § "Local clone preflight".
+
 ## Stato progetto (manuale)
 
 ```bash

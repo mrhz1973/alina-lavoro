@@ -48,7 +48,7 @@ Current posture: **monitoring and reduction**, not expansion. Telegram Mode A is
 
 | State | Info |
 |---|---|
-| Last completed | **0273** — V3.1 Measure-First Subtraction Pass (2026-05-14): docs-only; measured cold-start guidance size using file/line proxy; compressed LLMS.md/current-state.md; consolidated Prompt Size Guard and cold-start measurement into existing routing docs; clarified Decision Packet discipline; kept future ideas future-only; no runtime, no n8n, no app, no secrets. |
+| Last completed | **0274** — Local Clone Preflight Standardization (2026-05-14): docs-only; added mandatory local clone preflight to `implementer-standard.md` and `docs/COMMANDS.md`; prevents stale clones, wrong folders, duplicate task IDs in multi-workstation setup; no new guidance doc created; no runtime, no n8n, no app, no secrets. |
 | Previous | **0272** — Anti-bureaucracy Docs ROI rule enforced (batch 0267–0272): Docs ROI Gate added/propagated; new docs that only add files to read are regressions; AGENTS.md remains pointer-only; CLI Printing Press remains future-only; Telegram Mode A stable-after-fix; INBOX 0 pending. |
 | Queue location | `docs/tasks/queue/` |
 
