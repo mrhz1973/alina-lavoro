@@ -307,6 +307,84 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 21. Ollama classifier output contract (task 0305)
+
+Future output contract for the local Ollama / Qwen classifier / router. **Design-only** — no implementation now.
+
+### Allowed output fields (JSON)
+
+```json
+{
+  "task_type": "docs-only | runtime-gated | app-source | inspection | unknown",
+  "risk_level": "low | medium | high",
+  "suggested_template": "implementer-standard | docs-only-task | runtime-gated-task | state-update-batch | unknown",
+  "requires_human_gate": true,
+  "gate_reason": "string — short, human-readable reason if requires_human_gate=true; empty otherwise",
+  "allowed_next_step": "produce_task_packet | request_human_gate | reject_task | request_more_info",
+  "confidence": 0.0,
+  "notes": "string — optional advisory notes for orchestrator-lite"
+}
+```
+
+Field definitions:
+
+| Field | Type | Description |
+|---|---|---|
+| `task_type` | enum | High-level category of the task |
+| `risk_level` | enum | Risk score; high triggers gate consideration |
+| `suggested_template` | enum | Advisory template selection |
+| `requires_human_gate` | bool | True if a Decision Packet may be needed; user still decides |
+| `gate_reason` | string | Short reason if gate suggested; empty if not |
+| `allowed_next_step` | enum | What the classifier suggests as the next pipeline action |
+| `confidence` | float 0–1 | Self-reported confidence; advisory only |
+| `notes` | string | Free-text advisory; never an instruction |
+
+### Forbidden output fields and values
+
+The classifier must **never** emit any of the following — they are not part of the contract, and any output containing them is rejected as ill-formed:
+
+- `approve`
+- `execute`
+- `deploy`
+- `send_telegram`
+- `merge`
+- `delete`
+- `reveal_secret`
+- `bypass_gate`
+- any field name suggesting authorization, action, or gate resolution
+- any field containing token, chat_id, API key, OAuth material, or credential value
+- any output that purports to record a `D-NNNN-X = N` resolution
+
+### Advisory-only semantics
+
+- Classifier is **advisory only**. Its output does not authorize any action.
+- The user / orchestrator gate always wins on disagreement.
+- A `requires_human_gate: false` output never overrides §17 enumerations.
+- The reviewer must independently verify diff and commit; classifier output is not a substitute.
+- Low confidence outputs should bias toward `request_human_gate` or `request_more_info`.
+
+### Pipeline position (reminder)
+
+```
+n8n queue read
+  → Ollama/Qwen classifier (advisory JSON)
+  → orchestrator-lite (decides whether to proceed; emits Task Packet or DP)
+  → implementer CLI
+  → reviewer (Review Packet)
+  → user gate (sensitive actions only)
+```
+
+### What this section does not authorize
+
+- Running Ollama or any local model now.
+- Creating any classifier prompt or system message file now.
+- Wiring n8n to call the classifier now.
+- Persisting classifier outputs to GitHub from runtime.
+
+All implementation remains LATER/GATED.
+
+---
+
 ## 20. Minimal branch policy for dual CLI (task 0304)
 
 Current project uses `main` as the single operative branch (`dev` is legacy/inactive). This section defines the **future** branch policy for dual-CLI work without changing the current workflow.

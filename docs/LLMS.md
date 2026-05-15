@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0304** — minimal branch policy for dual CLI (2026-05-15): dual-CLI design §20; main remains source of truth; future runtime/high-risk requires dedicated branch or explicit DP; no force-push, no automated merge; dual CLI LATER/GATED. |
-| Previous | **0303** — dry-run runner protocol (2026-05-15). |
+| Last completed | **0305** — Ollama classifier output contract (2026-05-15): dual-CLI design §21; allowed JSON fields enumerated; forbidden fields (approve/execute/deploy/merge/etc.) rejected; advisory-only; dual CLI LATER/GATED. |
+| Previous | **0304** — minimal branch policy for dual CLI (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
