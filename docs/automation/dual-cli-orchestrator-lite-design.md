@@ -686,3 +686,53 @@ The Task Packet is the artifact Cursor Agent 2 (orchestrator-lite / reviewer) pr
 - A Task Packet without `review_packet_expected: true` is malformed and must be rejected.
 - This contract extends §12; the `role_assignment` field is the Cursor-specific addition.
 - No queue files, no Cursor execution authorized by this section.
+
+---
+
+## 24. Cursor-first review packet — Agent 2 reviewing Agent 1 (task 0310)
+
+The Review Packet is the artifact Cursor Agent 2 (orchestrator-lite / reviewer) produces after reading Cursor Agent 1's done marker, diff, and commit. It persists in `docs/sessions/`. **Design-only** — no Cursor execution authorized.
+
+### Required fields
+
+| Field | Type | Description |
+|---|---|---|
+| `reviewed_task_id` | string | Task ID reviewed (e.g. `0310`) |
+| `implementer_role` | string | `"cursor-agent-1-implementer"` — confirms who performed the work |
+| `commit_hash` | string | Git commit hash of Agent 1's closing commit (read from GitHub, not from Agent 1's prose) |
+| `changed_files` | list | Files actually modified in the commit (verified from diff, not from Agent 1's report) |
+| `checks_observed` | list | Checks Agent 1 ran and their outcomes (as stated in session note) |
+| `allowed_paths_result` | enum | `pass` / `violation` (with file path if violation) |
+| `forbidden_paths_result` | enum | `pass` / `violation` (with file path if violation) |
+| `final_status` | enum | `APPROVED` / `NEEDS_FIX` / `FAILED` / `HUMAN_GATE_REQUIRED` |
+| `gate_status` | string | Whether a human gate was triggered and why; empty if not |
+| `reviewer_decision` | string | Agent 2's rationale for final_status (brief, artifact-based) |
+| `next_action` | string | e.g. `proceed-to-next-task`, `return-to-implementer`, `open-decision-packet`, `stop-chain` |
+
+### Status definitions
+
+| Status | Meaning |
+|---|---|
+| `APPROVED` | All paths respected, checks passed, done marker present, session note present, commit hash matches. |
+| `NEEDS_FIX` | Minor issues; Agent 1 can retry without human gate. |
+| `FAILED` | Agent 1 violated constraints or checks failed unresolvably; human review required. |
+| `HUMAN_GATE_REQUIRED` | A sensitive action was encountered or a real choice exists; Decision Packet must be created in `docs/INBOX.md`. |
+
+### Critical rule — verify artifacts, not prose
+
+Agent 2 must independently verify:
+- The actual diff for the commit hash (`git diff` or GitHub API comparison).
+- The list of changed files from the diff, not from Agent 1's session note.
+- That done marker exists at `done_marker_path` specified in the Task Packet.
+- That session note exists at `session_note_path`.
+- That no forbidden path appears in the diff.
+
+Trusting Agent 1's prose alone (without diff/commit verification) is a reviewer error.
+
+### Notes
+
+- The Review Packet is a file artifact, not a chat exchange; it must persist in `docs/sessions/`.
+- No automated merge or deploy is triggered by `APPROVED`; that remains a separate user gate.
+- `HUMAN_GATE_REQUIRED` does not mean the task failed; it means a Decision Packet is needed before proceeding.
+- This contract extends §13; the `implementer_role` field and the "verify artifacts not prose" rule are Cursor-specific additions.
+- No Cursor execution authorized by this section.

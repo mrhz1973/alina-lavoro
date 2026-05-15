@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0309** — Cursor-first task packet draft (2026-05-15): §23 added to dual-CLI design; Task Packet fields specified (role_assignment Cursor-specific addition); Agent 2 produces, Agent 1 receives; no queue files, no Cursor execution. |
-| Previous | **0308** — Cursor-first dry-run candidate selection (2026-05-15). |
+| Last completed | **0310** — Cursor-first review packet draft (2026-05-15): §24 added to dual-CLI design; Review Packet fields specified (implementer_role Cursor-specific); Agent 2 verifies diff not prose; APPROVED/NEEDS_FIX/FAILED/HUMAN_GATE_REQUIRED statuses defined. |
+| Previous | **0309** — Cursor-first task packet draft (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
