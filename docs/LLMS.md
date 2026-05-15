@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0307** — Cursor-first dual-agent target alignment (2026-05-15): user decision recorded in dual-CLI design §1c; future dual-agent target is Cursor (Agent 1 implementer + Agent 2 orchestrator-lite/reviewer); no further verification of Windsurf/Antigravity unless user reopens; Claude Code remains current supervised implementer; dual CLI LATER/GATED. |
-| Previous | **0306** — dual CLI readiness phase marker (2026-05-15). |
+| Last completed | **0308** — Cursor-first dry-run candidate selection (2026-05-15): §22 added to dual-CLI design; candidate shape defined (docs-only/no-op, no app, no n8n runtime, no Telegram, no deploy/secrets); proves artifact handoff only; dry-run gate not opened. |
+| Previous | **0307** — Cursor-first dual-agent target alignment (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

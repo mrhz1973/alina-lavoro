@@ -609,3 +609,39 @@ Agentic injection threats (prompt injection, branch-name injection, secrets leak
 - `docs/automation/dual-cli-agentic-threat-model.md`
 
 The threat model is the canonical reference for all future dual-CLI / n8n / Ollama / Cursor-agent work. Mitigations summarized: artifact-only communication, allow/forbid paths, human gates, local preflight, final-report contract, no-secrets policy, no-runtime-without-gate policy, reviewer verifies diff+commit (not prose).
+
+---
+
+## 22. Cursor-first dry-run candidate selection (task 0308)
+
+The first future Cursor-first dry-run must use a candidate that is maximally safe and clearly bounded.
+
+### Candidate shape — mandatory criteria
+
+- **Type:** docs-only / no-op
+- **App:** no app source changes (`src/**`, `gas-current/**`, `appsscript.json`, `package.json`)
+- **n8n runtime:** none — n8n is not executed as part of this dry-run
+- **Telegram:** no Telegram send
+- **Deploy / tag / rollback:** none
+- **Secrets / credentials:** none
+- **Complexity:** one trivial state or report artifact task only (e.g. a compact session note or LLMS.md state refresh)
+
+### What the dry-run proves
+
+The first Cursor-first dry-run is not a functionality test. It proves:
+- Cursor Agent 2 can read GitHub state and produce a valid Task Packet conforming to §23.
+- Cursor Agent 1 can receive the Task Packet, execute a no-op docs-only change within allowed paths, and produce a valid done marker and session note.
+- Cursor Agent 2 can produce a valid Review Packet conforming to §24 by reading the done marker, diff, and commit hash from GitHub.
+- Artifact handoff is consistent: cross-references resolve, paths exist, hashes match.
+
+### What it does not prove
+
+- Code correctness or app functionality.
+- n8n integration.
+- Ollama / Qwen integration (unless separately gated).
+- Automated scheduling or autonomous dispatch.
+- Headless / unattended Cursor execution.
+
+### Scope boundary
+
+This section does not authorize Cursor execution. It defines only the shape a future candidate must satisfy before the user opens the dry-run gate. Do not create queue files or schedule Cursor tasks based on this section alone.
