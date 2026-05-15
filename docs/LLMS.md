@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0290** — implementer CLI capability assumption guard (2026-05-15): docs-only; `docs/automation/dual-cli-orchestrator-lite-design.md` §1b updated with CLI capability column and guard note; Claude Code CLI confirmed; Windsurf/Antigravity/Cursor unverified for runtime; dual CLI LATER/GATED. |
-| Previous | **0289** — current-state header alignment (2026-05-15): docs-only / micro-fix. |
+| Last completed | **0298** — dual CLI capability phase marker (2026-05-15): docs-only chain 0291–0298 complete; CLI probes: Cursor interactive-only (v3.3.30), Windsurf no agent mode (v1.110.1), Antigravity chat CLI partially confirmed (v1.107.0); Task/Review Packet contracts in §12–13; n8n/Ollama role boundaries in §14; capability-probe phase closed; dual CLI LATER/GATED. |
+| Previous | **0290** — implementer CLI capability assumption guard (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -104,12 +104,14 @@ Provider APIs are out of scope by default. ChatGPT = web/on-demand; Claude Code/
 
 ## Implementers
 
-| Implementer | Status |
-|---|---|
-| Claude Code | Principal supervised implementer |
-| Windsurf/Cascade | Backup supervised implementer |
-| Cursor | Suspended until reset |
-| Antigravity | Supervised implementer (installed 2026-05-14) |
+| Implementer | Status | CLI capability |
+|---|---|---|
+| Claude Code | Principal supervised implementer | Confirmed — batch/non-interactive |
+| Windsurf/Cascade | Backup supervised implementer | CLI present, no agent mode (v1.110.1) |
+| Cursor | Suspended until reset | Interactive-only (v3.3.30; `agent` subcommand interactive) |
+| Antigravity | Supervised implementer (installed 2026-05-14) | Partially confirmed (`chat --mode agent` v1.107.0; headless unverified) |
+
+CLI capability matrix detail: `docs/automation/dual-cli-orchestrator-lite-design.md` §1b
 
 ---
 
