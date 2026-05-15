@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0325)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0326)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -25,8 +25,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0325 — V2.0.1 quick resume prep** (2026-05-15): quick resume from cache, APP_VERSION 2.0.1, no deploy. |
-| Previous | **0324 — V2.0.0 post-deploy test OK + stable tag** (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created. |
+| Last completed | **0326 — V2.0.1 quick resume review** (2026-05-15): startup flow reviewed, no blocking issue; safe for manual test gate. |
+| Previous | **0325 — V2.0.1 quick resume prep** (2026-05-15): quick resume from cache, APP_VERSION 2.0.1, no deploy. |
 | Queue | `docs/tasks/queue/` |
 
 ---
