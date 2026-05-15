@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0326)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0327)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.0.1** (prep 2026-05-15, task 0325 — not yet deployed) |
-| Production version | **V2.0.0** (stable 2026-05-15) |
-| Tag | **`v2.0.0-stable`** (created 2026-05-15, task 0324) |
+| Source version | **V2.0.1** (deployed 2026-05-15, task 0327) |
+| Production version | **V2.0.1** (deployed 2026-05-15 @28 — awaiting manual test + stable tag) |
+| Tag | **`v2.0.0-stable`** (last stable; V2.0.1 tag pending manual test, task 0328) |
 | Branch | **main** |
-| Apps Script | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
-| Last test | OK 2026-05-15 post-deploy /exec — user "tutto ok post deploy" (task 0324) |
-| Scope | **Stable prod V2.0.0** · source V2.0.1-prep awaiting test gate + deploy gate |
+| Apps Script | **@28** (V2.0.1 live; same deployment ID as @26/@24; deployed 2026-05-15) |
+| Last test | OK 2026-05-15 post-deploy /exec @26 — user "tutto ok post deploy" (task 0324, V2.0.0) |
+| Scope | **V2.0.1 deployed @28** · post-deploy manual test required · stable tag pending (task 0328) |
 
 ---
 
@@ -25,8 +25,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0326 — V2.0.1 quick resume review** (2026-05-15): startup flow reviewed, no blocking issue; safe for manual test gate. |
-| Previous | **0325 — V2.0.1 quick resume prep** (2026-05-15): quick resume from cache, APP_VERSION 2.0.1, no deploy. |
+| Last completed | **0327 — V2.0.1 deploy** (2026-05-15): deployed @28; 20-slot limit → updated existing deployment in place; stable tag pending manual test. |
+| Previous | **0326 — V2.0.1 quick resume review** (2026-05-15): startup flow reviewed, no blocking issue. |
 | Queue | `docs/tasks/queue/` |
 
 ---

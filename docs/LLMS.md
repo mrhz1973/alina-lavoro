@@ -25,13 +25,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.0.1** (prep 2026-05-15, task 0325 — not yet deployed) |
-| Production version | **V2.0.0** (stable 2026-05-15) |
-| Tag | **`v2.0.0-stable`** (created 2026-05-15, task 0324) |
+| Source version | **V2.0.1** (deployed 2026-05-15, task 0327) |
+| Production version | **V2.0.1** (deployed 2026-05-15 — awaiting manual test gate + stable tag) |
+| Tag | **`v2.0.0-stable`** (last stable; V2.0.1 tag pending manual test, task 0328) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
-| Last manual test | OK 2026-05-15 post-deploy /exec — user "tutto ok post deploy" (task 0324) |
-| App scope | **Stable prod V2.0.0** · source V2.0.1-prep awaiting test gate + deploy gate |
+| Apps Script deploy | **@28** (V2.0.1 live; same deployment ID as @26/@24; deployed 2026-05-15) |
+| Last manual test | OK 2026-05-15 post-deploy /exec @26 — user "tutto ok post deploy" (task 0324, V2.0.0) |
+| App scope | **V2.0.1 deployed @28** · post-deploy manual test required · stable tag pending (task 0328) |
 
 ---
 
@@ -47,8 +47,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0326** — V2.0.1 quick resume review (2026-05-15): startup flow reviewed, no blocking issue found; safe for manual test gate. |
-| Previous | **0325** — V2.0.1 quick resume prep (2026-05-15): APP_VERSION 2.0.1, quick resume from cache, package.json bumped; no deploy. |
+| Last completed | **0327** — V2.0.1 deploy (2026-05-15): deployed @28 (same deployment ID as @26); 20-slot limit → updated in place; stable tag pending manual test. |
+| Previous | **0326** — V2.0.1 quick resume review (2026-05-15): startup flow reviewed, no blocking issue found. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
