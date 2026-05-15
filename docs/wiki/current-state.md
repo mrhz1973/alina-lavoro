@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0323)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0324)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -11,12 +11,12 @@
 
 | Field | Value |
 |---|---|
-| Version | **V2.0.0** (deployed 2026-05-15) |
-| Tag | `v1.9.2-stable` (last stable; V2.0.0 tag pending post-deploy test) |
+| Version | **V2.0.0** (stable 2026-05-15) |
+| Tag | **`v2.0.0-stable`** (created 2026-05-15, task 0324) |
 | Branch | **main** |
 | Apps Script | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
-| Last test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok") — pre-deploy |
-| Scope | Active — V2.0.0 deployed; awaiting post-deploy /exec test gate (task 0324) |
+| Last test | OK 2026-05-15 post-deploy /exec — user "tutto ok post deploy" (task 0324) |
+| Scope | **Stable** — V2.0.0 @26 in production; tag v2.0.0-stable created |
 
 ---
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0323 — V2.0.0 deploy** (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0"; no stable tag yet. |
-| Previous | **0322 — V2.0.0 retarget** (2026-05-15): APP_VERSION + package.json → 2.0.0; docs updated. |
+| Last completed | **0324 — V2.0.0 post-deploy test OK + stable tag** (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created. |
+| Previous | **0323 — V2.0.0 deploy** (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0". |
 | Queue | `docs/tasks/queue/` |
 
 ---

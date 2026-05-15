@@ -25,12 +25,12 @@
 
 | Field | Value |
 |---|---|
-| Version | **V2.0.0** (deployed 2026-05-15) |
-| Tag | `v1.9.2-stable` (last stable; V2.0.0 tag pending post-deploy test) |
+| Version | **V2.0.0** (stable 2026-05-15) |
+| Tag | **`v2.0.0-stable`** (created 2026-05-15, task 0324) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
-| Last manual test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok", tasks 0316–0318) — pre-deploy |
-| App scope | Active — V2.0.0 deployed; awaiting post-deploy /exec test gate (task 0324) |
+| Last manual test | OK 2026-05-15 post-deploy /exec — user "tutto ok post deploy" (task 0324) |
+| App scope | **Stable** — V2.0.0 @26 in production; tag v2.0.0-stable created |
 
 ---
 
@@ -46,8 +46,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0323** — V2.0.0 deploy (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0"; no stable tag yet (task 0324). |
-| Previous | **0322** — V2.0.0 retarget (2026-05-15): APP_VERSION + package.json → 2.0.0; docs updated. |
+| Last completed | **0324** — V2.0.0 post-deploy test OK + stable tag (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created and pushed. |
+| Previous | **0323** — V2.0.0 deploy (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0". |
 | Queue location | `docs/tasks/queue/` |
 
 ---
