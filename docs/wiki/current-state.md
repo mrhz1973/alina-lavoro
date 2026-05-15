@@ -16,7 +16,7 @@
 | Branch | **main** |
 | Apps Script | **@24** |
 | Last test | OK 2026-05-10 (`/exec @24`, Redmi 9C NFC) |
-| Scope | Stable — not touched during automation workstream |
+| Scope | Active for app finalization; production remains V1.9.2 @24 until deploy gate |
 
 ---
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0315 — App finalization preflight** (2026-05-15): active workstream switched to app finalization; candidate-fix map produced (session `docs/sessions/2026-05-15-app-finalization-preflight.md`); no source changes; next: task 0316. |
-| Previous | **0314 — Cursor-first dry-run readiness marker** (2026-05-15). |
+| Last completed | **0316 — Month detail DOM API refactor** (2026-05-15): `renderMonthDetail` converted to DOM API + signature cache; source: `src/frontend/Index.html`; no deploy; gate: manual test before V1.9.3 deploy auth. |
+| Previous | **0315 — App finalization preflight** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

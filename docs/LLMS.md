@@ -48,8 +48,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0315** — App finalization preflight (2026-05-15): active workstream switched to app finalization; candidate-fix map produced; no source changes; next step: task 0316 `renderMonthDetail` DOM API refactor. |
-| Previous | **0314** — Cursor-first dry-run readiness marker (2026-05-15). |
+| Last completed | **0316** — Month detail DOM API refactor (2026-05-15): `renderMonthDetail` converted to DOM API + navigation-signature cache (`monthDetailSig`); no deploy; gate: manual test on Redmi 9C NFC before V1.9.3 deploy auth. |
+| Previous | **0315** — App finalization preflight (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
