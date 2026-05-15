@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0305** — Ollama classifier output contract (2026-05-15): dual-CLI design §21; allowed JSON fields enumerated; forbidden fields (approve/execute/deploy/merge/etc.) rejected; advisory-only; dual CLI LATER/GATED. |
-| Previous | **0304** — minimal branch policy for dual CLI (2026-05-15). |
+| Last completed | **0306** — dual CLI readiness phase marker (2026-05-15): readiness chain 0299–0306 complete (threat model, artifact-only communication, human gate hardening, recovery/resume, dry-run protocol, branch policy, Ollama classifier contract documented in dual-CLI design §12–§21); dual CLI LATER/GATED; next future step is user-gated dry-run, not automatic. |
+| Previous | **0305** — Ollama classifier output contract (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

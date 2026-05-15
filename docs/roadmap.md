@@ -26,7 +26,7 @@ Stack:
 | LATER | CLI Printing Press — read-only only, if measured need exists | Explicit open | Runtime gate |
 | LATER | Local AI/Ollama router — consultive only, not decision-making | Explicit open | Runtime gate |
 | LATER | Browser bridge — only if still needed | Explicit open | Runtime gate |
-| LATER | Dual-agent loop / orchestrator-lite CLI — **design gate opened (task 0288, 2026-05-15)**; capability probe chain 0291–0298 completed (2026-05-15): Cursor interactive-only, Windsurf no agent mode, Antigravity `chat --mode agent` partially confirmed; Task/Review Packet contracts + n8n/Ollama role boundaries defined in §12–14; runtime implementation remains LATER/GATED | Runtime activation requires explicit user request | Runtime gate |
+| LATER | Dual-agent loop / orchestrator-lite CLI — **design gate opened (task 0288)**; capability probes 0291–0298; readiness chain 0299–0306 (2026-05-15): threat model, artifact-only communication, human gate hardening, recovery/resume, dry-run protocol, branch policy, Ollama classifier contract documented in design §12–§21; runtime implementation remains LATER/GATED — next future step is a user-gated dry-run, not automatic | Runtime activation requires explicit user request | Runtime gate |
 | DO NOT | New framework, runtime, tool, or automation | — | Blocked |
 | DO NOT | App work (V1.9.2 stable) | — | User explicit only |
 | DO NOT | Deploy/tag/rollback | — | Explicit only |

@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0305)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0306)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0305 — Ollama classifier output contract** (2026-05-15): dual-CLI design §21; advisory-only JSON; dual CLI LATER/GATED. |
-| Previous | **0304 — minimal branch policy for dual CLI** (2026-05-15). |
+| Last completed | **0306 — dual CLI readiness phase marker** (2026-05-15): readiness chain 0299–0306 closed (threat model, artifact-only, gate hardening, recovery, dry-run, branch policy, classifier contract); dual CLI LATER/GATED; next is user-gated dry-run. |
+| Previous | **0305 — Ollama classifier output contract** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---
