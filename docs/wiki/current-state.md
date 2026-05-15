@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0314)**
-**Posture:** baseline stable / monitor (marker: task 0287).
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0315)**
+**Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0314 — Cursor-first dry-run readiness marker** (2026-05-15): chain 0308–0313 complete; §22–§27 documented in dual-CLI design (candidate, task packet, review packet, no-op sequence, n8n/Ollama boundary, gate checklist); dry-run NOT executed; dual CLI LATER/GATED. |
-| Previous | **0313 — Cursor-first future gate checklist** (2026-05-15). |
+| Last completed | **0315 — App finalization preflight** (2026-05-15): active workstream switched to app finalization; candidate-fix map produced (session `docs/sessions/2026-05-15-app-finalization-preflight.md`); no source changes; next: task 0316. |
+| Previous | **0314 — Cursor-first dry-run readiness marker** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

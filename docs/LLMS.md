@@ -38,9 +38,9 @@ Constraint: do not return to app work until the automation/watcher/runner/low-to
 
 ## Active Workstream
 
-**automation / watcher / runner / low-touch**
+**app finalization** — bugfix / UX / performance / V1.9.3 prep (marker: task 0315).
 
-Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt implementer flow is validated; Telegram Mode A is active and stable-after-fix; avoid new runtime or new tooling unless it demonstrably removes user friction.
+Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix; no active automation changes in this session. Short-prompt implementer flow validated.
 
 ---
 
@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0314** — Cursor-first dry-run readiness marker (2026-05-15): chain 0308–0313 complete; candidate §22, task packet §23, review packet §24, no-op sequence §25, n8n/Ollama boundary §26, gate checklist §27 all documented in dual-CLI design; dry-run NOT executed; dual CLI LATER/GATED; next step: user explicitly authorizes or declines first Cursor-first dry-run. |
-| Previous | **0313** — Cursor-first future gate checklist (2026-05-15). |
+| Last completed | **0315** — App finalization preflight (2026-05-15): active workstream switched to app finalization; candidate-fix map produced; no source changes; next step: task 0316 `renderMonthDetail` DOM API refactor. |
+| Previous | **0314** — Cursor-first dry-run readiness marker (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
