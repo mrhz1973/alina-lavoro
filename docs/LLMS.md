@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0308** — Cursor-first dry-run candidate selection (2026-05-15): §22 added to dual-CLI design; candidate shape defined (docs-only/no-op, no app, no n8n runtime, no Telegram, no deploy/secrets); proves artifact handoff only; dry-run gate not opened. |
-| Previous | **0307** — Cursor-first dual-agent target alignment (2026-05-15). |
+| Last completed | **0309** — Cursor-first task packet draft (2026-05-15): §23 added to dual-CLI design; Task Packet fields specified (role_assignment Cursor-specific addition); Agent 2 produces, Agent 1 receives; no queue files, no Cursor execution. |
+| Previous | **0308** — Cursor-first dry-run candidate selection (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

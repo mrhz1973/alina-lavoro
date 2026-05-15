@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0308)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0309)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0308 — Cursor-first dry-run candidate selection** (2026-05-15): §22 added to dual-CLI design; candidate shape defined (docs-only/no-op); proves artifact handoff only; dry-run gate not opened. |
-| Previous | **0307 — Cursor-first dual-agent target alignment** (2026-05-15). |
+| Last completed | **0309 — Cursor-first task packet draft** (2026-05-15): §23 added to dual-CLI design; Task Packet fields specified (role_assignment Cursor-specific); Agent 2 produces, Agent 1 receives. |
+| Previous | **0308 — Cursor-first dry-run candidate selection** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

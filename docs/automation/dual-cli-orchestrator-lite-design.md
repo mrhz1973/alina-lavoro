@@ -645,3 +645,44 @@ The first Cursor-first dry-run is not a functionality test. It proves:
 ### Scope boundary
 
 This section does not authorize Cursor execution. It defines only the shape a future candidate must satisfy before the user opens the dry-run gate. Do not create queue files or schedule Cursor tasks based on this section alone.
+
+---
+
+## 23. Cursor-first task packet — Agent 2 → Agent 1 (task 0309)
+
+The Task Packet is the artifact Cursor Agent 2 (orchestrator-lite / reviewer) produces and hands to Cursor Agent 1 (implementer). It is the sole authorization for Agent 1 to act. **Design-only** — no Cursor execution authorized.
+
+### Required fields
+
+| Field | Type | Description |
+|---|---|---|
+| `task_id` | string | Canonical task ID (e.g. `0309`) |
+| `role_assignment` | string | `"cursor-agent-1-implementer"` — makes Agent 1's role explicit; Agent 2 must never assign itself implementer role |
+| `expected_previous_state` | string | Last completed task ID and slug (from `docs/LLMS.md`) |
+| `goal` | string | One-sentence objective |
+| `allowed_paths` | list | Explicit file/directory paths Agent 1 may touch |
+| `forbidden_paths` | list | Explicit paths Agent 1 must not touch (always includes `src/**`, `gas-current/**`, `appsscript.json`, `package.json` unless overridden by user gate) |
+| `required_reads` | list | Files Agent 1 must read before acting |
+| `runtime_gate_status` | enum | `docs-only` / `runtime-gated` / `user-gated` |
+| `stop_conditions` | list | Events that must halt Agent 1 and surface a gate |
+| `expected_outputs` | list | Artifacts Agent 1 must produce |
+| `session_note_path` | string | `docs/sessions/YYYY-MM-DD-<slug>.md` |
+| `done_marker_path` | string | `docs/tasks/done/<id>-<slug>.md` |
+| `review_packet_expected` | bool | Always `true` — Agent 2 must produce a Review Packet after Agent 1 completes |
+
+### Stop conditions (always included)
+
+- Forbidden path would be touched
+- Sensitive action required (deploy, tag, rollback, app source, secrets, provider API)
+- Real human choice exists between non-equivalent options
+- Git state unexpected (wrong branch, dirty tree, merge conflict)
+- Checks fail and cause is not clear
+
+### Notes
+
+- The Task Packet is produced by Agent 2 and never self-assigned by Agent 1.
+- Forbidden paths always apply even if not listed; `allowed_paths` is an additive allowlist.
+- Agent 1 must verify `expected_previous_state` against `docs/LLMS.md` before acting.
+- A Task Packet without `review_packet_expected: true` is malformed and must be rejected.
+- This contract extends §12; the `role_assignment` field is the Cursor-specific addition.
+- No queue files, no Cursor execution authorized by this section.
