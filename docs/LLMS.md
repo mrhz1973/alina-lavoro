@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0301** — human gate packet hardening (2026-05-15): dual-CLI design §17 clarifies when a real human gate is required and when it must not be invented; authority boundaries enumerated; dual CLI LATER/GATED. |
-| Previous | **0300** — artifact-only communication protocol (2026-05-15). |
+| Last completed | **0302** — recovery / resume protocol (2026-05-15): dual-CLI design §18 defines pre-action probe, 9 resume cases, and hard constraints (no reset/stash/clean/amend/force-push); dual CLI LATER/GATED. |
+| Previous | **0301** — human gate packet hardening (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

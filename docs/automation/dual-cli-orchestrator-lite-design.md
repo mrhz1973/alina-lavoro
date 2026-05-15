@@ -307,6 +307,48 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 18. Recovery / resume protocol (task 0302)
+
+How a future agentic / dual-CLI run resumes safely after interruption. Builds on §8 (dirty tree) and the local clone preflight; this section does not duplicate those rules.
+
+### Pre-action probe (always)
+
+Before resuming, probe:
+- `git status --short`
+- `git branch --show-current`
+- `git log --oneline -5`
+- presence of `docs/tasks/done/<id>-<slug>.md`
+- presence of `docs/sessions/YYYY-MM-DD-<slug>.md`
+- remote in sync: `git fetch && git status` (does not modify state)
+
+### Cases
+
+| Case | State observed | Action |
+|---|---|---|
+| Clean | working tree clean, branch on expected commit | proceed with next task per Task Packet |
+| Dirty unclear | modified/untracked files of unknown origin | **STOP**, write session note, do not push, surface to user |
+| Marker created, not committed | `docs/tasks/done/<id>-<slug>.md` exists but `git status` shows it as untracked/modified | inspect content; if matches task and is the only pending change, finish commit/push under the task ID; otherwise stop |
+| Session note created, push failed | local commit exists, push rejected | run `git pull --rebase`; if clean rebase, push; on conflict, stop and surface |
+| Push rejected (remote ahead) | non-fast-forward | `git pull --rebase`; if clean, retry push; otherwise stop |
+| Task in processing but no done marker | implementer stopped mid-task; no commit | re-run the implementer for the same task from a clean tree, after verifying local preflight matches Task Packet |
+| Commit exists but LLMS/current-state not updated | task work pushed but state files not updated | open a follow-up state-update micro-task (do not amend the historical commit) |
+| Implementer stopped mid-task | partial work present locally | stop, write session note describing what is partial, do not push partial work unless explicitly authorized |
+| Model switched mid-task | new implementer instance picks up | re-anchor on Task Packet; treat prior chat context as untrusted; re-run local preflight and resume per the cases above |
+
+### Hard constraints
+
+- Never `git reset --hard`, `git stash`, `git clean`, or `git checkout --` as part of automated recovery. These are user-only actions.
+- Never amend or rewrite a pushed commit. Add a new commit instead.
+- Never force-push.
+- Never delete a done marker or session note to "clean up".
+- If the state is ambiguous and the table above does not match, STOP and report.
+
+### Final-report contract
+
+A resumed task's final report must explicitly state: which case applied, what was recovered, what was added, commit hash, push result, residual risks. Reference: `docs/tasks/templates/final-report-contract.md`.
+
+---
+
 ## 17. Human gate boundaries — hardening (task 0301)
 
 This section clarifies when a real human gate (Decision Packet in `docs/INBOX.md`) is required and when it is not, to prevent both gate bypass and bureaucratic gate inflation.
