@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0299** — agentic injection threat model (2026-05-15): `docs/automation/dual-cli-agentic-threat-model.md` documents threats T1–T12 + mitigations; cross-referenced from dual-CLI design §15; dual CLI LATER/GATED. |
-| Previous | **0298** — dual CLI capability phase marker (2026-05-15). |
+| Last completed | **0300** — artifact-only communication protocol (2026-05-15): dual-CLI design §16 defines artifacts (Task/Review Packet, session, done, DP, commit, diff) and rules; chat claims do not authorize action; dual CLI LATER/GATED. |
+| Previous | **0299** — agentic injection threat model (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

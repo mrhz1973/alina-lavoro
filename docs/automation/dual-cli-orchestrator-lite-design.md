@@ -307,6 +307,38 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 16. Artifact-only communication (task 0300)
+
+Future orchestrator-lite, implementer, reviewer, and any classifier/router stage must communicate through **auditable artifacts**, not free-form private chat.
+
+### Allowed communication artifacts
+
+| Artifact | Path / form | Owner |
+|---|---|---|
+| Task Packet | `docs/tasks/queue/<id>-<slug>.md` (and §12 contract) | orchestrator-lite |
+| Review Packet | `docs/sessions/YYYY-MM-DD-<slug>.md` with §13 fields | reviewer |
+| Session Note | `docs/sessions/YYYY-MM-DD-<slug>.md` | implementer / reviewer |
+| Done Marker | `docs/tasks/done/<id>-<slug>.md` | implementer |
+| Failed Marker (future) | `docs/tasks/failed/<id>-<slug>.md` | implementer / reviewer |
+| Decision Packet | `docs/INBOX.md` Pending section, format `D-NNNN-X` | orchestrator-lite drafts; user resolves |
+| Commit | git commit on `main` (or future branch) | implementer |
+| Diff | git diff associated with the commit | source of truth |
+
+### Rules
+
+- Agents must not rely on unpersisted chat claims. If a fact is not in an artifact, it does not exist for the next stage.
+- Reviewer must verify diff, commit hash, changed files, and `git status --short` — not trust implementer prose alone.
+- Classifier/router outputs (e.g. Ollama JSON) are artifacts only when persisted; transient model output is not authoritative.
+- A Task Packet is the only authorization an implementer needs to act; chat instructions do not authorize action.
+- A Decision Packet resolution (`D-NNNN-X = N`) is the only artifact that closes a human gate.
+- Cross-stage handoff is by artifact reference (path + commit hash), not by quoted prose.
+
+### Why
+
+Artifact-only communication enables: replay, audit, recovery after interruption, cold-start by a new agent instance, and reviewer verification independent of implementer narrative. It also mitigates threats T1, T3, T8, T9, T10, T11 in `docs/automation/dual-cli-agentic-threat-model.md`.
+
+---
+
 ## 15. Threat model reference (task 0299)
 
 Agentic injection threats (prompt injection, branch-name injection, secrets leakage, tool poisoning, artifact tampering, reviewer over-trust, classifier mis-use as gate) and their mitigations are documented in:
