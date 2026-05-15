@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0310)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0311)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0310 — Cursor-first review packet draft** (2026-05-15): §24 added to dual-CLI design; Agent 2 verifies diff not prose; reviewer decisions defined. |
-| Previous | **0309 — Cursor-first task packet draft** (2026-05-15). |
+| Last completed | **0311 — Cursor-first no-op dry-run plan** (2026-05-15): §25 added to dual-CLI design; 8-step sequence defined; boundaries explicit (no n8n/Ollama unless separately gated). |
+| Previous | **0310 — Cursor-first review packet draft** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

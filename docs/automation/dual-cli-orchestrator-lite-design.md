@@ -736,3 +736,48 @@ Trusting Agent 1's prose alone (without diff/commit verification) is a reviewer 
 - `HUMAN_GATE_REQUIRED` does not mean the task failed; it means a Decision Packet is needed before proceeding.
 - This contract extends §13; the `implementer_role` field and the "verify artifacts not prose" rule are Cursor-specific additions.
 - No Cursor execution authorized by this section.
+
+---
+
+## 25. Cursor-first no-op dry-run sequence (task 0311)
+
+The future Cursor-first dry-run sequence, defined without executing it. **Design-only** — runtime remains LATER/GATED until the user explicitly opens it.
+
+### Sequence
+
+1. **ChatGPT / user opens the gate.** The user explicitly authorizes the first Cursor-first dry-run via chat confirmation (or a future Decision Packet). Without this, no step below happens.
+
+2. **Cursor Agent 2 reads GitHub state.** Agent 2 reads `docs/LLMS.md`, `docs/wiki/current-state.md`, and `docs/tasks/queue/` from GitHub to orient on last completed task and select the candidate task conforming to §22.
+
+3. **Cursor Agent 2 produces Task Packet.** Agent 2 writes a Task Packet conforming to §23 and delivers it to Agent 1. The packet specifies `role_assignment: cursor-agent-1-implementer`, `runtime_gate_status: docs-only`, and `review_packet_expected: true`.
+
+4. **Cursor Agent 1 performs no-op / docs-only task.** Agent 1 reads the Task Packet, confirms `expected_previous_state` matches `docs/LLMS.md`, executes the no-op or docs-only change within `allowed_paths`, runs standard checks, commits selectively (never `git add .`), and pushes to `main`.
+
+5. **Cursor Agent 1 writes session note + done marker.** Agent 1 creates `docs/sessions/YYYY-MM-DD-<slug>.md` and `docs/tasks/done/<id>-<slug>.md`. Both include commit hash, changed files, checks run, final `git status --short`, and the confirmation: no runtime / no secrets / no app / no deploy.
+
+6. **Cursor Agent 2 produces Review Packet.** Agent 2 reads the done marker, fetches the diff and commit from GitHub, verifies changed files against `allowed_paths` and `forbidden_paths`, and writes a Review Packet conforming to §24 to a new session note. Reviewer must verify diff — not trust Agent 1's prose.
+
+7. **ChatGPT verifies via aggio.** ChatGPT reads GitHub (not local) to confirm: done marker present, session note present, commit hash in Review Packet matches actual commit on `main`, no forbidden path touched, INBOX pending count unchanged.
+
+8. **User decides whether to proceed.** After ChatGPT reports the dry-run outcome, the user decides: approve and continue, iterate on issues, or stop. No automated action follows from a dry-run result.
+
+### Explicit boundaries during this dry-run
+
+- **n8n Execute:** not included in this dry-run unless the user separately gates it. n8n may be used only for read-only queue polling if needed; no workflow Execute side effects.
+- **Ollama / Qwen:** not included in this dry-run unless the user separately gates it. The first dry-run may be performed without any local model execution.
+- **App source changes:** none.
+- **Deploy / tag / rollback:** none.
+- **Telegram send:** none (Telegram Mode A continues independently as notification-only).
+- **Autonomous chaining:** the dry-run terminates at step 8; it does not chain into another task automatically.
+- **Secrets / credentials:** none introduced in any artifact.
+
+### Success criteria (for the eventual run, not now)
+
+- All artifacts (Task Packet, Done Marker, Session Note, Review Packet) exist, reference each other consistently, and are readable from GitHub.
+- Review Packet `final_status` is `APPROVED` or surfaces a clear `HUMAN_GATE_REQUIRED`.
+- No forbidden path touched in the diff.
+- No human gate bypassed.
+
+### What is NOT authorized by this section
+
+Implementing n8n flows, installing or configuring Ollama, writing any runner script, selecting the specific task to use in the dry-run, or opening the dry-run window itself. All of the above remain user-gated.

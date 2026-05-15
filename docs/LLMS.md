@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0310** — Cursor-first review packet draft (2026-05-15): §24 added to dual-CLI design; Review Packet fields specified (implementer_role Cursor-specific); Agent 2 verifies diff not prose; APPROVED/NEEDS_FIX/FAILED/HUMAN_GATE_REQUIRED statuses defined. |
-| Previous | **0309** — Cursor-first task packet draft (2026-05-15). |
+| Last completed | **0311** — Cursor-first no-op dry-run plan (2026-05-15): §25 added to dual-CLI design; 8-step sequence defined; explicit boundaries (no n8n Execute, no Ollama, no app/deploy/Telegram unless separately gated); success criteria and what is NOT authorized documented. |
+| Previous | **0310** — Cursor-first review packet draft (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
