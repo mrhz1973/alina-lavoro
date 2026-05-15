@@ -35,6 +35,12 @@ Use selective staging only. Do not use `git add .`. Final state must report chec
 
 If `git push` is rejected (non-fast-forward, hook failure, network), do **not** force-push or skip hooks. Stop, report the rejection reason, and wait for instructions.
 
+## Plan persistence
+
+Apply the canonical plan persistence rule from `docs/AI_RULES.md`.
+
+In practice: if a visible Plan/Review output is produced and is not executed immediately in the same block, persist it to GitHub before closing. Do not leave operational plans only in the implementer UI.
+
 ## Final report persistence
 
 The final report must **not** remain only in terminal output or chat. After every completed task:
