@@ -36,6 +36,21 @@ The implementer (Cursor, Windsurf/Cascade, Claude Code, Agent) must:
 
 For **determined docs-only tasks**, the absence of a real choice equals **operational consent to proceed**: execute and close according to workflow with selective commit and push.
 
+## Implementer rule — Plan persistence
+
+GitHub is the orchestrator-visible source of truth. A visible operational plan must not remain only in the implementer UI.
+
+Apply this rule without creating extra bureaucracy:
+
+- **Plan task:** persist the plan to GitHub before the block is considered closed.
+- **Code task:** no separate plan file is required if the implementation is executed immediately in the same block; the normal session note / done marker is enough.
+- **Code or Review task that stops at a visible plan:** persist that plan to GitHub before closing.
+- **Future actionable work:** create or update a task file under `docs/tasks/queue/` using the verified next task id.
+- **Analysis-only plan:** save a concise session note under `docs/sessions/YYYY-MM-DD-<slug>-plan.md`.
+- Do not create new guidance docs just to record a plan. Use the existing session/task artifacts.
+
+Prompt shorthand: `Plan persistence: canonical GitHub rule`.
+
 ## Operational roles
 
 - **Orchestrator**: the coordination chat. **Does not read the local filesystem**: reconstructs state from **GitHub** (and from what the user pastes in chat).
@@ -131,7 +146,7 @@ Orchestrator alignment: `docs/ORCHESTRATOR_RULES.md` (**PRIORITY 0**). n8n disci
 
 ## Working mode
 
-- For **significant or ambiguous** changes: **Plan** before **Agent**, with plan approved by the user.
+- For **significant or ambiguous** changes: **Plan** before **Agent**, with plan approved by the user. If the block stops at Plan or Review output, apply the Plan persistence rule above.
 - **Deploy** Apps Script / deployment update only when the block requires it (`docs/STREAMLINED_WORKFLOW.md` + instructions in the prompt); no accidental deploys out of context.
 - **No `git add .`**: use explicit file list or `npm run finito` with explicit list.
 - **Small, targeted commits**; commit messages in English (consistent with repo history).
