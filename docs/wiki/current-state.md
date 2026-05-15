@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0324)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0325)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -11,12 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Version | **V2.0.0** (stable 2026-05-15) |
+| Source version | **V2.0.1** (prep 2026-05-15, task 0325 — not yet deployed) |
+| Production version | **V2.0.0** (stable 2026-05-15) |
 | Tag | **`v2.0.0-stable`** (created 2026-05-15, task 0324) |
 | Branch | **main** |
 | Apps Script | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
 | Last test | OK 2026-05-15 post-deploy /exec — user "tutto ok post deploy" (task 0324) |
-| Scope | **Stable** — V2.0.0 @26 in production; tag v2.0.0-stable created |
+| Scope | **Stable prod V2.0.0** · source V2.0.1-prep awaiting test gate + deploy gate |
 
 ---
 
@@ -24,8 +25,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0324 — V2.0.0 post-deploy test OK + stable tag** (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created. |
-| Previous | **0323 — V2.0.0 deploy** (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0". |
+| Last completed | **0325 — V2.0.1 quick resume prep** (2026-05-15): quick resume from cache, APP_VERSION 2.0.1, no deploy. |
+| Previous | **0324 — V2.0.0 post-deploy test OK + stable tag** (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created. |
 | Queue | `docs/tasks/queue/` |
 
 ---
