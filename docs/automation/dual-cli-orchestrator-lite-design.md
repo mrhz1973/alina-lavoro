@@ -781,3 +781,31 @@ The future Cursor-first dry-run sequence, defined without executing it. **Design
 ### What is NOT authorized by this section
 
 Implementing n8n flows, installing or configuring Ollama, writing any runner script, selecting the specific task to use in the dry-run, or opening the dry-run window itself. All of the above remain user-gated.
+
+---
+
+## 26. n8n and Ollama dry-run boundary confirmation (task 0312)
+
+This section consolidates the n8n and Ollama role boundaries (§14) as they apply to the Cursor-first dry-run specifically. No new rules are introduced here; this is a confirmation of existing constraints for agents reading this section in isolation.
+
+### Confirmed boundaries for the Cursor-first dry-run
+
+**n8n:**
+- n8n remains `queue / scheduler / postman / supervised coordinator` only.
+- No n8n workflow Execute, Schedule activation, or node wiring change is authorized by the dry-run gate.
+- If n8n is used at all during the dry-run, it is read-only queue polling only.
+- A separate explicit runtime gate is required before n8n Execute is included in the dry-run.
+
+**Ollama / Qwen:**
+- Ollama and local models remain `advisory classifier / router` only.
+- No Ollama execution is required for the first Cursor-first dry-run.
+- The dry-run may be performed end-to-end (all 8 steps in §25) without any local model execution.
+- A separate explicit local model gate is required before Ollama is included in the dry-run.
+
+**Gate authority:**
+- Neither n8n nor Ollama can approve a human gate. Gate authority is always the user. This is unchanged from §14.
+- A `requires_human_gate: false` output from Ollama never overrides the user gate for sensitive actions (§21).
+
+### Inspection result
+
+Existing §14 and §25 already cover these boundaries correctly. No changes to §14 or §25 are needed. This section is a checkpoint confirmation only, not a correction.
