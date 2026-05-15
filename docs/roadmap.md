@@ -26,7 +26,7 @@ Stack:
 | LATER | CLI Printing Press — read-only only, if measured need exists | Explicit open | Runtime gate |
 | LATER | Local AI/Ollama router — consultive only, not decision-making | Explicit open | Runtime gate |
 | LATER | Browser bridge — only if still needed | Explicit open | Runtime gate |
-| LATER | Dual-agent loop / orchestrator-lite CLI — **design gate opened (task 0288)**; capability probes 0291–0298; readiness chain 0299–0306; **Cursor-first target alignment (task 0307, 2026-05-15)**: future dual-agent architecture is Cursor (Agent 1 implementer + Agent 2 orchestrator-lite/reviewer); no further verification of Windsurf/Antigravity unless user reopens; Claude Code remains current supervised implementer; runtime implementation remains LATER/GATED — next future step is a user-gated dry-run, not automatic | Runtime activation requires explicit user request | Runtime gate |
+| LATER | Dual-agent loop / orchestrator-lite CLI — **design gate opened (task 0288)**; capability probes 0291–0298; readiness chain 0299–0306; **Cursor-first target alignment (task 0307, 2026-05-15)**; **dry-run preparation chain 0308–0314 (2026-05-15)**: dry-run candidate §22, Task Packet §23, Review Packet §24, no-op sequence §25, n8n/Ollama boundaries §26, gate checklist §27 all documented in `docs/automation/dual-cli-orchestrator-lite-design.md`; dry-run NOT executed; **next step: user explicitly authorizes or declines first Cursor-first dry-run** | Runtime activation requires explicit user request | Runtime gate |
 | DO NOT | New framework, runtime, tool, or automation | — | Blocked |
 | DO NOT | App work (V1.9.2 stable) | — | User explicit only |
 | DO NOT | Deploy/tag/rollback | — | Explicit only |

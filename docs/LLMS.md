@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0313** — Cursor-first future gate checklist (2026-05-15): §27 added to dual-CLI design; 9-item pre-gate checklist defined; actual authorization requires explicit future user decision; no INBOX Decision Packet created. |
-| Previous | **0312** — n8n/Ollama dry-run boundary check (2026-05-15). |
+| Last completed | **0314** — Cursor-first dry-run readiness marker (2026-05-15): chain 0308–0313 complete; candidate §22, task packet §23, review packet §24, no-op sequence §25, n8n/Ollama boundary §26, gate checklist §27 all documented in dual-CLI design; dry-run NOT executed; dual CLI LATER/GATED; next step: user explicitly authorizes or declines first Cursor-first dry-run. |
+| Previous | **0313** — Cursor-first future gate checklist (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

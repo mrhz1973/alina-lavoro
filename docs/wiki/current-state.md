@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0313)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0314)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0313 — Cursor-first future gate checklist** (2026-05-15): §27 added; 9-item pre-gate checklist defined; no INBOX Decision Packet created. |
-| Previous | **0312 — n8n/Ollama dry-run boundary check** (2026-05-15). |
+| Last completed | **0314 — Cursor-first dry-run readiness marker** (2026-05-15): chain 0308–0313 complete; §22–§27 documented in dual-CLI design (candidate, task packet, review packet, no-op sequence, n8n/Ollama boundary, gate checklist); dry-run NOT executed; dual CLI LATER/GATED. |
+| Previous | **0313 — Cursor-first future gate checklist** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---
