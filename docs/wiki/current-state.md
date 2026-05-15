@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0322)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0323)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -11,12 +11,12 @@
 
 | Field | Value |
 |---|---|
-| Version | **V2.0.0-prep** (source bumped; not deployed) |
-| Tag | `v1.9.2-stable` (production) |
+| Version | **V2.0.0** (deployed 2026-05-15) |
+| Tag | `v1.9.2-stable` (last stable; V2.0.0 tag pending post-deploy test) |
 | Branch | **main** |
-| Apps Script | **@24** (production; V2.0.0 not yet deployed) |
-| Last test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok") |
-| Scope | Active — V2.0.0 source ready; awaiting deploy gate (task 0323) |
+| Apps Script | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
+| Last test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok") — pre-deploy |
+| Scope | Active — V2.0.0 deployed; awaiting post-deploy /exec test gate (task 0324) |
 
 ---
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0322 — V2.0.0 retarget** (2026-05-15): skipped V1.9.3 label; APP_VERSION + package.json → 2.0.0; docs updated; deploy gate pending explicit authorization (task 0323). |
-| Previous | **0321 — V1.9.3 release prep** (2026-05-15): superseded before deploy by task 0322 retarget. |
+| Last completed | **0323 — V2.0.0 deploy** (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0"; no stable tag yet. |
+| Previous | **0322 — V2.0.0 retarget** (2026-05-15): APP_VERSION + package.json → 2.0.0; docs updated. |
 | Queue | `docs/tasks/queue/` |
 
 ---

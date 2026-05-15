@@ -25,12 +25,12 @@
 
 | Field | Value |
 |---|---|
-| Version | **V2.0.0-prep** (source bumped; not deployed) |
-| Tag | `v1.9.2-stable` (production) |
+| Version | **V2.0.0** (deployed 2026-05-15) |
+| Tag | `v1.9.2-stable` (last stable; V2.0.0 tag pending post-deploy test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@24** (production; V2.0.0 not yet deployed) |
-| Last manual test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok", tasks 0316–0318) |
-| App scope | Active for app finalization; V2.0.0 source ready; awaiting deploy gate (task 0323) |
+| Apps Script deploy | **@26** (V2.0.0 live; same deployment ID as @24; deployed 2026-05-15) |
+| Last manual test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok", tasks 0316–0318) — pre-deploy |
+| App scope | Active — V2.0.0 deployed; awaiting post-deploy /exec test gate (task 0324) |
 
 ---
 
@@ -46,8 +46,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0322** — V2.0.0 retarget (2026-05-15): skipped V1.9.3 label; APP_VERSION + package.json → 2.0.0; docs updated; deploy gate pending explicit authorization (task 0323). |
-| Previous | **0321** — V1.9.3 release prep (2026-05-15): superseded before deploy by task 0322 retarget. |
+| Last completed | **0323** — V2.0.0 deploy (2026-05-15): clasp push + deploy to existing deployment ID; script version @26; description "V2.0.0"; no stable tag yet (task 0324). |
+| Previous | **0322** — V2.0.0 retarget (2026-05-15): APP_VERSION + package.json → 2.0.0; docs updated. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
