@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0315)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0317)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -16,7 +16,7 @@
 | Branch | **main** |
 | Apps Script | **@24** |
 | Last test | OK 2026-05-10 (`/exec @24`, Redmi 9C NFC) |
-| Scope | Active for app finalization; production remains V1.9.2 @24 until deploy gate |
+| Scope | Active — app finalization; production remains V1.9.2 @24 until deploy gate |
 
 ---
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0316 — Month detail DOM API refactor** (2026-05-15): `renderMonthDetail` converted to DOM API + signature cache; source: `src/frontend/Index.html`; no deploy; gate: manual test before V1.9.3 deploy auth. |
-| Previous | **0315 — App finalization preflight** (2026-05-15). |
+| Last completed | **0317 — Month detail sticky back header** (2026-05-15): sticky mobile header (back + title) added to `renderMonthDetail`; desktop unchanged; no deploy; gate: manual test before V1.9.3 deploy auth. |
+| Previous | **0316 — Month detail DOM API refactor** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---
