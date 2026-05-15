@@ -307,6 +307,57 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 19. Dry-run runner protocol (task 0303)
+
+The first future dry-run experiment for dual CLI / n8n / Ollama. **Design-only** — runtime remains LATER/GATED until the user explicitly opens it.
+
+### Sequence
+
+1. **Pick** a trivial docs-only queued task with low risk and clear scope.
+2. **n8n** reads or simulates queue selection (read-only; no write to GitHub from n8n in this run).
+3. **Ollama / Qwen** classifies the task: risk level, type, whether a human gate is required. Output is JSON only (see classifier output contract, task 0305).
+4. **Orchestrator-lite** produces a Task Packet conforming to §12.
+5. **Implementer CLI** runs the task — either a no-op (read-only inspection) or an allowed docs-only change strictly within the Task Packet's `allowed_paths`.
+6. **Reviewer** produces a Review Packet conforming to §13: commit hash, changed files, allowed/forbidden path check, final status.
+7. **ChatGPT-web** verifies via `aggio` and confirms artifacts match expectations.
+
+### Hard constraints during dry-run
+
+- no real n8n Execute that has side effects beyond the read/simulate stage
+- no Telegram send (Telegram Mode A continues separately as notification-only)
+- no app changes
+- no deploy / tag / rollback
+- no autonomous loop — each stage is gated and observed
+- no secrets or real chat IDs introduced into any artifact
+- no GitHub Actions
+- no new provider API calls
+- the dry-run terminates at the Review Packet; it does not chain into another task automatically
+
+### Success criteria (for the eventual run, not now)
+
+- All artifacts (Task Packet, Done Marker, Session Note, Review Packet) exist and reference each other consistently.
+- Commit hash in Review Packet matches the actual commit on `main`.
+- No forbidden path was touched.
+- No human gate was bypassed.
+- Recovery protocol (§18) is not exercised (clean run).
+
+### Failure handling
+
+- If any stage produces unexpected output, STOP. Record what happened in a session note. Do not attempt automated recovery beyond §18.
+- The first failure is information, not a setback: it reveals which stage needs further design before the next dry-run attempt.
+
+### What is NOT authorized by this section
+
+- Implementing n8n flows for this dry-run.
+- Installing or configuring Ollama models for this dry-run.
+- Writing any runner script.
+- Selecting the specific task to use.
+- Opening the dry-run window itself.
+
+All of the above remain user-gated. This section defines only the protocol shape.
+
+---
+
 ## 18. Recovery / resume protocol (task 0302)
 
 How a future agentic / dual-CLI run resumes safely after interruption. Builds on §8 (dirty tree) and the local clone preflight; this section does not duplicate those rules.

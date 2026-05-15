@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0302)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0303)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0302 — recovery / resume protocol** (2026-05-15): dual-CLI design §18; 9 resume cases; no destructive auto-recovery; dual CLI LATER/GATED. |
-| Previous | **0301 — human gate packet hardening** (2026-05-15). |
+| Last completed | **0303 — dry-run runner protocol** (2026-05-15): dual-CLI design §19; future 7-step dry-run protocol; dual CLI LATER/GATED. |
+| Previous | **0302 — recovery / resume protocol** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

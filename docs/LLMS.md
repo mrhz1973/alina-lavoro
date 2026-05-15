@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0302** — recovery / resume protocol (2026-05-15): dual-CLI design §18 defines pre-action probe, 9 resume cases, and hard constraints (no reset/stash/clean/amend/force-push); dual CLI LATER/GATED. |
-| Previous | **0301** — human gate packet hardening (2026-05-15). |
+| Last completed | **0303** — dry-run runner protocol (2026-05-15): dual-CLI design §19 defines a future 7-step dry-run with hard constraints (no real Execute side effects, no Telegram send, no app, no deploy); dual CLI LATER/GATED. |
+| Previous | **0302** — recovery / resume protocol (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
