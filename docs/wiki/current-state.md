@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0321)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0322)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -11,12 +11,12 @@
 
 | Field | Value |
 |---|---|
-| Version | **V1.9.3-prep** (source bumped; not deployed) |
+| Version | **V2.0.0-prep** (source bumped; not deployed) |
 | Tag | `v1.9.2-stable` (production) |
 | Branch | **main** |
-| Apps Script | **@24** (production; V1.9.3 not yet deployed) |
+| Apps Script | **@24** (production; V2.0.0 not yet deployed) |
 | Last test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok") |
-| Scope | Active — V1.9.3 source ready; awaiting deploy gate (task 0322) |
+| Scope | Active — V2.0.0 source ready; awaiting deploy gate (task 0323) |
 
 ---
 
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0321 — V1.9.3 release prep** (2026-05-15): roadmap/LLMS.md/current-state updated; V1.9.3 source ready; deploy gate pending explicit authorization. |
-| Previous | **0320 — V1.9.3 version bump** (2026-05-15): APP_VERSION + package.json → 1.9.3. |
+| Last completed | **0322 — V2.0.0 retarget** (2026-05-15): skipped V1.9.3 label; APP_VERSION + package.json → 2.0.0; docs updated; deploy gate pending explicit authorization (task 0323). |
+| Previous | **0321 — V1.9.3 release prep** (2026-05-15): superseded before deploy by task 0322 retarget. |
 | Queue | `docs/tasks/queue/` |
 
 ---

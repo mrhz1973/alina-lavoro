@@ -25,18 +25,18 @@
 
 | Field | Value |
 |---|---|
-| Version | **V1.9.3-prep** (source bumped; not deployed) |
+| Version | **V2.0.0-prep** (source bumped; not deployed) |
 | Tag | `v1.9.2-stable` (production) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@24** (production; V1.9.3 not yet deployed) |
+| Apps Script deploy | **@24** (production; V2.0.0 not yet deployed) |
 | Last manual test | OK 2026-05-15 (Redmi 9C NFC, user "tutto ok", tasks 0316–0318) |
-| App scope | Active for app finalization; V1.9.3 source ready; awaiting deploy gate (task 0322) |
+| App scope | Active for app finalization; V2.0.0 source ready; awaiting deploy gate (task 0323) |
 
 ---
 
 ## Active Workstream
 
-**app finalization** — bugfix / UX / performance / V1.9.3 prep (marker: task 0315).
+**app finalization** — bugfix / UX / performance / V2.0.0 prep (marker: task 0315).
 
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix; no active automation changes in this session. Short-prompt implementer flow validated.
 
@@ -46,8 +46,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0321** — V1.9.3 release prep (2026-05-15): roadmap/LLMS.md/current-state updated; V1.9.3 source ready; deploy gate pending explicit authorization. |
-| Previous | **0320** — V1.9.3 version bump (2026-05-15): APP_VERSION and package.json → 1.9.3. |
+| Last completed | **0322** — V2.0.0 retarget (2026-05-15): skipped V1.9.3 label; APP_VERSION + package.json → 2.0.0; docs updated; deploy gate pending explicit authorization (task 0323). |
+| Previous | **0321** — V1.9.3 release prep (2026-05-15): superseded before deploy by task 0322 retarget. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
