@@ -47,8 +47,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0325** — V2.0.1 quick resume prep (2026-05-15): APP_VERSION 2.0.1, quick resume from cache, package.json bumped; no deploy. |
-| Previous | **0324** — V2.0.0 post-deploy test OK + stable tag (2026-05-15): user "tutto ok post deploy"; tag `v2.0.0-stable` created. |
+| Last completed | **0326** — V2.0.1 quick resume review (2026-05-15): startup flow reviewed, no blocking issue found; safe for manual test gate. |
+| Previous | **0325** — V2.0.1 quick resume prep (2026-05-15): APP_VERSION 2.0.1, quick resume from cache, package.json bumped; no deploy. |
 | Queue location | `docs/tasks/queue/` |
 
 ---
