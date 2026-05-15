@@ -307,6 +307,52 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 17. Human gate boundaries — hardening (task 0301)
+
+This section clarifies when a real human gate (Decision Packet in `docs/INBOX.md`) is required and when it is not, to prevent both gate bypass and bureaucratic gate inflation.
+
+### Requires explicit human gate (Decision Packet)
+
+- runtime execution (start/stop/restart a workflow, runner, daemon)
+- n8n UI changes that alter behavior (Execute, Schedule activate/change, credential change, node wiring change in active workflow)
+- workflow import / export with side effects
+- Telegram send (test or production)
+- app source changes (`src/**`, `gas-current/**`, `appsscript.json`, `package.json` when non-trivial)
+- deploy (Apps Script `clasp push` / `npm run deploy`)
+- tag (create/move/delete)
+- rollback
+- provider API call, billing, new recurring cost
+- secrets, API keys, OAuth material, real chat IDs, tokenized URLs
+- GitHub Actions setup or trigger
+- branch policy change away from main-only
+- granting any non-user gate authority
+
+### Does NOT require a Decision Packet
+
+- docs-only edits within already-allowed paths
+- compact session notes recording inspection or all-green outcomes
+- routine status / monitoring observations
+- inconclusive retries that do not change state
+- debug notes
+- low-risk refactor inside an already-authorized docs scope
+- task-ID preflight or template inspection
+
+For these cases, record information in the session note or task done marker, not in INBOX. Inventing a Decision Packet without a real choice is a regression (INBOX inflation).
+
+### Authority boundaries
+
+- The **user** is the sole gate authority for sensitive actions. No other actor can resolve a Decision Packet.
+- **Ollama / Qwen / classifier** outputs are advisory; they cannot approve a gate. See §14 and the classifier output contract (forthcoming).
+- **n8n** can dispatch and notify; it cannot approve. See §14.
+- **Reviewer** (ChatGPT-web or future reviewer CLI) can mark `HUMAN_GATE_REQUIRED` but cannot resolve it.
+- **Implementer CLI** must stop and surface the gate; never self-authorize.
+
+### Decision Packet format reference
+
+The canonical Decision Packet format is defined in `docs/automation/decision-packet-format.md` and recorded in `docs/INBOX.md`. This section does not duplicate that format; it only clarifies when to use it.
+
+---
+
 ## 16. Artifact-only communication (task 0300)
 
 Future orchestrator-lite, implementer, reviewer, and any classifier/router stage must communicate through **auditable artifacts**, not free-form private chat.

@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0300)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0301)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0300 — artifact-only communication protocol** (2026-05-15): dual-CLI design §16 defines artifacts and rules; dual CLI LATER/GATED. |
-| Previous | **0299 — agentic injection threat model** (2026-05-15). |
+| Last completed | **0301 — human gate packet hardening** (2026-05-15): dual-CLI design §17; gate authority is user-only; dual CLI LATER/GATED. |
+| Previous | **0300 — artifact-only communication protocol** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

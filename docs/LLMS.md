@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0300** — artifact-only communication protocol (2026-05-15): dual-CLI design §16 defines artifacts (Task/Review Packet, session, done, DP, commit, diff) and rules; chat claims do not authorize action; dual CLI LATER/GATED. |
-| Previous | **0299** — agentic injection threat model (2026-05-15). |
+| Last completed | **0301** — human gate packet hardening (2026-05-15): dual-CLI design §17 clarifies when a real human gate is required and when it must not be invented; authority boundaries enumerated; dual CLI LATER/GATED. |
+| Previous | **0300** — artifact-only communication protocol (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
