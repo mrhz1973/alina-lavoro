@@ -304,3 +304,13 @@ n8n (queue/scheduler/postman)
 ```
 
 No stage in this pipeline can skip or bypass the user gate for sensitive actions.
+
+---
+
+## 15. Threat model reference (task 0299)
+
+Agentic injection threats (prompt injection, branch-name injection, secrets leakage, tool poisoning, artifact tampering, reviewer over-trust, classifier mis-use as gate) and their mitigations are documented in:
+
+- `docs/automation/dual-cli-agentic-threat-model.md`
+
+The threat model is the canonical reference for all future dual-CLI / n8n / Ollama / Cursor-agent work. Mitigations summarized: artifact-only communication, allow/forbid paths, human gates, local preflight, final-report contract, no-secrets policy, no-runtime-without-gate policy, reviewer verifies diff+commit (not prose).

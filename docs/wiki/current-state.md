@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0298)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0299)**
 **Posture:** baseline stable / monitor (marker: task 0287).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0298 — dual CLI capability phase marker** (2026-05-15): docs-only chain 0291–0298; CLI probes: Cursor interactive-only, Windsurf no agent mode, Antigravity `chat --mode agent` partially confirmed; Task/Review Packet contracts §12–13; n8n/Ollama role boundaries §14; capability-probe phase closed; dual CLI LATER/GATED. |
-| Previous | **0290 — implementer CLI capability assumption guard** (2026-05-15). |
+| Last completed | **0299 — agentic injection threat model** (2026-05-15): `docs/automation/dual-cli-agentic-threat-model.md` documents threats T1–T12 + mitigations; cross-referenced from dual-CLI design §15; dual CLI LATER/GATED. |
+| Previous | **0298 — dual CLI capability phase marker** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---

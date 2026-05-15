@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0298** — dual CLI capability phase marker (2026-05-15): docs-only chain 0291–0298 complete; CLI probes: Cursor interactive-only (v3.3.30), Windsurf no agent mode (v1.110.1), Antigravity chat CLI partially confirmed (v1.107.0); Task/Review Packet contracts in §12–13; n8n/Ollama role boundaries in §14; capability-probe phase closed; dual CLI LATER/GATED. |
-| Previous | **0290** — implementer CLI capability assumption guard (2026-05-15). |
+| Last completed | **0299** — agentic injection threat model (2026-05-15): `docs/automation/dual-cli-agentic-threat-model.md` documents threats T1–T12 + mitigations; cross-referenced from dual-CLI design §15; dual CLI LATER/GATED. |
+| Previous | **0298** — dual CLI capability phase marker (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
