@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0312** — n8n/Ollama dry-run boundary check (2026-05-15): §26 added to dual-CLI design; confirmed existing §14/§25 already correct; no n8n Execute required for dry-run; no Ollama required; gate authority always the user. |
-| Previous | **0311** — Cursor-first no-op dry-run plan (2026-05-15). |
+| Last completed | **0313** — Cursor-first future gate checklist (2026-05-15): §27 added to dual-CLI design; 9-item pre-gate checklist defined; actual authorization requires explicit future user decision; no INBOX Decision Packet created. |
+| Previous | **0312** — n8n/Ollama dry-run boundary check (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

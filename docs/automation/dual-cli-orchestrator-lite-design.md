@@ -809,3 +809,38 @@ This section consolidates the n8n and Ollama role boundaries (§14) as they appl
 ### Inspection result
 
 Existing §14 and §25 already cover these boundaries correctly. No changes to §14 or §25 are needed. This section is a checkpoint confirmation only, not a correction.
+
+---
+
+## 27. Cursor-first dry-run future gate checklist (task 0313)
+
+A checklist for the human gate that would authorize the first Cursor-first dry-run. **This checklist does not authorize anything.** Actual authorization requires an explicit future user decision (via chat confirmation or Decision Packet). Do not open a Decision Packet in `docs/INBOX.md` based on this section alone.
+
+### Pre-gate checklist — all items must be confirmed before opening the dry-run
+
+| # | Item | What to verify |
+|---|---|---|
+| 1 | **Cursor availability confirmed** | Cursor has been reset and is available on the user's machine; any prior suspension is lifted; `cursor --version` or equivalent succeeds |
+| 2 | **Workspace clean and aligned** | `git status` is clean on `main`; `git pull origin main` is up to date; no uncommitted changes from other work |
+| 3 | **Agent 1 / Agent 2 separation feasible** | Cursor can open two independent instances or sessions without shared state; or a documented workaround exists for sequential Agent 2 → Agent 1 handoff |
+| 4 | **No app / runtime / deploy involved** | Confirmed the dry-run task is strictly docs-only (see §22); no `src/**`, no `gas-current/**`, no Apps Script, no deploy, no tag, no rollback in scope |
+| 5 | **No secrets exposed** | No credential, token, API key, OAuth material, real chat_id, or tokenized URL is needed for or produced by the dry-run task |
+| 6 | **Dry-run task is docs-only / no-op** | The selected task conforms to §22 candidate criteria; this is confirmed in the Task Packet before Agent 1 acts |
+| 7 | **Expected rollback is no further action** | If the dry-run produces an unwanted commit, the recovery is: create a revert commit on `main` or simply leave the artifact in place; no destructive reset is needed |
+| 8 | **ChatGPT aggio verification after completion** | ChatGPT (orchestrator) will read GitHub after the dry-run and confirm artifacts before the user is asked to decide next steps |
+| 9 | **Stop conditions accepted** | User acknowledges that the dry-run terminates at the Review Packet (step 6 of §25); no automated continuation; any `FAILED` or `HUMAN_GATE_REQUIRED` outcome is reported and paused for user decision |
+
+### How to open the gate
+
+When the user is ready to authorize the first Cursor-first dry-run, say so explicitly in the orchestrator chat. The orchestrator will then:
+1. Confirm the checklist above is satisfied.
+2. Produce a Decision Packet in `docs/INBOX.md` (if needed) or proceed directly if the user's confirmation is unambiguous.
+3. Provide the first Task Packet for Agent 2 to hand to Agent 1.
+
+### What does NOT open this gate
+
+- Reading this section.
+- Running the current docs-only chain (tasks 0308–0314).
+- Any agent action without explicit user confirmation.
+
+Dual CLI implementation remains **LATER/GATED** until the user explicitly opens it.
