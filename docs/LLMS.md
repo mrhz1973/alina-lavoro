@@ -46,8 +46,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0317** — Month detail sticky back header (2026-05-15): sticky mobile header (back + title) added to `renderMonthDetail`; desktop unchanged; no deploy; gate: manual test on Redmi 9C NFC before V1.9.3 deploy auth. |
-| Previous | **0316** — Month detail DOM API refactor (2026-05-15). |
+| Last completed | **0318** — Frontend static validation after 0317 (2026-05-15): review-only; git diff --check clean; no modern operators; navbar unchanged; JS length 45534 matches baseline; node not installed on system (all paths searched); ES5-only DOM API = LOW risk; no source changes; gate: physical test Redmi 9C NFC before V1.9.3 deploy auth. |
+| Previous | **0317** — Month detail sticky back header (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---

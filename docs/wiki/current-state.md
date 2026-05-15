@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0317)**
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0318)**
 **Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -24,8 +24,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0317 — Month detail sticky back header** (2026-05-15): sticky mobile header (back + title) added to `renderMonthDetail`; desktop unchanged; no deploy; gate: manual test before V1.9.3 deploy auth. |
-| Previous | **0316 — Month detail DOM API refactor** (2026-05-15). |
+| Last completed | **0318 — Frontend static validation after 0317** (2026-05-15): review-only; all static checks pass; node not installed on system; ES5-only DOM API = LOW risk; no source changes; gate: physical test Redmi 9C NFC before V1.9.3 deploy auth. |
+| Previous | **0317 — Month detail sticky back header** (2026-05-15). |
 | Queue | `docs/tasks/queue/` |
 
 ---
