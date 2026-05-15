@@ -55,14 +55,29 @@ The task file format, commit/push protocol, and stop conditions (§7) are the sa
 
 ---
 
-## 1c. Cursor dual-agent option (one possible future implementation)
+## 1c. Cursor-first dual-agent target (user decision, task 0307, 2026-05-15)
 
-One valid future implementation of the orchestrator-lite + implementer split using Cursor:
+The user has decided that the **future dual-agent architecture is Cursor-first**:
 
 - **Cursor / Agent 1** = implementer (executes task, commits, pushes, writes epilogue)
 - **Cursor / Agent 2** = orchestrator-lite / reviewer (reads queue, produces prompt for Agent 1, checks done marker)
 
-This option is **not the only path** and is not authorized now. It is recorded here so the design remains coherent when the user decides to evaluate it. The tool-agnostic framing in §1b takes precedence: any pairing of supported implementers may be used.
+### Scope of this decision
+
+- Cursor is the **preferred future target** for the dual-agent architecture.
+- No further resources are to be spent now verifying whether Windsurf, Antigravity, or other implementers can fill the same dual-agent role, **unless the user explicitly reopens that question**.
+- The tool-agnostic framing in §1b is **superseded as the planning target** by this Cursor-first decision; §1b remains accurate as a capability snapshot but is no longer the architectural direction.
+
+### What is NOT changed by this decision
+
+- Cursor runtime / headless / batch capability is **not yet activated**; implementation remains **LATER/GATED**.
+- **Claude Code** remains the currently confirmed CLI implementer for docs-only / supervised repo work until Cursor is available for the dual-agent role.
+- **Windsurf / Antigravity** remain fallback supervised tools; they are **not active verification targets** going forward.
+- No Cursor execution, no new capability probes for any implementer, are authorized by this decision.
+
+### Why recorded here
+
+The design must reflect the user's chosen target so that future agents (Claude Code, ChatGPT-web orchestrator, any reviewer) plan against the same architecture and do not re-open settled capability questions.
 
 ---
 

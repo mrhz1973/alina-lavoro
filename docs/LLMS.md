@@ -48,8 +48,8 @@ Current posture: **baseline stable / monitor** (marker: task 0287). Short-prompt
 
 | State | Info |
 |---|---|
-| Last completed | **0306** — dual CLI readiness phase marker (2026-05-15): readiness chain 0299–0306 complete (threat model, artifact-only communication, human gate hardening, recovery/resume, dry-run protocol, branch policy, Ollama classifier contract documented in dual-CLI design §12–§21); dual CLI LATER/GATED; next future step is user-gated dry-run, not automatic. |
-| Previous | **0305** — Ollama classifier output contract (2026-05-15). |
+| Last completed | **0307** — Cursor-first dual-agent target alignment (2026-05-15): user decision recorded in dual-CLI design §1c; future dual-agent target is Cursor (Agent 1 implementer + Agent 2 orchestrator-lite/reviewer); no further verification of Windsurf/Antigravity unless user reopens; Claude Code remains current supervised implementer; dual CLI LATER/GATED. |
+| Previous | **0306** — dual CLI readiness phase marker (2026-05-15). |
 | Queue location | `docs/tasks/queue/` |
 
 ---
@@ -106,12 +106,12 @@ Provider APIs are out of scope by default. ChatGPT = web/on-demand; Claude Code/
 
 | Implementer | Status | CLI capability |
 |---|---|---|
-| Claude Code | Principal supervised implementer | Confirmed — batch/non-interactive |
-| Windsurf/Cascade | Backup supervised implementer | CLI present, no agent mode (v1.110.1) |
-| Cursor | Suspended until reset | Interactive-only (v3.3.30; `agent` subcommand interactive) |
-| Antigravity | Supervised implementer (installed 2026-05-14) | Partially confirmed (`chat --mode agent` v1.107.0; headless unverified) |
+| Claude Code | Principal supervised implementer (current) | Confirmed — batch/non-interactive |
+| Cursor | **Future dual-agent target** (Agent 1 + Agent 2); suspended until reset | Interactive-only (v3.3.30; `agent` subcommand interactive) |
+| Windsurf/Cascade | Fallback supervised tool; not an active verification target | CLI present, no agent mode (v1.110.1) |
+| Antigravity | Fallback supervised tool; not an active verification target | Partially confirmed (`chat --mode agent` v1.107.0; headless unverified) |
 
-CLI capability matrix detail: `docs/automation/dual-cli-orchestrator-lite-design.md` §1b
+Cursor-first decision: `docs/automation/dual-cli-orchestrator-lite-design.md` §1c · CLI capability matrix: §1b
 
 ---
 
