@@ -307,6 +307,37 @@ No stage in this pipeline can skip or bypass the user gate for sensitive actions
 
 ---
 
+## 20. Minimal branch policy for dual CLI (task 0304)
+
+Current project uses `main` as the single operative branch (`dev` is legacy/inactive). This section defines the **future** branch policy for dual-CLI work without changing the current workflow.
+
+### Current state (unchanged)
+
+- `main` is the operative branch and source of truth.
+- `dev` is legacy/inactive.
+- Stable tags on `main` are the rollback mechanism.
+- No branch separation for low-risk docs-only work.
+
+### Future dual-CLI policy (design-only)
+
+- **Docs-only low-risk tasks**: may continue on `main` if existing repo policy allows. No branch separation required.
+- **Runtime / app / high-risk tasks**: require a dedicated branch (e.g. `dualcli/<id>-<slug>`) or an explicit Decision Packet allowing on-main execution. The user decides per-task.
+- **Branch naming**: ASCII `[a-z0-9-]` only; no shell metacharacters; no Unicode; threat T2 applies.
+- **Force push**: forbidden on `main` and on any agentic branch. No exceptions for any implementer or runner.
+- **Merge**: any branch other than direct push to `main` requires explicit user approval before merge. No automated merge by reviewer, orchestrator-lite, n8n, or Ollama.
+- **PR opening**: not authorized for agentic branches without explicit user gate. PRs may be opened for review purposes only if the user opens that workflow.
+- **Branch deletion**: only after merge confirmed; deletion is a user action.
+- **`main` remains source of truth** until the user changes the workflow.
+
+### Hard constraints
+
+- This section does not authorize creating any branch now.
+- This section does not authorize opening any PR now.
+- This section does not change current main-only workflow.
+- Branch policy change is itself a sensitive gate (see §17).
+
+---
+
 ## 19. Dry-run runner protocol (task 0303)
 
 The first future dry-run experiment for dual CLI / n8n / Ollama. **Design-only** — runtime remains LATER/GATED until the user explicitly opens it.
