@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0327)**
-**Posture:** app finalization active (marker: task 0315); automation baseline stable / monitor.
+**Derived memory (Level 2) — last updated: 2026-05-15 (task 0352)**
+**Posture:** maintenance mode — app MVP mature at V2.0.1; automation baseline stable / monitor.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.0.1** (deployed 2026-05-15, task 0327) |
-| Production version | **V2.0.1** (deployed 2026-05-15 @28 — awaiting manual test + stable tag) |
-| Tag | **`v2.0.0-stable`** (last stable; V2.0.1 tag pending manual test, task 0328) |
+| Source version | **V2.0.1** (stable 2026-05-15) |
+| Production version | **V2.0.1** (stable 2026-05-15) |
+| Tag | **`v2.0.1-stable`** (created 2026-05-15, task 0331) |
 | Branch | **main** |
 | Apps Script | **@28** (V2.0.1 live; same deployment ID as @26/@24; deployed 2026-05-15) |
-| Last test | OK 2026-05-15 post-deploy /exec @26 — user "tutto ok post deploy" (task 0324, V2.0.0) |
-| Scope | **V2.0.1 deployed @28** · post-deploy manual test required · stable tag pending (task 0328) |
+| Last test | OK 2026-05-15 post-deploy /exec — user "tutto ok 2.0.1" (task 0328) |
+| Scope | **Stable prod V2.0.1 @28 · MVP mature / maintenance-ready** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0327 — V2.0.1 deploy** (2026-05-15): deployed @28; 20-slot limit → updated existing deployment in place; stable tag pending manual test. |
-| Previous | **0326 — V2.0.1 quick resume review** (2026-05-15): startup flow reviewed, no blocking issue. |
-| Queue | `docs/tasks/queue/` |
+| Last completed | **0352 — Final MVP mature close marker** (2026-05-15): V2.0.1 stable close complete; app is MVP mature / maintenance-ready. |
+| Previous | **0351 — V2.0.2 candidate map** (2026-05-15). |
+| Queue | `docs/tasks/queue/0353-v202-decision-or-maintenance-review.md` |
 
 ---
 
@@ -48,9 +48,9 @@ Routine posture: monitor passively. Check logs only when Telegram arrives unexpe
 
 ## Current Constraints
 
-- No app work unless explicitly requested.
+- App work only if user reports issue or explicitly requests.
+- No speculative refactor; no deploy/tag/rollback without explicit gate.
 - No runtime/n8n UI/Execute/Schedule/Telegram send without explicit gate.
-- No deploy/tag/rollback.
 - No provider API or new billing.
 - No secrets, real chat IDs, tokenized URLs, OAuth material, or credential exports.
 - `AGENTS.md` stays pointer-only.
@@ -62,6 +62,7 @@ Routine posture: monitor passively. Check logs only when Telegram arrives unexpe
 ## Future / Not Active
 
 CLI Printing Press, repo hygiene scanner, local AI router, browser bridge, dual-agent loop, VPS backup plan, n8n health check, INBOX auto-read, GitHub write automation.
+V2.0.2 candidates: startup UX polish (on demand), no-login mode (explicit gate), minor cleanup. See task 0353.
 
 ---
 
@@ -69,8 +70,9 @@ CLI Printing Press, repo hygiene scanner, local AI router, browser bridge, dual-
 
 | Version | Tag | Deploy |
 |---|---|---|
+| V2.0.1 | `v2.0.1-stable` | @28 |
+| V2.0.0 | `v2.0.0-stable` | @26 |
+| V1.9.2 | `v1.9.2-stable` | @24 |
 | V1.9.1 | `v1.9.1-stable` | @23 |
-| V1.9.0 | `v1.9.0-stable` | @22 |
-| V1.8.10 | `v1.8.10-stable` | @21 |
 
 Full deploy history → `docs/PROJECT_STATE.md` (fallback/audit only)
