@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.1.1** (deployed 2026-05-16) |
-| Production version | **V2.1.1** (deployed 2026-05-16 @30) |
-| Tag | **`v2.1.1-stable`** (created 2026-05-16, task 0367) |
+| Source version | **V2.2.0** (deployed 2026-05-16) |
+| Production version | **V2.2.0** (deployed 2026-05-16 @31) |
+| Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@30** (V2.1.1 live; same deployment ID as @29/@28/@26/@24; deployed 2026-05-16) |
-| Last manual test | **PASS** (0366, V2.1.1) — "tutto ok 2.1.1" (2026-05-16) |
-| App scope | **V2.1.1 stable · quick resume fix · tag `v2.1.1-stable` · maintenance-mode** |
+| Apps Script deploy | **@31** (V2.2.0 live; same deployment ID as @30/@29/@28/@26/@24; deployed 2026-05-16) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 test pending (task 0391) |
+| App scope | **V2.2.0 · no-login direct start · tag pending user test** |
 
 ---
 
 ## Active Workstream
 
-**V2.1.1 stable** — quick resume persistence fix + analytics/charts. Tag `v2.1.1-stable` created. Maintenance-mode: monitor only.
+**V2.2.0** — no-login direct start: access code gate removed. App opens immediately on `/exec`. Tag `v2.2.0-stable` pending user test (task 0391).
 
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
 
@@ -47,9 +47,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0383** — autonomy validation batch close (2026-05-16): batch 0378–0383 done. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation) |
-| Queue | none pending |
+| Last completed | **0390** — V2.2.0 deploy (2026-05-16): batch 0384–0390 done. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login) |
+| Queue | **0391** (post-deploy test), **0392** (stable tag) |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
