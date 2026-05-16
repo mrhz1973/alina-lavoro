@@ -1,9 +1,10 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-16 (task 0403) — V2.2.0 source patched (batch 0399–0403): blank-screen-on-resume fix, Dettaglio mese day-label + real "Oggi" badge on today only, boot placeholder, additive design tokens, day-card readability polish. **Patch NOT deployed**: production Apps Script still @31 until explicit deploy gate. Session: `docs/sessions/2026-05-16-v220-frontend-fix-ui-polish-batch.md`. Canonical Level-2 memory is now `docs/LLMS.md` + `docs/wiki/current-state.md`; the entries below are preserved from the 2026-05-13 compression and are superseded for state-reading purposes by the wiki.
+Ultimo aggiornamento: 2026-05-16 (task 0404) — V2.2.0 patched source deployed @33. Patch batch 0399–0403 live. Session: `docs/sessions/2026-05-16-v220-patched-source-deploy.md`. Canonical Level-2 memory is `docs/LLMS.md` + `docs/wiki/current-state.md`; entries below preserved from 2026-05-13 compression and superseded by the wiki for state-reading.
 
 ## Latest Completed Useful Tasks
 
+- **0404** — V2.2.0 patched source deploy (deploy, 2026-05-16)
 - **0403** — V2.2.0 frontend fix + UI polish (frontend-only patch, 2026-05-16)
 - **0402** — V2.2.0 design token polish pass 1 (frontend-only, 2026-05-16)
 - **0401** — V2.2.0 startup boot placeholder (frontend-only, 2026-05-16)
@@ -25,7 +26,7 @@ Ultimo aggiornamento: 2026-05-16 (task 0403) — V2.2.0 source patched (batch 03
 
 ## Current Safe Assumptions
 
-- **App:** V2.2.0 deployed @31 (2026-05-16); source patched 2026-05-16 (batch 0399–0403) — patch awaiting explicit deploy gate; last stable tag is still `v2.1.1-stable` (v2.2.0-stable pending user test)
+- **App:** V2.2.0 patched deployed @33 (2026-05-16); patch batch 0399–0403 live; last stable tag is still `v2.1.1-stable` (v2.2.0-stable pending user test)
 - **Earlier baseline (pre-V2.0):** V1.9.2 on main, tag v1.9.2-stable, deploy @24
 - **Branch:** main only (dev legacy/inactive)
 - **n8n queue reader:** Operational with 5-minute schedule, skip done/processing/failed validated

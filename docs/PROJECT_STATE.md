@@ -1,18 +1,18 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-16 (task 0403) — V2.2.0 source patched (batch 0399–0403): blank-screen-on-resume fix, Dettaglio mese day-label + real "Oggi" badge, boot placeholder, design-token pass, day-card readability polish. **Patch NOT deployed**: production Apps Script still @31 (V2.2.0 as released 2026-05-16) until explicit deploy gate. Session: `docs/sessions/2026-05-16-v220-frontend-fix-ui-polish-batch.md`. Body below preserved from earlier compression (2026-05-13) and is now superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
+Ultimo aggiornamento: 2026-05-16 (task 0404) — V2.2.0 patched source deployed @33. Patch batch 0399–0403 live: blank-screen-on-resume fix, "Oggi" badge, boot placeholder, design tokens, day-card readability polish. Session: `docs/sessions/2026-05-16-v220-patched-source-deploy.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
 
 ## Current App State
 
 | Field | Value |
 |-------|-------|
-| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; not deployed) |
-| Production version | **V2.2.0** (deployed 2026-05-16; pre-patch) |
+| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; deployed @33) |
+| Production version | **V2.2.0 patched** (deployed 2026-05-16 @33) |
 | Tag | `v2.1.1-stable` (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (operational) — `dev` is legacy/inactive |
-| Apps Script deploy | **@31** (V2.2.0 pre-patch live) |
-| Last manual test | OK 2026-05-10 (Redmi 9C NFC, /exec @24, V2.1.1); V2.2.0 + patch test pending |
-| App scope | **V2.2.0 · no-login direct start · in-source patch awaiting deploy gate** |
+| Apps Script deploy | **@33** (V2.2.0 patched live; same deployment ID as @31) |
+| Last manual test | OK 2026-05-10 (Redmi 9C NFC, /exec @24, V2.1.1); V2.2.0 patched test pending |
+| App scope | **V2.2.0 · no-login direct start · patch deployed @33 · awaiting manual user test** |
 
 **Constraint:** do not return to Alina app work until watcher/runner/low-touch workstream is closed, or user explicitly requests it.
 
