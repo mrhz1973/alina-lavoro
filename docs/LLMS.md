@@ -47,8 +47,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0377** — V2.1.1 maintenance-mode close (2026-05-16): batch 0372–0377 done. |
-| Batch completed | 0353–0361 (V2.1.0), 0362 (test FAILED), 0364 (hotfix), 0365 (deploy), 0366–0371 (stable close), 0372–0377 (cleanup + autonomy) |
+| Last completed | **0383** — autonomy validation batch close (2026-05-16): batch 0378–0383 done. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation) |
 | Queue | none pending |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 

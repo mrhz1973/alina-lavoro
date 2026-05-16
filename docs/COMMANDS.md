@@ -99,6 +99,36 @@ git log --oneline -5
 
 Reference: `docs/tasks/templates/implementer-standard.md` § "Local clone preflight".
 
+## Routine maintenance workflow
+
+Postura corrente: **V2.1.1 stable / maintenance-mode**. Seguire questo flusso per ogni sessione ordinaria.
+
+1. **Read state** — sempre prima di fare qualsiasi cosa:
+   ```bash
+   git pull origin main
+   git status --short
+   git log --oneline -5
+   ```
+   Poi leggere `docs/LLMS.md` → `docs/wiki/current-state.md`.
+
+2. **Run checks** — per task docs-only:
+   ```bash
+   git diff --check
+   git status --short
+   ```
+   Safe, auto-proceed. Vedi sezione "Comandi sicuri" sopra.
+
+3. **No deploy/tag unless explicit gate** — non eseguire mai:
+   - `npm run deploy`, `clasp push`, `clasp deploy`
+   - `git tag`, `git push origin <tag>`
+   - `git reset`, `git clean`, `git push --force`
+   senza gate esplicito dall'utente.
+
+4. **Source changes only on user request** — non modificare `src/**`, `package.json`, `appsscript.json`
+   se l'utente non ha riportato un problema o non ha richiesto esplicitamente una feature.
+
+---
+
 ## Stato progetto (manuale)
 
 ```bash
