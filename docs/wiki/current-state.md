@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0364)**
-**Posture:** V2.1.1 hotfix source ready — quick resume persistence fix; deploy pending (task 0365).
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0365)**
+**Posture:** V2.1.1 deployed @30 — quick resume persistence fix; stable tag pending manual test (task 0366).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.1.1** (hotfix ready 2026-05-16; deploy pending task 0365) |
-| Production version | **V2.1.0** @29 (live) |
-| Tag | **`v2.0.1-stable`** (last stable; v2.1.1-stable pending after 0366 test) |
+| Source version | **V2.1.1** (deployed 2026-05-16) |
+| Production version | **V2.1.1** (deployed 2026-05-16) |
+| Tag | **`v2.0.1-stable`** (last stable; v2.1.1-stable pending 0366) |
 | Branch | **main** |
-| Apps Script | **@29** (V2.1.0 live; V2.1.1 deploy pending) |
-| Last test | **FAILED** — task 0362: quick resume broken (code asked every reopen) |
-| Scope | **V2.1.1 source ready · quick resume fix · deploy pending 0365** |
+| Apps Script | **@30** (V2.1.1 live; same deployment ID as @29/@28/@26/@24; deployed 2026-05-16) |
+| Last test | **FAILED** (0362, V2.1.0) — Pending 0366 (V2.1.1) |
+| Scope | **V2.1.1 deployed · quick resume fix · stable tag pending 0366** |
 
 ---
 
@@ -25,10 +25,11 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0364 — V2.1.1 quick resume fix** (2026-05-16): `tryQuickResumeFromCache_` fix; APP_VERSION 2.1.1. |
-| Done | 0362 — post-deploy test FAILED (quick resume broken). |
-| Queue | `docs/tasks/queue/0363-v21-stable-tag.md` (BLOCKED — skip until 0366 passes) |
-| Next | task 0365 — deploy V2.1.1 (manual deploy gate) |
+| Last completed | **0365 — V2.1.1 deploy** (2026-05-16): V2.1.1 deployed @30. |
+| Done | 0362 — post-deploy test FAILED (V2.1.0 quick resume broken). |
+| Queue | `docs/tasks/queue/0366-v211-post-deploy-test.md` (GATE: manual test) |
+| Queue | `docs/tasks/queue/0367-v211-stable-tag.md` (GATE: after 0366 OK) |
+| Blocked | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
 
@@ -71,7 +72,7 @@ V2.0.2 candidates: startup UX polish (on demand), no-login mode (explicit gate),
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.1.1 | pending `v2.1.1-stable` (after 0366 test) | @29 pending |
+| V2.1.1 | pending `v2.1.1-stable` (after 0366) | @30 |
 | V2.1.0 | no stable tag (0362 failed) | @29 |
 | V2.0.1 | `v2.0.1-stable` | @28 |
 | V2.0.0 | `v2.0.0-stable` | @26 |

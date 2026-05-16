@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.1.1** (hotfix ready 2026-05-16; deploy pending) |
-| Production version | **V2.1.0** @29 (live) |
+| Source version | **V2.1.1** (deployed 2026-05-16) |
+| Production version | **V2.1.1** (deployed 2026-05-16 @30) |
 | Tag | **`v2.0.1-stable`** (last stable; v2.1.1-stable pending post-deploy test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@29** (V2.1.0 live; V2.1.1 deploy pending task 0365) |
-| Last manual test | **FAILED** (0362) — quick resume broken in V2.1.0; V2.1.1 hotfix prepared |
-| App scope | **V2.1.1 source ready · quick resume fix · deploy pending 0365** |
+| Apps Script deploy | **@30** (V2.1.1 live; same deployment ID as @29/@28/@26/@24; deployed 2026-05-16) |
+| Last manual test | **FAILED** (0362, V2.1.0) — V2.1.1 deployed; new test required (task 0366) |
+| App scope | **V2.1.1 deployed · quick resume fix · stable tag pending 0366** |
 
 ---
 
 ## Active Workstream
 
-**V2.1.1 hotfix** — quick resume persistence fix (`tryQuickResumeFromCache_`). Source ready; deploy pending (task 0365). After deploy: manual test (task 0366), then stable tag (task 0367).
+**V2.1.1 deployed** — quick resume persistence fix. Awaiting manual test (task 0366). Stable tag: task 0367.
 
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
 
@@ -47,10 +47,11 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0364** — V2.1.1 quick resume fix (2026-05-16): source fix + version bump; checks pass. |
-| Batch completed | 0353–0361 (V2.1.0 analytics + deploy), 0362 (post-deploy test FAILED), 0364 (hotfix) |
-| Queue | `docs/tasks/queue/0363-v21-stable-tag.md` (BLOCKED — 0362 failed; skip until 0366 passes) |
-| Next | deploy V2.1.1 (task 0365 — manual deploy gate) |
+| Last completed | **0365** — V2.1.1 deploy (2026-05-16): V2.1.1 deployed @30. |
+| Batch completed | 0353–0361 (V2.1.0), 0362 (test FAILED), 0364 (hotfix), 0365 (deploy) |
+| Queue | `docs/tasks/queue/0366-v211-post-deploy-test.md` (GATE: manual test) |
+| Queue | `docs/tasks/queue/0367-v211-stable-tag.md` (GATE: after 0366 OK) |
+| Blocked | `docs/tasks/queue/0363-v21-stable-tag.md` (skip — superseded by 0367) |
 
 ---
 
