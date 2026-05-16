@@ -25,8 +25,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0415 — deploy @37** (2026-05-16): 0407–0413 live on phone. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), **0415 (deploy @37)** |
+| Last completed | **0415** (deploy @37, 2026-05-16) + **0415b** (CC confirmation spam fix, 2026-05-16) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), **0415 (deploy @37)**, **0415b (CC spam fix)** |
 | Queue | **0391** (post-deploy phone test for @37), **0392** (stable tag). Next gate: manual phone test on @37. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 

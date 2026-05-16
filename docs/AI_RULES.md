@@ -48,6 +48,8 @@ The implementer **stops only for non-recoverable or high-risk actions**:
 
 **Deploy gate:** deploy is still an orchestrator-level gate. However, if the current prompt explicitly authorizes deploy, Claude must not ask again for the exact deploy command or project deploy equivalents. Deploy commands auto-proceed only inside a deploy-authorized task.
 
+**Claude Code local permission prompts are tool friction, not safety gates.** The allowlist in `.claude/settings.local.json` must be maintained so that prompt-authorized commands auto-proceed. If a command is authorized by the current prompt and is recoverable, it must not generate a Claude Code confirmation dialog. User guide and fallback skip-permissions procedure: `docs/COMMANDS.md` — "Claude Code confirmation spam".
+
 Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" section.
 
 ---

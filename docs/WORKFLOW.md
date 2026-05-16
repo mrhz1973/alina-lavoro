@@ -15,6 +15,8 @@ Operational workflow note:
 
 Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" section · `docs/AI_RULES.md` — "Aggressive autonomy" section.
 
+**Claude Code local permission prompts** are tool friction. The local allowlist (`.claude/settings.local.json`) is maintained to auto-approve recoverable commands. If prompts persist, use `--dangerously-skip-permissions` for this repo only. Deny rules block git reset/clean/push --force regardless. User guide: `docs/COMMANDS.md` — "Claude Code confirmation spam".
+
 ---
 
 ## No unnecessary confirmations (global rule)

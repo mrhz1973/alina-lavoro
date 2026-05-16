@@ -39,6 +39,8 @@
 
 **Deployed @37 (2026-05-16):** V2.2.0 + 0406–0414 now live. Includes import/export tools, manual-test UI/state fixes (nav, theme, lang, home metrics, notes filter, Mesi heading, analytics), deploy-info in Settings. URL changed (new deployment ID). Manual phone test pending → gate for 0391 (post-deploy test) → 0392 (stable tag).
 
+**Claude Code confirmation spam mitigation (task 0415b, 2026-05-16):** `.claude/settings.local.json` deny rules added (git reset/clean/push --force); PowerShell patterns added; user guide in `docs/COMMANDS.md` — "Claude Code confirmation spam"; `--dangerously-skip-permissions` fallback documented.
+
 **V2.2.0 start-work state fix (task 0406, 2026-05-16):** included in @37 deploy.
 
 **Aggressive autonomy policy (task 0405, 2026-05-16):** active.
@@ -51,8 +53,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0415** — deploy 0407–0413 for phone test (2026-05-16): deployed @37. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), **0415 (deploy @37)** |
+| Last completed | **0415** (deploy @37, 2026-05-16) + **0415b** (CC confirmation spam fix, 2026-05-16) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), **0415 (deploy @37)**, **0415b (CC confirmation spam mitigation)** |
 | Queue | **0391** (post-deploy phone test for @37), **0392** (stable tag after test pass). Next gate: manual user phone test on @37. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 

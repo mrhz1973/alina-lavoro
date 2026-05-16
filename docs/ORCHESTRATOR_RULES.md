@@ -26,6 +26,8 @@ runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script
 **No provider APIs by default:**
 ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models. Any provider API / hosted AI call / API key / billing / recurring cost requires explicit future manual gate and is out of scope by default.
 
+**Claude Code permission prompts are local-tool friction.** The `.claude/settings.local.json` allowlist must be kept current. Deny rules block git reset/clean/push --force. For persistent prompt spam on authorized recoverable commands, use `--dangerously-skip-permissions` for this repo only. Full guide: `docs/COMMANDS.md` — "Claude Code confirmation spam".
+
 **Step-by-step mode (PRIORITY 0) — mandatory only when user is manually operating:**
 n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface requiring human-in-the-loop
 → One step at a time, wait for outcome before the next step.

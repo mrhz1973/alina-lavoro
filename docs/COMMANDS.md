@@ -51,6 +51,53 @@ unresolved merge conflicts               scope drift outside allowed paths
 
 ---
 
+## Claude Code confirmation spam — user guide
+
+**Applies to local Claude Code sessions in this repository only.**
+
+### When to approve
+
+When Claude Code asks for permission on a command already authorized by the orchestrator prompt, choose **"Yes, and don't ask again"** (or equivalent "Always allow" / "Approve for this session" option).
+
+The user decides through the orchestrator prompt. Claude must not re-litigate it inside the same task.
+
+Commands covered by the existing `.claude/settings.local.json` allowlist that should never prompt:
+
+```
+git status    git diff     git log      git branch    git rev-parse
+git remote    git show     git fetch    git pull *    git add <path>
+git commit    git push origin main      git rebase
+node --check  npm run *    npm.cmd run * node *        python / python3
+grep / findstr  ls / dir   diff         cp             wc
+clasp push    clasp deploy  npm run sync  npm run deploy (deploy-authorized tasks only)
+"C:\Program Files\Git\bin\bash.exe" -c "npm run sync && clasp push && clasp deploy"
+PowerShell(git *) PowerShell(npm *)  PowerShell(node *)
+```
+
+### When to stop
+
+Stop execution if Claude Code asks to run any of these **without explicit user authorization** in the current prompt:
+
+```
+git reset --hard / --soft    git clean    git push --force / -f
+rm / delete outside allowed paths         rollback / tag creation
+secrets / credentials / OAuth / tokens   billing / provider API
+```
+
+### Permissive / skip-permissions fallback
+
+If allowlist hardening in `.claude/settings.local.json` still results in repeated prompts for prompt-authorized recoverable commands, Claude Code can be launched with `--dangerously-skip-permissions` for this repository only.
+
+**This is not the default safe mode.** Use only inside this repo.
+
+- GitHub history and commits are the recovery mechanism.
+- Even in skip-permissions mode: do NOT execute git reset, git clean, git push --force, or touch secrets/credentials/OAuth material unless the user explicitly requests it in the current prompt.
+- Repeated prompts on authorized recoverable actions are an **operational failure** in this project.
+
+Reference: `docs/AI_RULES.md` — Aggressive autonomy · `docs/ORCHESTRATOR_RULES.md` — PRIORITÀ 0A.
+
+---
+
 ## Nota operativa — Niente conferme superflue
 
 Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
