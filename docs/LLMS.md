@@ -25,23 +25,25 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + patch 2026-05-16 + task-0406 fix** (start-work state regression fixed) |
+| Source version | **V2.2.0 + 0406 fix + 0407–0412 import/export** (data portability tools added; NOT deployed) |
 | Production version | **V2.2.0 + 0406 fix** (deployed 2026-05-16 @35) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@35** (same deployment ID as @33/@31; URL unchanged) |
+| Apps Script deploy | **@35** (no new deploy in batch 0407–0412; source patched only) |
 | Last manual test | **PASS** (0366, V2.1.1) — V2.2.0+0406 test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · awaiting manual user test** |
+| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · import/export source-patched · awaiting manual user test + future deploy gate** |
 
 ---
 
 ## Active Workstream
 
-**V2.2.0 start-work state fix (task 0406, 2026-05-16):** fixed start-work button reversion bug. Root cause: `initBackground_()` getBootstrap response (stale server data) was calling `mergeServerData` and clobbering locally-started shift. Fix: `_localMutationAt` timestamp guard in `upsertLocalShift` + conditional merge in `initBackground_`. Deployed @35 (same deployment ID, URL unchanged). Awaiting manual user test.
+**Data Import/Export tools (batch 0407–0412, 2026-05-16):** safe data portability added — JSON full backup, CSV per data type, import from CSV/JSON paste OR a tab in the **current** Google Sheet. External Google Sheet URL/ID import deferred (would require OAuth scope upgrade from `spreadsheets.currentonly`). Safety: preview is read-only, apply always creates `_BACKUP_yyyymmdd_hhmmss` first (max 5 per sheet), default mode merge-skip-duplicates, no destructive replace. **Source patched, NOT deployed.** Production remains @35.
 
-**Aggressive autonomy policy (task 0405, 2026-05-16):** Claude Code must proceed without repeated confirmations for prompt-authorized recoverable actions. Recoverable mistakes are preferable to blocked progress. Deploy auto-proceeds only when the current prompt explicitly authorizes it. Non-recoverable gates remain protected.
+**V2.2.0 start-work state fix (task 0406, 2026-05-16):** fix deployed @35; manual user test still pending.
 
-Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
+**Aggressive autonomy policy (task 0405, 2026-05-16):** active.
+
+Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 ---
 
@@ -49,9 +51,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0406** — V2.2.0 start-work state regression fix (2026-05-16): fix deployed @35. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix) |
-| Queue | **0391** (post-deploy test — now covers V2.2.0+0406 @35), **0392** (stable tag). Next gate: manual user test PASS (start-work flow) before v2.2.0-stable tag. |
+| Last completed | **0412** — Data Import/Export batch validation close (2026-05-16): source patched, not deployed. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), **0407–0412 (data import/export tools — source patched, NOT deployed)** |
+| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user test PASS + future explicit deploy gate for 0407–0412 import/export tools. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

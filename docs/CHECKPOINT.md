@@ -1,9 +1,12 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-16 (task 0404) — V2.2.0 patched source deployed @33. Patch batch 0399–0403 live. Session: `docs/sessions/2026-05-16-v220-patched-source-deploy.md`. Canonical Level-2 memory is `docs/LLMS.md` + `docs/wiki/current-state.md`; entries below preserved from 2026-05-13 compression and superseded by the wiki for state-reading.
+Ultimo aggiornamento: 2026-05-16 (task 0412) — Data Import/Export batch 0407–0412 source-patched (NOT deployed). Production remains V2.2.0 + 0406 fix @35. Session: `docs/sessions/2026-05-16-data-import-export-batch.md`. Canonical Level-2 memory is `docs/LLMS.md` + `docs/wiki/current-state.md`; entries below preserved from 2026-05-13 compression and superseded by the wiki for state-reading.
 
 ## Latest Completed Useful Tasks
 
+- **0407–0412** — Data Import/Export tools (backend export/import API + frontend UI; source-patched NOT deployed, 2026-05-16)
+- **0406** — V2.2.0 start-work state regression fix (deploy @35, 2026-05-16)
+- **0405** — Claude aggressive autonomy policy (docs + settings, 2026-05-16)
 - **0404** — V2.2.0 patched source deploy (deploy, 2026-05-16)
 - **0403** — V2.2.0 frontend fix + UI polish (frontend-only patch, 2026-05-16)
 - **0402** — V2.2.0 design token polish pass 1 (frontend-only, 2026-05-16)

@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-16 (task 0404) — V2.2.0 patched source deployed @33. Patch batch 0399–0403 live: blank-screen-on-resume fix, "Oggi" badge, boot placeholder, design tokens, day-card readability polish. Session: `docs/sessions/2026-05-16-v220-patched-source-deploy.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
+Ultimo aggiornamento: 2026-05-16 (task 0412) — Data Import/Export batch 0407–0412 source-patched (NOT deployed). Production remains V2.2.0 + 0406 fix @35. Earlier tasks 0405 (aggressive autonomy policy) and 0406 (start-work state regression fix, deployed @35) preserved. Sessions: `docs/sessions/2026-05-16-data-import-export-batch.md` (latest), `docs/sessions/2026-05-16-v220-start-work-state-regression-fix.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
 
 ## Current App State
 
