@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406 + 0407–0412 + 0413 + 0414** (import/export + UI/state fixes + deploy-info) |
-| Production version | **V2.2.0 + 0406–0414** (deployed 2026-05-16 @37) |
-| Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test after @37) |
+| Source version | **V2.2.0 + 0406–0416** (settings/mesi UX fixes) |
+| Production version | **V2.2.0 + 0406–0416** (deployed 2026-05-17 @39, same URL as @37) |
+| Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@37** (deployed 2026-05-16; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @37 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0414 deployed @37 · URL changed · awaiting manual phone test** |
+| Apps Script deploy | **@39** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @39 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0416 deployed @39 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
 
-**Deployed @37 (2026-05-16):** V2.2.0 + 0406–0414 now live. Includes import/export tools, manual-test UI/state fixes (nav, theme, lang, home metrics, notes filter, Mesi heading, analytics), deploy-info in Settings. URL changed (new deployment ID). Manual phone test pending → gate for 0391 (post-deploy test) → 0392 (stable tag).
+**Deployed @39 (2026-05-17, task 0416):** Settings UX: removed Deploy from visible line, shows `Versione: 2.2.0 · Build: 0416`. Save Settings now returns to Home. Mesi: current-year months rendered directly below analytics (no duplicate collapsible "2026" header); older years remain collapsible. URL unchanged (same deployment ID as @37). Phone test pending → gate for 0391 → 0392 (stable tag).
 
 **Claude Code confirmation spam mitigation (task 0415b, 2026-05-16):** `.claude/settings.local.json` deny rules added (git reset/clean/push --force); PowerShell patterns added; user guide in `docs/COMMANDS.md` — "Claude Code confirmation spam"; `--dangerously-skip-permissions` fallback documented.
 
@@ -53,9 +53,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0415** (deploy @37, 2026-05-16) + **0415b** (CC confirmation spam fix, 2026-05-16) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), **0415 (deploy @37)**, **0415b (CC confirmation spam mitigation)** |
-| Queue | **0391** (post-deploy phone test for @37), **0392** (stable tag after test pass). Next gate: manual user phone test on @37. |
+| Last completed | **0416** (settings/mesi UX fixes + deploy @39, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), **0416 (settings/mesi UX + deploy @39)** |
+| Queue | **0391** (post-deploy phone test for @39), **0392** (stable tag after test pass). Next gate: manual user phone test on @39. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

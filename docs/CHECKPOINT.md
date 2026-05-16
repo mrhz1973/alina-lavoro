@@ -1,6 +1,6 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-16 (task 0412) — Data Import/Export batch 0407–0412 source-patched (NOT deployed). Production remains V2.2.0 + 0406 fix @35. Session: `docs/sessions/2026-05-16-data-import-export-batch.md`. Canonical Level-2 memory is `docs/LLMS.md` + `docs/wiki/current-state.md`; entries below preserved from 2026-05-13 compression and superseded by the wiki for state-reading.
+Ultimo aggiornamento: 2026-05-17 (task 0416) — Settings/Mesi UX fixes deployed @39 (2026-05-17, URL invariato). Production: V2.2.0 + 0406–0416. Session: `docs/sessions/2026-05-17-v220-settings-mesi-phone-test-fixes.md`. Canonical Level-2 memory is `docs/LLMS.md` + `docs/wiki/current-state.md`; entries below preserved from 2026-05-13 compression and superseded by the wiki for state-reading.
 
 ## Latest Completed Useful Tasks
 

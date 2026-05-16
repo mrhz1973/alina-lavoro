@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-16 (task 0415) — Deploy 0407–0413 pubblicato @37 (2026-05-16). URL cambiato (nuovo deployment ID). Phone test utente pending. Stable tag pending (0392). Session: `docs/sessions/2026-05-16-deploy-0407-0413-for-phone-test.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
+Ultimo aggiornamento: 2026-05-17 (task 0416) — Settings/Mesi UX fixes deployed @39 (2026-05-17). URL invariato (stesso deployment ID di @37). Phone test utente pending. Stable tag pending (0392). Session: `docs/sessions/2026-05-17-v220-settings-mesi-phone-test-fixes.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
 
 ## Current App State
 

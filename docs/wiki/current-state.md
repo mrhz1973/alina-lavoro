@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0415)**
-**Posture:** V2.2.0 + 0406–0414 deployed @37 (2026-05-16). URL changed (new deployment ID). Manual phone test pending → stable tag pending.
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0416)**
+**Posture:** V2.2.0 + 0406–0416 deployed @39 (2026-05-17). URL unchanged (same deployment ID as @37). Manual phone test pending → stable tag pending.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0414** (deployed @37) |
-| Production version | **V2.2.0 + 0406–0414** (deployed 2026-05-16 @37) |
+| Source version | **V2.2.0 + 0406–0416** (deployed @39) |
+| Production version | **V2.2.0 + 0406–0416** (deployed 2026-05-17 @39, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** |
-| Apps Script | **@37** (2026-05-16; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ) |
-| Last test | **PASS** (0366, V2.1.1) — V2.2.0 @37 phone test pending |
-| Scope | **V2.2.0 · no-login · 0406–0414 deployed @37 · URL changed · phone test pending · stable tag pending** |
+| Apps Script | **@39** (2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last test | **PASS** (0366, V2.1.1) — V2.2.0 @39 phone test pending |
+| Scope | **V2.2.0 · no-login · 0406–0416 deployed @39 · URL unchanged · phone test pending · stable tag pending** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0415** (deploy @37, 2026-05-16) + **0415b** (CC confirmation spam fix, 2026-05-16) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), **0415 (deploy @37)**, **0415b (CC spam fix)** |
-| Queue | **0391** (post-deploy phone test for @37), **0392** (stable tag). Next gate: manual phone test on @37. |
+| Last completed | **0416** (settings/mesi UX fixes + deploy @39, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), 0415 (deploy @37), 0415b (CC spam fix), **0416 (settings/mesi UX + deploy @39)** |
+| Queue | **0391** (post-deploy phone test for @39), **0392** (stable tag). Next gate: manual phone test on @39. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
@@ -71,7 +71,8 @@ V2.0.2 candidates: startup UX polish (on demand), minor cleanup. See task 0353. 
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.2.0 + 0406–0414 | `v2.2.0-stable` (pending phone test) | @37 |
+| V2.2.0 + 0406–0416 | `v2.2.0-stable` (pending phone test) | @39 (URL same as @37) |
+| V2.2.0 + 0406–0414 | — | @37 |
 | V2.2.0 + 0406 fix | — | @35 |
 | V2.2.0 patched | — | @33 |
 | V2.1.1 | `v2.1.1-stable` (2026-05-16) | @30 |
