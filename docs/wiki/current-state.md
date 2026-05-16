@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-15 (task 0352)**
-**Posture:** maintenance mode — app MVP mature at V2.0.1; automation baseline stable / monitor.
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0361)**
+**Posture:** V2.1.0 deployed — analytics/charts on Mesi; stable tag pending post-deploy test (task 0362).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.0.1** (stable 2026-05-15) |
-| Production version | **V2.0.1** (stable 2026-05-15) |
-| Tag | **`v2.0.1-stable`** (created 2026-05-15, task 0331) |
+| Source version | **V2.1.0** (deployed 2026-05-16) |
+| Production version | **V2.1.0** (deployed 2026-05-16) |
+| Tag | **`v2.0.1-stable`** (last stable; v2.1.0-stable pending 0362) |
 | Branch | **main** |
-| Apps Script | **@28** (V2.0.1 live; same deployment ID as @26/@24; deployed 2026-05-15) |
-| Last test | OK 2026-05-15 post-deploy /exec — user "tutto ok 2.0.1" (task 0328) |
-| Scope | **Stable prod V2.0.1 @28 · MVP mature / maintenance-ready** |
+| Apps Script | **@29** (V2.1.0 live; same deployment ID as @28/@26/@24; deployed 2026-05-16) |
+| Last test | Pending — task 0362 post-deploy test required |
+| Scope | **V2.1.0 deployed · analytics/charts Mesi · stable tag pending 0362** |
 
 ---
 
@@ -25,9 +25,10 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0352 — Final MVP mature close marker** (2026-05-15): V2.0.1 stable close complete; app is MVP mature / maintenance-ready. |
-| Previous | **0351 — V2.0.2 candidate map** (2026-05-15). |
-| Queue | `docs/tasks/queue/0353-v202-decision-or-maintenance-review.md` |
+| Last completed | **0361 — V2.1 deploy** (2026-05-16): V2.1.0 deployed @29. |
+| Batch completed | **0353–0360** (V2.1 analytics implementation, 2026-05-16). |
+| Queue | `docs/tasks/queue/0362-v21-post-deploy-test.md` (GATE: manual test) |
+| Queue | `docs/tasks/queue/0363-v21-stable-tag.md` (GATE: after 0362 OK) |
 
 ---
 
@@ -70,6 +71,7 @@ V2.0.2 candidates: startup UX polish (on demand), no-login mode (explicit gate),
 
 | Version | Tag | Deploy |
 |---|---|---|
+| V2.1.0 | pending `v2.1.0-stable` (after 0362) | @29 |
 | V2.0.1 | `v2.0.1-stable` | @28 |
 | V2.0.0 | `v2.0.0-stable` | @26 |
 | V1.9.2 | `v1.9.2-stable` | @24 |

@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.0.1** (stable 2026-05-15) |
-| Production version | **V2.0.1** (stable 2026-05-15) |
-| Tag | **`v2.0.1-stable`** (created 2026-05-15, task 0331) |
+| Source version | **V2.1.0** (deployed 2026-05-16) |
+| Production version | **V2.1.0** (deployed 2026-05-16) |
+| Tag | **`v2.0.1-stable`** (last stable; v2.1.0-stable pending post-deploy test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@28** (V2.0.1 live; same deployment ID as @26/@24; deployed 2026-05-15) |
-| Last manual test | OK 2026-05-15 post-deploy /exec — user "tutto ok 2.0.1" (task 0328) |
-| App scope | **Stable prod V2.0.1 @28 · MVP mature / maintenance-ready** |
+| Apps Script deploy | **@29** (V2.1.0 live; same deployment ID as @28/@26/@24; deployed 2026-05-16) |
+| Last manual test | Pending — task 0362 post-deploy test required |
+| App scope | **V2.1.0 deployed · analytics/charts on Mesi · stable tag pending 0362** |
 
 ---
 
 ## Active Workstream
 
-**Maintenance mode** — app is MVP mature at V2.0.1. No active source workstream. Next step: task 0353 review/decision.
+**V2.1.0 deployed** — analytics/charts collapsible card on Mesi page. Awaiting post-deploy manual test (task 0362) before stable tag (task 0363).
 
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
 
@@ -47,9 +47,10 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0352** — Final MVP mature close marker (2026-05-15): V2.0.1 stable close complete; app is MVP mature / maintenance-ready. |
-| Previous | **0351** — V2.0.2 candidate map (2026-05-15). |
-| Queue | `docs/tasks/queue/0353-v202-decision-or-maintenance-review.md` |
+| Last completed | **0360** — V2.1 mobile chart test prep (2026-05-16): source implementation complete, checks pass. |
+| Batch completed | 0353–0360 (V2.1 analytics implementation), 0361 (deploy 2026-05-16) |
+| Queue | `docs/tasks/queue/0362-v21-post-deploy-test.md` (GATE: manual test) |
+| Queue | `docs/tasks/queue/0363-v21-stable-tag.md` (GATE: after 0362 OK) |
 
 ---
 
