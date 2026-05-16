@@ -1,6 +1,6 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-16 (task 0412) — Data Import/Export batch 0407–0412 source-patched (NOT deployed). Production remains V2.2.0 + 0406 fix @35. Earlier tasks 0405 (aggressive autonomy policy) and 0406 (start-work state regression fix, deployed @35) preserved. Sessions: `docs/sessions/2026-05-16-data-import-export-batch.md` (latest), `docs/sessions/2026-05-16-v220-start-work-state-regression-fix.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
+Ultimo aggiornamento: 2026-05-16 (task 0415) — Deploy 0407–0413 pubblicato @37 (2026-05-16). URL cambiato (nuovo deployment ID). Phone test utente pending. Stable tag pending (0392). Session: `docs/sessions/2026-05-16-deploy-0407-0413-for-phone-test.md`. Body below preserved from earlier compression and is superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
 
 ## Current App State
 

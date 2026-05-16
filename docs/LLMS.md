@@ -25,23 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406 fix + 0407–0412 import/export + 0413 manual-test UI/state fixes + 0414 deploy-info in Settings** (NOT deployed) |
-| Production version | **V2.2.0 + 0406 fix** (deployed 2026-05-16 @35) |
-| Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
+| Source version | **V2.2.0 + 0406 + 0407–0412 + 0413 + 0414** (import/export + UI/state fixes + deploy-info) |
+| Production version | **V2.2.0 + 0406–0414** (deployed 2026-05-16 @37) |
+| Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test after @37) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@35** (no new deploy in batches 0407–0413; source patched only) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0+0406 user re-test pending after 0413 UI/state fixes |
-| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · import/export + 0413 UI/state fixes source-patched · awaiting manual user re-test + future deploy gate** |
+| Apps Script deploy | **@37** (deployed 2026-05-16; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @37 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0414 deployed @37 · URL changed · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
 
-**V2.2.0 manual test UI/state fixes (task 0413, 2026-05-16):** frontend-only patch addressing 9 user-reported bugs from the @35 manual test — language toggle label IT/RU sync, theme/lang stale-server overwrite guard (config mutations now bump `_localMutationAt`; merge-order fixed in `initBackground_` and `flushQueue` so local wins on conflict), stronger modal backdrop, compact Home metrics card (2×2), Home notes today-only filter, bottom nav reduced to Home/Mesi/Note (gear keeps Settings access), Mesi page heading not card, annual analytics labels and year-scoped data. **Source patched, NOT deployed.** Production remains @35.
+**Deployed @37 (2026-05-16):** V2.2.0 + 0406–0414 now live. Includes import/export tools, manual-test UI/state fixes (nav, theme, lang, home metrics, notes filter, Mesi heading, analytics), deploy-info in Settings. URL changed (new deployment ID). Manual phone test pending → gate for 0391 (post-deploy test) → 0392 (stable tag).
 
-**Data Import/Export tools (batch 0407–0412, 2026-05-16):** safe data portability added — JSON full backup, CSV per data type, import from CSV/JSON paste OR a tab in the **current** Google Sheet. External Google Sheet URL/ID import deferred (would require OAuth scope upgrade from `spreadsheets.currentonly`). Safety: preview is read-only, apply always creates `_BACKUP_yyyymmdd_hhmmss` first (max 5 per sheet), default mode merge-skip-duplicates, no destructive replace. **Source patched, NOT deployed.** Production remains @35.
-
-**V2.2.0 start-work state fix (task 0406, 2026-05-16):** fix deployed @35; manual user test still pending.
+**V2.2.0 start-work state fix (task 0406, 2026-05-16):** included in @37 deploy.
 
 **Aggressive autonomy policy (task 0405, 2026-05-16):** active.
 
@@ -53,9 +51,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0414** — deploy info in Settings page (2026-05-16): source patched, NOT deployed. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (data import/export tools — source patched, NOT deployed), 0413 (V2.2.0 manual test UI/state fixes — source patched, NOT deployed), **0414 (deploy info in Settings — source patched, NOT deployed)** |
-| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user re-test of 0413 fixes + future explicit deploy gate covering 0407–0412 import/export tools and 0413 UI/state fixes. |
+| Last completed | **0415** — deploy 0407–0413 for phone test (2026-05-16): deployed @37. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), **0415 (deploy @37)** |
+| Queue | **0391** (post-deploy phone test for @37), **0392** (stable tag after test pass). Next gate: manual user phone test on @37. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
