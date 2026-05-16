@@ -1,9 +1,15 @@
 # Alina Lavoro — Checkpoint (ripartenza)
 
-Ultimo aggiornamento: 2026-05-13 — **State compression completed** (docs-only, 2026-05-13): PROJECT_STATE.md and CHECKPOINT.md physically compressed; long historical content moved to `docs/history/PROJECT_LOG.md` (audit-only); files reduced from >47k chars to compact current state; LLMS-first routing preserved; no runtime/app/deploy/tag/rollback changes; session: `docs/sessions/2026-05-13-state-compression-checkpoint-slimming.md`.
+Ultimo aggiornamento: 2026-05-16 (task 0403) — V2.2.0 source patched (batch 0399–0403): blank-screen-on-resume fix, Dettaglio mese day-label + real "Oggi" badge on today only, boot placeholder, additive design tokens, day-card readability polish. **Patch NOT deployed**: production Apps Script still @31 until explicit deploy gate. Session: `docs/sessions/2026-05-16-v220-frontend-fix-ui-polish-batch.md`. Canonical Level-2 memory is now `docs/LLMS.md` + `docs/wiki/current-state.md`; the entries below are preserved from the 2026-05-13 compression and are superseded for state-reading purposes by the wiki.
 
 ## Latest Completed Useful Tasks
 
+- **0403** — V2.2.0 frontend fix + UI polish (frontend-only patch, 2026-05-16)
+- **0402** — V2.2.0 design token polish pass 1 (frontend-only, 2026-05-16)
+- **0401** — V2.2.0 startup boot placeholder (frontend-only, 2026-05-16)
+- **0400** — V2.2.0 month detail day-label + today-badge fix (frontend-only, 2026-05-16)
+- **0399** — V2.2.0 blank-screen-on-resume fix (frontend-only, 2026-05-16)
+- **0390** — V2.2.0 deploy @31 (deploy, 2026-05-16)
 - **0117** — Phase 2 watcher/polling MVP completion (docs-only, 2026-05-12)
 - **0116** — n8n queue reader scheduled polling validation (n8n runtime, 2026-05-12)
 - **0115** — n8n queue reader direct schedule trigger activation (n8n runtime, 2026-05-12)
@@ -19,7 +25,8 @@ Ultimo aggiornamento: 2026-05-13 — **State compression completed** (docs-only,
 
 ## Current Safe Assumptions
 
-- **App stable:** V1.9.2 on main, tag v1.9.2-stable, deploy @24
+- **App:** V2.2.0 deployed @31 (2026-05-16); source patched 2026-05-16 (batch 0399–0403) — patch awaiting explicit deploy gate; last stable tag is still `v2.1.1-stable` (v2.2.0-stable pending user test)
+- **Earlier baseline (pre-V2.0):** V1.9.2 on main, tag v1.9.2-stable, deploy @24
 - **Branch:** main only (dev legacy/inactive)
 - **n8n queue reader:** Operational with 5-minute schedule, skip done/processing/failed validated
 - **VPS:** Ubuntu 24.04.4 LTS, n8n in Docker, binding 127.0.0.1:5678 hardened

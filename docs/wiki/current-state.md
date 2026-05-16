@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0390)**
-**Posture:** V2.2.0 deployed — no-login direct start; tag v2.2.0-stable pending user test (task 0391).
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0403)**
+**Posture:** V2.2.0 source patched (batch 0399–0403): blank-screen-on-resume + Dettaglio mese "Oggi" + boot placeholder + token + day-card polish. **Patch not deployed**: Apps Script @31 still serves pre-patch V2.2.0 until explicit deploy gate.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0** (deployed 2026-05-16) |
-| Production version | **V2.2.0** (deployed 2026-05-16) |
+| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; not deployed) |
+| Production version | **V2.2.0** (deployed 2026-05-16; pre-patch) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** |
-| Apps Script | **@31** (V2.2.0 live; same deployment ID as @30/@29/@28/@26/@24; deployed 2026-05-16) |
-| Last test | **PASS** (0366, V2.1.1) — V2.2.0 test pending (task 0391) |
-| Scope | **V2.2.0 · no-login direct start · tag pending user test** |
+| Apps Script | **@31** (V2.2.0 pre-patch live) |
+| Last test | **PASS** (0366, V2.1.1) — V2.2.0 + patch test pending |
+| Scope | **V2.2.0 · no-login direct start · in-source patch awaiting deploy gate** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0390 — V2.2.0 deploy** (2026-05-16): batch 0384–0390 done. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login) |
-| Queue | **0391** (post-deploy test), **0392** (stable tag) |
+| Last completed | **0403 — V2.2.0 frontend fix + UI polish** (2026-05-16): batch 0399–0403 done, source patched, not deployed. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish) |
+| Queue | **0391** (post-deploy test — covers patch), **0392** (stable tag). New pending gate: deploy + test patched V2.2.0 source. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

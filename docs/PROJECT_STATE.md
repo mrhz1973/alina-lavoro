@@ -1,17 +1,18 @@
 # Alina Lavoro - Project State
 
-Ultimo aggiornamento: 2026-05-13 — **State compression completed** (docs-only, 2026-05-13): PROJECT_STATE.md and CHECKPOINT.md physically compressed; long historical content moved to `docs/history/PROJECT_LOG.md` (audit-only); files reduced from >47k chars to compact current state; LLMS-first routing preserved; no runtime/app/deploy/tag/rollback changes; session: `docs/sessions/2026-05-13-state-compression-checkpoint-slimming.md`.
+Ultimo aggiornamento: 2026-05-16 (task 0403) — V2.2.0 source patched (batch 0399–0403): blank-screen-on-resume fix, Dettaglio mese day-label + real "Oggi" badge, boot placeholder, design-token pass, day-card readability polish. **Patch NOT deployed**: production Apps Script still @31 (V2.2.0 as released 2026-05-16) until explicit deploy gate. Session: `docs/sessions/2026-05-16-v220-frontend-fix-ui-polish-batch.md`. Body below preserved from earlier compression (2026-05-13) and is now superseded by `docs/LLMS.md` + `docs/wiki/current-state.md` for current state; canonical Level-2 memory is the wiki.
 
 ## Current App State
 
 | Field | Value |
 |-------|-------|
-| Version | **V1.9.2** |
-| Tag | `v1.9.2-stable` |
+| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; not deployed) |
+| Production version | **V2.2.0** (deployed 2026-05-16; pre-patch) |
+| Tag | `v2.1.1-stable` (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (operational) — `dev` is legacy/inactive |
-| Apps Script deploy | **@24** |
-| Last manual test | OK 2026-05-10 (Redmi 9C NFC, /exec @24) |
-| App scope | **Stable — not in active work scope** |
+| Apps Script deploy | **@31** (V2.2.0 pre-patch live) |
+| Last manual test | OK 2026-05-10 (Redmi 9C NFC, /exec @24, V2.1.1); V2.2.0 + patch test pending |
+| App scope | **V2.2.0 · no-login direct start · in-source patch awaiting deploy gate** |
 
 **Constraint:** do not return to Alina app work until watcher/runner/low-touch workstream is closed, or user explicitly requests it.
 

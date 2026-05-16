@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0** (deployed 2026-05-16) |
-| Production version | **V2.2.0** (deployed 2026-05-16 @31) |
+| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; not deployed) |
+| Production version | **V2.2.0** (deployed 2026-05-16 @31; pre-patch) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@31** (V2.2.0 live; same deployment ID as @30/@29/@28/@26/@24; deployed 2026-05-16) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 test pending (task 0391) |
-| App scope | **V2.2.0 · no-login direct start · tag pending user test** |
+| Apps Script deploy | **@31** (V2.2.0 live; pre-patch source) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 deploy + patch test pending |
+| App scope | **V2.2.0 · no-login direct start · in-source patch (blank-screen / Oggi / boot placeholder / token + day-card polish) awaiting deploy gate** |
 
 ---
 
 ## Active Workstream
 
-**V2.2.0** — no-login direct start: access code gate removed. App opens immediately on `/exec`. Tag `v2.2.0-stable` pending user test (task 0391).
+**V2.2.0 in-source patch (0399–0403, 2026-05-16):** dead `loginView` reference removed from `showApp()` (fixes blank-screen-on-resume); Dettaglio mese day-card label fixed and a real "Oggi" pill added only on today's card; pre-rendered boot placeholder in `<main id="content">`; additive design tokens; day-card readability polish. Production Apps Script still @31 as released — patch reaches users only after explicit deploy gate.
 
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
 
@@ -47,9 +47,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0390** — V2.2.0 deploy (2026-05-16): batch 0384–0390 done. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login) |
-| Queue | **0391** (post-deploy test), **0392** (stable tag) |
+| Last completed | **0403** — V2.2.0 frontend fix + UI polish (2026-05-16): batch 0399–0403 done, source patched, not deployed. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish) |
+| Queue | **0391** (post-deploy test — covers V2.2.0 as-released and the new patch), **0392** (stable tag). Pending manual gate: deploy + test patched V2.2.0 source. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
