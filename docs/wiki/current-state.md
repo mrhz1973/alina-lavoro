@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0412)**
-**Posture:** V2.2.0 + 0406 fix deployed @35. Source has been patched with import/export tools (batch 0407–0412) but **NOT deployed**. Awaiting manual user test of @35 + future explicit deploy gate for 0407–0412.
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0413)**
+**Posture:** V2.2.0 + 0406 fix deployed @35. Source has been patched with import/export tools (batch 0407–0412) and V2.2.0 manual-test UI/state fixes (task 0413) but **NOT deployed**. Awaiting manual user re-test + future explicit deploy gate covering 0407–0413.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406 + 0407–0412** (import/export tools, source-patched not deployed) |
+| Source version | **V2.2.0 + 0406 + 0407–0412 + 0413** (import/export + manual-test UI/state fixes; source-patched, not deployed) |
 | Production version | **V2.2.0 + 0406 fix** (deployed 2026-05-16 @35) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** |
 | Apps Script | **@35** (unchanged in this batch) |
-| Last test | **PASS** (0366, V2.1.1) — V2.2.0+0406 test pending |
-| Scope | **V2.2.0 · no-login direct start · 0406 fix @35 · import/export source-patched · awaiting test + future deploy gate** |
+| Last test | **PASS** (0366, V2.1.1) — V2.2.0+0406 user re-test pending after 0413 UI/state fixes |
+| Scope | **V2.2.0 · no-login direct start · 0406 fix @35 · import/export + 0413 UI/state fixes source-patched · awaiting re-test + future deploy gate** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0412 — Data Import/Export batch validation close** (2026-05-16): source patched, not deployed. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), **0407–0412 (data import/export tools, source-only)** |
-| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user test PASS + future explicit deploy gate for import/export. |
+| Last completed | **0413 — V2.2.0 manual test UI/state fixes** (2026-05-16): frontend source patched, NOT deployed. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (data import/export tools, source-only), **0413 (V2.2.0 manual test UI/state fixes, source-only)** |
+| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user re-test of 0413 fixes + future explicit deploy gate covering 0407–0413. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

@@ -25,17 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406 fix + 0407–0412 import/export** (data portability tools added; NOT deployed) |
+| Source version | **V2.2.0 + 0406 fix + 0407–0412 import/export + 0413 manual-test UI/state fixes** (NOT deployed) |
 | Production version | **V2.2.0 + 0406 fix** (deployed 2026-05-16 @35) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@35** (no new deploy in batch 0407–0412; source patched only) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0+0406 test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · import/export source-patched · awaiting manual user test + future deploy gate** |
+| Apps Script deploy | **@35** (no new deploy in batches 0407–0413; source patched only) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0+0406 user re-test pending after 0413 UI/state fixes |
+| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · import/export + 0413 UI/state fixes source-patched · awaiting manual user re-test + future deploy gate** |
 
 ---
 
 ## Active Workstream
+
+**V2.2.0 manual test UI/state fixes (task 0413, 2026-05-16):** frontend-only patch addressing 9 user-reported bugs from the @35 manual test — language toggle label IT/RU sync, theme/lang stale-server overwrite guard (config mutations now bump `_localMutationAt`; merge-order fixed in `initBackground_` and `flushQueue` so local wins on conflict), stronger modal backdrop, compact Home metrics card (2×2), Home notes today-only filter, bottom nav reduced to Home/Mesi/Note (gear keeps Settings access), Mesi page heading not card, annual analytics labels and year-scoped data. **Source patched, NOT deployed.** Production remains @35.
 
 **Data Import/Export tools (batch 0407–0412, 2026-05-16):** safe data portability added — JSON full backup, CSV per data type, import from CSV/JSON paste OR a tab in the **current** Google Sheet. External Google Sheet URL/ID import deferred (would require OAuth scope upgrade from `spreadsheets.currentonly`). Safety: preview is read-only, apply always creates `_BACKUP_yyyymmdd_hhmmss` first (max 5 per sheet), default mode merge-skip-duplicates, no destructive replace. **Source patched, NOT deployed.** Production remains @35.
 
@@ -51,9 +53,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0412** — Data Import/Export batch validation close (2026-05-16): source patched, not deployed. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), **0407–0412 (data import/export tools — source patched, NOT deployed)** |
-| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user test PASS + future explicit deploy gate for 0407–0412 import/export tools. |
+| Last completed | **0413** — V2.2.0 manual test UI/state fixes (2026-05-16): frontend source patched, NOT deployed. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (data import/export tools — source patched, NOT deployed), **0413 (V2.2.0 manual test UI/state fixes — source patched, NOT deployed)** |
+| Queue | **0391** (post-deploy test for @35), **0392** (stable tag). Next gate: manual user re-test of 0413 fixes + future explicit deploy gate covering 0407–0412 import/export tools and 0413 UI/state fixes. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
