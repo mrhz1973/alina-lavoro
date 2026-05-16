@@ -25,19 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + patch 2026-05-16** (batch 0399–0403; deployed @33) |
-| Production version | **V2.2.0 patched** (deployed 2026-05-16 @33) |
+| Source version | **V2.2.0 + patch 2026-05-16 + task-0406 fix** (start-work state regression fixed) |
+| Production version | **V2.2.0 + 0406 fix** (deployed 2026-05-16 @35) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending user test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@33** (V2.2.0 patched live; same deployment ID as @31) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 patched test pending |
-| App scope | **V2.2.0 · no-login direct start · patch deployed @33 · awaiting manual user test** |
+| Apps Script deploy | **@35** (same deployment ID as @33/@31; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0+0406 test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406 fix deployed @35 · awaiting manual user test** |
 
 ---
 
 ## Active Workstream
 
-**V2.2.0 patched deployed (task 0404, 2026-05-16):** patch batch 0399–0403 deployed to Apps Script @33. Fixes live: blank-screen-on-resume fix, "Oggi" badge, boot placeholder, UI tokens, day-card readability. Same deployment ID as @31 (URL unchanged). Awaiting manual user test before v2.2.0-stable tag.
+**V2.2.0 start-work state fix (task 0406, 2026-05-16):** fixed start-work button reversion bug. Root cause: `initBackground_()` getBootstrap response (stale server data) was calling `mergeServerData` and clobbering locally-started shift. Fix: `_localMutationAt` timestamp guard in `upsertLocalShift` + conditional merge in `initBackground_`. Deployed @35 (same deployment ID, URL unchanged). Awaiting manual user test.
 
 **Aggressive autonomy policy (task 0405, 2026-05-16):** Claude Code must proceed without repeated confirmations for prompt-authorized recoverable actions. Recoverable mistakes are preferable to blocked progress. Deploy auto-proceeds only when the current prompt explicitly authorizes it. Non-recoverable gates remain protected.
 
@@ -49,9 +49,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0405** — Claude aggressive autonomy policy (2026-05-16): settings + docs updated. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy) |
-| Queue | **0391** (post-deploy test — covers V2.2.0 patched @33), **0392** (stable tag). Next gate: manual user test PASS before v2.2.0-stable tag. |
+| Last completed | **0406** — V2.2.0 start-work state regression fix (2026-05-16): fix deployed @35. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix) |
+| Queue | **0391** (post-deploy test — now covers V2.2.0+0406 @35), **0392** (stable tag). Next gate: manual user test PASS (start-work flow) before v2.2.0-stable tag. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
