@@ -39,6 +39,8 @@
 
 **V2.2.0 patched deployed (task 0404, 2026-05-16):** patch batch 0399–0403 deployed to Apps Script @33. Fixes live: blank-screen-on-resume fix, "Oggi" badge, boot placeholder, UI tokens, day-card readability. Same deployment ID as @31 (URL unchanged). Awaiting manual user test before v2.2.0-stable tag.
 
+**Aggressive autonomy policy (task 0405, 2026-05-16):** Claude Code must proceed without repeated confirmations for prompt-authorized recoverable actions. Recoverable mistakes are preferable to blocked progress. Deploy auto-proceeds only when the current prompt explicitly authorizes it. Non-recoverable gates remain protected.
+
 Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegram Mode A active and stable-after-fix.
 
 ---
@@ -47,8 +49,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0404** — V2.2.0 patched source deploy (2026-05-16): patch deployed @33. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (V2.2.0 deploy patch) |
+| Last completed | **0405** — Claude aggressive autonomy policy (2026-05-16): settings + docs updated. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy) |
 | Queue | **0391** (post-deploy test — covers V2.2.0 patched @33), **0392** (stable tag). Next gate: manual user test PASS before v2.2.0-stable tag. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 

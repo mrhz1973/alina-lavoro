@@ -17,24 +17,59 @@ When asked to design or deliver an n8n workflow or test:
 - **Import is a runtime/UI gate.** A template alone does not authorize import. Import requires an explicit Decision Packet (see D-0206-A pattern).
 - **Execute is a separate gate.** Import does not authorize Execute. A future separate Decision Packet is required.
 
+## Implementer rule — Aggressive autonomy (recoverable mistakes over blocked progress)
+
+**User decision (2026-05-16, task 0405):** recoverable mistakes are explicitly preferable to project abandonment caused by repeated confirmation prompts.
+
+**Operational bug:** asking the user for confirmation on a prompt-authorized recoverable action is an operational bug. It blocks progress without adding safety.
+
+The implementer must proceed autonomously for all **recoverable actions** already authorized by the current task prompt:
+- file, docs, config edits inside allowed paths;
+- validation and preflight commands;
+- npm scripts explicitly authorized by the prompt;
+- sync / clasp push / clasp deploy **when the current prompt explicitly authorizes a deploy gate**;
+- selective git add, git commit, git push origin main;
+- git pull --rebase origin main when working tree is clean;
+- retrying after non-destructive command failures (encoding issues, environment fixes, npm config);
+- creating done markers, session notes, updating state docs.
+
+The implementer must **continue through recoverable errors** and repair via follow-up commit when needed. The user is informed in the **final report** — not interrupted during execution.
+
+The implementer **stops only for non-recoverable or high-risk actions**:
+- `git reset --hard`, `git clean`, `git push --force`;
+- deleting files outside allowed paths;
+- rollback;
+- secrets, credentials, OAuth material, tokens;
+- billing, provider API keys, new paid services;
+- destructive database/sheet operations;
+- unresolved merge conflicts;
+- scope drift outside allowed paths;
+- commands not covered by the current task prompt.
+
+**Deploy gate:** deploy is still an orchestrator-level gate. However, if the current prompt explicitly authorizes deploy, Claude must not ask again for the exact deploy command or project deploy equivalents. Deploy commands auto-proceed only inside a deploy-authorized task.
+
+Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" section.
+
+---
+
 ## Implementer rule — No unnecessary confirmations
 
-Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A** · **Aggressive autonomy policy** (section above).
 
 The implementer (Cursor, Windsurf/Cascade, Claude Code, Agent) must:
 
-- **not ask the user for unnecessary confirmations** for already-assigned **docs-only** tasks;
+- **not ask the user for unnecessary confirmations** for already-assigned tasks with clear allowed paths;
 - **not turn into a decision** what is already decided by the roadmap, queue task, or orchestrator prompt;
-- if the task is **docs-only** and the **allowed paths** are clear, **execute**;
+- if the task and **allowed paths** are clear, **execute**;
 - **stop only for**:
   - scope drift (changes go outside the allowed paths);
   - forbidden paths touched;
   - Git conflicts not autonomously resolvable;
   - unresolvable technical errors (e.g. corrupted files, missing dependencies);
-  - **sensitive gates** (runtime, VPS runtime, n8n runtime, Alina app changes, deploy, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, sensitive data, real physical test).
+  - **sensitive gates** (runtime, VPS runtime, n8n runtime, Alina app changes, deploy without prompt authorization, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, sensitive data, real physical test).
 - in the **final report**, indicate if any **real gates** or residual risks remain, but **do not ask «shall I proceed?»** if there is no real choice.
 
-For **determined docs-only tasks**, the absence of a real choice equals **operational consent to proceed**: execute and close according to workflow with selective commit and push.
+For **determined tasks with clear allowed paths**, the absence of a real choice equals **operational consent to proceed**: execute and close according to workflow with selective commit and push.
 
 ## Implementer rule — Plan persistence
 

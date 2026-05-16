@@ -2,6 +2,55 @@
 
 Percorsi relativi alla radice del repository. Eseguire da macchina con repo clonato.
 
+## Aggressive autonomy policy — recoverable mistakes are preferable to blocked progress
+
+**User decision (2026-05-16, task 0405):** the user explicitly prefers recoverable mistakes over project abandonment caused by repeated confirmation prompts.
+
+**Core principle:**
+- A recoverable mistake is acceptable.
+- A blocked project caused by repeated confirmation prompts is **not** acceptable.
+
+**Prompt-authorized recoverable commands must not ask again:** the user decides through the orchestrator prompt. Claude must not re-ask for the same authorized action inside the same task scope.
+
+**Recoverable actions — auto-proceed when prompt authorizes:**
+- file, docs, config edits inside allowed paths
+- frontend/source patches when the prompt explicitly authorizes app source changes
+- validation and preflight commands
+- npm scripts explicitly authorized by the prompt
+- sync / clasp push / clasp deploy **when the current prompt explicitly authorizes a deploy gate**
+- selective git add with explicit paths
+- git commit
+- git push origin main
+- git pull --rebase origin main when working tree is clean
+- retrying after non-destructive command failures (e.g. encoding issues, environment fixes)
+- creating task done markers and session notes
+- updating state docs
+
+**Deploy commands — auto-proceed only when deploy is explicitly authorized by the current prompt:**
+```
+npm run deploy    npm run sync
+clasp push        clasp deploy
+npx clasp deploy  npx clasp push
+"C:\Program Files\Git\bin\bash.exe" -c "npm run sync && clasp push && clasp deploy"
+```
+If the current task prompt does NOT explicitly authorize deploy, these commands remain gated.
+
+**Non-recoverable / gated — ALWAYS require explicit user decision:**
+```
+git reset --hard     git clean           git push --force
+git push origin <tag> (stable tag)       rollback
+rm / delete outside allowed paths        secrets / credentials / OAuth
+billing / provider API keys / new paid services
+destructive Sheet or database operations
+unresolved merge conflicts               scope drift outside allowed paths
+```
+
+**Operational bug:** asking the user «proceed?» / «confirm?» for a prompt-authorized recoverable action is an operational bug. It blocks progress without adding safety.
+
+**Recovery:** if a recoverable action causes an error, Claude fixes it via follow-up commit. The user is informed in the final report — not in the middle of execution.
+
+---
+
 ## Nota operativa — Niente conferme superflue
 
 Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
@@ -13,24 +62,26 @@ Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
 
 ## Comandi sicuri — nessuna conferma richiesta
 
-Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A** · Aggressive autonomy policy (sezione sopra).
 
 I comandi seguenti sono **sicuri, non distruttivi e reversibili**. L'implementatore deve eseguirli senza richiedere conferma all'utente nei task autorizzati:
 
 ```
 git status        git diff         git log          git branch
 git rev-parse     git remote       git show         git tag --list
-grep              node --check     ls               diff
-cp (snapshot)     git diff --check
+grep / findstr    node --check     ls / dir         diff
+cp (snapshot)     git diff --check python / python3 wc
+git fetch         git pull --rebase (clean tree)
+selective git add  git commit       git push origin main
 ```
 
-**Require explicit gate — never auto-execute:**
+**Require explicit gate — never auto-execute without prompt authorization:**
 
 ```
-npm run deploy    clasp push       clasp deploy
 git reset         git clean        git push --force
 git tag (create)  git push origin <tag>
 rm / delete       secrets / credentials / OAuth
+deploy commands (see aggressive autonomy policy above for conditions)
 ```
 
 Canonical gate list: `docs/ORCHESTRATOR_RULES.md` PRIORITÀ 0A + sezione Open Gates in `docs/LLMS.md`.

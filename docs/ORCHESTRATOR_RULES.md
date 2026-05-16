@@ -8,13 +8,20 @@ Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per quals
 
 Quick reference for new agents, Claude Code, Cursor, Windsurf/Cascade, and future classifier/planner. Full rules in Italian sections below; this section is a compact English extraction for token efficiency.
 
+**Aggressive autonomy — recoverable mistakes over blocked progress (task 0405, 2026-05-16):**
+- User explicitly prefers recoverable mistakes over project abandonment from repeated confirmations.
+- Prompt-authorized recoverable actions must auto-proceed: file edits, docs, config, validation, git add/commit/push, git pull --rebase (clean tree), done markers, session notes, retrying after non-destructive failures.
+- Deploy commands auto-proceed **only when the current task prompt explicitly authorizes deploy**.
+- Non-recoverable gates remain fully protected (see below).
+- Full policy: `docs/COMMANDS.md` — "Aggressive autonomy policy" · `docs/AI_RULES.md` — "Aggressive autonomy".
+
 **No unnecessary confirmations (PRIORITY 0A):**
-- Determined docs-only task → execute; the absence of a real choice equals operational consent.
-- Forbidden: asking «vuoi?», «procedo?», «autorizzi?», «vai?» for predetermined docs-only work.
+- Determined task with clear allowed paths → execute; the absence of a real choice equals operational consent.
+- Forbidden: asking «vuoi?», «procedo?», «autorizzi?», «vai?» for prompt-authorized work.
 - Asking unnecessary confirmations is an **operational error**.
 
 **Sensitive gates — always require explicit user decision:**
-runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script · tag · rollback · API key · login · GitHub Actions · new recurring costs · automatic runner · personal data / credentials / secrets / OAuth material · real physical test (Alina on phone)
+runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script (without prompt authorization) · tag · rollback · API key · login · GitHub Actions · new recurring costs · automatic runner · personal data / credentials / secrets / OAuth material · real physical test (Alina on phone)
 
 **No provider APIs by default:**
 ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models. Any provider API / hosted AI call / API key / billing / recurring cost requires explicit future manual gate and is out of scope by default.

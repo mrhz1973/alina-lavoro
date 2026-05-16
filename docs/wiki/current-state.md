@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0404)**
-**Posture:** V2.2.0 patched deployed @33. Patch batch 0399–0403 live. Awaiting manual user test before v2.2.0-stable tag.
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0405)**
+**Posture:** V2.2.0 patched deployed @33. Awaiting manual user test before v2.2.0-stable tag. Aggressive autonomy policy active: Claude proceeds without repeated confirmations for prompt-authorized recoverable actions.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,8 +25,8 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0404 — V2.2.0 patched source deploy** (2026-05-16): patch batch 0399–0403 deployed @33. |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch) |
+| Last completed | **0405 — Claude aggressive autonomy policy** (2026-05-16): settings + docs updated. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy) |
 | Queue | **0391** (post-deploy test — covers V2.2.0 patched @33), **0392** (stable tag). Next gate: manual user test PASS. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 

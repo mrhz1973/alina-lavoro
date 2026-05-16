@@ -2,14 +2,29 @@
 
 Goal: reduce manual copy-paste and always keep GitHub as the shared source of truth.
 
+## Aggressive autonomy policy (task 0405, 2026-05-16)
+
+**User decision:** recoverable mistakes are explicitly preferable to project abandonment caused by repeated confirmation prompts.
+
+Operational workflow note:
+- Do **not** convert prompt-authorized steps into extra user confirmations. The user decided through the orchestrator prompt. That is sufficient.
+- Normal task closure includes: validation checks, selective commit, push — all **without further approval** when already authorized by the current prompt.
+- If a recoverable error occurs (e.g. environment issue, encoding mismatch, rebase needed), fix it and continue. Report in the final output — do not interrupt the user.
+- **Non-recoverable actions remain fully gated** (see `docs/AI_RULES.md` and `docs/COMMANDS.md` for the full list).
+- **Deploy gate:** deploy is still an orchestrator-level gate, but if the current task prompt explicitly authorizes it, run deploy commands without asking again.
+
+Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" section · `docs/AI_RULES.md` — "Aggressive autonomy" section.
+
+---
+
 ## No unnecessary confirmations (global rule)
 
-Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A**.
+Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A** · **Aggressive autonomy policy** (section above).
 
-- **Determined docs-only tasks** do not require new user authorization.
+- **Determined tasks with clear allowed paths** do not require new user authorization.
 - If the task is already in the roadmap or is a direct consequence of the previous task, the orchestrator **generates the implementer prompt directly** without asking «vuoi?», «procedo?», «autorizzi?».
 - The implementer must **execute and close** according to the workflow (sections below), without asking the user for additional confirmations.
-- **Manual gate** is mandatory **only** for: runtime, VPS runtime, n8n runtime, Alina app changes, Apps Script deploy, tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, sensitive data/credentials, real physical test.
+- **Manual gate** is mandatory **only** for: runtime, VPS runtime, n8n runtime, Alina app changes, Apps Script deploy (without prompt authorization), tag, rollback, API key, login, GitHub Actions, new recurring costs, automatic runner, sensitive data/credentials, real physical test.
 - **GitHub** remains the source of truth.
 - The cycle closes with **commit/push** and subsequent **`aggio`** or auto-aggio for verification, **not** with «shall I proceed?» requests.
 - Step-by-step mode (PRIORITY 0) is mandatory only when the user is manually operating n8n/VPS/browser/terminal/Apps Script.
