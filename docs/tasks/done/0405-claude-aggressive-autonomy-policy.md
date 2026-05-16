@@ -13,7 +13,7 @@ Implement the user's aggressive Claude Code autonomy policy: proceed without rep
 
 - Completed by: Claude Code
 - Completion date: 2026-05-16
-- Completion commit: see git log
+- Completion commit: `2e9e402`
 - Session: `docs/sessions/2026-05-16-claude-aggressive-autonomy-policy.md`
 
 ## Evidence
