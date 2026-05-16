@@ -664,12 +664,7 @@ function safeConfig_(config) {
 }
 
 function requireAccess_(code) {
-  const cfg = getConfigRaw_();
-  const expected = String(cfg.codice_accesso || DEFAULT_ACCESS_CODE);
-
-  if (String(code || '') !== expected) {
-    throw new Error('Codice accesso non valido');
-  }
+  // V2.2.0: access code check removed — single-user personal app, URL is the key
 }
 
 function computeSummaries_(shifts, salaries, config) {
