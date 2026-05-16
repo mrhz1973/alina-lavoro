@@ -13,7 +13,7 @@ Deploy the already-committed patched V2.2.0 source (batch 0399–0403) to Apps S
 
 - Completed by: Claude Code
 - Completion date: 2026-05-16
-- Completion commit: see git log after this session commit
+- Completion commit: `3611e15`
 - Session: `docs/sessions/2026-05-16-v220-patched-source-deploy.md`
 - Deploy result: @33 (deployment ID `AKfycbyIkaQqS-Dce0tfdxyfjdnEEE_xSb3Ys3KdeGL9xiX652QfgfAFRRBSvmuLXdPqQhaXSg`)
 - Source pushed: V2.2.0 + patch 2026-05-16 (commit `0118e70`)
