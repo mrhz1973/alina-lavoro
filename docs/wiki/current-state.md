@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0371)**
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0377)**
 **Posture:** V2.1.1 stable — tag `v2.1.1-stable` created; maintenance-mode, monitor only.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0371 — V2.1.1 maintenance-mode close** (2026-05-16): batch 0366–0371 done. |
-| Batch completed | 0366 (test OK), 0367 (tag v2.1.1-stable), 0368 (gas-current), 0369 (docs audit), 0370 (rollback cleanup), 0371 (close) |
-| Queue | `docs/tasks/queue/0372-maintenance-review.md` (GATE: user explicit) |
+| Last completed | **0377 — maintenance & autonomy batch close** (2026-05-16): batch 0372–0377 done. |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (LLMS cleanup + permission friction reduction) |
+| Queue | none pending |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

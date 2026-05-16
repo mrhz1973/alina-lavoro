@@ -30,8 +30,8 @@
 | Tag | **`v2.1.1-stable`** (created 2026-05-16, task 0367) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@30** (V2.1.1 live; same deployment ID as @29/@28/@26/@24; deployed 2026-05-16) |
-| Last manual test | **FAILED** (0362, V2.1.0) — V2.1.1 deployed; new test required (task 0366) |
-| App scope | **V2.1.1 deployed · quick resume fix · stable tag pending 0366** |
+| Last manual test | **PASS** (0366, V2.1.1) — "tutto ok 2.1.1" (2026-05-16) |
+| App scope | **V2.1.1 stable · quick resume fix · tag `v2.1.1-stable` · maintenance-mode** |
 
 ---
 
@@ -47,9 +47,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor** — Telegra
 
 | State | Info |
 |---|---|
-| Last completed | **0371** — V2.1.1 maintenance-mode close (2026-05-16): batch 0366–0371 done. |
-| Batch completed | 0353–0361 (V2.1.0), 0362 (test FAILED), 0364 (hotfix), 0365 (deploy), 0366–0371 (stable close) |
-| Queue | `docs/tasks/queue/0372-maintenance-review.md` (GATE: user explicit) |
+| Last completed | **0377** — V2.1.1 maintenance-mode close (2026-05-16): batch 0372–0377 done. |
+| Batch completed | 0353–0361 (V2.1.0), 0362 (test FAILED), 0364 (hotfix), 0365 (deploy), 0366–0371 (stable close), 0372–0377 (cleanup + autonomy) |
+| Queue | none pending |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

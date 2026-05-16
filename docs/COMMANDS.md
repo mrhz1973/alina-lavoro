@@ -11,6 +11,32 @@ Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
 - L'orchestratore verifica l'esito con **`aggio`** o futuro **auto-aggio** (vedi `docs/automation/auto-aggio-design.md`).
 - Le conferme esplicite restano obbligatorie solo per gate sensibili (runtime, VPS runtime, n8n runtime, app, deploy, tag, rollback, API key, login, GitHub Actions, costi nuovi, runner automatico, dati sensibili, test fisico reale).
 
+## Comandi sicuri — nessuna conferma richiesta
+
+Riferimento canonico: `docs/ORCHESTRATOR_RULES.md` — **PRIORITÀ 0A**.
+
+I comandi seguenti sono **sicuri, non distruttivi e reversibili**. L'implementatore deve eseguirli senza richiedere conferma all'utente nei task autorizzati:
+
+```
+git status        git diff         git log          git branch
+git rev-parse     git remote       git show         git tag --list
+grep              node --check     ls               diff
+cp (snapshot)     git diff --check
+```
+
+**Require explicit gate — never auto-execute:**
+
+```
+npm run deploy    clasp push       clasp deploy
+git reset         git clean        git push --force
+git tag (create)  git push origin <tag>
+rm / delete       secrets / credentials / OAuth
+```
+
+Canonical gate list: `docs/ORCHESTRATOR_RULES.md` PRIORITÀ 0A + sezione Open Gates in `docs/LLMS.md`.
+
+---
+
 ## Orchestratore / aggio locale
 
 Cursor deve scegliere automaticamente il comando corretto in base all'ambiente, senza chiedere all'utente quale usare.
