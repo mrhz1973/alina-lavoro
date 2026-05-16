@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-16 (task 0365)**
-**Posture:** V2.1.1 deployed @30 — quick resume persistence fix; stable tag pending manual test (task 0366).
+**Derived memory (Level 2) — last updated: 2026-05-16 (task 0371)**
+**Posture:** V2.1.1 stable — tag `v2.1.1-stable` created; maintenance-mode, monitor only.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -13,11 +13,11 @@
 |---|---|
 | Source version | **V2.1.1** (deployed 2026-05-16) |
 | Production version | **V2.1.1** (deployed 2026-05-16) |
-| Tag | **`v2.0.1-stable`** (last stable; v2.1.1-stable pending 0366) |
+| Tag | **`v2.1.1-stable`** (created 2026-05-16, task 0367) |
 | Branch | **main** |
 | Apps Script | **@30** (V2.1.1 live; same deployment ID as @29/@28/@26/@24; deployed 2026-05-16) |
-| Last test | **FAILED** (0362, V2.1.0) — Pending 0366 (V2.1.1) |
-| Scope | **V2.1.1 deployed · quick resume fix · stable tag pending 0366** |
+| Last test | **PASS** (0366, V2.1.1) — "tutto ok 2.1.1" (2026-05-16) |
+| Scope | **V2.1.1 stable · quick resume fix · tag `v2.1.1-stable` · maintenance-mode** |
 
 ---
 
@@ -25,11 +25,10 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0365 — V2.1.1 deploy** (2026-05-16): V2.1.1 deployed @30. |
-| Done | 0362 — post-deploy test FAILED (V2.1.0 quick resume broken). |
-| Queue | `docs/tasks/queue/0366-v211-post-deploy-test.md` (GATE: manual test) |
-| Queue | `docs/tasks/queue/0367-v211-stable-tag.md` (GATE: after 0366 OK) |
-| Blocked | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
+| Last completed | **0371 — V2.1.1 maintenance-mode close** (2026-05-16): batch 0366–0371 done. |
+| Batch completed | 0366 (test OK), 0367 (tag v2.1.1-stable), 0368 (gas-current), 0369 (docs audit), 0370 (rollback cleanup), 0371 (close) |
+| Queue | `docs/tasks/queue/0372-maintenance-review.md` (GATE: user explicit) |
+| Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
 
@@ -72,7 +71,7 @@ V2.0.2 candidates: startup UX polish (on demand), no-login mode (explicit gate),
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.1.1 | pending `v2.1.1-stable` (after 0366) | @30 |
+| V2.1.1 | `v2.1.1-stable` (2026-05-16) | @30 |
 | V2.1.0 | no stable tag (0362 failed) | @29 |
 | V2.0.1 | `v2.0.1-stable` | @28 |
 | V2.0.0 | `v2.0.0-stable` | @26 |
