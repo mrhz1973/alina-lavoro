@@ -37,6 +37,8 @@
 
 ## Active Workstream
 
+**Route fix for external import preview page (2026-05-17, task 0436):** doGet routing made robust — `String(...).trim().toLowerCase()` + try/catch + aliases (`externalimportpreview`, `import-preview`). Previous strict `===` match may have failed due to URL encoding or GAS caching. Re-pushed HEAD/dev. No deploy. Test URL: `/dev?page=external-import-preview`. Full session: `docs/sessions/2026-05-17-external-import-preview-page-route-fix.md`.
+
 **Separate external import preview page (2026-05-17, task 0435):** New architecture — completely separate ExternalImportPreview.html page, accessible only via `/dev?page=external-import-preview`. doGet routes the parameter defensively; default route (no parameter) unchanged. previewExternalSheetImport backend function (read-only). spreadsheets.readonly scope added to appsscript.json. Index.html NOT modified (APP_BUILD='0428'). No deploy. Test URL: `/dev?page=external-import-preview`. Full session: `docs/sessions/2026-05-17-external-import-preview-page-canary.md`.
 
 **Rollback broken preview canary (2026-05-17, task 0434):** 0433 /dev boot test FAIL — "Apertura app…" stuck. Root cause: `renderExternalSheetPreviewSection_()` inside `renderSettings()` causes boot hang. No hotfix. HEAD/dev restored to build 0428 from tag `v2.2.0-build0428-stable`. `spreadsheets.readonly` removed. `previewExternalSheetImport` removed. `clasp push --force` done — HEAD updated, no deploy. Production @57 unchanged. Full session: `docs/sessions/2026-05-17-rollback-broken-preview-canary.md`. Future import attempt must use separate ultra-minimal dev page or lazy render only.
@@ -93,9 +95,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0435** (separate external import preview page — ExternalImportPreview.html — HEAD/dev push only — 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN), **0431 (rollback to build 0428 + deploy @57 — phone test PASS)**, **0432 (external sheet import safe design — docs-only)**, 0433 (external sheet preview canary — build 0433 — /dev boot FAIL), **0434 (rollback broken preview canary — HEAD/dev restored to 0428)**, **0435 (separate external import preview page — HEAD/dev push only — no deploy)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html. Test URL: `/dev?page=external-import-preview`. Phone test gate pending for preview page. |
+| Last completed | **0436** (route fix external import preview page — doGet robust routing — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …0432 (external import safe design — docs-only), 0433 (external sheet preview canary — /dev boot FAIL), **0434 (rollback HEAD/dev to build 0428)**, **0435 (separate external import preview page — HEAD/dev push only)**, **0436 (route fix — doGet robust routing — HEAD/dev push only)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html + robust routing. Test URL: `/dev?page=external-import-preview`. Phone test gate pending for preview page. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

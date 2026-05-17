@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0435 separate external import preview page)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html added (0435); Index.html unchanged at APP_BUILD='0428'; no deploy. Test URL: `/dev?page=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0436 route fix external import preview page)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + robust doGet routing (0436); Index.html unchanged at APP_BUILD='0428'; no deploy. Test URL: `/dev?page=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,7 +11,7 @@
 
 | Field | Value |
 |---|---|
-| Source version | **HEAD: V2.2.0 + 0406–0428 + ExternalImportPreview (0435)** / Production: V2.2.0 + 0406–0428 |
+| Source version | **HEAD: V2.2.0 + 0406–0428 + ExternalImportPreview + robust doGet routing (0436)** / Production: V2.2.0 + 0406–0428 |
 | Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — **phone test PASS 2026-05-17**) |
 | Tag | **`v2.2.0-stable`** (on @54/0427) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** |
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0435** (separate external import preview page — ExternalImportPreview.html — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0432 (external import safe design — docs-only), 0433 (external sheet preview canary — /dev boot FAIL — rolled back), **0434 (rollback HEAD/dev to build 0428)**, **0435 (separate external import preview page — HEAD/dev push only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html (0435). Test: `/dev?page=external-import-preview`. |
+| Last completed | **0436** (route fix — doGet robust routing — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …0434 (rollback HEAD/dev to build 0428), **0435 (separate external import preview page — HEAD/dev push only)**, **0436 (route fix — doGet robust routing — HEAD/dev push only)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html + robust routing (0436). Test: `/dev?page=external-import-preview`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

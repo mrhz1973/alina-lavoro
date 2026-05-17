@@ -86,7 +86,14 @@ const DEFAULT_CONFIG = {
 };
 
 function doGet(e) {
-  if (e && e.parameter && e.parameter.page === 'external-import-preview') {
+  var page = '';
+  try {
+    page = String((e && e.parameter && e.parameter.page) ? e.parameter.page : '').trim().toLowerCase();
+  } catch (_) {
+    page = '';
+  }
+
+  if (page === 'external-import-preview' || page === 'externalimportpreview' || page === 'import-preview') {
     return HtmlService
       .createHtmlOutputFromFile('ExternalImportPreview')
       .setTitle('Preview Import Esterno — DEV')
