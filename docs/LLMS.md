@@ -39,6 +39,8 @@
 
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
+**External preview runtime version check (2026-05-17, task 0440):** Added runtime diagnostic `externalImportPreviewRuntimeInfo()` and "Verifica runtime" button to ExternalImportPreview.html to determine which code version is actually executing in `/dev`. User still sees SpreadsheetApp.openById error despite correct source; this diagnostic will identify if runtime is old/cached or if issue is client-side. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview` → click "Verifica runtime". Session: `docs/sessions/2026-05-17-external-preview-runtime-version-check.md`.
+
 **Verify 0438 remote code (2026-05-17, task 0439):** Diagnostic confirmed remote Apps Script HEAD contains correct 0438 fix - no `SpreadsheetApp.openById` active, Advanced Sheets Service enabled, proper readonly scopes. User error likely browser cache or authorization pending. No code changes needed. Session: `docs/sessions/2026-05-17-verify-0438-remote-code.md`.
 
 **Route diagnostic fix (2026-05-17, task 0437):** Added `getRequestRoute_(e)` helper (reads `page`/`route`/`view`/`alinaPage`), `isExternalImportPreviewRoute_()`, and `debug-route` diagnostic page. doGet now checks all 4 parameter names before defaulting to Index. Pushed HEAD/dev. No deploy. Test: `/dev?route=debug-route` (verify params), `/dev?route=external-import-preview` (preview page). Session: `docs/sessions/2026-05-17-external-import-preview-route-diagnostic.md`.
@@ -101,9 +103,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0439** (verify 0438 remote code — diagnostic confirmed remote Apps Script correct — user error likely cache/authorization — 2026-05-17) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + Advanced Sheets Service read-only verified. User should test with hard refresh. |
+| Last completed | **0440** (external preview runtime version check — added diagnostic function and button to determine actual runtime version — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic. User should test: click "Verifica runtime" button. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

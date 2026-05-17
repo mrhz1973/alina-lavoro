@@ -221,6 +221,16 @@ function extractSpreadsheetId_(input) {
   return null;
 }
 
+function externalImportPreviewRuntimeInfo() {
+  return {
+    ok: true,
+    marker: "0440-runtime-sheets-api",
+    timestamp: new Date().toISOString(),
+    uses: "Sheets.Spreadsheets.Values.get",
+    spreadsheetAppOpenByIdExpected: false
+  };
+}
+
 function setupAlinaLavoro() {
   const ss = getSpreadsheet_();
 

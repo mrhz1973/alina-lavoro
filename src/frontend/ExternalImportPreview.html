@@ -32,6 +32,7 @@
   <input type="text" id="tab-name" placeholder="Foglio1">
 
   <button id="btn-preview" onclick="runPreview()">Anteprima</button>
+  <button id="btn-runtime" onclick="checkRuntime()" style="background: #f39c12; margin-left: 10px;">Verifica runtime</button>
   <p class="info">Nessun dato viene scritto o modificato. Solo lettura.</p>
 
   <div id="result-area"></div>
@@ -84,6 +85,39 @@
           area.innerHTML = '<div class="error-box">Errore chiamata backend:\n' + escHtml(String(err && err.message ? err.message : err)) + '</div>';
         })
         .previewExternalSheetImport({ url: url, tab: tab });
+    }
+
+    function checkRuntime() {
+      var btn = document.getElementById('btn-runtime');
+      var area = document.getElementById('result-area');
+
+      btn.disabled = true;
+      btn.textContent = 'Verifica…';
+      area.innerHTML = '<div class="result-box">Verifica runtime in corso…</div>';
+
+      google.script.run
+        .withSuccessHandler(function(data) {
+          btn.disabled = false;
+          btn.textContent = 'Verifica runtime';
+          if (data && data.ok) {
+            var html = '<div class="result-box">';
+            html += '<strong>Runtime Marker:</strong> ' + data.marker + '\n';
+            html += '<strong>Timestamp:</strong> ' + data.timestamp + '\n';
+            html += '<strong>Uses:</strong> ' + data.uses + '\n';
+            html += '<strong>SpreadsheetApp.openById Expected:</strong> ' + data.spreadsheetAppOpenByIdExpected + '\n';
+            html += '</div>';
+            area.innerHTML = html;
+          } else {
+            var msg = (data && data.error) ? data.error : 'Errore sconosciuto.';
+            area.innerHTML = '<div class="error-box">Errore runtime: ' + escHtml(msg) + '</div>';
+          }
+        })
+        .withFailureHandler(function(err) {
+          btn.disabled = false;
+          btn.textContent = 'Verifica runtime';
+          area.innerHTML = '<div class="error-box">Errore chiamata runtime:\n' + escHtml(String(err && err.message ? err.message : err)) + '</div>';
+        })
+        .externalImportPreviewRuntimeInfo();
     }
 
     function escHtml(s) {
