@@ -39,6 +39,8 @@
 
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
+**Force inline preview route (2026-05-17, task 0443):** Fixed route interception issue where `/dev?route=external-import-preview-inline` opened Home instead of inline page. Added explicit route check FIRST in doGet(e) and forced push to remote runtime. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview-inline`. Session: `docs/sessions/2026-05-17-force-inline-preview-route.md`.
+
 **External preview inline page (2026-05-17, task 0442):** Created new DEV inline route `/dev?route=external-import-preview-inline` to bypass HTML sync issues. Implemented `buildExternalImportPreviewInlineHtml_()` function serving complete HTML page directly from Code.gs with runtime diagnostic and preview functionality. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview-inline`. Session: `docs/sessions/2026-05-17-external-preview-inline-page.md`.
 
 **Verify external preview HTML push (2026-05-17, task 0441):** Fixed HTML sync issue where `npm run sync` failed to copy updated ExternalImportPreview.html to `.gas/`, causing runtime diagnostic button to be missing. Manually copied HTML file and pushed with `clasp push --force`. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview` → "Verifica runtime" button should now be visible. Session: `docs/sessions/2026-05-17-verify-external-preview-html-push.md`.
@@ -107,9 +109,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0442** (external preview inline page — created new inline route to bypass HTML sync issues — complete HTML served from Code.gs — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route. User should test: `/dev?route=external-import-preview-inline`. |
+| Last completed | **0443** (force inline preview route — fixed route interception where inline route opened Home — added explicit check FIRST in doGet — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + forced inline route. User should test: `/dev?route=external-import-preview-inline`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

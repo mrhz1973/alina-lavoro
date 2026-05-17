@@ -111,6 +111,15 @@ function isExternalImportPreviewInlineRoute_(route) {
 function doGet(e) {
   var route = getRequestRoute_(e);
 
+  // FORCE INLINE PREVIEW ROUTE - must be checked FIRST
+  if (route === 'external-import-preview-inline' || route === 'import-preview-inline') {
+    return HtmlService
+      .createHtmlOutput(buildExternalImportPreviewInlineHtml_())
+      .setTitle('Preview Google Sheet esterno INLINE 0442')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+
   if (route === 'debug-route') {
     var params = (e && e.parameter) ? JSON.stringify(e.parameter) : '{}';
     return HtmlService.createHtmlOutput(
@@ -120,14 +129,6 @@ function doGet(e) {
       '<p><b>e.parameter:</b> ' + params + '</p>' +
       '</body></html>'
     ).setTitle('ALINA ROUTE DEBUG');
-  }
-
-  if (isExternalImportPreviewInlineRoute_(route)) {
-    return HtmlService
-      .createHtmlOutput(buildExternalImportPreviewInlineHtml_())
-      .setTitle('Preview Google Sheet esterno INLINE 0442')
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 
   if (isExternalImportPreviewRoute_(route)) {
