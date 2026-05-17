@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (tasks 0391+0392 stable close)**
-**Posture:** V2.2.0 STABLE. Tag v2.2.0-stable created 2026-05-17. Phone test PASS on @54 / build 0427. External sheet import NOT live. Maintenance mode.
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0428 day bars color fix)**
+**Posture:** V2.2.0 STABLE. Tag v2.2.0-stable (on @54/0427). Build 0428 deployed @55 (day bars fix, phone test pending). External sheet import NOT live. Maintenance mode.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0427** (UI-only Mesi cleanup, build 0427) |
-| Production version | **V2.2.0 + 0406–0427** (deployed @54 2026-05-17, URL unchanged) |
-| Tag | **`v2.2.0-stable`** (created 2026-05-17) |
+| Source version | **V2.2.0 + 0406–0428** (day bars color fix, build 0428) |
+| Production version | **V2.2.0 + 0406–0428** (deployed @55 2026-05-17, URL unchanged) |
+| Tag | **`v2.2.0-stable`** (created 2026-05-17, on @54/0427) |
 | Branch | **main** |
-| Apps Script | **@54** (UI-only patch 0427 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last test | **PASS** — 2026-05-17, phone test on @54 / build 0427 |
-| Scope | **V2.2.0 stable · no-login · 0406–0427 deployed @54 · URL unchanged · tag v2.2.0-stable · import NOT live · maintenance mode** |
+| Apps Script | **@55** (day bars fix 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last test | **PASS** — 2026-05-17, phone test on @54 / build 0427 (0428/@55 pending) |
+| Scope | **V2.2.0 stable · no-login · 0406–0428 deployed @55 · URL unchanged · tag v2.2.0-stable · import NOT live · maintenance mode** |
 
 ---
 
