@@ -37,6 +37,8 @@
 
 ## Active Workstream
 
+**External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
+
 **Route diagnostic fix (2026-05-17, task 0437):** Added `getRequestRoute_(e)` helper (reads `page`/`route`/`view`/`alinaPage`), `isExternalImportPreviewRoute_()`, and `debug-route` diagnostic page. doGet now checks all 4 parameter names before defaulting to Index. Pushed HEAD/dev. No deploy. Test: `/dev?route=debug-route` (verify params), `/dev?route=external-import-preview` (preview page). Session: `docs/sessions/2026-05-17-external-import-preview-route-diagnostic.md`.
 
 **Route fix for external import preview page (2026-05-17, task 0436):** doGet routing made robust — `String(...).trim().toLowerCase()` + try/catch + aliases (`externalimportpreview`, `import-preview`). Previous strict `===` match may have failed due to URL encoding or GAS caching. Re-pushed HEAD/dev. No deploy. Test URL: `/dev?page=external-import-preview`. Full session: `docs/sessions/2026-05-17-external-import-preview-page-route-fix.md`.
@@ -97,9 +99,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0437** (route diagnostic — getRequestRoute_ + debug-route + multi-param — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic — multi-param + debug-route — HEAD/dev push only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + multi-param routing + debug-route. Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. Phone test gate pending. |
+| Last completed | **0438** (external preview read-only scope fix — Advanced Sheets Service — no SpreadsheetApp.openById — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic — multi-param + debug-route)**, **0438 (readonly scope fix — Advanced Sheets Service)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + Advanced Sheets Service read-only. Test: `/dev?route=external-import-preview`. Phone test gate pending. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

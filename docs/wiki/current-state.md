@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0436 route fix external import preview page)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + multi-param routing + debug-route (0437); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0438 external preview read-only scope fix)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + Advanced Sheets Service read-only (0438); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **HEAD: V2.2.0 + 0406–0428 + ExternalImportPreview + robust doGet routing (0436)** / Production: V2.2.0 + 0406–0428 |
+| Source version | **HEAD: V2.2.0 + 0406–0428 + ExternalImportPreview + Advanced Sheets Service read-only (0438)** / Production: V2.2.0 + 0406–0428 |
 | Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — **phone test PASS 2026-05-17**) |
 | Tag | **`v2.2.0-stable`** (on @54/0427) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** |
-| Apps Script | **@57** (production, unchanged; HEAD has ExternalImportPreview.html from 0435 — no deploy) |
-| Last test | **PASS** — 2026-05-17, phone test on @57 / build 0428 (app boot OK) — preview page not yet tested |
-| Scope | **Production @57: 0428 · no-login · URL unchanged · external import NOT live · no deploy** / **HEAD: ExternalImportPreview.html added · doGet routes ?page=external-import-preview · spreadsheets.readonly in appsscript.json · Index.html APP_BUILD='0428' unchanged** |
+| Apps Script | **@57** (production, unchanged; HEAD has ExternalImportPreview.html + Advanced Sheets Service from 0438 — no deploy) |
+| Last test | **PASS** — 2026-05-17, phone test on @57 / build 0428 (app boot OK) — preview page read-only fix pending test |
+| Scope | **Production @57: 0428 · no-login · URL unchanged · external import NOT live · no deploy** / **HEAD: ExternalImportPreview.html added · Advanced Sheets Service enabled · previewExternalSheetImport uses Sheets API read-only · Index.html APP_BUILD='0428' unchanged** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0437** (route diagnostic — getRequestRoute_ + debug-route + multi-param — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0436 (route fix), **0437 (route diagnostic — multi-param + debug-route — HEAD/dev push only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + multi-param routing + debug-route (0437). Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. |
+| Last completed | **0438** (external preview read-only scope fix — Advanced Sheets Service — no SpreadsheetApp.openById — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …0436 (route fix), 0437 (route diagnostic), **0438 (readonly scope fix — Advanced Sheets Service)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + Advanced Sheets Service read-only. Test: `/dev?route=external-import-preview`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

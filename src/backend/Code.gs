@@ -144,23 +144,46 @@ function previewExternalSheetImport(payload) {
     var ssId = extractSpreadsheetId_(rawUrl);
     if (!ssId) return { ok: false, error: 'Impossibile estrarre ID dal valore fornito.' };
 
-    var ss = SpreadsheetApp.openById(ssId);
-    var sheet;
+    // Usa Advanced Sheets Service (read-only) invece di SpreadsheetApp.openById
+    var sheetName;
     if (tabName) {
-      sheet = ss.getSheetByName(tabName);
-      if (!sheet) return { ok: false, error: 'Foglio "' + tabName + '" non trovato.' };
+      sheetName = tabName;
     } else {
-      sheet = ss.getSheets()[0];
-      if (!sheet) return { ok: false, error: 'Nessun foglio trovato nel documento.' };
+      // Ottieni i metadati dei fogli per trovare il primo foglio
+      try {
+        var spreadsheet = Sheets.Spreadsheets.get(ssId);
+        if (spreadsheet && spreadsheet.sheets && spreadsheet.sheets.length > 0) {
+          sheetName = spreadsheet.sheets[0].properties.title;
+        } else {
+          return { ok: false, error: 'Nessun foglio trovato nel documento.' };
+        }
+      } catch (metaErr) {
+        return { ok: false, error: 'File non accessibile: verifica che il Google Sheet sia tuo o condiviso con questo account.' };
+      }
     }
 
-    var data = sheet.getDataRange().getValues();
-    if (!data || data.length < 2) {
-      return { ok: true, rowsRead: data ? data.length : 0, validRows: 0, invalidRows: 0, recognizedColumns: [], sampleRows: [], errors: ['Il foglio è vuoto o ha solo intestazioni.'] };
+    // Leggi i dati con Sheets API (read-only)
+    var range = sheetName + '!A1:Z';
+    var response;
+    try {
+      response = Sheets.Spreadsheets.Values.get(ssId, range);
+    } catch (apiErr) {
+      if (apiErr.message && apiErr.message.indexOf('permission') !== -1) {
+        return { ok: false, error: 'Autorizzazione read-only Google Sheet richiesta. Riapri la pagina /dev e autorizza se richiesto.' };
+      }
+      if (apiErr.message && apiErr.message.indexOf('Unable to parse range') !== -1) {
+        return { ok: false, error: 'Tab non trovato: controlla il nome del foglio in basso nel Google Sheet.' };
+      }
+      return { ok: false, error: 'File non accessibile: verifica che il Google Sheet sia tuo o condiviso con questo account.' };
     }
 
-    var headers = data[0].map(function(h) { return String(h).trim().toLowerCase(); });
-    var rows = data.slice(1);
+    var values = response.values;
+    if (!values || values.length < 2) {
+      return { ok: true, rowsRead: values ? values.length : 0, validRows: 0, invalidRows: 0, recognizedColumns: [], sampleRows: [], errors: ['Il foglio è vuoto o ha solo intestazioni.'] };
+    }
+
+    var headers = values[0].map(function(h) { return String(h).trim().toLowerCase(); });
+    var rows = values.slice(1);
     var validRows = 0;
     var invalidRows = 0;
     var sampleRows = [];
