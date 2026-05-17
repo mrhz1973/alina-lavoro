@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0443 force inline preview route)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + forced inline route (0443); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview-inline`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0444 verify inline route remote code)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route (local) - sync issue identified; Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview-inline`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0443** (force inline preview route — fixed route interception where inline route opened Home — added explicit check FIRST in doGet — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), 0441 (HTML sync fix), 0442 (inline page), **0443 (force route)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + forced inline route. User should test: `/dev?route=external-import-preview-inline`. |
+| Last completed | **0444** (verify inline route remote code — identified sync issue where clasp push appears to succeed but remote runtime not updated — local code correct but clasp pull returns old code — requires .clasp.json investigation — 2026-05-17) |
+| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), 0441 (HTML sync fix), 0442 (inline page), 0443 (force route), **0444 (sync issue)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + inline route (local). Remote sync issue identified. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
