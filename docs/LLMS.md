@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0419** (Mesi final layout cleanup) |
-| Production version | **V2.2.0 + 0406–0419** (deployed 2026-05-17 @45, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0420** (UI refinements + external sheet import) |
+| Production version | **V2.2.0 + 0406–0420** (deployed 2026-05-17 @47, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@45** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — redeploy in place) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @45 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0419 deployed @45 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@47** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — redeploy in place) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @47 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0420 deployed @47 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
 
-**Deployed @45 (2026-05-17, task 0419):** Mesi final layout cleanup — removed global "Analisi" block; all years (including current) are now accordions, current year open by default; each year accordion contains: color legend + annual stats + per-month 3-bar chart + months list. Month Detail compact header: removed two big metric cards, replaced with one compact stats line (total hours · estimated · real salary). Day cards in Month Detail now have 3 colored bars (presence/hours/estimated) matching month card style. APP_BUILD='0419'. URL unchanged (same deployment ID). Phone test pending → 0391 → 0392.
+**Deployed @47 (2026-05-17, task 0420):** Theme flash fix (sync `<script>` in `<head>` applies theme from localStorage before CSS); year stats compact inline strip (ore rounded `213h`, giorni + guadagno same line, accordion highlight, no duplicate month chart); day cards in Month Detail flex row (date left, stats right); external sheet import in Settings (Preview + mandatory checkbox + Replace, backend `previewImportFromSpreadsheet` + `applyReplaceFromExternalSheet` with LockService + backup guard); `spreadsheets.readonly` scope added to `appsscript.json`. APP_BUILD='0420'. URL unchanged. Phone test pending → 0391 → 0392.
+
+**Deployed @45 (2026-05-17, task 0419):** Mesi final layout cleanup — removed global "Analisi" block; all years (including current) are now accordions, current year open by default; each year accordion contains: color legend + annual stats + per-month 3-bar chart + months list. Month Detail compact header: removed two big metric cards, replaced with one compact stats line (total hours · estimated · real salary). Day cards in Month Detail now have 3 colored bars (presence/hours/estimated) matching month card style. APP_BUILD='0419'. URL unchanged.
 
 **Deployed @43 (2026-05-17, task 0418):** Mesi + Month Detail compact-card redesign — compact `.month-tab` cards with 3-bar mini chart; clickable day cards opening shift modal; note indicator. URL unchanged — redeploy in place (20-deployment cap hit).
 
@@ -59,9 +61,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0419** (Mesi final layout cleanup + deploy @45, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), **0419 (Mesi final layout cleanup + deploy @45)** |
-| Queue | **0391** (post-deploy phone test for @45), **0392** (stable tag after test pass). Next gate: manual user phone test on @45. |
+| Last completed | **0420** (UI refinements + external sheet import + deploy @47, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), **0420 (UI refinements + external sheet import + deploy @47)** |
+| Queue | **0391** (post-deploy phone test for @47), **0392** (stable tag after test pass). Next gate: manual user phone test on @47. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
