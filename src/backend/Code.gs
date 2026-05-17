@@ -2161,6 +2161,98 @@ function parseCsv_(text) {
   return { headers: headers, rows: dataRows };
 }
 
+/* ==========================================================================
+ * EXTERNAL GOOGLE SHEET IMPORT — PREVIEW ONLY (task 0433, 2026-05-17)
+ *
+ * Read-only preview of an external Google Sheet identified by URL or ID.
+ * NO writes, NO replace, NO backup creation in this function.
+ * Triggered exclusively by explicit user action (button click in Settings).
+ * NOT called from boot path (doGet, getBootstrap, render, initBackground_).
+ * ========================================================================== */
+
+function previewExternalSheetImport(accessCode, urlOrId, sheetName, dataType) {
+  setupAlinaLavoro();
+  requireAccess_(accessCode);
+
+  if (!urlOrId || !String(urlOrId).trim()) {
+    return { success: false, message: 'URL o ID del Google Sheet esterno mancante.' };
+  }
+
+  var id = extractSpreadsheetId_(String(urlOrId).trim());
+  if (!id) {
+    return { success: false, message: 'URL o ID non valido. Usa il link condivisibile di Google Sheets oppure solo l\'ID (la stringa alfanumerica nell\'URL dopo /d/).' };
+  }
+
+  var ss;
+  try {
+    ss = SpreadsheetApp.openById(id);
+  } catch (err) {
+    return { success: false, message: 'Impossibile aprire il Google Sheet esterno. Verifica che sia condiviso (almeno "Visualizzatore" o "Chiunque abbia il link") e che l\'ID sia corretto. Dettaglio: ' + err.message };
+  }
+
+  var sh;
+  if (sheetName && String(sheetName).trim()) {
+    sh = ss.getSheetByName(String(sheetName).trim());
+    if (!sh) {
+      return { success: false, message: 'Foglio "' + String(sheetName).trim() + '" non trovato nel Google Sheet esterno. Verifica il nome del tab (rispetta maiuscole/minuscole).' };
+    }
+  } else {
+    sh = ss.getSheets()[0];
+    if (!sh) {
+      return { success: false, message: 'Il Google Sheet esterno non contiene fogli.' };
+    }
+  }
+
+  var lastRow = sh.getLastRow();
+  var lastCol = sh.getLastColumn();
+
+  if (lastRow < 2 || lastCol < 1) {
+    return { success: false, message: 'Il foglio "' + sh.getName() + '" è vuoto o privo di righe dati (servono intestazioni + almeno una riga).' };
+  }
+
+  var headers = sh.getRange(1, 1, 1, lastCol).getValues()[0].map(function (h) {
+    return String(h || '').trim();
+  });
+
+  var values = sh.getRange(2, 1, lastRow - 1, lastCol).getValues();
+  var rows = values
+    .filter(function (row) { return row.join('').trim() !== ''; })
+    .map(function (row) {
+      var obj = {};
+      headers.forEach(function (header, idx) {
+        if (header) obj[header] = row[idx];
+      });
+      return obj;
+    });
+
+  if (rows.length === 0) {
+    return { success: false, message: 'Il foglio "' + sh.getName() + '" non contiene righe dati (solo intestazioni o righe vuote).' };
+  }
+
+  var result = buildImportPreview_(
+    { headers: headers, rows: rows },
+    dataType || null,
+    'external-sheet:' + ss.getName() + '/' + sh.getName()
+  );
+
+  result.externalSheetName = ss.getName();
+  result.externalTabName = sh.getName();
+  result.rowsRead = rows.length;
+
+  log_('previewExternalSheetImport', 'ok', 'Rows: ' + rows.length + ' sheet: ' + id.substring(0, 20));
+
+  return result;
+}
+
+function extractSpreadsheetId_(urlOrId) {
+  var m = urlOrId.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+
+  if (/^[a-zA-Z0-9_-]{20,}$/.test(urlOrId)) return urlOrId;
+
+  return null;
+}
+
 function parseTsv_(text) {
   if (text.charCodeAt(0) === 0xFEFF) {
     text = text.substring(1);
