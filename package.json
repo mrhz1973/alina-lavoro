@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sync": "mkdir -p .gas && cp src/backend/Code.gs .gas/Code.gs && cp src/frontend/Index.html .gas/Index.html && cp src/frontend/ExternalImportPreview.html .gas/ExternalImportPreview.html && cp appsscript.json .gas/appsscript.json",
+    "sync": "if [ ! -d .gas ]; then mkdir .gas; fi && rm -f .gas/Code.js && cp src/backend/Code.gs .gas/Code.gs && cp src/frontend/Index.html .gas/Index.html && cp src/frontend/ExternalImportPreview.html .gas/ExternalImportPreview.html && cp appsscript.json .gas/appsscript.json",
     "push": "npm run sync && clasp push",
     "deploy": "npm run sync && clasp push && clasp deploy",
     "aggio": "bash tools/aggio.sh",
