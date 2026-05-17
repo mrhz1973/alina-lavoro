@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0419** (rollback to last working build) |
-| Production version | **V2.2.0 + 0406–0419** (rollback 2026-05-17 @53, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0427** (UI-only Mesi cleanup, build 0427) |
+| Production version | **V2.2.0 + 0406–0427** (deployed @54 2026-05-17, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@53** (rollback to build 0419 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @53 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0419 deployed @53 · URL unchanged · awaiting manual phone test · import Google Sheet external NOT live** |
+| Apps Script deploy | **@54** (UI-only patch 0427 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @54 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0427 deployed @54 · URL unchanged · awaiting manual phone test · import Google Sheet external NOT live** |
 
 ---
 
 ## Active Workstream
 
-**Rollback to build 0419 @53 (2026-05-17, task 0426):** Builds 0420–0425 left app broken ("Errore avvio app"). Restored src/frontend/Index.html, src/backend/Code.gs, appsscript.json from commit e476618 (0419 state). Removed stale .gas/Code.js. clasp push --force + deploy @53 (same ID/URL). APP_BUILD='0419'. External sheet import (0420) not live. 0391/0392 pending. Phone test pending on @53.
+**Mesi UI-only cleanup @54 (2026-05-17, task 0427):** UI-only patch on top of rollback 0419 base. Removed duplicate month display (per-month chart inside year accordion); added compact year-stats-strip (ore/giorni/guadagno inline); inline stats in month card head; year toggle highlight; `hoursLabel_()` function. APP_BUILD='0427'. Index.html only — Code.gs and appsscript.json unchanged. Import NOT live. 0391/0392 pending. Phone test pending on @54.
+
+**Rollback to build 0419 @53 (2026-05-17, task 0426):** Builds 0420–0425 left app broken ("Errore avvio app"). Restored src/frontend/Index.html, src/backend/Code.gs, appsscript.json from commit e476618 (0419 state). Removed stale .gas/Code.js. clasp push --force + deploy @53 (same ID/URL). APP_BUILD='0419'. External sheet import (0420) not live. 0391/0392 pending.
 
 **Boot forensic hotfix @52 (2026-05-17, task 0425):** [superseded by rollback 0426] APP_BUILD='0425' deployed @52 — boot error persisted.
 
@@ -73,9 +75,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0426** (rollback to build 0419 — APP_BUILD='0419' + deploy @53, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), **0426 (rollback to build 0419 + redeploy @53)** |
-| Queue | **0391** (post-deploy phone test for @53), **0392** (stable tag after test pass). Next gate: manual user phone test on @53. |
+| Last completed | **0427** (Mesi UI-only cleanup — APP_BUILD='0427' + deploy @54, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), **0427 (Mesi UI-only cleanup + deploy @54)** |
+| Queue | **0391** (post-deploy phone test for @54), **0392** (stable tag after test pass). Next gate: manual user phone test on @54. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
