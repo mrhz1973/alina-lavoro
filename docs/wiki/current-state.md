@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0428 day bars color fix)**
-**Posture:** V2.2.0 STABLE. Tag v2.2.0-stable (on @54/0427). Build 0428 deployed @55 (day bars fix, phone test pending). External sheet import NOT live. Maintenance mode.
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0428 PASS)**
+**Posture:** V2.2.0 STABLE. Tag v2.2.0-stable (on @54/0427). Build 0428 deployed @55 (day bars fix, phone test PASS 2026-05-17). External sheet import NOT live. Maintenance mode.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -16,7 +16,7 @@
 | Tag | **`v2.2.0-stable`** (created 2026-05-17, on @54/0427) |
 | Branch | **main** |
 | Apps Script | **@55** (day bars fix 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last test | **PASS** — 2026-05-17, phone test on @54 / build 0427 (0428/@55 pending) |
+| Last test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK) |
 | Scope | **V2.2.0 stable · no-login · 0406–0428 deployed @55 · URL unchanged · tag v2.2.0-stable · import NOT live · maintenance mode** |
 
 ---
@@ -71,7 +71,8 @@ V2.0.2 candidates: startup UX polish (on demand), minor cleanup. See task 0353. 
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.2.0 + 0406–0427 | **`v2.2.0-stable`** (2026-05-17) | **@54 UI-only patch (current production — same ID/URL)** |
+| V2.2.0 + 0406–0428 | — | **@55 day bars color fix (current production — PASS 2026-05-17)** |
+| V2.2.0 + 0406–0427 | **`v2.2.0-stable`** (2026-05-17) | @54 UI-only patch |
 | V2.2.0 + 0406–0419 | — | @53 rollback (2026-05-17) |
 | V2.2.0 + 0406–0425 | — | @52 boot forensic hotfix (broken — superseded by rollback) |
 | V2.2.0 + 0406–0424 | — | @51 force boot recovery |

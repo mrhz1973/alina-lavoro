@@ -18,4 +18,5 @@ Fix colored bars in Month Detail day cards — bars appeared all dark instead of
 - Backend modified: no
 - appsscript.json modified: no
 - Import Google Sheet external: not reintroduced
+- Phone test: PASS — user confirmed 2026-05-17 (bars render correctly: purple/teal/yellow)
 - Session: docs/sessions/2026-05-17-day-bars-color-fix-ui-only.md

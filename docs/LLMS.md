@@ -30,14 +30,14 @@
 | Tag | **`v2.2.0-stable`** (created 2026-05-17) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@55** (day bars color fix 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** — 2026-05-17, phone test on @54 / build 0427 (0428 pending test) |
+| Last manual test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK) |
 | App scope | **V2.2.0 stable · no-login direct start · 0406–0428 deployed @55 · URL unchanged · tag v2.2.0-stable · import Google Sheet external NOT live** |
 
 ---
 
 ## Active Workstream
 
-**Day bars color fix @55 (2026-05-17, task 0428):** UI-only fix — `.month-detail-day-bar-fill` lacked `display:block`; bars appeared all dark. Added `display:block`; moved bar CSS to general section. Legend colors (purple/teal/yellow) now render. Backend and appsscript.json unchanged. APP_BUILD='0428'. Phone test pending.
+**Day bars color fix @55 (2026-05-17, task 0428):** UI-only fix — `.month-detail-day-bar-fill` lacked `display:block`; bars appeared all dark. Added `display:block`; moved bar CSS to general section. Legend colors (purple/teal/yellow) now render. Backend and appsscript.json unchanged. APP_BUILD='0428'. Phone test PASS 2026-05-17.
 
 **V2.2.0 STABLE CLOSED (2026-05-17, tasks 0391+0392):** Phone test PASS on @54 / build 0427. Tag v2.2.0-stable created. Import Google Sheet external NOT live (future separate workstream). App in maintenance mode.
 

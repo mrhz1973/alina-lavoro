@@ -38,4 +38,4 @@ Comparison: `.month-tab-bar-fill` (month cards) correctly had `display:block;hei
 - src/frontend/Index.html
 
 ## Status
-Deployed @55. Phone test pending → task 0391 pattern.
+Deployed @55. Phone test PASS — user confirmed 2026-05-17. Bars render correctly (purple/teal/yellow). Task 0428 closed.
