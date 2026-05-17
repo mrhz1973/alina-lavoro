@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0423** (boot stuck hotfix) |
-| Production version | **V2.2.0 + 0406–0423** (deployed 2026-05-17 @50, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0424** (force boot recovery) |
+| Production version | **V2.2.0 + 0406–0424** (deployed 2026-05-17 @51, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@50** (boot hotfix 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @50 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0423 deployed @50 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@51** (force boot recovery 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @51 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0424 deployed @51 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
 
-**Boot stuck hotfix @50 (2026-05-17, task 0423):** App was stuck on boot placeholder "Apertura app…" after @49 deploy. Root cause: fragile DOMContentLoaded handler — if `state.config` was null after loadCache merge, `applyThemeLang()` threw TypeError, `showApp()` was never called, placeholder stayed forever. Fix: try/catch around loadCache+merge, null-guards for `state.config`/arrays/reminder, `applyThemeLang` null-safe via `var _cfg=state.config||{}`, `t()` null-safe, `renderActiveNotesMini` guarded, 3s fallback boot timer, `showApp` try/catch on render. APP_BUILD='0423'. Remote verified via pull. Phone test pending → 0391 → 0392.
+**Force boot recovery @51 (2026-05-17, task 0424):** Second boot stuck fix pass. Added `ensureStateShape_()` centralised guard; DOMContentLoaded now guarantees immediate render() from local state (no async dependency); render failure → `renderBootFallback_()` (Riprova + Impostazioni); `window.onerror` calls fallback if bootPlaceholder still visible; `initBackground_()` + `setupMobileUi_()` wrapped in try/catch; 3s timer removed. APP_BUILD='0424'. Remote verified @51. Phone test pending → 0391 → 0392.
+
+**Boot stuck hotfix @50 (2026-05-17, task 0423):** App stuck on "Apertura app…" after @49. Fix: null-guards, applyThemeLang null-safe, 3s fallback timer, showApp try/catch. APP_BUILD='0423'.
 
 **Root cause fix @49 (2026-05-17, task 0422):** `clasp pull` confirmed remote HEAD still had APP_BUILD='0419' — the `clasp push` in task 0420/0421 never actually sent 0420 to Apps Script remote. Fix: `rm .gas/Code.js` (stale pull artifact) + `clasp push --force` + `clasp deploy --deploymentId` → @49 (same ID/URL). Remote verified via pull: APP_BUILD='0420'. Phone test pending → 0391 → 0392.
 
@@ -67,9 +69,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0423** (boot stuck hotfix — APP_BUILD='0423' + redeploy @50, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy attempt @48), 0422 (root cause fix + corrected push + redeploy @49), **0423 (boot stuck hotfix + redeploy @50)** |
-| Queue | **0391** (post-deploy phone test for @50), **0392** (stable tag after test pass). Next gate: manual user phone test on @50. |
+| Last completed | **0424** (force boot recovery — APP_BUILD='0424' + redeploy @51, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), **0424 (force boot recovery + redeploy @51)** |
+| Queue | **0391** (post-deploy phone test for @51), **0392** (stable tag after test pass). Next gate: manual user phone test on @51. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

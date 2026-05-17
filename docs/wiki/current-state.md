@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
 **Derived memory (Level 2) — last updated: 2026-05-17 (task 0423)**
-**Posture:** V2.2.0 + 0406–0423 deployed @50 (boot stuck hotfix 2026-05-17). URL unchanged. Remote verified APP_BUILD='0423'. Manual phone test pending → stable tag pending.
+**Posture:** V2.2.0 + 0406–0424 deployed @51 (force boot recovery 2026-05-17). URL unchanged. Remote verified APP_BUILD='0424'. Manual phone test pending → stable tag pending.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0423** (boot hotfix deployed @50) |
-| Production version | **V2.2.0 + 0406–0423** (boot hotfix 2026-05-17 @50, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0424** (force boot recovery deployed @51) |
+| Production version | **V2.2.0 + 0406–0424** (force boot recovery 2026-05-17 @51, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** |
-| Apps Script | **@50** (boot hotfix 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last test | **PASS** (0366, V2.1.1) — V2.2.0 @50 phone test pending |
-| Scope | **V2.2.0 · no-login · 0406–0423 deployed @50 · URL unchanged · phone test pending · stable tag pending** |
+| Apps Script | **@51** (force boot recovery 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last test | **PASS** (0366, V2.1.1) — V2.2.0 @51 phone test pending |
+| Scope | **V2.2.0 · no-login · 0406–0424 deployed @51 · URL unchanged · phone test pending · stable tag pending** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0423** (boot stuck hotfix — APP_BUILD='0423' + redeploy @50, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48 — push not sent), 0422 (root cause fix + corrected push + redeploy @49), **0423 (boot stuck hotfix + redeploy @50)** |
-| Queue | **0391** (post-deploy phone test for @50), **0392** (stable tag). Next gate: manual phone test on @50. |
+| Last completed | **0424** (force boot recovery — APP_BUILD='0424' + redeploy @51, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48 — push not sent), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), **0424 (force boot recovery + redeploy @51)** |
+| Queue | **0391** (post-deploy phone test for @51), **0392** (stable tag). Next gate: manual phone test on @51. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
@@ -71,7 +71,8 @@ V2.0.2 candidates: startup UX polish (on demand), minor cleanup. See task 0353. 
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.2.0 + 0406–0423 | `v2.2.0-stable` (pending phone test) | @50 boot hotfix (same ID/URL — fix 0423) |
+| V2.2.0 + 0406–0424 | `v2.2.0-stable` (pending phone test) | @51 force boot recovery (same ID/URL — fix 0424) |
+| V2.2.0 + 0406–0423 | — | @50 boot hotfix |
 | V2.2.0 + 0406–0420 | — | @49 (0422 corrected push) |
 | V2.2.0 + 0406–0419 | — | @45 |
 | V2.2.0 + 0406–0418 | — | @43 |
