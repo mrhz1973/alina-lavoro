@@ -39,6 +39,8 @@
 
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
+**External preview real error diagnostic (2026-05-18, task 0445):** Added safe diagnostic layer to external Google Sheet preview flow. Implemented `redactSpreadsheetId_()`, `safeExternalImportError_()`, and `externalImportPreviewAccessProbe()` functions. Enhanced `previewExternalSheetImport()` with precise error phases. Added "Verifica accesso file" button to inline page. Implementation complete locally but blocked by same sync issue from task 0444. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-external-preview-real-error-diagnostic.md`.
+
 **Verify inline route remote code (2026-05-17, task 0444):** Identified sync issue where `clasp push --force` appears to succeed but remote Apps Script runtime not updated. Local source contains correct inline route, but `clasp pull` returns old code without it. Requires investigation of `.clasp.json` configuration and authentication. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-17-verify-inline-route-remote-code.md`.
 
 **Force inline preview route (2026-05-17, task 0443):** Fixed route interception issue where `/dev?route=external-import-preview-inline` opened Home instead of inline page. Added explicit route check FIRST in doGet(e) and forced push to remote runtime. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview-inline`. Session: `docs/sessions/2026-05-17-force-inline-preview-route.md`.
@@ -111,9 +113,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0444** (verify inline route remote code — identified sync issue where clasp push appears to succeed but remote runtime not updated — local code correct but clasp pull returns old code — requires .clasp.json investigation — 2026-05-17) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route (local). Remote sync issue identified. |
+| Last completed | **0445** (external preview real error diagnostic — added safe diagnostic layer with redactSpreadsheetId_, safeExternalImportError_, externalImportPreviewAccessProbe functions — enhanced previewExternalSheetImport with precise error phases — added "Verifica accesso file" button — implementation complete locally but blocked by sync issue — 2026-05-18) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer (local). Remote sync issue identified. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

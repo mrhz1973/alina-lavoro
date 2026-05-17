@@ -172,7 +172,7 @@ function previewExternalSheetImport(payload) {
           return { ok: false, error: 'Nessun foglio trovato nel documento.' };
         }
       } catch (metaErr) {
-        return { ok: false, error: 'File non accessibile: verifica che il Google Sheet sia tuo o condiviso con questo account.' };
+        return safeExternalImportError_('spreadsheet_get', ssId, tabName, metaErr);
       }
     }
 
@@ -183,12 +183,12 @@ function previewExternalSheetImport(payload) {
       response = Sheets.Spreadsheets.Values.get(ssId, range);
     } catch (apiErr) {
       if (apiErr.message && apiErr.message.indexOf('permission') !== -1) {
-        return { ok: false, error: 'Autorizzazione read-only Google Sheet richiesta. Riapri la pagina /dev e autorizza se richiesto.' };
+        return safeExternalImportError_('values_get_permission', ssId, sheetName, apiErr);
       }
       if (apiErr.message && apiErr.message.indexOf('Unable to parse range') !== -1) {
-        return { ok: false, error: 'Tab non trovato: controlla il nome del foglio in basso nel Google Sheet.' };
+        return safeExternalImportError_('values_get_range', ssId, sheetName, apiErr);
       }
-      return { ok: false, error: 'File non accessibile: verifica che il Google Sheet sia tuo o condiviso con questo account.' };
+      return safeExternalImportError_('values_get', ssId, sheetName, apiErr);
     }
 
     var values = response.values;
@@ -245,6 +245,96 @@ function externalImportPreviewRuntimeInfo() {
   };
 }
 
+function redactSpreadsheetId_(spreadsheetId) {
+  if (!spreadsheetId) return "(missing)";
+  var id = String(spreadsheetId);
+  if (id.length <= 3) return id + "…";
+  if (id.length <= 10) return id.substring(0, 3) + "…";
+  return id.substring(0, 6) + "…" + id.substring(id.length - 4);
+}
+
+function safeExternalImportError_(phase, spreadsheetId, tabName, err) {
+  return {
+    ok: false,
+    phase: phase,
+    spreadsheetIdRedacted: redactSpreadsheetId_(spreadsheetId),
+    tabName: tabName || "",
+    rawMessage: err.message || err.toString() || "Unknown error",
+    name: err.name || "",
+    stackFirstLine: (err.stack && err.stack.split('\n')[0]) || ""
+  };
+}
+
+function externalImportPreviewAccessProbe(payload) {
+  try {
+    // Extract payload parameters with tolerance for different field names
+    var rawUrl = (payload && payload.url) ? String(payload.url).trim() : '';
+    var ssId = (payload && payload.spreadsheetId) ? String(payload.spreadsheetId).trim() : '';
+    var tabName = (payload && payload.tab) ? String(payload.tab).trim() : '';
+    var tabNameAlt = (payload && payload.tabName) ? String(payload.tabName).trim() : '';
+
+    // Use spreadsheetId if provided, otherwise extract from URL
+    var effectiveSsId = ssId || extractSpreadsheetId_(rawUrl);
+    var effectiveTabName = tabName || tabNameAlt;
+
+    if (!effectiveSsId) {
+      return safeExternalImportError_('extract_id', effectiveSsId, effectiveTabName, new Error('Missing spreadsheet ID'));
+    }
+
+    // Phase 1: Get spreadsheet metadata
+    var title = '';
+    var availableSheets = [];
+    try {
+      var spreadsheet = Sheets.Spreadsheets.get(effectiveSsId, { fields: "properties.title,sheets.properties.title" });
+      if (spreadsheet) {
+        title = spreadsheet.properties && spreadsheet.properties.title ? spreadsheet.properties.title : '';
+        if (spreadsheet.sheets) {
+          availableSheets = spreadsheet.sheets.map(function(sheet) {
+            return sheet.properties && sheet.properties.title ? sheet.properties.title : '';
+          }).filter(function(name) { return name; });
+        }
+      }
+    } catch (metaErr) {
+      return safeExternalImportError_('spreadsheet_get', effectiveSsId, effectiveTabName, metaErr);
+    }
+
+    // Phase 2: Get sample values
+    var targetTabName = effectiveTabName;
+    if (!targetTabName && availableSheets.length > 0) {
+      targetTabName = availableSheets[0]; // Use first available sheet
+    }
+
+    var valuesRange = '';
+    var rowsSeen = 0;
+    if (targetTabName) {
+      try {
+        var range = targetTabName + '!A1:Z20';
+        var response = Sheets.Spreadsheets.Values.get(effectiveSsId, range);
+        if (response && response.values) {
+          valuesRange = range;
+          rowsSeen = response.values.length;
+        }
+      } catch (valuesErr) {
+        return safeExternalImportError_('values_get', effectiveSsId, targetTabName, valuesErr);
+      }
+    }
+
+    return {
+      ok: true,
+      phase: 'ok',
+      spreadsheetIdRedacted: redactSpreadsheetId_(effectiveSsId),
+      tabName: targetTabName,
+      title: title,
+      availableSheets: availableSheets,
+      valuesRange: valuesRange,
+      rowsSeen: rowsSeen
+    };
+
+  } catch (probeErr) {
+    return safeExternalImportError_('probe', '', '', probeErr);
+  }
+}
+
 function buildExternalImportPreviewInlineHtml_() {
   return '<!DOCTYPE html>' +
     '<html lang="it">' +
@@ -280,6 +370,7 @@ function buildExternalImportPreviewInlineHtml_() {
     '<input type="text" id="tab-name" placeholder="Foglio1">' +
 
     '<button id="btn-preview" onclick="runPreview()">Anteprima</button>' +
+    '<button id="btn-access" onclick="checkAccess()" style="background: #27ae60; margin-left: 10px;">Verifica accesso file</button>' +
     '<button id="btn-runtime" onclick="checkRuntime()" style="background: #f39c12; margin-left: 10px;">Verifica runtime</button>' +
     '<p class="info">Nessun dato viene scritto o modificato. Solo lettura.</p>' +
 
@@ -333,6 +424,58 @@ function buildExternalImportPreviewInlineHtml_() {
     '      area.innerHTML = "<div class=\\"error-box\\">Errore chiamata backend:\\n" + escHtml(String(err && err.message ? err.message : err)) + "</div>";' +
     '    })' +
     '    .previewExternalSheetImport({ url: url, tab: tab });' +
+    '}' +
+
+    'function checkAccess() {' +
+    '  var url = document.getElementById("sheet-url").value.trim();' +
+    '  var tab = document.getElementById("tab-name").value.trim();' +
+    '  var btn = document.getElementById("btn-access");' +
+    '  var area = document.getElementById("result-area");' +
+
+    '  if (!url) {' +
+    '    area.innerHTML = "<div class=\\"error-box\\">Inserisci un URL o ID Google Sheet.</div>";' +
+    '    return;' +
+    '  }' +
+
+    '  btn.disabled = true;' +
+    '  btn.textContent = "Verifica…";' +
+    '  area.innerHTML = "<div class=\\"result-box\\">Verifica accesso in corso…</div>";' +
+
+    '  google.script.run' +
+    '    .withSuccessHandler(function(data) {' +
+    '      btn.disabled = false;' +
+    '      btn.textContent = "Verifica accesso file";' +
+    '      if (data && data.ok) {' +
+    '        var html = "<div class=\\"result-box\\">";' +
+    '        html += "<strong>Stato:</strong> OK\\n";' +
+    '        html += "<strong>Fase:</strong> " + data.phase + "\\n";' +
+    '        html += "<strong>Spreadsheet ID:</strong> " + data.spreadsheetIdRedacted + "\\n";' +
+    '        html += "<strong>Foglio:</strong> " + data.tabName + "\\n";' +
+    '        html += "<strong>Titolo:</strong> " + data.title + "\\n";' +
+    '        html += "<strong>Fogli disponibili:</strong> " + (data.availableSheets || []).join(", ") + "\\n";' +
+    '        html += "<strong>Range valori:</strong> " + data.valuesRange + "\\n";' +
+    '        html += "<strong>Righe viste:</strong> " + data.rowsSeen + "\\n";' +
+    '        html += "</div>";' +
+    '        area.innerHTML = html;' +
+    '      } else {' +
+    '        var html = "<div class=\\"error-box\\">";' +
+    '        html += "<strong>Stato:</strong> ERRORE\\n";' +
+    '        html += "<strong>Fase:</strong> " + (data.phase || "sconosciuta") + "\\n";' +
+    '        html += "<strong>Spreadsheet ID:</strong> " + (data.spreadsheetIdRedacted || "sconosciuto") + "\\n";' +
+    '        html += "<strong>Foglio:</strong> " + (data.tabName || "") + "\\n";' +
+    '        html += "<strong>Messaggio:</strong> " + (data.rawMessage || "sconosciuto") + "\\n";' +
+    '        html += "<strong>Tipo errore:</strong> " + (data.name || "sconosciuto") + "\\n";' +
+    '        html += "<strong>Stack:</strong> " + (data.stackFirstLine || "sconosciuto") + "\\n";' +
+    '        html += "</div>";' +
+    '        area.innerHTML = html;' +
+    '      }' +
+    '    })' +
+    '    .withFailureHandler(function(err) {' +
+    '      btn.disabled = false;' +
+    '      btn.textContent = "Verifica accesso file";' +
+    '      area.innerHTML = "<div class=\\"error-box\\">Errore chiamata backend:\\n" + escHtml(String(err && err.message ? err.message : err)) + "</div>";' +
+    '    })' +
+    '    .externalImportPreviewAccessProbe({ url: url, tab: tab });' +
     '}' +
 
     'function checkRuntime() {' +
