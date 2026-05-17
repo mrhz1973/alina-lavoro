@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0417** (phone-test refinement batch) |
-| Production version | **V2.2.0 + 0406–0417** (deployed 2026-05-17 @41, same URL as @37/@39) |
+| Source version | **V2.2.0 + 0406–0418** (Mesi + Month Detail compact-card redesign) |
+| Production version | **V2.2.0 + 0406–0418** (deployed 2026-05-17 @43, same URL as @37/@39/@41) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@41** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @41 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0417 deployed @41 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@43** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — redeploy in place because 20-deployment cap was hit) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @43 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0418 deployed @43 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
 
-**Deployed @41 (2026-05-17, task 0417):** Phone-test refinement batch — Home header shows localized "Ciao Alina" only (date moved to hero subtitle, eyebrow removed); annual analytics rebuilt per-year with 3 colored bars per month (days / hours / salary) + single legend; Mesi list simplified to one clickable card per month (no "Dettaglio" button, salary button still available for editable past months). URL unchanged (same deployment ID as @37/@39). Phone test still pending → 0391 → 0392.
+**Deployed @43 (2026-05-17, task 0418):** Mesi + Month Detail compact-card redesign — inside each year accordion, months become compact `.month-tab` cards with month name, days/hours/salary stats line, three proportional bars (days/hours/salary) scaled within the year, optional small `Stipendio reale` button for editable past months; single compact color legend above year accordions; whole card clickable to open Month Detail. Month Detail day cards are now fully clickable (`.list-item--clickable`) → open shift modal for that date via extended `openManualShiftModal('', date)`; optional `📝 N` note indicator per day from shifts with `nota`. Today badge, IT/RU, theme, navbar, import/export, start-work fix 0406 preserved. URL unchanged (same deployment ID as @37/@39/@41) — redeploy in place because 20-deployment cap was hit. Phone test still pending → 0391 → 0392.
+
+**Deployed @41 (2026-05-17, task 0417):** Phone-test refinement batch — Home header shows localized "Ciao Alina" only (date moved to hero subtitle, eyebrow removed); annual analytics rebuilt per-year with 3 colored bars per month (days / hours / salary) + single legend; Mesi list simplified to one clickable card per month (no "Dettaglio" button, salary button still available for editable past months). URL unchanged (same deployment ID as @37/@39).
 
 **Deployed @39 (2026-05-17, task 0416):** Settings UX + mesi UX fixes. URL unchanged.
 
@@ -55,9 +57,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0417** (phone-test refinement batch + deploy @41, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), **0417 (phone-test refinement batch + deploy @41)** |
-| Queue | **0391** (post-deploy phone test for @41), **0392** (stable tag after test pass). Next gate: manual user phone test on @41. |
+| Last completed | **0418** (Mesi + Month Detail compact-card redesign + deploy @43, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), **0418 (Mesi + Month Detail compact-card redesign + deploy @43)** |
+| Queue | **0391** (post-deploy phone test for @43), **0392** (stable tag after test pass). Next gate: manual user phone test on @43. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
