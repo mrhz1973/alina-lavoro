@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0430 external Google Sheet import isolated)**
-**Posture:** V2.2.0 + 0430 in production (@56). Tag v2.2.0-stable (on @54/0427). Tag v2.2.0-build0428-stable (on @55/0428, anti-disaster rollback reference). Build 0430 deployed @56 (external Google Sheet import LIVE on-demand from Settings; spreadsheets.readonly scope added; phone test pending).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0431 rollback from broken 0430)**
+**Posture:** V2.2.0 + 0428 in production (@57). Tag v2.2.0-stable (on @54/0427). Tag v2.2.0-build0428-stable (on @55/0428, rollback reference used by task 0431). Build 0430 rolled back — app boot was broken ("Apertura app…" stuck). Build 0428 restored @57, phone test pending.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0430** (external Google Sheet import isolated, build 0430) |
-| Production version | **V2.2.0 + 0406–0430** (deployed @56 2026-05-17, URL unchanged — phone test pending) |
+| Source version | **V2.2.0 + 0406–0428** (rollback from broken 0430, build 0428) |
+| Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — phone test pending) |
 | Tag | **`v2.2.0-stable`** (on @54/0427) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** |
-| Apps Script | **@56** (external sheet import 0430 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK); @56/0430 pending |
-| Scope | **V2.2.0 + 0430 · no-login · 0406–0430 deployed @56 · URL unchanged · tags v2.2.0-stable + v2.2.0-build0428-stable · import Google Sheet external LIVE (on-demand, never at boot, spreadsheets.readonly scope added)** |
+| Apps Script | **@57** (rollback to build 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK); @57/0428 phone test pending |
+| Scope | **V2.2.0 + 0428 · no-login · rollback @57 · URL unchanged · tags v2.2.0-stable + v2.2.0-build0428-stable · import Google Sheet external NOT live (stub only) · spreadsheets.readonly NOT present** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0430** (external Google Sheet import isolated — deploy @56 — 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48 — push not sent), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (stable snapshot tag v2.2.0-build0428-stable)**, **0430 (external Google Sheet import isolated + deploy @56)** |
-| Queue | **0 pending** — Phone test @56/0430 pending. Rollback reference: v2.2.0-build0428-stable / @55. |
+| Last completed | **0431** (rollback from broken 0430 — restore build 0428 — deploy @57 — 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export, source), 0413 (UI/state fixes, source), 0414 (deploy-info, source), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48 — push not sent), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN boot), **0431 (rollback to build 0428 + deploy @57)** |
+| Queue | **0 pending** — Phone test @57/0428 pending. External sheet import: requires new docs-only design strategy before any future attempt. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
@@ -71,8 +71,9 @@ V2.0.2 candidates: startup UX polish (on demand), minor cleanup. See task 0353. 
 
 | Version | Tag | Deploy |
 |---|---|---|
-| V2.2.0 + 0406–0430 | — | **@56 external Google Sheet import isolated (current production — phone test pending 2026-05-17)** |
-| V2.2.0 + 0406–0428 | **`v2.2.0-build0428-stable`** (2026-05-17) | @55 day bars color fix (PASS 2026-05-17 — anti-disaster rollback reference) |
+| V2.2.0 + 0406–0428 | — | **@57 rollback from broken 0430 (current production — phone test pending 2026-05-17)** |
+| V2.2.0 + 0406–0430 | — | @56 external Google Sheet import (BROKEN — boot failure — rolled back by 0431) |
+| V2.2.0 + 0406–0428 | **`v2.2.0-build0428-stable`** (2026-05-17) | @55 day bars color fix (PASS 2026-05-17 — rollback reference) |
 | V2.2.0 + 0406–0427 | **`v2.2.0-stable`** (2026-05-17) | @54 UI-only patch |
 | V2.2.0 + 0406–0419 | — | @53 rollback (2026-05-17) |
 | V2.2.0 + 0406–0425 | — | @52 boot forensic hotfix (broken — superseded by rollback) |
