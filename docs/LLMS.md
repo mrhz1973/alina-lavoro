@@ -37,6 +37,8 @@
 
 ## Active Workstream
 
+**Route diagnostic fix (2026-05-17, task 0437):** Added `getRequestRoute_(e)` helper (reads `page`/`route`/`view`/`alinaPage`), `isExternalImportPreviewRoute_()`, and `debug-route` diagnostic page. doGet now checks all 4 parameter names before defaulting to Index. Pushed HEAD/dev. No deploy. Test: `/dev?route=debug-route` (verify params), `/dev?route=external-import-preview` (preview page). Session: `docs/sessions/2026-05-17-external-import-preview-route-diagnostic.md`.
+
 **Route fix for external import preview page (2026-05-17, task 0436):** doGet routing made robust — `String(...).trim().toLowerCase()` + try/catch + aliases (`externalimportpreview`, `import-preview`). Previous strict `===` match may have failed due to URL encoding or GAS caching. Re-pushed HEAD/dev. No deploy. Test URL: `/dev?page=external-import-preview`. Full session: `docs/sessions/2026-05-17-external-import-preview-page-route-fix.md`.
 
 **Separate external import preview page (2026-05-17, task 0435):** New architecture — completely separate ExternalImportPreview.html page, accessible only via `/dev?page=external-import-preview`. doGet routes the parameter defensively; default route (no parameter) unchanged. previewExternalSheetImport backend function (read-only). spreadsheets.readonly scope added to appsscript.json. Index.html NOT modified (APP_BUILD='0428'). No deploy. Test URL: `/dev?page=external-import-preview`. Full session: `docs/sessions/2026-05-17-external-import-preview-page-canary.md`.
@@ -95,9 +97,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0436** (route fix external import preview page — doGet robust routing — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0432 (external import safe design — docs-only), 0433 (external sheet preview canary — /dev boot FAIL), **0434 (rollback HEAD/dev to build 0428)**, **0435 (separate external import preview page — HEAD/dev push only)**, **0436 (route fix — doGet robust routing — HEAD/dev push only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html + robust routing. Test URL: `/dev?page=external-import-preview`. Phone test gate pending for preview page. |
+| Last completed | **0437** (route diagnostic — getRequestRoute_ + debug-route + multi-param — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic — multi-param + debug-route — HEAD/dev push only)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + multi-param routing + debug-route. Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. Phone test gate pending. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

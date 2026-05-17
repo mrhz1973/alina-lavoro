@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
 **Derived memory (Level 2) — last updated: 2026-05-17 (task 0436 route fix external import preview page)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + robust doGet routing (0436); Index.html unchanged at APP_BUILD='0428'; no deploy. Test URL: `/dev?page=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + multi-param routing + debug-route (0437); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0436** (route fix — doGet robust routing — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0434 (rollback HEAD/dev to build 0428), **0435 (separate external import preview page — HEAD/dev push only)**, **0436 (route fix — doGet robust routing — HEAD/dev push only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev has ExternalImportPreview.html + robust routing (0436). Test: `/dev?page=external-import-preview`. |
+| Last completed | **0437** (route diagnostic — getRequestRoute_ + debug-route + multi-param — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …0436 (route fix), **0437 (route diagnostic — multi-param + debug-route — HEAD/dev push only)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + multi-param routing + debug-route (0437). Test: `/dev?route=debug-route` then `/dev?route=external-import-preview`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
