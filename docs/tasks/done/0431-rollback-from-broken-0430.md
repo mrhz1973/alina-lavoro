@@ -39,3 +39,4 @@ Build 0430 (external Google Sheet import) broke production — app stuck on "Ape
 | Tag created | no |
 | Hotfix attempted | no |
 | Rollback source | v2.2.0-build0428-stable |
+| Phone test @57/0428 | **PASS** (2026-05-17, user confirmed) |

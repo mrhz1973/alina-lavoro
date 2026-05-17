@@ -45,7 +45,7 @@ Build 0430 (external Google Sheet import) caused app boot failure: app stuck on 
 - Production: V2.2.0 + 0406–0428, build 0428, @57
 - Import Google Sheet external: NOT live
 - spreadsheets.readonly scope: NOT present
-- Phone test: pending
+- Phone test: **PASS** (2026-05-17, user confirmed app boot OK)
 
 ## Future: external sheet import strategy
 

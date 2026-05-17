@@ -26,18 +26,20 @@
 | Field | Value |
 |---|---|
 | Source version | **V2.2.0 + 0406–0428** (rollback from broken 0430, build 0428) |
-| Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — phone test pending) |
+| Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — **phone test PASS 2026-05-17**) |
 | Tag | **`v2.2.0-stable`** (on @54/0427, 2026-05-17) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@57** (rollback to build 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK); @57/0428 phone test pending |
+| Last manual test | **PASS** — 2026-05-17, phone test on @57 / build 0428 (app boot OK) |
 | App scope | **V2.2.0 + 0428 · no-login direct start · rollback @57 · URL unchanged · tags v2.2.0-stable + v2.2.0-build0428-stable · import Google Sheet external NOT live (stub only) · spreadsheets.readonly scope NOT present** |
 
 ---
 
 ## Active Workstream
 
-**ROLLBACK to build 0428 @57 (2026-05-17, task 0431):** Build 0430 broke boot ("Apertura app…" stuck). No hotfix attempted. Immediate rollback: restored src/frontend/Index.html, src/backend/Code.gs, appsscript.json from tag v2.2.0-build0428-stable. spreadsheets.readonly scope removed (back to spreadsheets.currentonly only). previewImportFromSpreadsheet is stub only (no external sheet access). applyReplaceFromExternalSheet not present. clasp push --force + deploy @57 (same ID/URL). Remote verified via clasp pull: APP_BUILD='0428'. No tag. Future: external sheet import requires separate design-docs-only strategy, preview-only on canary first, never direct to production.
+**External sheet import safe design (2026-05-17, task 0432):** docs-only. Design rules for safe future re-implementation: no production deploy without canary, no import in boot path, 5-step progressive strategy (A→E), preview-only before any write, max 1 hotfix then rollback, no OAuth scope until strictly needed. Full design: `docs/sessions/2026-05-17-external-sheet-import-safe-design.md`. No code, no deploy.
+
+**ROLLBACK to build 0428 @57 (2026-05-17, task 0431) — phone test PASS:** Build 0430 broke boot ("Apertura app…" stuck). No hotfix attempted. Immediate rollback: restored src/frontend/Index.html, src/backend/Code.gs, appsscript.json from tag v2.2.0-build0428-stable. spreadsheets.readonly scope removed (back to spreadsheets.currentonly only). previewImportFromSpreadsheet is stub only (no external sheet access). applyReplaceFromExternalSheet not present. clasp push --force + deploy @57 (same ID/URL). Remote verified via clasp pull: APP_BUILD='0428'. No tag. **Phone test PASS 2026-05-17 — app boot OK.**
 
 **External Google Sheet import isolated @56 (2026-05-17, task 0430) [ROLLED BACK — app boot broken]:** Replaced stub with real implementation — caused "Apertura app…" boot failure. Rolled back by task 0431.
 
@@ -85,9 +87,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0431** (rollback from broken 0430 — restore build 0428 — deploy @57 — 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN), **0431 (rollback to build 0428 + deploy @57)** |
-| Queue | **0 pending** — Phone test @57/0428 pending. Rollback reference: v2.2.0-build0428-stable / @55/@57. |
+| Last completed | **0432** (external sheet import safe design — docs-only — 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN), **0431 (rollback to build 0428 + deploy @57 — phone test PASS)**, **0432 (external sheet import safe design — docs-only)** |
+| Queue | **0 pending** — App stable @57/build 0428. Phone test PASS 2026-05-17. External import: future task, follow design in `docs/sessions/2026-05-17-external-sheet-import-safe-design.md`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
