@@ -25,17 +25,19 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0420** (UI refinements + external sheet import) |
-| Production version | **V2.2.0 + 0406–0420** (deployed 2026-05-17 @49, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0423** (boot stuck hotfix) |
+| Production version | **V2.2.0 + 0406–0423** (deployed 2026-05-17 @50, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@49** (corrected push 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — root cause found task 0422) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @49 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0420 deployed @49 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@50** (boot hotfix 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @50 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0423 deployed @50 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
+
+**Boot stuck hotfix @50 (2026-05-17, task 0423):** App was stuck on boot placeholder "Apertura app…" after @49 deploy. Root cause: fragile DOMContentLoaded handler — if `state.config` was null after loadCache merge, `applyThemeLang()` threw TypeError, `showApp()` was never called, placeholder stayed forever. Fix: try/catch around loadCache+merge, null-guards for `state.config`/arrays/reminder, `applyThemeLang` null-safe via `var _cfg=state.config||{}`, `t()` null-safe, `renderActiveNotesMini` guarded, 3s fallback boot timer, `showApp` try/catch on render. APP_BUILD='0423'. Remote verified via pull. Phone test pending → 0391 → 0392.
 
 **Root cause fix @49 (2026-05-17, task 0422):** `clasp pull` confirmed remote HEAD still had APP_BUILD='0419' — the `clasp push` in task 0420/0421 never actually sent 0420 to Apps Script remote. Fix: `rm .gas/Code.js` (stale pull artifact) + `clasp push --force` + `clasp deploy --deploymentId` → @49 (same ID/URL). Remote verified via pull: APP_BUILD='0420'. Phone test pending → 0391 → 0392.
 
@@ -65,9 +67,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0422** (root cause fix — corrected clasp push + redeploy @49, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy attempt @48), **0422 (root cause fix + corrected push + redeploy @49)** |
-| Queue | **0391** (post-deploy phone test for @49), **0392** (stable tag after test pass). Next gate: manual user phone test on @49. |
+| Last completed | **0423** (boot stuck hotfix — APP_BUILD='0423' + redeploy @50, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy attempt @48), 0422 (root cause fix + corrected push + redeploy @49), **0423 (boot stuck hotfix + redeploy @50)** |
+| Queue | **0391** (post-deploy phone test for @50), **0392** (stable tag after test pass). Next gate: manual user phone test on @50. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
