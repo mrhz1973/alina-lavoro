@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Preview Import Esterno — DEV</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #f5f5f5; color: #222; padding: 24px 16px; max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 1.2rem; margin-bottom: 4px; }
+    .build-tag { font-size: 0.75rem; color: #888; margin-bottom: 24px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; margin-top: 16px; }
+    input[type=text] { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
+    button { margin-top: 20px; padding: 10px 24px; background: #1a73e8; color: #fff; border: none; border-radius: 6px; font-size: 0.95rem; cursor: pointer; }
+    button:disabled { background: #aaa; cursor: not-allowed; }
+    #result-area { margin-top: 24px; }
+    .result-box { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+    .error-box { background: #fff3f3; border: 1px solid #f66; border-radius: 8px; padding: 16px; font-size: 0.85rem; color: #c00; white-space: pre-wrap; word-break: break-all; }
+    .info { font-size: 0.8rem; color: #555; margin-top: 8px; }
+    .badge { display: inline-block; background: #fde68a; color: #92400e; border-radius: 4px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Preview Google Sheet esterno</h1>
+  <div class="build-tag">DEV preview 0435</div>
+  <div class="badge">SOLO LETTURA — nessuna modifica ai dati</div>
+
+  <label for="sheet-url">URL o ID Google Sheet</label>
+  <input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/… oppure ID diretto">
+
+  <label for="tab-name">Nome foglio / tab (opzionale)</label>
+  <input type="text" id="tab-name" placeholder="Foglio1">
+
+  <button id="btn-preview" onclick="runPreview()">Anteprima</button>
+  <p class="info">Nessun dato viene scritto o modificato. Solo lettura.</p>
+
+  <div id="result-area"></div>
+
+  <script>
+    function runPreview() {
+      var url = document.getElementById('sheet-url').value.trim();
+      var tab = document.getElementById('tab-name').value.trim();
+      var btn = document.getElementById('btn-preview');
+      var area = document.getElementById('result-area');
+
+      if (!url) {
+        area.innerHTML = '<div class="error-box">Inserisci un URL o ID Google Sheet.</div>';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Caricamento…';
+      area.innerHTML = '<div class="result-box">In attesa del backend…</div>';
+
+      google.script.run
+        .withSuccessHandler(function(data) {
+          btn.disabled = false;
+          btn.textContent = 'Anteprima';
+          if (data && data.ok) {
+            var html = '<div class="result-box">';
+            html += '<strong>Righe lette:</strong> ' + data.rowsRead + '\n';
+            html += '<strong>Righe valide:</strong> ' + data.validRows + '\n';
+            html += '<strong>Righe non valide:</strong> ' + data.invalidRows + '\n';
+            html += '<strong>Colonne riconosciute:</strong> ' + (data.recognizedColumns || []).join(', ') + '\n\n';
+            if (data.sampleRows && data.sampleRows.length) {
+              html += '<strong>Anteprima righe (max 5):</strong>\n';
+              data.sampleRows.forEach(function(row, i) {
+                html += (i + 1) + '. ' + JSON.stringify(row) + '\n';
+              });
+            }
+            if (data.errors && data.errors.length) {
+              html += '\n<strong>Avvisi:</strong>\n' + data.errors.join('\n');
+            }
+            html += '</div>';
+            area.innerHTML = html;
+          } else {
+            var msg = (data && data.error) ? data.error : 'Errore sconosciuto.';
+            area.innerHTML = '<div class="error-box">Errore backend: ' + escHtml(msg) + '</div>';
+          }
+        })
+        .withFailureHandler(function(err) {
+          btn.disabled = false;
+          btn.textContent = 'Anteprima';
+          area.innerHTML = '<div class="error-box">Errore chiamata backend:\n' + escHtml(String(err && err.message ? err.message : err)) + '</div>';
+        })
+        .previewExternalSheetImport({ url: url, tab: tab });
+    }
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+  </script>
+</body>
+</html>

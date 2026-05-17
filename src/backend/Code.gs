@@ -86,6 +86,14 @@ const DEFAULT_CONFIG = {
 };
 
 function doGet(e) {
+  if (e && e.parameter && e.parameter.page === 'external-import-preview') {
+    return HtmlService
+      .createHtmlOutputFromFile('ExternalImportPreview')
+      .setTitle('Preview Import Esterno — DEV')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+
   setupAlinaLavoro();
 
   return HtmlService
@@ -93,6 +101,70 @@ function doGet(e) {
     .setTitle('Alina Lavoro')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function previewExternalSheetImport(payload) {
+  try {
+    var rawUrl = (payload && payload.url) ? String(payload.url).trim() : '';
+    var tabName = (payload && payload.tab) ? String(payload.tab).trim() : '';
+
+    if (!rawUrl) return { ok: false, error: 'URL o ID mancante.' };
+
+    var ssId = extractSpreadsheetId_(rawUrl);
+    if (!ssId) return { ok: false, error: 'Impossibile estrarre ID dal valore fornito.' };
+
+    var ss = SpreadsheetApp.openById(ssId);
+    var sheet;
+    if (tabName) {
+      sheet = ss.getSheetByName(tabName);
+      if (!sheet) return { ok: false, error: 'Foglio "' + tabName + '" non trovato.' };
+    } else {
+      sheet = ss.getSheets()[0];
+      if (!sheet) return { ok: false, error: 'Nessun foglio trovato nel documento.' };
+    }
+
+    var data = sheet.getDataRange().getValues();
+    if (!data || data.length < 2) {
+      return { ok: true, rowsRead: data ? data.length : 0, validRows: 0, invalidRows: 0, recognizedColumns: [], sampleRows: [], errors: ['Il foglio è vuoto o ha solo intestazioni.'] };
+    }
+
+    var headers = data[0].map(function(h) { return String(h).trim().toLowerCase(); });
+    var rows = data.slice(1);
+    var validRows = 0;
+    var invalidRows = 0;
+    var sampleRows = [];
+    var errors = [];
+
+    rows.forEach(function(row, idx) {
+      var hasContent = row.some(function(cell) { return cell !== '' && cell !== null && cell !== undefined; });
+      if (!hasContent) { invalidRows++; return; }
+      validRows++;
+      if (sampleRows.length < 5) {
+        var obj = {};
+        headers.forEach(function(h, i) { obj[h] = row[i]; });
+        sampleRows.push(obj);
+      }
+    });
+
+    return {
+      ok: true,
+      rowsRead: rows.length,
+      validRows: validRows,
+      invalidRows: invalidRows,
+      recognizedColumns: headers,
+      sampleRows: sampleRows,
+      errors: errors
+    };
+  } catch (err) {
+    return { ok: false, error: err.message || String(err) };
+  }
+}
+
+function extractSpreadsheetId_(input) {
+  var m = input.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]{20,})/);
+  if (m) return m[1];
+  if (/^[a-zA-Z0-9_-]{20,}$/.test(input)) return input;
+  return null;
 }
 
 function setupAlinaLavoro() {
