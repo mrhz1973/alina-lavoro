@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0425** (boot forensic hotfix) |
-| Production version | **V2.2.0 + 0406–0425** (deployed 2026-05-17 @52, URL unchanged) |
+| Source version | **V2.2.0 + 0406–0419** (rollback to last working build) |
+| Production version | **V2.2.0 + 0406–0419** (rollback 2026-05-17 @53, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@52** (boot forensic hotfix 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @52 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0425 deployed @52 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@53** (rollback to build 0419 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @53 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0419 deployed @53 · URL unchanged · awaiting manual phone test · import Google Sheet external NOT live** |
 
 ---
 
 ## Active Workstream
 
-**Boot forensic hotfix @52 (2026-05-17, task 0425):** Forensic investigation: node --check PASS, no parse error. Root causes: missing readyState guard (DOMContentLoaded may have already fired in cached GAS scenarios); render() had no try/catch around renderXxx() calls; renderBootFallback_() could fail silently if #content null. Fix: added ES5 panic boot script (separate script, readyState guard, 2s delay, shows "Build 0425"); DOMContentLoaded extracted to _bootMain_() with readyState check; render() wraps renderXxx() in try/catch; renderBootFallback_() adds body injection fallback. APP_BUILD='0425'. Remote verified @52. Phone test pending → 0391 → 0392.
+**Rollback to build 0419 @53 (2026-05-17, task 0426):** Builds 0420–0425 left app broken ("Errore avvio app"). Restored src/frontend/Index.html, src/backend/Code.gs, appsscript.json from commit e476618 (0419 state). Removed stale .gas/Code.js. clasp push --force + deploy @53 (same ID/URL). APP_BUILD='0419'. External sheet import (0420) not live. 0391/0392 pending. Phone test pending on @53.
+
+**Boot forensic hotfix @52 (2026-05-17, task 0425):** [superseded by rollback 0426] APP_BUILD='0425' deployed @52 — boot error persisted.
 
 **Force boot recovery @51 (2026-05-17, task 0424):** Second boot stuck fix pass. Added `ensureStateShape_()` centralised guard; DOMContentLoaded now guarantees immediate render() from local state (no async dependency); render failure → `renderBootFallback_()` (Riprova + Impostazioni); `window.onerror` calls fallback if bootPlaceholder still visible; `initBackground_()` + `setupMobileUi_()` wrapped in try/catch; 3s timer removed. APP_BUILD='0424'. Remote verified @51.
 
@@ -71,9 +73,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0425** (boot forensic hotfix — APP_BUILD='0425' + redeploy @52, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), **0425 (boot forensic hotfix + redeploy @52)** |
-| Queue | **0391** (post-deploy phone test for @52), **0392** (stable tag after test pass). Next gate: manual user phone test on @52. |
+| Last completed | **0426** (rollback to build 0419 — APP_BUILD='0419' + deploy @53, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), **0426 (rollback to build 0419 + redeploy @53)** |
+| Queue | **0391** (post-deploy phone test for @53), **0392** (stable tag after test pass). Next gate: manual user phone test on @53. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
