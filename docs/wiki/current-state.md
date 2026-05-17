@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0441 verify external preview HTML push)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + HTML sync fixed (0441); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview` → "Verifica runtime" button visible. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0442 external preview inline page)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route (0442); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview-inline`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0441** (verify external preview HTML push — fixed sync issue where HTML wasn't copied to .gas/ — manual copy + clasp push — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), **0441 (HTML sync fix)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + HTML sync fixed. User should test: "Verifica runtime" button now visible. |
+| Last completed | **0442** (external preview inline page — created new inline route to bypass HTML sync issues — complete HTML served from Code.gs — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), 0441 (HTML sync fix), **0442 (inline page)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + inline route. User should test: `/dev?route=external-import-preview-inline`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

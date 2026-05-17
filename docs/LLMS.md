@@ -39,6 +39,8 @@
 
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
+**External preview inline page (2026-05-17, task 0442):** Created new DEV inline route `/dev?route=external-import-preview-inline` to bypass HTML sync issues. Implemented `buildExternalImportPreviewInlineHtml_()` function serving complete HTML page directly from Code.gs with runtime diagnostic and preview functionality. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview-inline`. Session: `docs/sessions/2026-05-17-external-preview-inline-page.md`.
+
 **Verify external preview HTML push (2026-05-17, task 0441):** Fixed HTML sync issue where `npm run sync` failed to copy updated ExternalImportPreview.html to `.gas/`, causing runtime diagnostic button to be missing. Manually copied HTML file and pushed with `clasp push --force`. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview` → "Verifica runtime" button should now be visible. Session: `docs/sessions/2026-05-17-verify-external-preview-html-push.md`.
 
 **External preview runtime version check (2026-05-17, task 0440):** Added runtime diagnostic `externalImportPreviewRuntimeInfo()` and "Verifica runtime" button to ExternalImportPreview.html to determine which code version is actually executing in `/dev`. User still sees SpreadsheetApp.openById error despite correct source; this diagnostic will identify if runtime is old/cached or if issue is client-side. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview` → click "Verifica runtime". Session: `docs/sessions/2026-05-17-external-preview-runtime-version-check.md`.
@@ -105,9 +107,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0441** (verify external preview HTML push — fixed sync issue where HTML wasn't copied to .gas/ — manual copy + clasp push — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + HTML sync fixed. User should test: "Verifica runtime" button now visible. |
+| Last completed | **0442** (external preview inline page — created new inline route to bypass HTML sync issues — complete HTML served from Code.gs — HEAD/dev push only — 2026-05-17) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route. User should test: `/dev?route=external-import-preview-inline`. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
