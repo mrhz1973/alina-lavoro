@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0433 external sheet preview canary)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: build 0433 preview canary (push only, no deploy). Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428). Production unchanged.
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0434 rollback broken preview canary)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: build 0428 (0433 canary rolled back — /dev boot FAIL). Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428). Production unchanged.
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -11,13 +11,13 @@
 
 | Field | Value |
 |---|---|
-| Source version | **HEAD: V2.2.0 + 0406–0433 (build 0433 preview canary, push only)** / Production: V2.2.0 + 0406–0428 |
+| Source version | **HEAD: V2.2.0 + 0406–0428 (build 0428, restored from stable tag — 0433 rolled back)** / Production: V2.2.0 + 0406–0428 |
 | Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — **phone test PASS 2026-05-17**) |
 | Tag | **`v2.2.0-stable`** (on @54/0427) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** |
-| Apps Script | **@57** (production, unchanged; HEAD has build 0433 — no new deployment created) |
+| Apps Script | **@57** (production, unchanged; HEAD restored to build 0428 by task 0434) |
 | Last test | **PASS** — 2026-05-17, phone test on @57 / build 0428 (app boot OK) |
-| Scope | **Production @57: 0428 · no-login · URL unchanged · external import NOT live · spreadsheets.readonly NOT in production** / **HEAD build 0433: preview-only UI + previewExternalSheetImport · spreadsheets.readonly in appsscript.json · no deploy** |
+| Scope | **Production @57: 0428 · no-login · URL unchanged · external import NOT live · spreadsheets.readonly NOT present** / **HEAD: build 0428, identical to production** |
 
 ---
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0433** (external sheet preview canary — preview-only build 0433 HEAD/dev — 2026-05-17) |
-| Batch completed | …0428 (day bars @55), **0429 (tag v2.2.0-build0428-stable)**, 0430 (external import @56 — BROKEN), **0431 (rollback @57 — PASS)**, **0432 (external import safe design — docs-only)**, **0433 (external sheet preview canary — build 0433 HEAD/dev — no deploy)** |
-| Queue | **0 pending** — Production stable @57/build 0428. PASS 2026-05-17. HEAD/dev build 0433 preview canary ready. Next: Step C boot test on HEAD (separate gate). |
+| Last completed | **0434** (rollback broken preview canary — HEAD/dev restored to build 0428 — 2026-05-17) |
+| Batch completed | …0430 (external import @56 — BROKEN), **0431 (rollback @57 — PASS)**, **0432 (external import safe design — docs-only)**, 0433 (external sheet preview canary — /dev boot FAIL — rolled back), **0434 (rollback HEAD/dev to build 0428)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev = build 0428. PASS 2026-05-17. Future import: needs separate dev page or lazy render architecture. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

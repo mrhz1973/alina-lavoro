@@ -25,19 +25,21 @@
 
 | Field | Value |
 |---|---|
-| Source version | **V2.2.0 + 0406–0433** (HEAD/dev: build 0433 preview canary; production: build 0428) |
+| Source version | **V2.2.0 + 0406–0428** (HEAD/dev: build 0428, restored from stable tag; production: build 0428) |
 | Production version | **V2.2.0 + 0406–0428** (deployed @57 2026-05-17, URL unchanged — **phone test PASS 2026-05-17**) |
 | Tag | **`v2.2.0-stable`** (on @54/0427, 2026-05-17) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@57** (rollback to build 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
 | Last manual test | **PASS** — 2026-05-17, phone test on @57 / build 0428 (app boot OK) |
-| App scope | **Production @57: V2.2.0 + 0428 · no-login · URL unchanged · tags v2.2.0-stable + v2.2.0-build0428-stable · external import NOT live · spreadsheets.readonly NOT in production** / **HEAD/dev build 0433: preview-only UI + previewExternalSheetImport backend · spreadsheets.readonly added to appsscript.json · no deploy created** |
+| App scope | **Production @57: V2.2.0 + 0428 · no-login · URL unchanged · tags v2.2.0-stable + v2.2.0-build0428-stable · external import NOT live · spreadsheets.readonly NOT present** / **HEAD/dev: build 0428 restored (0433 canary rolled back — /dev boot FAIL)** |
 
 ---
 
 ## Active Workstream
 
-**External sheet preview canary (2026-05-17, task 0433):** Step B of safe design. Preview-only UI + `previewExternalSheetImport` backend. HEAD/dev build 0433. `spreadsheets.readonly` scope added to `appsscript.json`. `clasp push --force` done — HEAD updated, no new deployment. Production @57 / build 0428 NOT touched. No deploy, no replace, no data write. Full session: `docs/sessions/2026-05-17-external-sheet-preview-only-canary.md`. Next: Step C = boot test on HEAD, then Step D (replace + backup), Step E (production deploy) — all need separate explicit task gates.
+**Rollback broken preview canary (2026-05-17, task 0434):** 0433 /dev boot test FAIL — "Apertura app…" stuck. Root cause: `renderExternalSheetPreviewSection_()` inside `renderSettings()` causes boot hang. No hotfix. HEAD/dev restored to build 0428 from tag `v2.2.0-build0428-stable`. `spreadsheets.readonly` removed. `previewExternalSheetImport` removed. `clasp push --force` done — HEAD updated, no deploy. Production @57 unchanged. Full session: `docs/sessions/2026-05-17-rollback-broken-preview-canary.md`. Future import attempt must use separate ultra-minimal dev page or lazy render only.
+
+**External sheet preview canary (2026-05-17, task 0433) [FAILED — rolled back by 0434]:** Step B of safe design. Preview-only UI + `previewExternalSheetImport` backend — caused /dev boot failure. Rolled back. Full session: `docs/sessions/2026-05-17-external-sheet-preview-only-canary.md`.
 
 **External sheet import safe design (2026-05-17, task 0432):** docs-only. Design rules: no production deploy without canary, no import in boot path, 5-step progressive strategy (A→E), preview-only before any write, max 1 hotfix then rollback. Full design: `docs/sessions/2026-05-17-external-sheet-import-safe-design.md`.
 
@@ -89,9 +91,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0433** (external sheet preview canary — preview-only build 0433 HEAD/dev — 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN), **0431 (rollback to build 0428 + deploy @57 — phone test PASS)**, **0432 (external sheet import safe design — docs-only)** |
-| Queue | **0 pending** — Production stable @57/build 0428. Phone test PASS 2026-05-17. External import: HEAD/dev build 0433 preview canary ready. Next: Step C boot test on HEAD (separate gate). |
+| Last completed | **0434** (rollback broken preview canary — HEAD/dev restored to build 0428 — 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)**, 0430 (external sheet import + deploy @56 — BROKEN), **0431 (rollback to build 0428 + deploy @57 — phone test PASS)**, **0432 (external sheet import safe design — docs-only)**, 0433 (external sheet preview canary — build 0433 — /dev boot FAIL), **0434 (rollback broken preview canary — HEAD/dev restored to 0428)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev = build 0428 (restored). Phone test PASS 2026-05-17. External import: future attempt needs separate dev page or lazy render architecture. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

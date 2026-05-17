@@ -96,3 +96,14 @@ To test build 0433: use Apps Script editor > Deploy > Test deployments (HEAD).
 
 Per safe design (task 0432), Step C is: full boot test on HEAD (open app, navigate, verify no hang).
 Step D (replace + backup + LockService) and Step E (production deploy) require separate explicit task gates.
+
+---
+
+## Post-session update (task 0434, 2026-05-17)
+
+**CANARY FAILED — /dev boot test FAIL**
+- Symptom: /dev blocked on "Apertura app…"
+- Root cause: `renderExternalSheetPreviewSection_()` inside `renderSettings()` causes boot hang
+- No hotfix — rolled back to build 0428 by task 0434
+- HEAD/dev now at build 0428 (same as production @57)
+- See: `docs/sessions/2026-05-17-rollback-broken-preview-canary.md`
