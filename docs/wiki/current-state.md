@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-17 (task 0438 external preview read-only scope fix)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + Advanced Sheets Service read-only (0438); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-17 (task 0439 verify 0438 remote code)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + Advanced Sheets Service read-only verified (0439); Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview` (hard refresh recommended). Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0438** (external preview read-only scope fix — Advanced Sheets Service — no SpreadsheetApp.openById — HEAD/dev push only — 2026-05-17) |
-| Batch completed | …0436 (route fix), 0437 (route diagnostic), **0438 (readonly scope fix — Advanced Sheets Service)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + Advanced Sheets Service read-only. Test: `/dev?route=external-import-preview`. |
+| Last completed | **0439** (verify 0438 remote code — diagnostic confirmed remote Apps Script correct — user error likely cache/authorization — 2026-05-17) |
+| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), **0439 (remote code verification)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + Advanced Sheets Service read-only verified. User should test with hard refresh. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
