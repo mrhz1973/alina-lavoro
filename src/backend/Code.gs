@@ -85,15 +85,39 @@ const DEFAULT_CONFIG = {
   setup_completato: 'no'
 };
 
+function getRequestRoute_(e) {
+  var params = (e && e.parameter) ? e.parameter : {};
+  var keys = ['page', 'route', 'view', 'alinaPage'];
+  for (var i = 0; i < keys.length; i++) {
+    var val = '';
+    try { val = String(params[keys[i]] || '').trim().toLowerCase(); } catch (_) {}
+    if (val) return val;
+  }
+  return '';
+}
+
+function isExternalImportPreviewRoute_(route) {
+  return route === 'external-import-preview' ||
+         route === 'externalimportpreview' ||
+         route === 'import-preview' ||
+         route === 'importpreview';
+}
+
 function doGet(e) {
-  var page = '';
-  try {
-    page = String((e && e.parameter && e.parameter.page) ? e.parameter.page : '').trim().toLowerCase();
-  } catch (_) {
-    page = '';
+  var route = getRequestRoute_(e);
+
+  if (route === 'debug-route') {
+    var params = (e && e.parameter) ? JSON.stringify(e.parameter) : '{}';
+    return HtmlService.createHtmlOutput(
+      '<!DOCTYPE html><html><body style="font-family:monospace;padding:24px">' +
+      '<h2>ALINA ROUTE DEBUG</h2>' +
+      '<p><b>route computed:</b> ' + route + '</p>' +
+      '<p><b>e.parameter:</b> ' + params + '</p>' +
+      '</body></html>'
+    ).setTitle('ALINA ROUTE DEBUG');
   }
 
-  if (page === 'external-import-preview' || page === 'externalimportpreview' || page === 'import-preview') {
+  if (isExternalImportPreviewRoute_(route)) {
     return HtmlService
       .createHtmlOutputFromFile('ExternalImportPreview')
       .setTitle('Preview Import Esterno — DEV')
