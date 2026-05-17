@@ -27,7 +27,7 @@
 |---|---|
 | Source version | **V2.2.0 + 0406–0428** (day bars color fix, build 0428) |
 | Production version | **V2.2.0 + 0406–0428** (deployed @55 2026-05-17, URL unchanged) |
-| Tag | **`v2.2.0-stable`** (created 2026-05-17) |
+| Tag | **`v2.2.0-stable`** (on @54/0427, 2026-05-17) · **`v2.2.0-build0428-stable`** (on @55/0428, 2026-05-17) |
 | Branch | **main** (`dev` legacy/inactive) |
 | Apps Script deploy | **@55** (day bars color fix 0428 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged) |
 | Last manual test | **PASS** — 2026-05-17, phone test on @55 / build 0428 (bars purple/teal/yellow OK) |
@@ -36,6 +36,8 @@
 ---
 
 ## Active Workstream
+
+**Build 0428 stable snapshot (2026-05-17, task 0429):** docs-only tag task. Tag `v2.2.0-build0428-stable` created on @55 / build 0428. `v2.2.0-stable` unchanged on @54 / 0427. No code, no deploy.
 
 **Day bars color fix @55 (2026-05-17, task 0428):** UI-only fix — `.month-detail-day-bar-fill` lacked `display:block`; bars appeared all dark. Added `display:block`; moved bar CSS to general section. Legend colors (purple/teal/yellow) now render. Backend and appsscript.json unchanged. APP_BUILD='0428'. Phone test PASS 2026-05-17.
 
@@ -79,8 +81,8 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0428** (day bars color fix deployed @55 — 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)** |
+| Last completed | **0429** (build 0428 stable snapshot tag — 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), 0421 (failed redeploy @48), 0422 (root cause fix + corrected push + redeploy @49), 0423 (boot stuck hotfix + redeploy @50), 0424 (force boot recovery + redeploy @51), 0425 (boot forensic hotfix + redeploy @52), 0426 (rollback to build 0419 + redeploy @53), 0427 (Mesi UI-only cleanup + deploy @54), **0391 (phone test PASS @54), 0392 (stable tag v2.2.0-stable)**, 0428 (day bars color fix deploy @55), **0429 (build 0428 stable snapshot tag v2.2.0-build0428-stable)** |
 | Queue | **0 pending** — V2.2.0 stable closed. Next: user direction. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
