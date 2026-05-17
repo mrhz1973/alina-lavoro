@@ -26,16 +26,18 @@
 | Field | Value |
 |---|---|
 | Source version | **V2.2.0 + 0406–0420** (UI refinements + external sheet import) |
-| Production version | **V2.2.0 + 0406–0420** (deployed 2026-05-17 @47, URL unchanged) |
+| Production version | **V2.2.0 + 0406–0420** (deployed 2026-05-17 @48, URL unchanged) |
 | Tag | **`v2.1.1-stable`** (last stable; v2.2.0-stable pending phone test) |
 | Branch | **main** (`dev` legacy/inactive) |
-| Apps Script deploy | **@47** (deployed 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — redeploy in place) |
-| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @47 phone test pending |
-| App scope | **V2.2.0 · no-login direct start · 0406–0420 deployed @47 · URL unchanged · awaiting manual phone test** |
+| Apps Script deploy | **@48** (fix redeploy 2026-05-17; ID: AKfycbxtG6_wflGYGuqWFjkVsrgGSWlQzcRvuR13VKsgNwsnHXbXSbpgPlS8UMuXDHM8FtHxRQ; URL unchanged — mismatch fix task 0421) |
+| Last manual test | **PASS** (0366, V2.1.1) — V2.2.0 @48 phone test pending |
+| App scope | **V2.2.0 · no-login direct start · 0406–0420 deployed @48 · URL unchanged · awaiting manual phone test** |
 
 ---
 
 ## Active Workstream
+
+**Fix redeploy @48 (2026-05-17, task 0421):** Corrected live build mismatch — source/push had 0420 but live endpoint served 0419; re-ran `clasp deploy --deploymentId` → @48 (same ID/URL). APP_BUILD='0420' now live. Phone test pending → 0391 → 0392.
 
 **Deployed @47 (2026-05-17, task 0420):** Theme flash fix (sync `<script>` in `<head>` applies theme from localStorage before CSS); year stats compact inline strip (ore rounded `213h`, giorni + guadagno same line, accordion highlight, no duplicate month chart); day cards in Month Detail flex row (date left, stats right); external sheet import in Settings (Preview + mandatory checkbox + Replace, backend `previewImportFromSpreadsheet` + `applyReplaceFromExternalSheet` with LockService + backup guard); `spreadsheets.readonly` scope added to `appsscript.json`. APP_BUILD='0420'. URL unchanged. Phone test pending → 0391 → 0392.
 
@@ -61,9 +63,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0420** (UI refinements + external sheet import + deploy @47, 2026-05-17) |
-| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), **0420 (UI refinements + external sheet import + deploy @47)** |
-| Queue | **0391** (post-deploy phone test for @47), **0392** (stable tag after test pass). Next gate: manual user phone test on @47. |
+| Last completed | **0421** (live build mismatch fix — redeploy @48, 2026-05-17) |
+| Batch completed | 0366–0371 (stable close), 0372–0377 (cleanup + autonomy), 0378–0383 (validation), 0384–0390 (V2.2.0 no-login), 0399–0403 (V2.2.0 frontend fix + polish), 0404 (deploy patch), 0405 (aggressive autonomy policy), 0406 (start-work state fix), 0407–0412 (import/export), 0413 (UI/state fixes), 0414 (deploy-info in Settings), 0415 (deploy @37), 0415b (CC spam fix), 0416 (settings/mesi UX + deploy @39), 0417 (phone-test refinement batch + deploy @41), 0418 (compact-card redesign + deploy @43), 0419 (Mesi final layout cleanup + deploy @45), 0420 (UI refinements + external sheet import + deploy @47), **0421 (live build mismatch fix + redeploy @48)** |
+| Queue | **0391** (post-deploy phone test for @48), **0392** (stable tag after test pass). Next gate: manual user phone test on @48. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
