@@ -1217,9 +1217,16 @@ function dateObjectForImport_(value) {
  *   - No destructive replace_all in this version.
  *
  * Scope limitation:
- *   - appsscript.json uses 'spreadsheets.currentonly'. External Google Sheet
- *     by URL/ID is NOT accessible. previewImportFromSpreadsheet returns a
- *     clear error suggesting CSV paste, JSON paste, or sheet-tab mode.
+ *   - appsscript.json uses 'spreadsheets.currentonly' for the bound sheet and
+ *     'spreadsheets.readonly' for external sheets (build 0430).
+ *   - previewImportFromSpreadsheet reads an external sheet read-only.
+ *   - applyReplaceFromExternalSheet performs the replace flow with backup
+ *     of all data sheets, then clear + import for the detected type.
+ *
+ * Boot safety contract:
+ *   - External sheet functions are NEVER called at boot. They run only when
+ *     the user explicitly clicks "Anteprima Google Sheet" or "Sostituisci
+ *     archivio corrente" in Settings > Importa/Esporta.
  * ========================================================================== */
 
 const IMPORT_EXPORT_FORMAT = 'alina-lavoro/v1';
@@ -1443,15 +1450,241 @@ function previewImportFromSheetTab(accessCode, sheetName, dataType) {
   return buildImportPreview_({ headers: headers, rows: rows }, dataType, 'sheet-tab:' + sheetName);
 }
 
+/**
+ * Read-only preview of an external Google Sheet. Requires user OAuth grant
+ * (scope spreadsheets.readonly added in build 0430).
+ *
+ * @param {string} accessCode  current session access code
+ * @param {string} urlOrId     full /spreadsheets/d/<ID>/... URL or bare ID
+ * @param {string} [sheetName] tab name; defaults to first sheet
+ * @param {string} [dataType]  'shifts'|'salaries'|'notes' (auto if empty)
+ * @return {Object} preview result (success/false + message, or rows summary)
+ */
 function previewImportFromSpreadsheet(accessCode, urlOrId, sheetName, dataType) {
   setupAlinaLavoro();
   requireAccess_(accessCode);
 
-  return {
-    success: false,
-    deferred: true,
-    message: 'Import da Google Sheet esterno non disponibile in questa versione (scope OAuth corrente: spreadsheets.currentonly). Alternative: (1) crea un foglio nel Google Sheet corrente con i dati e usa la modalità "Foglio del Google Sheet"; (2) copia il CSV da Google Sheets e usa la modalità "Incolla CSV"; (3) usa un backup JSON.'
-  };
+  if (!urlOrId || !String(urlOrId).trim()) {
+    return { success: false, message: 'URL o ID Google Sheet mancante' };
+  }
+
+  const id = extractSpreadsheetId_(String(urlOrId));
+
+  if (!id) {
+    return { success: false, message: 'URL o ID Google Sheet non riconosciuto' };
+  }
+
+  let externalSs;
+  try {
+    externalSs = SpreadsheetApp.openById(id);
+  } catch (err) {
+    return {
+      success: false,
+      message: 'Impossibile aprire il Google Sheet. Verifica che l\'ID/URL sia corretto e che l\'account abbia accesso al file. Dettaglio: ' + (err && err.message ? err.message : String(err))
+    };
+  }
+
+  let sh;
+  if (sheetName && String(sheetName).trim()) {
+    sh = externalSs.getSheetByName(String(sheetName).trim());
+    if (!sh) {
+      return { success: false, message: 'Tab "' + sheetName + '" non trovato nel Google Sheet esterno' };
+    }
+  } else {
+    const allSheets = externalSs.getSheets();
+    if (!allSheets || allSheets.length === 0) {
+      return { success: false, message: 'Il Google Sheet esterno non contiene fogli' };
+    }
+    sh = allSheets[0];
+  }
+
+  if (sh.getLastRow() < 2) {
+    return { success: false, message: 'Il tab "' + sh.getName() + '" è vuoto o privo di righe dati (servono intestazioni + righe)' };
+  }
+
+  const lastCol = sh.getLastColumn();
+  const headers = sh.getRange(1, 1, 1, lastCol).getValues()[0].map(function (h) {
+    return String(h || '').trim();
+  });
+
+  const values = sh.getRange(2, 1, sh.getLastRow() - 1, lastCol).getValues();
+  const rows = values
+    .filter(function (row) { return row.join('').trim() !== ''; })
+    .map(function (row) {
+      const obj = {};
+      headers.forEach(function (header, idx) {
+        if (header) obj[header] = row[idx];
+      });
+      return obj;
+    });
+
+  const preview = buildImportPreview_(
+    { headers: headers, rows: rows },
+    dataType || '',
+    'external-sheet:' + id + '#' + sh.getName()
+  );
+
+  if (preview && preview.success) {
+    preview.externalSpreadsheetId = id;
+    preview.externalSpreadsheetName = externalSs.getName();
+    preview.externalSheetName = sh.getName();
+    preview.externalSourceLabel = externalSs.getName() + ' / ' + sh.getName();
+    preview.canReplace = preview.payload && Array.isArray(preview.payload.rows) && preview.payload.rows.length > 0;
+  }
+
+  log_('previewImportFromSpreadsheet', preview && preview.success ? 'ok' : 'error',
+    'id=' + id + ' tab=' + sh.getName() + ' rows=' + rows.length);
+
+  return preview;
+}
+
+/**
+ * Replace the current archive for a single data type with rows previously
+ * validated by previewImportFromSpreadsheet. Backs up TURNI, STIPENDI and NOTE
+ * before any destructive write. Clears only the target type's data rows and
+ * imports the new rows. Other types are NOT touched.
+ *
+ * Confirmation guard: the payload must come from a successful preview and
+ * options.confirm must be the string 'REPLACE_ARCHIVE' (sent by the UI after
+ * the user ticks the mandatory checkbox).
+ *
+ * Safety:
+ *   - LockService.waitLock(20000)
+ *   - backupSheet_ runs for each data sheet BEFORE any clear/import
+ *   - if any backup fails, NO write happens and the call returns success:false
+ *   - backups created during this run are NEVER deleted by this function
+ *     (pruneBackupsForSheet_ inside backupSheet_ keeps the most recent 5)
+ *   - preserves header row, never deletes the spreadsheet or sheets
+ *
+ * @param {string} accessCode  current session access code
+ * @param {Object} payload     { dataType: 'shifts'|'salaries'|'notes', rows: [] }
+ * @param {Object} options     must include confirm:'REPLACE_ARCHIVE'
+ * @return {Object} summary of the operation
+ */
+function applyReplaceFromExternalSheet(accessCode, payload, options) {
+  setupAlinaLavoro();
+  requireAccess_(accessCode);
+
+  options = options || {};
+
+  if (options.confirm !== 'REPLACE_ARCHIVE') {
+    return { success: false, message: 'Conferma sostituzione mancante. Spunta la checkbox di conferma e ripeti.' };
+  }
+
+  if (!payload || !payload.dataType || !Array.isArray(payload.rows)) {
+    return { success: false, message: 'Payload non valido (atteso { dataType, rows })' };
+  }
+
+  const dataType = String(payload.dataType);
+
+  if (dataType !== 'shifts' && dataType !== 'salaries' && dataType !== 'notes') {
+    return { success: false, message: 'Tipo dati non gestito: ' + dataType };
+  }
+
+  if (payload.rows.length === 0) {
+    return { success: false, message: 'Nessuna riga da importare' };
+  }
+
+  const lock = LockService.getScriptLock();
+
+  try {
+    lock.waitLock(20000);
+  } catch (err) {
+    return { success: false, message: 'Operazione in corso, riprova tra qualche secondo' };
+  }
+
+  try {
+    const result = {
+      success: true,
+      dataType: dataType,
+      backups: [],
+      cleared: 0,
+      inserted: 0,
+      failed: 0,
+      errors: []
+    };
+
+    const allTypes = ['shifts', 'salaries', 'notes'];
+    for (let i = 0; i < allTypes.length; i++) {
+      const t = allTypes[i];
+      const sheetName = sheetNameForType_(t);
+      try {
+        backupSheet_(sheetName);
+        result.backups.push(sheetName);
+      } catch (err) {
+        const msg = 'Backup ' + sheetName + ' fallito: ' + (err && err.message ? err.message : String(err));
+        result.errors.push(msg);
+        log_('applyReplaceFromExternalSheet', 'error', msg);
+        return { success: false, message: msg, backups: result.backups };
+      }
+    }
+
+    const targetSheetName = sheetNameForType_(dataType);
+    const ss = getSpreadsheet_();
+    const targetHeaders = headersForType_(dataType);
+    const sh = ensureSheet_(ss, targetSheetName, targetHeaders);
+
+    const lastRow = sh.getLastRow();
+    if (lastRow >= 2) {
+      const colCount = Math.max(sh.getLastColumn(), targetHeaders.length);
+      sh.getRange(2, 1, lastRow - 1, colCount).clearContent();
+      result.cleared = lastRow - 1;
+    }
+
+    payload.rows.forEach(function (row) {
+      const errors = validateRow_(row, dataType);
+      if (errors.length > 0) {
+        result.failed++;
+        result.errors.push('Riga invalida: ' + errors.join(', ') + ' [' + rowSummary_(row, dataType) + ']');
+        return;
+      }
+
+      try {
+        const prepared = prepareRowForWrite_(row, dataType, null);
+        const rowValues = targetHeaders.map(function (header) {
+          return prepared[header] !== undefined ? prepared[header] : '';
+        });
+        sh.appendRow(rowValues);
+        result.inserted++;
+      } catch (err) {
+        result.failed++;
+        result.errors.push('Errore scrittura: ' + (err && err.message ? err.message : String(err)));
+      }
+    });
+
+    SpreadsheetApp.flush();
+
+    log_('applyReplaceFromExternalSheet', 'ok', JSON.stringify({
+      dataType: dataType,
+      cleared: result.cleared,
+      inserted: result.inserted,
+      failed: result.failed,
+      backups: result.backups
+    }));
+
+    return result;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function extractSpreadsheetId_(urlOrId) {
+  const txt = String(urlOrId || '').trim();
+  if (!txt) return '';
+
+  const match = txt.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (match && match[1]) return match[1];
+
+  if (/^[a-zA-Z0-9-_]{20,}$/.test(txt)) return txt;
+
+  return '';
+}
+
+function headersForType_(dataType) {
+  if (dataType === 'shifts') return HEADERS.TURNI;
+  if (dataType === 'salaries') return HEADERS.STIPENDI;
+  if (dataType === 'notes') return HEADERS.NOTE;
+  throw new Error('Tipo dati sconosciuto: ' + dataType);
 }
 
 function buildImportPreview_(parsed, dataType, source) {
