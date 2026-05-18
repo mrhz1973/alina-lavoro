@@ -632,9 +632,9 @@ function buildExternalImportPreviewInlineHtml_() {
     '<label for="tab-name">Nome foglio / tab (opzionale)</label>' +
     '<input type="text" id="tab-name" placeholder="Foglio1">' +
 
-    '<button id="btn-preview">Anteprima</button>' +
-    '<button id="btn-access" style="background: #27ae60; margin-left: 10px;">Verifica accesso file</button>' +
-    '<button id="btn-runtime" style="background: #f39c12; margin-left: 10px;">Verifica runtime</button>' +
+    '<button id="btn-preview" onclick="runPreview()">Anteprima</button>' +
+    '<button id="btn-access" onclick="checkAccess()" style="background: #27ae60; margin-left: 10px;">Verifica accesso file</button>' +
+    '<button id="btn-runtime" onclick="checkRuntime()" style="background: #f39c12; margin-left: 10px;">Verifica runtime</button>' +
     '<p class="info">Nessun dato viene scritto o modificato. Solo lettura.</p>' +
     '<div id="js-ready-marker" style="font-size:0.7rem;color:#888;margin-top:4px;"></div>' +
 
@@ -828,20 +828,21 @@ function buildExternalImportPreviewInlineHtml_() {
     'window.checkRuntime = checkRuntime;' +
     'window.escHtml = escHtml;' +
     '' +
-    '// JS ready marker for task 0451' +
-    'window.__ALINA_EXTERNAL_PREVIEW_JS_READY = "0451";' +
-    '' +
-    '// Bind button click handlers after DOM is ready' +
-    'document.addEventListener("DOMContentLoaded", function() {' +
-    '  var btnPreview = document.getElementById("btn-preview");' +
-    '  var btnAccess = document.getElementById("btn-access");' +
-    '  var btnRuntime = document.getElementById("btn-runtime");' +
+    '// Robust init for Apps Script iframe (task 0452)' +
+    'function initExternalPreviewButtons() {' +
     '  var marker = document.getElementById("js-ready-marker");' +
-    '  if (btnPreview) btnPreview.addEventListener("click", runPreview);' +
-    '  if (btnAccess) btnAccess.addEventListener("click", checkAccess);' +
-    '  if (btnRuntime) btnRuntime.addEventListener("click", checkRuntime);' +
-    '  if (marker) marker.textContent = "JS ready: 0451"; ' +
-    '});' +
+    '  if (marker) marker.textContent = "JS ready: 0452";' +
+    '  window.__ALINA_EXTERNAL_PREVIEW_JS_READY = "0452";' +
+    '}' +
+    '' +
+    'window.initExternalPreviewButtons = initExternalPreviewButtons;' +
+    '' +
+    '// Initialize immediately or wait for DOM' +
+    'if (document.readyState === "loading") {' +
+    '  document.addEventListener("DOMContentLoaded", initExternalPreviewButtons);' +
+    '} else {' +
+    '  initExternalPreviewButtons();' +
+    '}' +
     '</script>' +
     '</body>' +
     '</html>';

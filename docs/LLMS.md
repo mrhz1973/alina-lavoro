@@ -37,6 +37,8 @@
 
 ## Active Workstream
 
+**Harden inline preview button binding (2026-05-18, task 0452):** Made inline preview buttons work robustly in Apps Script iframe context. Restored inline `onclick` fallback on all three buttons, kept global `window` exports, replaced fragile `DOMContentLoaded`-only binding with robust `initExternalPreviewButtons()` that checks `document.readyState` and initializes immediately if DOM already loaded. Added visible "JS ready: 0452" marker. Buttons now work via both inline onclick and immediate init. Preserves normalizedPreview from 0450 and 0448-runtime-forensic marker. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-harden-inline-preview-button-binding.md`.
+
 **Fix inline preview button JS bindings (2026-05-18, task 0451):** Fixed broken button handlers after task 0450. Removed fragile inline `onclick` attributes, exposed JavaScript functions to `window` object, added `DOMContentLoaded` event listeners for robust button binding, added JS-ready marker `__ALINA_EXTERNAL_PREVIEW_JS_READY = "0451"` with visible indicator. All three buttons (Anteprima, Verifica accesso file, Verifica runtime) now work correctly. Preserves normalizedPreview from 0450 and 0448-runtime-forensic marker. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-fix-inline-preview-button-js-bindings.md`.
 
 **External sheet preview normalization (2026-05-18, task 0450):** Added normalization layer to external Google Sheet preview. Implemented helper functions for parsing Italian dates ("21 settembre 2024"), decimal times ("8.00"), and durations. Extended `previewExternalSheetImport()` to return `normalizedPreview` with importable vs skipped row counts, column mapping recognition, and detailed skip reasons. Updated inline UI to show normalized preview section with sample data. Preserves 0448 runtime marker. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-external-sheet-preview-normalization.md`.
@@ -123,9 +125,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0451** (fix inline preview button JS bindings — fixed broken button handlers after 0450 — removed fragile inline onclick attributes — exposed JS functions to window — added DOMContentLoaded event listeners — added JS-ready marker 0451 with visible indicator — all three buttons work correctly — preserves normalizedPreview and 0448-runtime-forensic marker — 2026-05-18) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)**, **0447 (runtime mapping fix)**, **0448 (deployment routing forensic)**, **0450 (preview normalization)**, **0451 (JS bindings fix)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer + normalized preview + JS-ready marker (no deploy). |
+| Last completed | **0452** (harden inline preview button binding — made buttons work in Apps Script iframe — restored inline onclick fallback — added initExternalPreviewButtons with document.readyState check — initializes immediately if DOM loaded — JS ready marker 0452 — preserves normalizedPreview and 0448-runtime-forensic marker — 2026-05-18) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)**, **0447 (runtime mapping fix)**, **0448 (deployment routing forensic)**, **0450 (preview normalization)**, **0451 (JS bindings fix)**, **0452 (hardened bindings)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer + normalized preview + hardened JS bindings (no deploy). |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---
