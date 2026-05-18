@@ -1,7 +1,7 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-18 (task 0448 real Apps Script runtime mismatch forensic)**
-**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer (deployment routing mismatch identified) - clasp sync pipeline working; Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=runtime-forensic-0448&t=0448`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
+**Derived memory (Level 2) — last updated: 2026-05-18 (task 0450 external sheet preview normalization)**
+**Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer + normalized preview - clasp sync pipeline working; Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview-inline&t=0450`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
 
@@ -25,9 +25,9 @@
 
 | Item | Value |
 |---|---|
-| Last completed | **0448** (real Apps Script runtime mismatch forensic — performed forensic investigation revealing deployment routing mismatch, not sync pipeline issue — confirmed GitHub source has 0448 markers, .gas staging has 0448 markers, clasp pull returns 0448 markers, but browser URL points to different deployment — added runtime-forensic-0448 diagnostic route — 2026-05-18) |
-| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), 0441 (HTML sync fix), 0442 (inline page), 0443 (force route), 0444 (sync issue), 0445 (diagnostic layer), 0446 (sync pipeline fix), 0447 (runtime mapping fix), **0448 (deployment routing forensic)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + inline route + diagnostic layer (deployment routing mismatch identified). |
+| Last completed | **0450** (external sheet preview normalization — added normalization layer to external Google Sheet preview — implemented date/time/duration parsing helpers — extended preview response with importable vs skipped row counts — updated inline UI with normalized preview section — preserves 0448 runtime marker — 2026-05-18) |
+| Batch completed | …0436 (route fix), 0437 (route diagnostic), 0438 (readonly scope fix), 0439 (remote code verification), 0440 (runtime diagnostic), 0441 (HTML sync fix), 0442 (inline page), 0443 (force route), 0444 (sync issue), 0445 (diagnostic layer), 0446 (sync pipeline fix), 0447 (runtime mapping fix), 0448 (deployment routing forensic), **0450 (preview normalization)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview + runtime diagnostic + inline route + diagnostic layer + normalized preview (no deploy). |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

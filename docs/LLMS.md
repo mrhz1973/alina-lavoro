@@ -37,6 +37,8 @@
 
 ## Active Workstream
 
+**External sheet preview normalization (2026-05-18, task 0450):** Added normalization layer to external Google Sheet preview. Implemented helper functions for parsing Italian dates ("21 settembre 2024"), decimal times ("8.00"), and durations. Extended `previewExternalSheetImport()` to return `normalizedPreview` with importable vs skipped row counts, column mapping recognition, and detailed skip reasons. Updated inline UI to show normalized preview section with sample data. Preserves 0448 runtime marker. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-external-sheet-preview-normalization.md`.
+
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
 **Real Apps Script runtime mismatch forensic (2026-05-18, task 0448):** Performed forensic investigation revealing deployment routing mismatch, not sync pipeline issue. User evidence showed browser still displayed 0442/0440 after tasks 0446/0447. Investigation confirmed: GitHub source has 0448 markers, .gas staging has 0448 markers, clasp pull returns 0448 markers, but browser URL points to different deployment. Added runtime-forensic-0448 diagnostic route for verification. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-real-apps-script-runtime-mismatch-forensic.md`.
@@ -119,9 +121,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0448** (real Apps Script runtime mismatch forensic — performed forensic investigation revealing deployment routing mismatch, not sync pipeline issue — confirmed GitHub source has 0448 markers, .gas staging has 0448 markers, clasp pull returns 0448 markers, but browser URL points to different deployment — added runtime-forensic-0448 diagnostic route — 2026-05-18) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)**, **0447 (runtime mapping fix)**, **0448 (deployment routing forensic)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer (deployment routing mismatch identified). |
+| Last completed | **0450** (external sheet preview normalization — added normalization layer to external Google Sheet preview — implemented date/time/duration parsing helpers — extended preview response with importable vs skipped row counts — updated inline UI with normalized preview section — preserves 0448 runtime marker — 2026-05-18) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)**, **0447 (runtime mapping fix)**, **0448 (deployment routing forensic)**, **0450 (preview normalization)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer + normalized preview (no deploy). |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

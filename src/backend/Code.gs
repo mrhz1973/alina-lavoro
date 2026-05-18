@@ -226,6 +226,9 @@ function previewExternalSheetImport(payload) {
       }
     });
 
+    // Build normalized preview for shift import (Task 0450)
+    var normalizedPreview = buildExternalShiftPreview_(headers, rows);
+
     return {
       ok: true,
       rowsRead: rows.length,
@@ -233,7 +236,8 @@ function previewExternalSheetImport(payload) {
       invalidRows: invalidRows,
       recognizedColumns: headers,
       sampleRows: sampleRows,
-      errors: errors
+      errors: errors,
+      normalizedPreview: normalizedPreview
     };
   } catch (err) {
     return { ok: false, error: err.message || String(err) };
@@ -347,6 +351,253 @@ function externalImportPreviewAccessProbe(payload) {
   }
 }
 
+// ============================================================================
+// External Import Normalization Helpers (Task 0450)
+// ============================================================================
+
+const ITALIAN_MONTHS = {
+  'gennaio': 1, 'febbraio': 2, 'marzo': 3, 'aprile': 4, 'maggio': 5, 'giugno': 6,
+  'luglio': 7, 'agosto': 8, 'settembre': 9, 'ottobre': 10, 'novembre': 11, 'dicembre': 12
+};
+
+function normalizeExternalImportHeader_(header) {
+  return String(header || '')
+    .toLowerCase()
+    .replace(/\n/g, ' ')
+    .replace(/\r/g, ' ')
+    .replace(/\.\s*/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function findExternalColumn_(headers, aliases) {
+  for (var i = 0; i < headers.length; i++) {
+    var normalizedHeader = normalizeExternalImportHeader_(headers[i]);
+    for (var j = 0; j < aliases.length; j++) {
+      if (normalizedHeader.indexOf(aliases[j].toLowerCase()) !== -1) {
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+
+function parseItalianExternalDate_(value) {
+  if (!value) return null;
+  var str = String(value).trim();
+  
+  // Already ISO format YYYY-MM-DD
+  var isoMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoMatch) {
+    return str;
+  }
+  
+  // Italian format: "21 settembre 2024"
+  var italianMatch = str.match(/^(\d{1,2})\s+([a-z]+)\s+(\d{4})$/i);
+  if (italianMatch) {
+    var day = parseInt(italianMatch[1], 10);
+    var monthName = italianMatch[2].toLowerCase();
+    var year = parseInt(italianMatch[3], 10);
+    var month = ITALIAN_MONTHS[monthName];
+    if (month && day >= 1 && day <= 31) {
+      return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+    }
+  }
+  
+  return null;
+}
+
+function parseExternalTime_(value) {
+  if (!value) return null;
+  var str = String(value).trim().replace(',', '.');
+  
+  // Already HH:mm format
+  var timeMatch = str.match(/^(\d{1,2}):(\d{2})$/);
+  if (timeMatch) {
+    var hours = parseInt(timeMatch[1], 10);
+    var minutes = parseInt(timeMatch[2], 10);
+    if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+      return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+    }
+  }
+  
+  // Decimal format: "8.00" or "15.30"
+  var decimalMatch = str.match(/^(\d{1,2})\.(\d{2})$/);
+  if (decimalMatch) {
+    var hours = parseInt(decimalMatch[1], 10);
+    var minutes = parseInt(decimalMatch[2], 10);
+    if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+      return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+    }
+  }
+  
+  // Simple hour format: "8" or "15"
+  var simpleMatch = str.match(/^(\d{1,2})$/);
+  if (simpleMatch) {
+    var hours = parseInt(simpleMatch[1], 10);
+    if (hours >= 0 && hours <= 23) {
+      return String(hours).padStart(2, '0') + ':00';
+    }
+  }
+  
+  return null;
+}
+
+function parseExternalDurationMinutes_(value) {
+  if (!value) return null;
+  var str = String(value).trim().replace(',', '.');
+  
+  // Decimal hours format: "7.00" = 7h 0m = 420m, "5.30" = 5h 30m = 330m
+  var decimalMatch = str.match(/^(\d{1,2})\.(\d{2})$/);
+  if (decimalMatch) {
+    var hours = parseInt(decimalMatch[1], 10);
+    var decimalPart = parseInt(decimalMatch[2], 10);
+    if (hours >= 0 && decimalPart >= 0 && decimalPart < 100) {
+      // Treat .30 as 30 minutes, not 0.30 hours
+      var minutes = (hours * 60) + (decimalPart >= 60 ? Math.floor(decimalPart * 0.6) : decimalPart);
+      return minutes;
+    }
+  }
+  
+  // Simple hours format: "7" = 420m
+  var simpleMatch = str.match(/^(\d{1,2})$/);
+  if (simpleMatch) {
+    var hours = parseInt(simpleMatch[1], 10);
+    if (hours >= 0) {
+      return hours * 60;
+    }
+  }
+  
+  return null;
+}
+
+function buildExternalShiftPreview_(headers, rows) {
+  // Column aliases for mapping
+  var dateAliases = ['data', 'date', 'giorno', 'day'];
+  var startAliases = ['inizio', 'start', 'ora inizio', 'dalle'];
+  var endAliases = ['termine', 'fine', 'end', 'ora fine', 'alle'];
+  var durationAliases = ['ore lavorate', 'durata', 'minuti', 'minuti lavorati', 'ore . minuti', 'totale ore'];
+  
+  var dateCol = findExternalColumn_(headers, dateAliases);
+  var startCol = findExternalColumn_(headers, startAliases);
+  var endCol = findExternalColumn_(headers, endAliases);
+  var durationCol = findExternalColumn_(headers, durationAliases);
+  
+  var recognizedMapping = {
+    data: dateCol >= 0 ? headers[dateCol] : null,
+    inizio: startCol >= 0 ? headers[startCol] : null,
+    fine: endCol >= 0 ? headers[endCol] : null,
+    durata: durationCol >= 0 ? headers[durationCol] : null
+  };
+  
+  var importableRows = [];
+  var skippedRows = [];
+  
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    var rowNum = i + 2; // +2 because row 1 is header
+    
+    // Check if row has any content
+    var hasContent = row.some(function(cell) { 
+      return cell !== '' && cell !== null && cell !== undefined; 
+    });
+    if (!hasContent) {
+      continue; // Skip empty rows without counting as skipped
+    }
+    
+    // Parse date (required)
+    var rawDate = dateCol >= 0 ? row[dateCol] : null;
+    var parsedDate = parseItalianExternalDate_(rawDate);
+    if (!parsedDate) {
+      skippedRows.push({
+        sourceRow: rowNum,
+        reason: 'invalid_date',
+        raw: { data: rawDate, inizio: startCol >= 0 ? row[startCol] : null, termine: endCol >= 0 ? row[endCol] : null }
+      });
+      continue;
+    }
+    
+    // Parse times
+    var rawStart = startCol >= 0 ? row[startCol] : null;
+    var rawEnd = endCol >= 0 ? row[endCol] : null;
+    var parsedStart = parseExternalTime_(rawStart);
+    var parsedEnd = parseExternalTime_(rawEnd);
+    
+    // Parse duration
+    var rawDuration = durationCol >= 0 ? row[durationCol] : null;
+    var parsedDuration = parseExternalDurationMinutes_(rawDuration);
+    
+    // Calculate working minutes
+    var minutesWorked = 0;
+    var durationSource = 'none';
+    
+    if (parsedStart && parsedEnd) {
+      var startParts = parsedStart.split(':');
+      var endParts = parsedEnd.split(':');
+      var startMin = parseInt(startParts[0], 10) * 60 + parseInt(startParts[1], 10);
+      var endMin = parseInt(endParts[0], 10) * 60 + parseInt(endParts[1], 10);
+      if (endMin >= startMin) {
+        minutesWorked = endMin - startMin;
+        durationSource = 'computed_from_times';
+      }
+    }
+    
+    // If computed duration is 0 or invalid, try parsed duration
+    if (minutesWorked === 0 && parsedDuration !== null && parsedDuration > 0) {
+      minutesWorked = parsedDuration;
+      durationSource = 'from_duration_column';
+    }
+    
+    // Check if row is importable
+    var isEmptyZeroShift = (!parsedStart || parsedStart === '00:00') && 
+                           (!parsedEnd || parsedEnd === '00:00') && 
+                           minutesWorked === 0;
+    
+    if (isEmptyZeroShift) {
+      skippedRows.push({
+        sourceRow: rowNum,
+        reason: 'empty_zero_shift',
+        raw: { data: rawDate, inizio: rawStart, termine: rawEnd, 'ore lavorate': rawDuration }
+      });
+      continue;
+    }
+    
+    if (minutesWorked === 0) {
+      skippedRows.push({
+        sourceRow: rowNum,
+        reason: 'missing_work_duration',
+        raw: { data: rawDate, inizio: rawStart, termine: rawEnd, 'ore lavorate': rawDuration }
+      });
+      continue;
+    }
+    
+    // Build normalized row
+    var normalizedRow = {
+      data: parsedDate,
+      inizio: parsedStart || '00:00',
+      fine: parsedEnd || '00:00',
+      minuti_lavorati: minutesWorked,
+      nota: '',
+      manuale: true,
+      sourceRow: rowNum,
+      durationSource: durationSource
+    };
+    
+    importableRows.push(normalizedRow);
+  }
+  
+  return {
+    dataType: 'shifts',
+    rowsRead: rows.length,
+    importableRows: importableRows.length,
+    skippedRows: skippedRows.length,
+    recognizedMapping: recognizedMapping,
+    normalizedSampleRows: importableRows.slice(0, 5),
+    skippedSamples: skippedRows.slice(0, 10),
+    warnings: []
+  };
+}
+
 function buildExternalImportPreviewInlineHtml_() {
   return '<!DOCTYPE html>' +
     '<html lang="it">' +
@@ -409,22 +660,65 @@ function buildExternalImportPreviewInlineHtml_() {
     '      btn.disabled = false;' +
     '      btn.textContent = "Anteprima";' +
     '      if (data && data.ok) {' +
-    '        var html = "<div class=\\"result-box\\">";' +
-    '        html += "<strong>Righe lette:</strong> " + data.rowsRead + "\\n";' +
-    '        html += "<strong>Righe valide:</strong> " + data.validRows + "\\n";' +
-    '        html += "<strong>Righe non valide:</strong> " + data.invalidRows + "\\n";' +
-    '        html += "<strong>Colonne riconosciute:</strong> " + (data.recognizedColumns || []).join(", ") + "\\n\\n";' +
-    '        if (data.sampleRows && data.sampleRows.length) {' +
-    '          html += "<strong>Anteprima righe (max 5):</strong>\\n";' +
-    '          data.sampleRows.forEach(function(row, i) {' +
-    '            html += (i + 1) + ". " + JSON.stringify(row) + "\\n";' +
-    '          });' +
-    '        }' +
-    '        if (data.errors && data.errors.length) {' +
-    '          html += "\\n<strong>Avvisi:</strong>\\n" + data.errors.join("\\n");' +
-    '        }' +
-    '        html += "</div>";' +
-    '        area.innerHTML = html;' +
+        '        var html = "<div class=\\"result-box\\">";' +
+        '        html += "<strong>Righe lette:</strong> " + data.rowsRead + "\\n";' +
+        '        html += "<strong>Righe valide:</strong> " + data.validRows + "\\n";' +
+        '        html += "<strong>Righe non valide:</strong> " + data.invalidRows + "\\n";' +
+        '        html += "<strong>Colonne riconosciute:</strong> " + (data.recognizedColumns || []).join(", ") + "\\n\\n";' +
+        '        if (data.sampleRows && data.sampleRows.length) {' +
+        '          html += "<strong>Anteprima righe raw (max 5):</strong>\\n";' +
+        '          data.sampleRows.forEach(function(row, i) {' +
+        '            html += (i + 1) + ". " + JSON.stringify(row) + "\\n";' +
+        '          });' +
+        '        }' +
+        '        if (data.errors && data.errors.length) {' +
+        '          html += "\\n<strong>Avvisi:</strong>\\n" + data.errors.join("\\n");' +
+        '        }' +
+        '        html += "</div>";' +
+        '        ' +
+        '        // Normalized Preview (Task 0450)' +
+        '        if (data.normalizedPreview) {' +
+        '          var norm = data.normalizedPreview;' +
+        '          html += "<div class=\\"result-box\\" style=\\"margin-top:16px; background:#f0f8ff;\\">";' +
+        '          html += "<strong>=== ANTEPRIMA NORMALIZZATA (Import Turni) ===</strong>\\n\\n";' +
+        '          html += "<strong>Tipo dati:</strong> " + norm.dataType + "\\n";' +
+        '          html += "<strong>Righe lette:</strong> " + norm.rowsRead + "\\n";' +
+        '          html += "<strong>Righe importabili:</strong> " + norm.importableRows + "\\n";' +
+        '          html += "<strong>Righe scartate:</strong> " + norm.skippedRows + "\\n\\n";' +
+        '          ' +
+        '          if (norm.recognizedMapping) {' +
+        '            html += "<strong>Mapping colonne:</strong>\\n";' +
+        '            html += "  - Data: " + (norm.recognizedMapping.data || "non trovata") + "\\n";' +
+        '            html += "  - Inizio: " + (norm.recognizedMapping.inizio || "non trovata") + "\\n";' +
+        '            html += "  - Fine: " + (norm.recognizedMapping.fine || "non trovata") + "\\n";' +
+        '            html += "  - Durata: " + (norm.recognizedMapping.durata || "non trovata") + "\\n\\n";' +
+        '          }' +
+        '          ' +
+        '          if (norm.normalizedSampleRows && norm.normalizedSampleRows.length) {' +
+        '            html += "<strong>Righe importabili (max 5):</strong>\\n";' +
+        '            norm.normalizedSampleRows.forEach(function(row, i) {' +
+        '              html += (i + 1) + ". " + row.data + " " + row.inizio + "-" + row.fine + " (" + row.minuti_lavorati + " min)\\n";' +
+        '            });' +
+        '            html += "\\n";' +
+        '          }' +
+        '          ' +
+        '          if (norm.skippedSamples && norm.skippedSamples.length) {' +
+        '            html += "<strong>Righe scartate (max 10):</strong>\\n";' +
+        '            norm.skippedSamples.forEach(function(skip, i) {' +
+        '              html += (i + 1) + ". Riga " + skip.sourceRow + ": " + skip.reason;' +
+        '              if (skip.raw && skip.raw.data) html += " (data: " + skip.raw.data + ")";' +
+        '              html += "\\n";' +
+        '            });' +
+        '            html += "\\n";' +
+        '          }' +
+        '          ' +
+        '          if (norm.warnings && norm.warnings.length) {' +
+        '            html += "<strong>Avvisi normalizzazione:</strong>\\n" + norm.warnings.join("\\n");' +
+        '          }' +
+        '          html += "</div>";' +
+        '        }' +
+        '        ' +
+        '        area.innerHTML = html;' +
     '      } else {' +
     '        var msg = (data && data.error) ? data.error : "Errore sconosciuto.";' +
     '        area.innerHTML = "<div class=\\"error-box\\">Errore backend: " + escHtml(msg) + "</div>";' +
