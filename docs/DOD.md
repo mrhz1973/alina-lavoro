@@ -1,4 +1,4 @@
-# Definition of Done — Alina Lavoro automation
+# Definition of Done - Alina Lavoro automation
 
 **Data:** 18 maggio 2026  
 **Versione:** v1.0  
@@ -8,7 +8,7 @@
 
 ## Principio
 
-Un task non è **done** senza prova oggettiva. La dichiarazione "task completato" senza evidence pack è invalida.
+Un task non e' **done** senza prova oggettiva. La dichiarazione "task completato" senza evidence pack e' invalida.
 
 Il sistema deve distinguere tra codice scritto, codice committato, codice pushato, build verde, deploy eseguito, feature funzionante e feature verificata nel browser reale. Ogni stato richiede evidenza separata.
 
@@ -48,7 +48,7 @@ Ogni release deve lasciare in pagina un marker leggibile dal browser, con format
 v2.2.0-build0428-stable+<short-sha>
 ```
 
-Il browser è ground truth per la release visibile all'utente. GitHub, clasp e build locale non bastano a dichiarare una release funzionante.
+Il browser e' ground truth per la release visibile all'utente. GitHub, clasp e build locale non bastano a dichiarare una release funzionante.
 
 ## Smoke test minimo pre-done
 
@@ -60,20 +60,20 @@ Prima di dichiarare `done`, l'implementatore deve eseguire almeno:
 4. verifica del marker o della stringa funzionale se il task impatta UI/runtime;
 5. verifica di non aver toccato path vietati.
 
-Se lo smoke test fallisce e il codice resta committato, lo stato massimo ammesso è `done-unverified` .
+Se lo smoke test fallisce e il codice resta committato, lo stato massimo ammesso e' `done-unverified`.
 
 ## Build verde e feature funzionante
 
-Build OK é necessaria ma non sufficiente. Una feature è funzionante solo se:
+Build OK e' necessaria ma non sufficiente. Una feature e' funzionante solo se:
 
-- il codice corretto è nel branch previsto;
+- il codice corretto e' nel branch previsto;
 - il runtime previsto usa quel codice;
 - l'evidenza dimostra il comportamento atteso;
 - eventuali limiti di test sono dichiarati.
 
 ## Regola ask once
 
-L'implementatore può chiedere chiarimenti solo all'inizio del task. Dopo la partenza deve procedere secondo policy, ridurre scope in modo conservativo o marcare `blocked` con motivo oggettivo.
+L'implementatore puo' chiedere chiarimenti solo all'inizio del task. Dopo la partenza deve procedere secondo policy, ridurre scope in modo conservativo o marcare `blocked` con motivo oggettivo.
 
 ## Messaggio di chiusura task
 
@@ -90,11 +90,11 @@ Ogni chiusura task deve includere:
 
 ## Anti-hallucinazione di stato
 
-L'Implementatore deve dichiarare solo ciò che ha fatto o verificato su GitHub/runtime. Non deve dichiarare:
+L'implementatore deve dichiarare solo cio' che ha fatto o verificato su GitHub/runtime. Non deve dichiarare:
 
 - deploy riuscito se non ha deployment ID;
-- browser test passato se non è stato eseguito;
-- sync Apps Script riuscito se non c'� evidenza remota;
+- browser test passato se non e' stato eseguito;
+- sync Apps Script riuscito se non c'e' evidenza remota;
 - produzione aggiornata se il marker browser non lo conferma;
 - task autonomo completato se mancano diff e SHA.
 
@@ -155,13 +155,13 @@ L'Implementatore deve dichiarare solo ciò che ha fatto o verificato su GitHub/r
 
 ## Deploy, tag e rollback
 
-Deploy, tag e rollback sono esclusi da ogni task salvo autorizzazione separata ed esplicita. Se un task richiede deploy/tag/rollback ma il prompt non lo autorizza chiaramente, lo stato deve essere `blocked` .
+Deploy, tag e rollback sono esclusi da ogni task salvo autorizzazione separata ed esplicita. Se un task richiede deploy/tag/rollback ma il prompt non lo autorizza chiaramente, lo stato deve essere `blocked`.
 
 ## Riferimenti correlati
 
-- `docs/ARCHITECTURF.md
-- `docs/ARCHITECTUR-DELL-NODE.md
-- `docs/CONTRACTS.md
+- `docs/ARCHITECTURE.md`
+- `docs/ARCHITECTURE-DELL-NODE.md`
+- `docs/CONTRACTS.md`
 - `docs/ROADMAP-EXECUTION.md`
 
 ## Changelog
