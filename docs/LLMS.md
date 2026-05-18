@@ -39,6 +39,8 @@
 
 **External preview read-only scope fix (2026-05-17, task 0438):** Fixed `previewExternalSheetImport()` to use Advanced Sheets Service instead of `SpreadsheetApp.openById` (which required full spreadsheets scope). Implemented read-only access via `Sheets.Spreadsheets.get()` and `Sheets.Spreadsheets.Values.get()`. Added Advanced Sheets Service to appsscript.json. Maintained existing scopes (spreadsheets.currentonly, spreadsheets.readonly). Added specific error messages for authorization/access issues. Production @57 untouched. HEAD/dev push only. Test: `/dev?route=external-import-preview`. Session: `docs/sessions/2026-05-17-external-preview-readonly-scope-fix.md`.
 
+**Fix CLASP Code.js runtime mapping (2026-05-18, task 0447):** Fixed clasp runtime file mapping issue where Apps Script expects .gas/Code.js not .gas/Code.gs. User evidence showed task 0446 was insufficient - browser still displayed old 0442 page. Updated package.json sync script to copy src/backend/Code.gs to .gas/Code.js, updated runtime markers to 0447 for visual verification. Task 0445 diagnostic layer now properly synchronized to runtime. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-fix-clasp-codejs-runtime-mapping.md`.
+
 **CLASP sync pipeline diagnostic and fix (2026-05-18, task 0446):** Diagnosed and fixed sync pipeline issue where stale .gas/Code.js conflicted with .gas/Code.gs, preventing task 0445 diagnostic code from reaching Apps Script runtime. Updated package.json sync script to remove stale files, cleaned .gas directory, and verified successful remote synchronization. Task 0445 diagnostic layer now live in runtime. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-clasp-sync-pipeline-diagnostic.md`.
 
 **External preview real error diagnostic (2026-05-18, task 0445):** Added safe diagnostic layer to external Google Sheet preview flow. Implemented `redactSpreadsheetId_()`, `safeExternalImportError_()`, and `externalImportPreviewAccessProbe()` functions. Enhanced `previewExternalSheetImport()` with precise error phases. Added "Verifica accesso file" button to inline page. Implementation complete locally but blocked by same sync issue from task 0444. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-external-preview-real-error-diagnostic.md`.
@@ -115,9 +117,9 @@ Automation (watcher/runner/low-touch): **baseline stable / monitor**.
 
 | State | Info |
 |---|---|
-| Last completed | **0446** (clasp sync pipeline diagnostic and fix — diagnosed stale .gas/Code.js conflict causing sync issues — updated package.json sync script to remove stale files — cleaned .gas directory and verified successful remote synchronization — task 0445 diagnostic layer now live in runtime — 2026-05-18) |
-| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)** |
-| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer (live in Apps Script runtime). Sync issue resolved. |
+| Last completed | **0447** (fix clasp Code.js runtime mapping — fixed clasp runtime file mapping where Apps Script expects .gas/Code.js not .gas/Code.gs — user evidence showed task 0446 insufficient — updated package.json sync script to copy to .gas/Code.js — updated runtime markers to 0447 — task 0445 diagnostic layer now properly synchronized — 2026-05-18) |
+| Batch completed | …**0436 (route fix)**, **0437 (route diagnostic)**, **0438 (readonly scope fix)**, **0439 (remote code verification)**, **0440 (runtime diagnostic)**, **0441 (HTML sync fix)**, **0442 (inline page)**, **0443 (force route)**, **0444 (sync issue)**, **0445 (diagnostic layer)**, **0446 (sync pipeline fix)**, **0447 (runtime mapping fix)** |
+| Queue | **0 pending** — Production stable @57/build 0428. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer (live in Apps Script runtime). Clasp runtime mapping fixed. |
 | Superseded | `docs/tasks/queue/0363-v21-stable-tag.md` (superseded by 0367) |
 
 ---

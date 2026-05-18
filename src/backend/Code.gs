@@ -115,7 +115,7 @@ function doGet(e) {
   if (route === 'external-import-preview-inline' || route === 'import-preview-inline') {
     return HtmlService
       .createHtmlOutput(buildExternalImportPreviewInlineHtml_())
-      .setTitle('Preview Google Sheet esterno INLINE 0442')
+      .setTitle('Preview Google Sheet esterno INLINE 0447')
       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
@@ -238,7 +238,7 @@ function extractSpreadsheetId_(input) {
 function externalImportPreviewRuntimeInfo() {
   return {
     ok: true,
-    marker: "0440-runtime-sheets-api",
+    marker: "0447-runtime-codejs-sync",
     timestamp: new Date().toISOString(),
     uses: "Sheets.Spreadsheets.Values.get",
     spreadsheetAppOpenByIdExpected: false
@@ -341,7 +341,7 @@ function buildExternalImportPreviewInlineHtml_() {
     '<head>' +
     '<meta charset="UTF-8">' +
     '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-    '<title>Preview Google Sheet esterno INLINE 0442</title>' +
+    '<title>Preview Google Sheet esterno INLINE 0447</title>' +
     '<style>' +
     '* { box-sizing: border-box; margin: 0; padding: 0; }' +
     'body { font-family: sans-serif; background: #f5f5f5; color: #222; padding: 24px 16px; max-width: 640px; margin: 0 auto; }' +
@@ -359,8 +359,8 @@ function buildExternalImportPreviewInlineHtml_() {
     '</style>' +
     '</head>' +
     '<body>' +
-    '<h1>Preview Google Sheet esterno INLINE 0442</h1>' +
-    '<div class="build-tag">DEV inline 0442</div>' +
+    '<h1>Preview Google Sheet esterno INLINE 0447</h1>' +
+    '<div class="build-tag">DEV inline 0447</div>' +
     '<div class="badge">SOLO LETTURA — nessuna modifica ai dati</div>' +
 
     '<label for="sheet-url">URL o ID Google Sheet</label>' +
