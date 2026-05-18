@@ -112,10 +112,22 @@ function doGet(e) {
   var route = getRequestRoute_(e);
 
   // FORCE INLINE PREVIEW ROUTE - must be checked FIRST
+  if (route === 'runtime-forensic-0448') {
+    return HtmlService.createHtmlOutput(
+      '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Runtime Forensic 0448</title></head>' +
+      '<body style="font-family:monospace;padding:24px">' +
+      '<h1>RUNTIME FORENSIC 0448</h1>' +
+      '<p>marker: 0448-runtime-forensic</p>' +
+      '<p>If you see this page, the clasp push worked and this is the correct runtime.</p>' +
+      '<p>Timestamp: ' + new Date().toISOString() + '</p>' +
+      '</body></html>'
+    ).setTitle('Runtime Forensic 0448');
+  }
+
   if (route === 'external-import-preview-inline' || route === 'import-preview-inline') {
     return HtmlService
       .createHtmlOutput(buildExternalImportPreviewInlineHtml_())
-      .setTitle('Preview Google Sheet esterno INLINE 0447')
+      .setTitle('Preview Google Sheet esterno INLINE 0448')
       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
@@ -238,7 +250,7 @@ function extractSpreadsheetId_(input) {
 function externalImportPreviewRuntimeInfo() {
   return {
     ok: true,
-    marker: "0447-runtime-codejs-sync",
+    marker: "0448-runtime-forensic",
     timestamp: new Date().toISOString(),
     uses: "Sheets.Spreadsheets.Values.get",
     spreadsheetAppOpenByIdExpected: false
@@ -341,7 +353,7 @@ function buildExternalImportPreviewInlineHtml_() {
     '<head>' +
     '<meta charset="UTF-8">' +
     '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-    '<title>Preview Google Sheet esterno INLINE 0447</title>' +
+    '<title>Preview Google Sheet esterno INLINE 0448</title>' +
     '<style>' +
     '* { box-sizing: border-box; margin: 0; padding: 0; }' +
     'body { font-family: sans-serif; background: #f5f5f5; color: #222; padding: 24px 16px; max-width: 640px; margin: 0 auto; }' +
@@ -359,9 +371,9 @@ function buildExternalImportPreviewInlineHtml_() {
     '</style>' +
     '</head>' +
     '<body>' +
-    '<h1>Preview Google Sheet esterno INLINE 0447</h1>' +
-    '<div class="build-tag">DEV inline 0447</div>' +
-    '<div class="badge">SOLO LETTURA — nessuna modifica ai dati</div>' +
+    '<h1>Preview Google Sheet esterno INLINE 0448</h1>' +
+    '<div class="build-tag">DEV inline 0448</div>' +
+    '<div class="badge">RUNTIME FORENSIC 0448 — if you see 0442, the browser is not using this pushed source.</div>' +
 
     '<label for="sheet-url">URL o ID Google Sheet</label>' +
     '<input type="text" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/… oppure ID diretto">' +
