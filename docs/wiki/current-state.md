@@ -9,6 +9,8 @@
 
 ## App
 
+**Planned:** multi-workplace shifts, date-specific scheduled-time overrides, and a monthly PDF report; see `docs/roadmap.md`. Not implemented or deployed. Keep personal documents outside this repository.
+
 | Field | Value |
 |---|---|
 | Source version | **HEAD: V2.2.0 + 0406–0428 + ExternalImportPreview + Advanced Sheets Service read-only (0438)** / Production: V2.2.0 + 0406–0428 |
