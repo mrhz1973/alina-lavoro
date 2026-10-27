@@ -39,6 +39,8 @@ The deployment and legacy automation descriptions below are historical; live run
 
 ## Active Workstream
 
+**Development method (2026-10-27):** the project-import and Google Apps Script adapters of `mrhz1973/dev-method` `v0.1.1` were reviewed. Formal adoption remains a proposal; project rules and existing safety gates continue to apply. See the versioned [GAS adapter](https://github.com/mrhz1973/dev-method/blob/v0.1.1/adapters/apps-script-gas.md).
+
 **Multi-workplace attendance and monthly PDF (2026-10-27):** requirements recorded in `docs/roadmap.md`; design and local proof of concept only. No application implementation, production-data migration, end-to-end validation, or deployment yet. Keep personal documents and private links out of this public repository.
 
 **Harden inline preview button binding (2026-05-18, task 0452):** Made inline preview buttons work robustly in Apps Script iframe context. Restored inline `onclick` fallback on all three buttons, kept global `window` exports, replaced fragile `DOMContentLoaded`-only binding with robust `initExternalPreviewButtons()` that checks `document.readyState` and initializes immediately if DOM already loaded. Added visible "JS ready: 0452" marker. Buttons now work via both inline onclick and immediate init. Preserves normalizedPreview from 0450 and 0448-runtime-forensic marker. Production @57 untouched. No deploy. Session: `docs/sessions/2026-05-18-harden-inline-preview-button-binding.md`.
