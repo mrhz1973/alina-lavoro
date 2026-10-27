@@ -88,12 +88,16 @@ function scheduledSelectorHtml_() {
 }
 function scheduledSelectWorkplace_(kind, source) {
   if (kind !== 'variable' && kind !== 'scheduled') return;
-  if (source !== 'automatic') { scheduledManualChoiceThisVisit = true; scheduledManualChoiceVersion++; }
+  if (source !== 'automatic') scheduledMarkManualInteraction_();
   scheduledSelectedWorkplace = kind;
   try { localStorage.setItem(SCHEDULED_WORKPLACE_KEY, kind); } catch (_) {}
   monthsViewSig = ''; monthDetailSig = '';
   if (state.page === 'monthDetail') state.page = 'months';
   render();
+}
+function scheduledMarkManualInteraction_() {
+  scheduledManualChoiceThisVisit = true;
+  scheduledManualChoiceVersion++;
 }
 function scheduledParseTime_(value) {
   var match = /^([01]\d|2[0-3]):(00|30)$/.exec(String(value || ''));
@@ -216,11 +220,6 @@ function renderScheduledHome_() {
     '</span></section>';
   document.getElementById('content').innerHTML = html;
 }
-function scheduledOpenSummary_() {
-  setPage('home');
-  var summary = document.getElementById('scheduledSummary');
-  if (summary && typeof summary.scrollIntoView === 'function') summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 function renderScheduledMonths_() {
   var keys = {};
   (state.scheduledShifts || []).forEach(function (row) {
@@ -239,6 +238,7 @@ function renderScheduledMonths_() {
 }
 function scheduledOpenMonth_(month) {
   if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) return;
+  if (scheduledSelectedWorkplace === 'scheduled') scheduledMarkManualInteraction_();
   state.detailMonth = month; setPage('monthDetail');
 }
 function renderScheduledMonthDetail_() {
@@ -299,6 +299,7 @@ function scheduledSettingsHtml_() {
 }
 function scheduledOpenDayEditor_(date) {
   if (!scheduledDateValid_(date)) return;
+  if (scheduledSelectedWorkplace === 'scheduled') scheduledMarkManualInteraction_();
   function field(id, label) {
     return '<div class="field"><label>' + esc(label) + '</label><input type="time" step="1800" id="' + id + '"></div>';
   }
@@ -488,13 +489,16 @@ document.addEventListener('visibilitychange', function () {
 });
 
 function scheduledUpdateNav_() {
-  var original = document.getElementById('nav'), scheduled = document.getElementById('scheduledNav');
-  var appRoot = document.getElementById('appView'), isScheduled = scheduledSelectedWorkplace === 'scheduled';
-  if (original) original.classList.toggle('hidden', isScheduled);
-  if (scheduled) scheduled.classList.toggle('hidden', !isScheduled);
-  if (appRoot) appRoot.classList.toggle('scheduled-nav-active', isScheduled);
+  var nav = document.getElementById('nav'), isScheduled = scheduledSelectedWorkplace === 'scheduled';
+  var variableMonths = document.getElementById('navVariableMonths');
+  var register = document.getElementById('navScheduledRegister');
+  var editor = document.getElementById('navScheduledEdit');
+  if (nav) nav.classList.toggle('nav-scheduled', isScheduled);
+  if (variableMonths) variableMonths.classList.toggle('hidden', isScheduled);
+  if (register) register.classList.toggle('hidden', !isScheduled);
+  if (editor) editor.classList.toggle('hidden', !isScheduled);
   var page = scheduledEditorOpen ? 'scheduledEdit' : state.page === 'monthDetail' ? 'months' : state.page;
-  document.querySelectorAll('#scheduledNav button[data-page]').forEach(function (button) {
+  document.querySelectorAll('#nav button[data-page]').forEach(function (button) {
     button.classList.toggle('active', button.dataset.page === page);
   });
 }

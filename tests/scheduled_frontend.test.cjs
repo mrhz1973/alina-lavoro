@@ -19,25 +19,26 @@ function createFrontend(sharedStorage) {
       toggle(name, force) { const next = force === undefined ? !values.has(name) : !!force; if (next) values.add(name); else values.delete(name); return next; }
     };
   }
-  const scheduledButtons = ['months', 'scheduledEdit', 'home'].map(page => ({ dataset: { page }, classList: classes() }));
-  const legacyButtons = ['home', 'months', 'notes'].map(page => ({ dataset: { page }, classList: classes() }));
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
       id, value: '', innerHTML: '', textContent: '', dataset: {}, children: [],
-      classList: classes(id === 'scheduledNav' ? ['hidden'] : []),
+      classList: classes(['navScheduledRegister', 'navScheduledEdit'].includes(id) ? ['hidden'] : []),
       insertAdjacentHTML(_where, text) { this.innerHTML = text + this.innerHTML; },
       appendChild(child) { this.children.push(child); }, addEventListener() {}, click() {},
       scrollIntoView() { this.scrolled = true; }
     });
     return elements.get(id);
   }
+  const navButtons = [
+    ['navHome', 'home'], ['navVariableMonths', 'months'], ['navScheduledRegister', 'months'],
+    ['navScheduledEdit', 'scheduledEdit'], ['navNotes', 'notes']
+  ].map(([id, page]) => { const button = element(id); button.dataset.page = page; return button; });
   const document = {
     documentElement: { dataset: {}, style: { setProperty() {} }, lang: '' },
     visibilityState: 'visible',
     addEventListener(name, callback) { if (!listeners.has(name)) listeners.set(name, []); listeners.get(name).push(callback); },
     querySelectorAll(selector) {
-      if (selector === '#scheduledNav button[data-page]') return scheduledButtons;
-      if (selector === '.nav button') return [...legacyButtons, ...scheduledButtons];
+      if (selector === '#nav button[data-page]' || selector === '.nav button') return navButtons;
       return [];
     }, getElementById: element,
     createElement() { return element('created'); }, createDocumentFragment() { return element('fragment'); }
@@ -69,7 +70,7 @@ function createFrontend(sharedStorage) {
     "state.summaries = [{mese:'2026-03', minuti:120, ore:2, giorni:1, ore_label:'2 h 00 min', stimato:20, tariffa_media:10}];",
     "scheduledSelectedWorkplace = 'scheduled'; state.scheduledCapability = true;"
   ].join('\n'), context);
-  return { context, storage, elements, navigator, listeners, scheduledButtons, setClock(value) { clock = Date.parse(value); } };
+  return { context, storage, elements, navigator, listeners, navButtons, setClock(value) { clock = Date.parse(value); } };
 }
 
 test('recording two scheduled shifts keeps the existing workplace untouched', () => {
@@ -155,7 +156,7 @@ function configureTestAreas(app) {
     "state.config.aree_programmata_json = JSON.stringify([{latitude:41,longitude:11,radius:500}]);", app);
 }
 
-test('the scheduled home keeps both shifts prominent and puts three controls in the bottom bar', () => {
+test('the scheduled home keeps both shifts prominent and retains one shared navigation bar', () => {
   const { context: app, elements } = createFrontend();
   app.renderScheduledHome_();
   const html = elements.get('content').innerHTML;
@@ -169,34 +170,46 @@ test('the scheduled home keeps both shifts prominent and puts three controls in 
   assert.doesNotMatch(html, /Riprova autorizzazione posizione/);
   assert.match(app.scheduledSettingsHtml_(), /Riprova autorizzazione posizione/);
   const source = fs.readFileSync(path.join(__dirname, '../src/frontend/Index.html'), 'utf8');
-  const bar = source.match(/<nav id="scheduledNav"[\s\S]*?<\/nav>/)[0];
-  assert.equal((bar.match(/<button /g) || []).length, 3);
-  assert.ok(bar.indexOf('Registro presenze') < bar.indexOf('Modifica orari'));
-  assert.ok(bar.indexOf('Modifica orari') < bar.indexOf('Riepilogo'));
-  assert.match(source, /\.nav\.scheduled-nav\{position:fixed;top:auto;bottom:/);
+  const bars = [...source.matchAll(/<nav\b/g)];
+  assert.equal(bars.length, 1);
+  const bar = source.match(/<nav id="nav"[\s\S]*?<\/nav>/)[0];
+  assert.ok(bar.indexOf('nav_home') < bar.indexOf('scheduled_show_register'));
+  assert.ok(bar.indexOf('scheduled_show_register') < bar.indexOf('scheduled_edit_short'));
+  assert.ok(bar.indexOf('scheduled_edit_short') < bar.indexOf('nav_notes'));
+  assert.match(source, /\.nav\.nav-scheduled\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+  assert.doesNotMatch(source, /\.nav\.scheduled-nav\{position:fixed/);
 });
 
-test('the scheduled bottom bar opens the register and editor and restores the existing workplace bar', () => {
-  const { context: app, elements, scheduledButtons } = createFrontend();
+test('the shared bar keeps Home and Notes while its middle controls change by workplace', () => {
+  const { context: app, elements } = createFrontend();
   app.render();
-  assert.equal(elements.get('nav').classList.contains('hidden'), true);
-  assert.equal(elements.get('scheduledNav').classList.contains('hidden'), false);
-  assert.equal(scheduledButtons[2].classList.contains('active'), true);
+  assert.equal(elements.get('nav').classList.contains('nav-scheduled'), true);
+  assert.equal(elements.get('navVariableMonths').classList.contains('hidden'), true);
+  assert.equal(elements.get('navScheduledRegister').classList.contains('hidden'), false);
+  assert.equal(elements.get('navScheduledEdit').classList.contains('hidden'), false);
+  assert.equal(elements.get('navHome').classList.contains('hidden'), false);
+  assert.equal(elements.get('navNotes').classList.contains('hidden'), false);
+  assert.equal(elements.get('navHome').classList.contains('active'), true);
   app.scheduledOpenMonth_('2026-03');
   assert.equal(vm.runInContext('state.page', app), 'monthDetail');
-  assert.equal(scheduledButtons[0].classList.contains('active'), true);
+  assert.equal(elements.get('navScheduledRegister').classList.contains('active'), true);
   app.scheduledOpenDayEditor_('2026-03-03');
-  assert.equal(scheduledButtons[1].classList.contains('active'), true);
+  assert.equal(elements.get('navScheduledEdit').classList.contains('active'), true);
   assert.match(elements.get('modalBody').innerHTML, /sch_modal_day_1_start/);
   app.closeModal();
-  assert.equal(scheduledButtons[0].classList.contains('active'), true);
-  app.scheduledOpenSummary_();
+  assert.equal(elements.get('navScheduledRegister').classList.contains('active'), true);
+  app.setPage('notes');
+  assert.equal(elements.get('navNotes').classList.contains('active'), true);
+  app.setPage('home');
   assert.equal(vm.runInContext('state.page', app), 'home');
-  assert.equal(scheduledButtons[2].classList.contains('active'), true);
-  assert.equal(elements.get('scheduledSummary').scrolled, true);
+  assert.equal(elements.get('navHome').classList.contains('active'), true);
   app.scheduledSelectWorkplace_('variable');
-  assert.equal(elements.get('nav').classList.contains('hidden'), false);
-  assert.equal(elements.get('scheduledNav').classList.contains('hidden'), true);
+  assert.equal(elements.get('nav').classList.contains('nav-scheduled'), false);
+  assert.equal(elements.get('navVariableMonths').classList.contains('hidden'), false);
+  assert.equal(elements.get('navScheduledRegister').classList.contains('hidden'), true);
+  assert.equal(elements.get('navScheduledEdit').classList.contains('hidden'), true);
+  assert.equal(elements.get('navHome').classList.contains('hidden'), false);
+  assert.equal(elements.get('navNotes').classList.contains('hidden'), false);
 });
 
 test('the date editor in the bottom bar uses its own fields even when settings are open', () => {
@@ -276,6 +289,21 @@ test('a delayed position result cannot override a manual workplace choice', asyn
   app.scheduledSelectWorkplace_('scheduled');
   resolvePosition({ coords: { latitude: 40, longitude: 10, accuracy: 10 } });
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+});
+
+test('a delayed location result cannot switch workplace while the register or date editor is opened', async () => {
+  for (const action of ['register', 'editor']) {
+    const { context: app, navigator } = createFrontend();
+    configureTestAreas(app);
+    let resolvePosition;
+    navigator.permissions = { query: async () => ({ state: 'granted' }) };
+    navigator.geolocation = { getCurrentPosition(callback) { resolvePosition = callback; } };
+    await app.scheduledTryAutoLocation_();
+    if (action === 'register') app.scheduledOpenMonth_('2026-03');
+    else app.scheduledOpenDayEditor_('2026-03-03');
+    resolvePosition({ coords: { latitude: 40, longitude: 10, accuracy: 10 } });
+    assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+  }
 });
 
 test('location is checked again when the app returns to the foreground with a granted permission', async () => {
