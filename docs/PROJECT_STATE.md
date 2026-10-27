@@ -46,7 +46,7 @@ Building the autonomous low-touch task loop:
 
 ## VPS Status
 
-Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | Claude Code CLI 2.1.139 ✅
+Node.js v18.19.1 ✅ | npm 9.2.0 ✅ | precedente CLI AI: storico, non previsto per nuovi task (decisione 27/10/2026)
 Login blocked ❌ | API key ❌ | Runner automatico ❌
 n8n binding: 127.0.0.1:5678 (hardened)
 
@@ -54,9 +54,8 @@ n8n binding: 127.0.0.1:5678 (hardened)
 
 | Implementer | Status |
 |-------------|--------|
-| Claude Code (local) | Principal — active |
-| Windsurf/Cascade | Backup / supervised |
-| Cursor | Suspended until reset |
+| ChatGPT (strumenti disponibili) | Operatore principale — dal 27/10/2026 |
+| Cursor | Solo supporto eventuale, su richiesta esplicita dell'utente; disponibilità locale non verificata |
 
 ## Open Technical Debts
 

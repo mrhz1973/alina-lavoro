@@ -2,6 +2,8 @@
 
 These rules complement the repository constraints and reduce operational ambiguity.
 
+**ACTIVE ROUTING (27/10/2026, overrides older tool-specific passages):** ChatGPT is the primary orchestrator and operator using only directly available authorized tools. Cursor is optional support requiring explicit user delegation. Do not route tasks to unavailable external implementers.
+
 ## Implementer rule — n8n template-first (priority time and results)
 
 Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0B**.
@@ -46,9 +48,9 @@ The implementer **stops only for non-recoverable or high-risk actions**:
 - scope drift outside allowed paths;
 - commands not covered by the current task prompt.
 
-**Deploy gate:** deploy is still an orchestrator-level gate. However, if the current prompt explicitly authorizes deploy, Claude must not ask again for the exact deploy command or project deploy equivalents. Deploy commands auto-proceed only inside a deploy-authorized task.
+**Deploy gate:** deploy is still an orchestrator-level gate. However, an explicitly user-authorized deploy task may proceed only inside its exact documented scope and gate. Deploy commands auto-proceed only inside a deploy-authorized task.
 
-**Claude Code local permission prompts are tool friction, not safety gates.** The allowlist in `.claude/settings.local.json` must be maintained so that prompt-authorized commands auto-proceed. If a command is authorized by the current prompt and is recoverable, it must not generate a Claude Code confirmation dialog. User guide and fallback skip-permissions procedure: `docs/COMMANDS.md` — "Claude Code confirmation spam".
+**Retired agent-specific permission configuration is not an active operational rule.** Do not enable bypass flags or install unavailable runtimes. Existing forbidden commands and human gates remain authoritative.
 
 Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" section.
 
@@ -58,7 +60,7 @@ Full policy reference: `docs/COMMANDS.md` — "Aggressive autonomy policy" secti
 
 Canonical reference: `docs/ORCHESTRATOR_RULES.md` — **PRIORITY 0A** · **Aggressive autonomy policy** (section above).
 
-The implementer (Cursor, Windsurf/Cascade, Claude Code, Agent) must:
+ChatGPT and, when explicitly delegated, Cursor must:
 
 - **not ask the user for unnecessary confirmations** for already-assigned tasks with clear allowed paths;
 - **not turn into a decision** what is already decided by the roadmap, queue task, or orchestrator prompt;
@@ -113,7 +115,7 @@ Prompt shorthand: `Plan persistence: canonical GitHub rule`.
     - Read only task-specific canonical docs (e.g. `docs/COMMANDS.md` for frontend tasks; automation docs for automation tasks).
     - **Do NOT read `docs/PROJECT_STATE.md` by default** — it is a large fallback/audit file; open only if LLMS.md + wiki cannot answer your question; if you open it, say why in your final report.
     - **Do NOT read `docs/CHECKPOINT.md` by default** — restart context only; open only when explicitly required; if you open it, say why in your final report.
-    - Claude Code large-file warnings may remain until a future physical compression task; this routing rule reduces real context consumption independently.
+    - Historical runtime warnings do not authorize the use of an unavailable implementer; prefer scoped document reads.
     - **LLM Wiki V3.1 (task 0232):** additional wiki files active — `docs/wiki/task-id-preflight.md`, `docs/wiki/prompt-routing.md`, `docs/wiki/context-budget-policy.md`, `docs/wiki/template-pack-index.md`; implementer templates in `docs/tasks/templates/`; run task-ID preflight before assigning any new task ID.
 
 1. **Do not invent state** of the project, deploy, or branch: verify with `git status`, `git branch`, docs in `docs/`, and if useful, `npm run aggio`.
@@ -228,7 +230,7 @@ Before creating any new document: confirm that at least one applies — reduces 
 | Canonical project docs (`PROJECT_STATE.md`, `roadmap.md`, etc.) | Italian (keep as-is) | Do not translate retroactively |
 | Commit messages | English (already standard) | Consistent with repo history |
 
-**Applicability:** Claude Code, Cursor, Windsurf/Cascade, local AI (Ollama), future n8n AI layer, n8n prompt generator.
+**Applicability:** ChatGPT and Cursor if explicitly delegated. Historical n8n templates remain subject to their own separate runtime gates.
 
 **Do not:**
 - translate existing canonical docs retroactively;
@@ -246,4 +248,4 @@ Canonical reference: `docs/AI_RULES.md` (this section). Other files reference th
 
 ## No provider APIs by default
 
-Implementers must not suggest OpenAI API, Anthropic API, OpenRouter, hosted provider AI, API keys, or paid cloud model calls as default solutions. Provider APIs are out of scope unless a future explicit manual gate says otherwise. ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models.
+Implementers must not suggest OpenAI API, Anthropic API, OpenRouter, hosted provider AI, API keys, or paid cloud model calls as default solutions. Provider APIs are out of scope unless a future explicit manual gate says otherwise. ChatGPT = primary orchestrator/operator via available tools, not OpenAI API. Cursor = optional user-delegated support; any local model or automation requires its own gate.

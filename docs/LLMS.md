@@ -176,18 +176,16 @@ All remain gated/future unless the user explicitly opens them.
 Require explicit manual gate before action:
 runtime, VPS/n8n UI, workflow import/export/Execute, Telegram send, Schedule change, provider API, billing, API key, login, GitHub Actions, deploy, tag, rollback, app source changes (`src/**`), secrets, OAuth material, real chat IDs, physical tests.
 
-Provider APIs are out of scope by default. ChatGPT = web/on-demand; Claude Code/Cursor/Windsurf = supervised tools; Local AI = Ollama/local models.
+Provider APIs are out of scope by default. ChatGPT operates via available tools; Cursor is optional only after explicit user delegation. Local AI, if used, is separately gated.
 
 ---
 
-## Implementers
+## Implementers — regola operativa aggiornata 27/10/2026
 
-| Implementer | Status | CLI capability |
+| Implementer | Stato corrente | Accesso |
 |---|---|---|
-| Claude Code | Principal supervised implementer (current) | Confirmed — batch/non-interactive |
-| Cursor | **Future dual-agent target** (Agent 1 + Agent 2); suspended until reset | Interactive-only (v3.3.30; `agent` subcommand interactive) |
-| Windsurf/Cascade | Fallback supervised tool; not an active verification target | CLI present, no agent mode (v1.110.1) |
-| Antigravity | Fallback supervised tool; not an active verification target | Partially confirmed (`chat --mode agent` v1.107.0; headless unverified) |
+| ChatGPT | Operatore principale e orchestratore | Solo strumenti direttamente disponibili e autorizzati nella sessione |
+| Cursor | Supporto eventuale, non attivo di default | Richiede incarico esplicito dell'utente, verifica del workspace e gate |
 
 Cursor-first decision: `docs/automation/dual-cli-orchestrator-lite-design.md` §1c · CLI capability matrix: §1b
 
