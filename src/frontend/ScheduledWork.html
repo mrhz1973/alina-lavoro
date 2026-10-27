@@ -66,6 +66,7 @@ var scheduledManualChoiceThisVisit = false;
 var scheduledManualChoiceVersion = 0;
 var scheduledLocationInFlight = false;
 var scheduledLocationTried = false;
+var scheduledEditorOpen = false;
 state.scheduledShifts = [];
 state.scheduledCapability = false;
 try {
@@ -192,10 +193,7 @@ function scheduledMonthTotals_(month) {
 }
 function renderScheduledHome_() {
   var html = scheduledSelectorHtml_() + '<section class="card"><div class="kicker">' +
-    esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' + esc(formatLongDate(today())) +
-    '</div><div class="scheduled-shortcuts"><button class="secondary-btn" onclick="scheduledOpenMonth_(\'' + currentMonth() + '\')">' +
-    esc(t('scheduled_show_register')) + '</button><button class="ghost-btn" onclick="scheduledOpenDayEditor_(\'' + today() + '\')">' +
-    esc(t('scheduled_edit_short')) + '</button></div>';
+    esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' + esc(formatLongDate(today())) + '</div>';
   ['1', '2'].forEach(function (slot) {
     var row = scheduledFind_(today(), slot), times = scheduledTimesForDay_(today(), slot);
     var status = row ? row.stato : 'planned';
@@ -211,12 +209,17 @@ function renderScheduledHome_() {
     html += '</div></div>';
   });
   var total = scheduledMonthTotals_(currentMonth());
-  html += '</section><section class="card"><div class="kicker">' + esc(t('home_summary')) + '</div><p>' +
+  html += '</section><section id="scheduledSummary" class="card"><div class="kicker">' + esc(t('home_summary')) + '</div><p>' +
     esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
     esc(minutesLabel(total.minutes)) + '</p><span class="pill">' +
     esc(!navigator.onLine ? t('offline') : getQueue().length ? getQueue().length + ' ' + t('pending') : t('synced')) +
     '</span></section>';
   document.getElementById('content').innerHTML = html;
+}
+function scheduledOpenSummary_() {
+  setPage('home');
+  var summary = document.getElementById('scheduledSummary');
+  if (summary && typeof summary.scrollIntoView === 'function') summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function renderScheduledMonths_() {
   var keys = {};
@@ -299,12 +302,14 @@ function scheduledOpenDayEditor_(date) {
   function field(id, label) {
     return '<div class="field"><label>' + esc(label) + '</label><input type="time" step="1800" id="' + id + '"></div>';
   }
+  scheduledEditorOpen = true;
   openModal(t('scheduled_edit_day'), '<div class="field"><label>' + esc(t('date')) +
-    '</label><input id="sch_date" type="date" value="' + date + '" onchange="scheduledLoadDay_()"></div><div class="time-grid">' +
-    field('sch_day_1_start', t('first_slot') + ' · ' + t('start')) + field('sch_day_1_end', t('first_slot') + ' · ' + t('end')) +
-    field('sch_day_2_start', t('second_slot') + ' · ' + t('start')) + field('sch_day_2_end', t('second_slot') + ' · ' + t('end')) +
+    '</label><input id="sch_modal_date" type="date" value="' + date + '" onchange="scheduledLoadDay_(true)"></div><div class="time-grid">' +
+    field('sch_modal_day_1_start', t('first_slot') + ' · ' + t('start')) + field('sch_modal_day_1_end', t('first_slot') + ' · ' + t('end')) +
+    field('sch_modal_day_2_start', t('second_slot') + ' · ' + t('start')) + field('sch_modal_day_2_end', t('second_slot') + ' · ' + t('end')) +
     '</div><button class="main-action" onclick="scheduledSaveDay_(true)">' + esc(t('scheduled_save_day')) + '</button>');
-  scheduledLoadDay_();
+  scheduledLoadDay_(true);
+  scheduledUpdateNav_();
 }
 function scheduledReadFour_(prefix) {
   var values = ['1_start', '1_end', '2_start', '2_end'].map(function (key) { return scheduledParseTime_(val(prefix + key)); });
@@ -326,16 +331,18 @@ function scheduledSaveDefaults_() {
   state._localMutationAt = Date.now(); state.config = Object.assign({}, state.config, patch);
   enqueue({ type: 'saveConfig', payload: patch }); toast(t('saved')); render(); flushQueue();
 }
-function scheduledLoadDay_() {
-  var date = val('sch_date');
+function scheduledLoadDay_(isModal) {
+  var prefix = isModal ? 'sch_modal_' : 'sch_';
+  var date = val(prefix + 'date');
   ['1', '2'].forEach(function (slot) {
     var times = scheduledTimesForDay_(date, slot);
-    setVal('sch_day_' + slot + '_start', times ? scheduledTime_(times.start) : '');
-    setVal('sch_day_' + slot + '_end', times ? scheduledTime_(times.end) : '');
+    setVal(prefix + 'day_' + slot + '_start', times ? scheduledTime_(times.start) : '');
+    setVal(prefix + 'day_' + slot + '_end', times ? scheduledTime_(times.end) : '');
   });
 }
 function scheduledSaveDay_(closeAfter) {
-  var date = val('sch_date'), values = scheduledReadFour_('sch_day_');
+  var prefix = closeAfter ? 'sch_modal_' : 'sch_';
+  var date = val(prefix + 'date'), values = scheduledReadFour_(prefix + 'day_');
   if (!scheduledDateValid_(date) || !values) return toast(t('scheduled_invalid'));
   try {
     ['1', '2'].forEach(function (slot, index) {
@@ -479,6 +486,30 @@ document.addEventListener('visibilitychange', function () {
   scheduledManualChoiceThisVisit = false;
   scheduledTryAutoLocation_();
 });
+
+function scheduledUpdateNav_() {
+  var original = document.getElementById('nav'), scheduled = document.getElementById('scheduledNav');
+  var appRoot = document.getElementById('appView'), isScheduled = scheduledSelectedWorkplace === 'scheduled';
+  if (original) original.classList.toggle('hidden', isScheduled);
+  if (scheduled) scheduled.classList.toggle('hidden', !isScheduled);
+  if (appRoot) appRoot.classList.toggle('scheduled-nav-active', isScheduled);
+  var page = scheduledEditorOpen ? 'scheduledEdit' : state.page === 'monthDetail' ? 'months' : state.page;
+  document.querySelectorAll('#scheduledNav button[data-page]').forEach(function (button) {
+    button.classList.toggle('active', button.dataset.page === page);
+  });
+}
+var scheduledBaseCloseModal = closeModal;
+closeModal = function () {
+  var wasEditor = scheduledEditorOpen;
+  scheduledEditorOpen = false;
+  scheduledBaseCloseModal();
+  if (wasEditor) scheduledUpdateNav_();
+};
+var scheduledBaseRender = render;
+render = function () {
+  scheduledBaseRender();
+  scheduledUpdateNav_();
+};
 
 var scheduledBaseHome = renderHome, scheduledBaseMonths = renderMonths;
 var scheduledBaseMonthDetail = renderMonthDetail, scheduledBaseSettings = renderSettings;

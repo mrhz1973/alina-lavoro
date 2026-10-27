@@ -11,12 +11,23 @@ function createFrontend(sharedStorage) {
     static now() { return clock; }
   }
   const storage = sharedStorage || new Map(), elements = new Map(), listeners = new Map();
+  function classes(initial = []) {
+    const values = new Set(initial);
+    return {
+      add(name) { values.add(name); }, remove(name) { values.delete(name); },
+      contains(name) { return values.has(name); },
+      toggle(name, force) { const next = force === undefined ? !values.has(name) : !!force; if (next) values.add(name); else values.delete(name); return next; }
+    };
+  }
+  const scheduledButtons = ['months', 'scheduledEdit', 'home'].map(page => ({ dataset: { page }, classList: classes() }));
+  const legacyButtons = ['home', 'months', 'notes'].map(page => ({ dataset: { page }, classList: classes() }));
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
       id, value: '', innerHTML: '', textContent: '', dataset: {}, children: [],
-      classList: { add() {}, remove() {}, contains() { return false; }, toggle() {} },
+      classList: classes(id === 'scheduledNav' ? ['hidden'] : []),
       insertAdjacentHTML(_where, text) { this.innerHTML = text + this.innerHTML; },
-      appendChild(child) { this.children.push(child); }, addEventListener() {}, click() {}
+      appendChild(child) { this.children.push(child); }, addEventListener() {}, click() {},
+      scrollIntoView() { this.scrolled = true; }
     });
     return elements.get(id);
   }
@@ -24,7 +35,11 @@ function createFrontend(sharedStorage) {
     documentElement: { dataset: {}, style: { setProperty() {} }, lang: '' },
     visibilityState: 'visible',
     addEventListener(name, callback) { if (!listeners.has(name)) listeners.set(name, []); listeners.get(name).push(callback); },
-    querySelectorAll() { return []; }, getElementById: element,
+    querySelectorAll(selector) {
+      if (selector === '#scheduledNav button[data-page]') return scheduledButtons;
+      if (selector === '.nav button') return [...legacyButtons, ...scheduledButtons];
+      return [];
+    }, getElementById: element,
     createElement() { return element('created'); }, createDocumentFragment() { return element('fragment'); }
   };
   const localStorage = {
@@ -54,7 +69,7 @@ function createFrontend(sharedStorage) {
     "state.summaries = [{mese:'2026-03', minuti:120, ore:2, giorni:1, ore_label:'2 h 00 min', stimato:20, tariffa_media:10}];",
     "scheduledSelectedWorkplace = 'scheduled'; state.scheduledCapability = true;"
   ].join('\n'), context);
-  return { context, storage, elements, navigator, listeners, setClock(value) { clock = Date.parse(value); } };
+  return { context, storage, elements, navigator, listeners, scheduledButtons, setClock(value) { clock = Date.parse(value); } };
 }
 
 test('recording two scheduled shifts keeps the existing workplace untouched', () => {
@@ -140,17 +155,63 @@ function configureTestAreas(app) {
     "state.config.aree_programmata_json = JSON.stringify([{latitude:41,longitude:11,radius:500}]);", app);
 }
 
-test('the two workplaces have large manual controls and shortcuts to the register and date editor', () => {
+test('the scheduled home keeps both shifts prominent and puts three controls in the bottom bar', () => {
   const { context: app, elements } = createFrontend();
   app.renderScheduledHome_();
   const html = elements.get('content').innerHTML;
   assert.match(html, /workplace-button/);
   assert.match(html, /scheduled-action/);
-  assert.match(html, /Registro presenze/);
-  assert.match(html, /Modifica orari/);
+  assert.match(html, /Prima fascia/);
+  assert.match(html, /Seconda fascia/);
+  assert.doesNotMatch(html, /scheduled-shortcuts/);
+  assert.doesNotMatch(html, /Registro presenze|Modifica orari/);
   assert.doesNotMatch(html, /Scegli con la posizione/);
   assert.doesNotMatch(html, /Riprova autorizzazione posizione/);
   assert.match(app.scheduledSettingsHtml_(), /Riprova autorizzazione posizione/);
+  const source = fs.readFileSync(path.join(__dirname, '../src/frontend/Index.html'), 'utf8');
+  const bar = source.match(/<nav id="scheduledNav"[\s\S]*?<\/nav>/)[0];
+  assert.equal((bar.match(/<button /g) || []).length, 3);
+  assert.ok(bar.indexOf('Registro presenze') < bar.indexOf('Modifica orari'));
+  assert.ok(bar.indexOf('Modifica orari') < bar.indexOf('Riepilogo'));
+  assert.match(source, /\.nav\.scheduled-nav\{position:fixed;top:auto;bottom:/);
+});
+
+test('the scheduled bottom bar opens the register and editor and restores the existing workplace bar', () => {
+  const { context: app, elements, scheduledButtons } = createFrontend();
+  app.render();
+  assert.equal(elements.get('nav').classList.contains('hidden'), true);
+  assert.equal(elements.get('scheduledNav').classList.contains('hidden'), false);
+  assert.equal(scheduledButtons[2].classList.contains('active'), true);
+  app.scheduledOpenMonth_('2026-03');
+  assert.equal(vm.runInContext('state.page', app), 'monthDetail');
+  assert.equal(scheduledButtons[0].classList.contains('active'), true);
+  app.scheduledOpenDayEditor_('2026-03-03');
+  assert.equal(scheduledButtons[1].classList.contains('active'), true);
+  assert.match(elements.get('modalBody').innerHTML, /sch_modal_day_1_start/);
+  app.closeModal();
+  assert.equal(scheduledButtons[0].classList.contains('active'), true);
+  app.scheduledOpenSummary_();
+  assert.equal(vm.runInContext('state.page', app), 'home');
+  assert.equal(scheduledButtons[2].classList.contains('active'), true);
+  assert.equal(elements.get('scheduledSummary').scrolled, true);
+  app.scheduledSelectWorkplace_('variable');
+  assert.equal(elements.get('nav').classList.contains('hidden'), false);
+  assert.equal(elements.get('scheduledNav').classList.contains('hidden'), true);
+});
+
+test('the date editor in the bottom bar uses its own fields even when settings are open', () => {
+  const { context: app, elements } = createFrontend();
+  app.scheduledStart_('1'); app.scheduledFinish_('1');
+  for (const [id, value] of Object.entries({
+    sch_date: '2026-03-04', sch_day_1_start: '07:00', sch_day_1_end: '09:30',
+    sch_day_2_start: '14:00', sch_day_2_end: '15:30',
+    sch_modal_date: '2026-03-03', sch_modal_day_1_start: '06:30', sch_modal_day_1_end: '10:00',
+    sch_modal_day_2_start: '14:00', sch_modal_day_2_end: '15:30'
+  })) elements.set(id, { id, value });
+  app.scheduledSaveDay_(true);
+  assert.equal(app.scheduledFind_('2026-03-03', '1').stato, 'done');
+  assert.equal(app.scheduledFind_('2026-03-03', '1').minuto_inizio, 390);
+  assert.equal(app.scheduledFind_('2026-03-04', '1'), null);
 });
 
 test('the register distinguishes a completed exit from an open shift', () => {
