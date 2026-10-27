@@ -1,13 +1,15 @@
 # Alina Lavoro — Roadmap
 
-## Evoluzione: turni multi-sede e registro mensile (in progettazione)
+## Evoluzione: turni multi-sede e registro mensile (candidato isolato)
 
 - Consentire più sedi e più turni nello stesso giorno, preservando il comportamento esistente e i dati storici. Non attribuire automaticamente i dati preesistenti a una sede senza una regola verificata.
 - Supportare turni programmati configurabili e correzioni per singola data a intervalli di 30 minuti; usare nel report solo presenze registrate e correzioni effettive. Distinguere i turni variabili da quelli programmati.
 - Consentire la scelta manuale della sede; valutare la posizione come assistenza opzionale con alternativa manuale e autorizzazioni appropriate.
 - Preparare un registro mensile PDF da un modello fornito separatamente, mantenendone l'aspetto e lasciando la firma all'operatore. Non inventare giorni o orari, e non mescolare i dati tra sedi.
 - Separare le stime retributive per rapporto di lavoro; distinguere stime indicative, importi netti, voci variabili e pagamenti verificati.
-- Stato: requisiti e prototipo PDF esplorativo; integrazione nell'app, migrazione, test end-to-end e deploy **non eseguiti**. La produzione e i dati esistenti richiedono protezione durante sviluppo e test. Conservare documenti e dati personali fuori dal repository pubblico.
+- Stato: un candidato in `codex/multi-lavoro-registro` usa archivi separati per i turni programmati, mantiene i dati precedenti nel loro archivio, registra le correzioni per data e produce dati JSON per il generatore PDF. I parametri effettivi e il modello sono privati, esterni al repository. Il generatore usa soltanto turni completati, rifiuta orari non validi e non firma il modulo.
+- Verifiche locali con dati inventati: `npm test` esegue i test JavaScript; `python -m unittest discover -s tests -p test_pdf_report.py -v` verifica il generatore PDF, con `pypdf` e `reportlab` installati. Il browser locale usa un backend simulato e dati separati.
+- Restano da verificare in un progetto Apps Script e Sheet di prova separati: avvio reale, GPS sul telefono, sincronizzazione tra dispositivi e generazione mensile automatica quando i dati sono completi. Un eventuale passaggio in produzione richiede il gate di rilascio e non è incluso in questa modifica. Conservare documenti e dati personali fuori dal repository pubblico.
 
 ## Stato attuale
 

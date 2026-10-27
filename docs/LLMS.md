@@ -23,6 +23,8 @@
 
 ## Current App State
 
+**Isolated candidate (2026-10-27):** `codex/multi-lavoro-registro` adds a separate scheduled-work store, per-day overrides and a local PDF generator. Automated tests use simulated Sheets and a local preview. This candidate has not been deployed or tested on a real Apps Script/phone environment. The monthly data-to-PDF automation is not yet verified end-to-end; see `docs/roadmap.md`. Keep configuration values, real attendance, PDF templates and personal documents outside this public repository.
+
 The deployment and legacy automation descriptions below are historical; live runtime status was not verified on 2026-10-27. Do not restart legacy automations based on documentation alone.
 
 | Field | Value |

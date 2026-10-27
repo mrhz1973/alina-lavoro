@@ -22,7 +22,9 @@ const SHEETS = {
   STIPENDI: 'STIPENDI',
   NOTE: 'NOTE',
   CONFIG: 'CONFIG',
-  SYNC_LOG: 'SYNC_LOG'
+  SYNC_LOG: 'SYNC_LOG',
+  TURNI_PROGRAMMATI: 'TURNI_PROGRAMMATI',
+  TURNI_PROGRAMMATI_OPS: 'TURNI_PROGRAMMATI_OPS'
 };
 
 const HEADERS = {
@@ -69,6 +71,13 @@ const HEADERS = {
     'azione',
     'stato',
     'messaggio'
+  ],
+  TURNI_PROGRAMMATI: [
+    'id', 'data', 'fascia', 'minuto_inizio', 'minuto_fine', 'stato',
+    'revisione', 'creato_il', 'aggiornato_il'
+  ],
+  TURNI_PROGRAMMATI_OPS: [
+    'id', 'turno_id', 'revisione', 'firma', 'registrato_il'
   ]
 };
 
@@ -153,8 +162,12 @@ function doGet(e) {
 
   setupAlinaLavoro();
 
+  const indexHtml = HtmlService.createHtmlOutputFromFile('Index').getContent();
+  const marker = '<!-- SCHEDULED_WORK_MODULE -->';
+  if (indexHtml.indexOf(marker) < 0) throw new Error('Modulo turni programmati non configurato');
+  const moduleHtml = HtmlService.createHtmlOutputFromFile('ScheduledWork').getContent();
   return HtmlService
-    .createHtmlOutputFromFile('Index')
+    .createHtmlOutput(indexHtml.replace(marker, moduleHtml))
     .setTitle('Alina Lavoro')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -856,6 +869,8 @@ function setupAlinaLavoro() {
   ensureSheet_(ss, SHEETS.NOTE, HEADERS.NOTE);
   ensureSheet_(ss, SHEETS.CONFIG, HEADERS.CONFIG);
   ensureSheet_(ss, SHEETS.SYNC_LOG, HEADERS.SYNC_LOG);
+  ensureSheet_(ss, SHEETS.TURNI_PROGRAMMATI, HEADERS.TURNI_PROGRAMMATI);
+  ensureSheet_(ss, SHEETS.TURNI_PROGRAMMATI_OPS, HEADERS.TURNI_PROGRAMMATI_OPS);
 
   const cfg = getConfigRaw_();
 
@@ -881,6 +896,7 @@ function getBootstrap(accessCode) {
   const shifts = getRecords_(SHEETS.TURNI);
   const salaries = getRecords_(SHEETS.STIPENDI);
   const notes = getRecords_(SHEETS.NOTE);
+  const scheduledShifts = getRecords_(SHEETS.TURNI_PROGRAMMATI);
 
   const summaries = computeSummaries_(shifts, salaries, config);
   const reminder = computeSalaryReminder_(summaries, salaries, config);
@@ -892,6 +908,8 @@ function getBootstrap(accessCode) {
       shifts: shifts,
       salaries: salaries,
       notes: notes,
+      scheduledShifts: scheduledShifts,
+      capabilities: { scheduledWork: 1 },
       summaries: summaries,
       reminder: reminder,
       serverTime: new Date().toISOString()
@@ -928,7 +946,9 @@ function saveConfig(accessCode, configPatch) {
     'media_mesi',
     'tariffa_media_default',
     'setup_completato',
-    'codice_accesso'
+    'codice_accesso',
+    'nome_lavoro_variabile', 'nome_lavoro_programmato', 'operatore_registro',
+    'programma_1_inizio', 'programma_1_fine', 'programma_2_inizio', 'programma_2_fine'
   ];
 
   allowed.forEach(function (key) {
@@ -1010,10 +1030,18 @@ function syncBatch(accessCode, actions) {
         return;
       }
 
+      if (['saveShift', 'saveScheduledShift', 'saveSalary', 'saveNote', 'deleteNote', 'saveConfig'].indexOf(action.type) < 0) {
+        throw new Error('Azione di sincronizzazione non riconosciuta: ' + String(action.type));
+      }
+
       log_('syncBatch_action', 'start', action.type);
 
       if (action.type === 'saveShift') {
         saveShiftDirect_(action.payload);
+      }
+
+      if (action.type === 'saveScheduledShift') {
+        saveScheduledShiftDirect_(action.payload, action.operationId);
       }
 
       if (action.type === 'saveSalary') {
@@ -1081,6 +1109,121 @@ function saveShiftDirect_(shift) {
 
   upsertRecord_(SHEETS.TURNI, HEADERS.TURNI, row);
   log_('saveShift_direct', 'ok', row.id);
+}
+
+// Scheduled work has its own sheet. Existing work shifts and pay summaries are
+// intentionally left in TURNI/STIPENDI, including records without a workplace.
+function validScheduledDate_(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ''));
+  if (!match) return false;
+  const year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function validateScheduledShift_(shift) {
+  if (!shift) return ['turno mancante'];
+  const errors = [];
+  if (!validScheduledDate_(shift.data)) errors.push('data non valida');
+  const slot = String(shift && shift.fascia || '');
+  if (slot !== '1' && slot !== '2') errors.push('fascia non valida');
+  if (shift && String(shift.id || '') !== String(shift.data || '') + '#' + slot) errors.push('ID non valido');
+  const start = Number(shift && shift.minuto_inizio), end = Number(shift && shift.minuto_fine);
+  if (shift.minuto_inizio === null || shift.minuto_inizio === undefined || shift.minuto_inizio === '' || shift.minuto_fine === null || shift.minuto_fine === undefined || shift.minuto_fine === '' || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end >= 1440 || start >= end || start % 30 || end % 30) {
+    errors.push('orari non validi o non a mezz\'ora');
+  }
+  if (['planned', 'open', 'done', 'cancelled'].indexOf(String(shift && shift.stato || '')) < 0) errors.push('stato non valido');
+  if (!Number.isInteger(Number(shift && shift.revisione)) || Number(shift.revisione) < 1) errors.push('revisione non valida');
+  return errors;
+}
+
+function sameScheduledContent_(a, b) {
+  return String(a.id) === String(b.id) && String(a.data) === String(b.data) &&
+    String(a.fascia) === String(b.fascia) && Number(a.minuto_inizio) === Number(b.minuto_inizio) &&
+    Number(a.minuto_fine) === Number(b.minuto_fine) && String(a.stato) === String(b.stato) &&
+    Number(a.revisione) === Number(b.revisione);
+}
+
+function scheduledContentSignature_(shift) {
+  return [shift.id, shift.data, shift.fascia, Number(shift.minuto_inizio), Number(shift.minuto_fine), shift.stato, Number(shift.revisione)].join('|');
+}
+
+// syncBatch holds the script lock. Operation IDs make retries after a lost
+// response safe; a concurrent conflicting edit is rejected rather than lost.
+function saveScheduledShiftDirect_(shift, operationId) {
+  const errors = validateScheduledShift_(shift);
+  if (errors.length) throw new Error('Turno programmato: ' + errors.join(', '));
+  if (!operationId || !/^[A-Za-z0-9_-]{8,120}$/.test(String(operationId))) throw new Error('Operazione senza ID valido');
+  const opId = String(operationId);
+  const priorOp = getRecords_(SHEETS.TURNI_PROGRAMMATI_OPS).find(function (op) { return String(op.id) === opId; });
+  if (priorOp) {
+    if (String(priorOp.turno_id) !== String(shift.id) || Number(priorOp.revisione) !== Number(shift.revisione) || String(priorOp.firma) !== scheduledContentSignature_(shift)) {
+      throw new Error('ID operazione già usato per un altro turno');
+    }
+    return;
+  }
+  const prior = getRecords_(SHEETS.TURNI_PROGRAMMATI).find(function (row) { return String(row.id) === String(shift.id); });
+  const priorRevision = prior ? Number(prior.revisione) : 0;
+  const nextRevision = Number(shift.revisione);
+  const isRecovery = prior && nextRevision === priorRevision && sameScheduledContent_(prior, shift);
+  if (!isRecovery && nextRevision !== priorRevision + 1) throw new Error('Conflitto di sincronizzazione del turno programmato');
+  if (!isRecovery) {
+    const previousStatus = prior ? String(prior.stato) : '';
+    const allowed = {
+      '': ['planned', 'open'], planned: ['planned', 'open'],
+      open: ['open', 'done', 'cancelled'], done: ['done', 'cancelled'],
+      cancelled: ['cancelled', 'planned', 'open']
+    };
+    if (!allowed[previousStatus] || allowed[previousStatus].indexOf(String(shift.stato)) < 0) {
+      throw new Error('Passaggio di stato non valido per il turno programmato');
+    }
+  }
+  if (!isRecovery) {
+    const now = new Date().toISOString();
+    upsertRecord_(SHEETS.TURNI_PROGRAMMATI, HEADERS.TURNI_PROGRAMMATI, {
+      id: String(shift.id), data: String(shift.data), fascia: String(shift.fascia),
+      minuto_inizio: Number(shift.minuto_inizio), minuto_fine: Number(shift.minuto_fine),
+      stato: String(shift.stato), revisione: nextRevision,
+      creato_il: prior ? String(prior.creato_il || now) : String(shift.creato_il || now), aggiornato_il: now
+    });
+  }
+  upsertRecord_(SHEETS.TURNI_PROGRAMMATI_OPS, HEADERS.TURNI_PROGRAMMATI_OPS, {
+    id: opId, turno_id: String(shift.id), revisione: nextRevision, firma: scheduledContentSignature_(shift), registrato_il: new Date().toISOString()
+  });
+}
+
+function scheduledTimeLabel_(minutes) {
+  return String(Math.floor(minutes / 60)).padStart(2, '0') + ':' + String(minutes % 60).padStart(2, '0');
+}
+
+// Only completed, explicitly recorded shifts are reportable. Planned settings
+// do not imply attendance and an unfinished shift blocks a final report.
+function buildScheduledReport_(shifts, month, operator, site) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) throw new Error('Mese non valido');
+  if (!String(operator || '').trim() || !String(site || '').trim()) throw new Error('Operatore o sede mancanti');
+  const selected = (shifts || []).filter(function (shift) { return String(shift.data || '').slice(0, 7) === month; });
+  if (selected.some(function (shift) { return shift.stato === 'open'; })) throw new Error('Ci sono turni non terminati');
+  const days = {};
+  selected.filter(function (shift) { return shift.stato === 'done'; }).forEach(function (shift) {
+    const errors = validateScheduledShift_(shift);
+    if (errors.length) throw new Error('Turno non valido: ' + errors.join(', '));
+    const date = String(shift.data);
+    if (!days[date]) days[date] = [];
+    days[date].push({ inizio: scheduledTimeLabel_(Number(shift.minuto_inizio)), fine: scheduledTimeLabel_(Number(shift.minuto_fine)) });
+  });
+  const result = Object.keys(days).sort().map(function (date) {
+    const turns = days[date].sort(function (a, b) { return a.inizio.localeCompare(b.inizio); });
+    for (let i = 1; i < turns.length; i++) if (turns[i - 1].fine > turns[i].inizio) throw new Error('Turni sovrapposti: ' + date);
+    return { data: date, turni: turns };
+  });
+  return { anno: Number(month.slice(0, 4)), mese: Number(month.slice(5, 7)), operatore: String(operator).trim(), cantiere: String(site).trim(), giorni: result };
+}
+
+function getScheduledReportData(accessCode, month) {
+  setupAlinaLavoro();
+  requireAccess_(accessCode);
+  const config = getConfigRaw_();
+  return { success: true, data: buildScheduledReport_(getRecords_(SHEETS.TURNI_PROGRAMMATI), String(month || ''), config.operatore_registro, config.nome_lavoro_programmato) };
 }
 
 function saveSalaryDirect_(salary) {
@@ -1992,6 +2135,7 @@ function getExportBundle(accessCode) {
     success: true,
     json: JSON.stringify(bundle, null, 2),
     shiftsCsv: csvForRecords_(HEADERS.TURNI, bundle.shifts),
+    scheduledShiftsCsv: csvForRecords_(HEADERS.TURNI_PROGRAMMATI, bundle.scheduledShifts),
     salariesCsv: csvForRecords_(HEADERS.STIPENDI, bundle.salaries),
     notesCsv: csvForRecords_(HEADERS.NOTE, bundle.notes)
   };
@@ -2001,6 +2145,12 @@ function exportShiftsCsv(accessCode) {
   setupAlinaLavoro();
   requireAccess_(accessCode);
   return { success: true, csv: csvForRecords_(HEADERS.TURNI, getRecords_(SHEETS.TURNI)) };
+}
+
+function exportScheduledShiftsCsv(accessCode) {
+  setupAlinaLavoro();
+  requireAccess_(accessCode);
+  return { success: true, csv: csvForRecords_(HEADERS.TURNI_PROGRAMMATI, getRecords_(SHEETS.TURNI_PROGRAMMATI)) };
 }
 
 function exportSalariesCsv(accessCode) {
@@ -2020,6 +2170,7 @@ function buildExportBundle_() {
   const shifts = getRecords_(SHEETS.TURNI);
   const salaries = getRecords_(SHEETS.STIPENDI);
   const notes = getRecords_(SHEETS.NOTE);
+  const scheduledShifts = getRecords_(SHEETS.TURNI_PROGRAMMATI);
   const config = safeConfig_(getConfigRaw_());
 
   return {
@@ -2033,11 +2184,13 @@ function buildExportBundle_() {
     },
     counts: {
       shifts: shifts.length,
+      scheduledShifts: scheduledShifts.length,
       salaries: salaries.length,
       notes: notes.length
     },
     config: config,
     shifts: shifts,
+    scheduledShifts: scheduledShifts,
     salaries: salaries,
     notes: notes
   };
@@ -2124,7 +2277,7 @@ function previewImportFromJson(accessCode, jsonText) {
 
   const sections = {};
 
-  ['shifts', 'salaries', 'notes'].forEach(function (type) {
+  ['shifts', 'scheduledShifts', 'salaries', 'notes'].forEach(function (type) {
     const arr = Array.isArray(obj[type]) ? obj[type] : [];
 
     if (arr.length === 0) {
@@ -2293,6 +2446,8 @@ function buildImportPreview_(parsed, dataType, source) {
 function detectDataType_(headers) {
   const lower = headers.map(function (h) { return String(h || '').toLowerCase().trim(); });
 
+  if (lower.indexOf('fascia') >= 0 && lower.indexOf('minuto_inizio') >= 0 && lower.indexOf('minuto_fine') >= 0) return 'scheduledShifts';
+
   if (lower.indexOf('mese_lavorato') >= 0 || lower.indexOf('importo_reale') >= 0) {
     return 'salaries';
   }
@@ -2315,6 +2470,7 @@ function normalizeImportRow_(row, dataType) {
   const mapped = mapImportHeaders_(row, dataType);
 
   if (dataType === 'shifts') return normalizeShiftRow_(mapped);
+  if (dataType === 'scheduledShifts') return normalizeScheduledShiftRow_(mapped);
   if (dataType === 'salaries') return normalizeSalaryRow_(mapped);
   if (dataType === 'notes') return normalizeNoteRow_(mapped);
 
@@ -2443,6 +2599,16 @@ function normalizeShiftRow_(row) {
   };
 }
 
+function normalizeScheduledShiftRow_(row) {
+  return {
+    id: String(row.id || ''), data: parseImportDate_(row.data), fascia: String(row.fascia || ''),
+    minuto_inizio: row.minuto_inizio === undefined || row.minuto_inizio === '' ? null : Number(row.minuto_inizio),
+    minuto_fine: row.minuto_fine === undefined || row.minuto_fine === '' ? null : Number(row.minuto_fine),
+    stato: String(row.stato || ''), revisione: Number(row.revisione),
+    creato_il: String(row.creato_il || ''), aggiornato_il: String(row.aggiornato_il || '')
+  };
+}
+
 function normalizeSalaryRow_(row) {
   return {
     id: row.id ? String(row.id) : '',
@@ -2553,6 +2719,8 @@ function validateRow_(row, dataType) {
     if (!hasStart && !hasEnd && !hasMinutes) {
       errors.push('orario o durata mancante (servono inizio, oppure inizio+fine, oppure minuti_lavorati)');
     }
+  } else if (dataType === 'scheduledShifts') {
+    return validateScheduledShift_(row);
   } else if (dataType === 'salaries') {
     if (!row.mese_lavorato) errors.push('mese_lavorato mancante o non valido (atteso YYYY-MM)');
     if (!(toNumber_(row.importo_reale, 0) > 0)) errors.push('importo_reale mancante o non positivo');
@@ -2582,6 +2750,7 @@ function rowSummary_(row, dataType) {
 }
 
 function duplicateSignature_(row, dataType) {
+  if (dataType === 'scheduledShifts') return 'scheduled|' + row.data + '|' + row.fascia;
   if (dataType === 'shifts') {
     return row.data + '|' + (row.inizio || '') + '|' + (row.fine || '');
   }
@@ -2595,6 +2764,7 @@ function duplicateSignature_(row, dataType) {
 }
 
 function loadExistingForType_(dataType) {
+  if (dataType === 'scheduledShifts') return getRecords_(SHEETS.TURNI_PROGRAMMATI);
   if (dataType === 'shifts') return getRecords_(SHEETS.TURNI);
   if (dataType === 'salaries') return getRecords_(SHEETS.STIPENDI);
   if (dataType === 'notes') return getRecords_(SHEETS.NOTE);
@@ -2602,6 +2772,7 @@ function loadExistingForType_(dataType) {
 }
 
 function sheetNameForType_(dataType) {
+  if (dataType === 'scheduledShifts') return SHEETS.TURNI_PROGRAMMATI;
   if (dataType === 'shifts') return SHEETS.TURNI;
   if (dataType === 'salaries') return SHEETS.STIPENDI;
   if (dataType === 'notes') return SHEETS.NOTE;
@@ -2638,6 +2809,10 @@ function applyImport(accessCode, payload, options) {
     return { success: false, message: 'Payload non valido (atteso { dataType, rows } o { sections: {...} })' };
   }
 
+  if (mode === 'merge_update_duplicates' && sections.scheduledShifts && sections.scheduledShifts.rows && sections.scheduledShifts.rows.length) {
+    return { success: false, message: 'Per i turni programmati è disponibile solo la modalità che salta i duplicati.' };
+  }
+
   const lock = LockService.getScriptLock();
 
   try {
@@ -2659,7 +2834,7 @@ function applyImport(accessCode, payload, options) {
       errors: []
     };
 
-    ['shifts', 'salaries', 'notes'].forEach(function (type) {
+    ['shifts', 'scheduledShifts', 'salaries', 'notes'].forEach(function (type) {
       const section = sections[type];
 
       if (!section || !Array.isArray(section.rows) || section.rows.length === 0) {
@@ -2767,6 +2942,15 @@ function prepareRowForWrite_(row, dataType, overrideId) {
     id = prefix + '_imp_' + Date.now() + '_' + Math.floor(Math.random() * 1000000).toString(36);
   }
 
+  if (dataType === 'scheduledShifts') {
+    return {
+      id: String(row.id), data: String(row.data), fascia: String(row.fascia),
+      minuto_inizio: Number(row.minuto_inizio), minuto_fine: Number(row.minuto_fine),
+      stato: String(row.stato), revisione: Number(row.revisione),
+      creato_il: String(row.creato_il || now), aggiornato_il: String(row.aggiornato_il || now)
+    };
+  }
+
   if (dataType === 'shifts') {
     return {
       id: String(id),
@@ -2814,7 +2998,9 @@ function prepareRowForWrite_(row, dataType, overrideId) {
 }
 
 function writeRowForType_(dataType, row) {
-  if (dataType === 'shifts') {
+  if (dataType === 'scheduledShifts') {
+    upsertRecord_(SHEETS.TURNI_PROGRAMMATI, HEADERS.TURNI_PROGRAMMATI, row);
+  } else if (dataType === 'shifts') {
     upsertRecord_(SHEETS.TURNI, HEADERS.TURNI, row);
   } else if (dataType === 'salaries') {
     upsertRecord_(SHEETS.STIPENDI, HEADERS.STIPENDI, row);
