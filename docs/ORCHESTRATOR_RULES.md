@@ -6,7 +6,7 @@ Questo file contiene le regole prioritarie per ChatGPT/orchestratore e per quals
 
 ## Agent-facing operational summary (English)
 
-Quick reference for new agents, Claude Code, Cursor, Windsurf/Cascade, and future classifier/planner. Full rules in Italian sections below; this section is a compact English extraction for token efficiency.
+Quick reference for ChatGPT and optionally Cursor on explicit user delegation; historical references below do not authorize additional agent runtimes. Full rules in Italian sections below; this section is a compact English extraction for token efficiency.
 
 **Aggressive autonomy — recoverable mistakes over blocked progress (task 0405, 2026-05-16):**
 - User explicitly prefers recoverable mistakes over project abandonment from repeated confirmations.
@@ -24,9 +24,9 @@ Quick reference for new agents, Claude Code, Cursor, Windsurf/Cascade, and futur
 runtime · VPS runtime · n8n runtime · Alina app changes · deploy Apps Script (without prompt authorization) · tag · rollback · API key · login · GitHub Actions · new recurring costs · automatic runner · personal data / credentials / secrets / OAuth material · real physical test (Alina on phone)
 
 **No provider APIs by default:**
-ChatGPT = web/on-demand orchestration, not OpenAI API. Claude Code = supervised usage, not Anthropic API. Local AI = Ollama/local models. Any provider API / hosted AI call / API key / billing / recurring cost requires explicit future manual gate and is out of scope by default.
+ChatGPT = primary orchestrator and operator using directly available authorized tools, not OpenAI API. Cursor is optional only on explicit user request; other agent runtimes are not assumed. Any provider API / hosted AI call / API key / billing / recurring cost requires explicit future manual gate and is out of scope by default.
 
-**Claude Code permission prompts are local-tool friction.** The `.claude/settings.local.json` allowlist must be kept current. Deny rules block git reset/clean/push --force. For persistent prompt spam on authorized recoverable commands, use `--dangerously-skip-permissions` for this repo only. Full guide: `docs/COMMANDS.md` — "Claude Code confirmation spam".
+**Previous external-agent permission configurations are retired.** Never enable bypass flags or use an unavailable executor. Preserve deny rules for destructive Git operations and all existing human gates.
 
 **Step-by-step mode (PRIORITY 0) — mandatory only when user is manually operating:**
 n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface requiring human-in-the-loop
@@ -47,10 +47,7 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - Final summaries to user, orchestrator chat output → **Italian**
 - Full rule: `docs/AI_RULES.md` — "Language policy for agents"
 
-**Claude Code prompt length rule:**
-- Short prompt: task file already in `docs/tasks/queue/` → minimal prompt is sufficient.
-- Full prompt: only when needed data is not yet on GitHub.
-- Sonnet for ordinary tasks; Opus only for complex planning or architectural decisions.
+**Current routing:** ChatGPT performs tasks with available tools. When the user explicitly delegates to Cursor, use a complete task-specific prompt and verify the workspace and path boundaries.
 
 **Batch size policy (updated task 0262, 2026-05-14):**
 - docs-only pure: **up to 8 sub-tasks per batch** (prefer 6–8 when coherent and safe; lower when fewer meaningful units exist; do not exceed 8 without explicit reason)
@@ -69,7 +66,7 @@ n8n UI · VPS terminal · browser · Apps Script / clasp · any visual interface
 - `docs/CHECKPOINT.md` is a **restart context** file — open only when restart context is explicitly required; justify in final report.
 - Canonicals win over wiki if there is a conflict — update the wiki, not the canonicals.
 - Task completion still updates PROJECT_STATE.md and CHECKPOINT.md per lifecycle rules — this routing rule does not change that.
-- Claude Code large-file warnings may remain until a future physical compression task; this rule reduces real context consumption independently.
+- Historical warning messages in earlier reports are not instructions to install or use retired executors.
 - **LLM Wiki V3.1 (task 0232, 2026-05-14):** additional wiki files active — `docs/wiki/task-id-preflight.md` (task-ID guard), `docs/wiki/prompt-routing.md` (context router), `docs/wiki/context-budget-policy.md` (budget rules), `docs/wiki/template-pack-index.md` (template index); implementer templates in `docs/tasks/templates/`; use for delta-based short prompts and task-ID preflight before any new task creation.
 
 **Docs ROI Gate (batch 0267–0272, 2026-05-14):**
@@ -115,7 +112,7 @@ La priorità del progetto è **TEMPO E RISULTATI**. La configurazione manuale n8
 
 ## PRIORITÀ 0A — Avanzamento senza conferme inutili
 
-**Regola globale del progetto.** Vale per ChatGPT orchestratore, implementatori (Windsurf/Cascade, Cursor, Claude Code, Agent), prompt generati da n8n, workflow documentale n8n / watcher / runner, politiche VPS/runner, documentazione di stato e ripartenza.
+**Regola globale del progetto.** Vale per ChatGPT orchestratore, implementatori (ChatGPT, Cursor only after explicit delegation), prompt generati da n8n, workflow documentale n8n / watcher / runner, politiche VPS/runner, documentazione di stato e ripartenza.
 
 **Principio:** se non esiste una decisione reale o un gate sensibile, il sistema deve avanzare senza chiedere conferme all'utente.
 
@@ -347,36 +344,14 @@ Se il task tocca backend, includere anche:
 
 Ogni prompt operativo per Cursor deve essere autosufficiente **per Cursor** nel blocco da incollare: tutto ciò che Cursor deve fare e che non è già documentato nel repo deve stare in quel blocco.
 
-## Regola lunghezza prompt per implementatore
+## Regola lunghezza prompt per implementatore — aggiornata 27/10/2026
 
-La lunghezza e il livello di dettaglio del prompt dipende dall’implementatore destinatario.
+| Operatore | Modalità |
+|---|---|
+| **ChatGPT** | Orchestrazione e implementazione diretta, soltanto con strumenti effettivamente disponibili e azioni autorizzate. |
+| **Cursor** | Supporto eventuale dopo incarico esplicito dell'utente; prompt completo e autosufficiente, con SESSION / REPO GUARD e gate. |
 
-| Implementatore | Stile prompt | Motivo |
-|----------------|-------------|--------|
-| **Claude Code** | Breve | Legge GitHub in autonomia; prompt lunghi sprecano contesto e token di sessione |
-| **Cursor** | Completo / autosufficiente | Il blocco deve contenere tutto il contesto operativo necessario |
-| **Windsurf / Cascade** | Completo / autosufficiente | Come Cursor; non accorciare |
-
-### Claude Code
-
-Se il task esiste già in `docs/tasks/queue/`, usare prompt minimo:
-
-```text
-Esegui il task docs/tasks/queue/<task>.md.
-Applica CLAUDE.md, docs/ORCHESTRATOR_RULES.md, docs/AI_RULES.md, docs/WORKFLOW.md e docs/COMMANDS.md.
-Chiudi secondo workflow con commit selettivo e push.
-```
-
-Se il task non esiste ancora: creare il task prima con prompt breve, poi far leggere i documenti già in repo.
-
-Usare prompt più lungo con Claude Code **solo** quando i dati necessari non sono ancora su GitHub (es. output appena raccolto in chat, non ancora committato).
-
-### Regola modello per Claude Code
-
-- **Sonnet**: esecuzione operativa ordinaria, task piccoli, docs-only, chiusure documentali.
-- **Opus**: solo per pianificazione complessa, analisi difficile o decisioni architetturali.
-
-Non usare Opus per task che Sonnet può completare correttamente.
+Non assegnare task a implementatori esterni non disponibili e non riattivare i loro vecchi file di configurazione.
 
 ### Language policy
 
@@ -385,13 +360,13 @@ Non usare Opus per task che Sonnet può completare correttamente.
 - **Goal:** token efficiency + technical precision for local 7B/8B models.
 - **Canonical rule:** `docs/AI_RULES.md` — "Language policy for agents".
 
-### Cursor / Windsurf / Cascade
+### Cursor (solo su delega esplicita dell'utente)
 
-Non accorciare i prompt per questi implementatori. Seguire la **Regola output prompt Cursor** qui sotto.
+Preparare prompt autonomi e completi quando Cursor viene effettivamente incaricato. Seguire la **Regola output prompt Cursor** qui sotto.
 
 ## Regola output verso implementatore
 
-Quando l’output richiesto è un prompt per un implementatore (Cursor, Windsurf/Cascade, Claude Code, Agent):
+Quando l’utente autorizza un prompt per Cursor:
 
 1. Il blocco deve contenere **solo** istruzioni e contesto destinati all’implementatore: riferimenti `@…`, MODALITÀ, obiettivo, vincoli, procedura, output atteso, commit, push.
 2. **Fuori dal blocco** può comparire **solo**:
