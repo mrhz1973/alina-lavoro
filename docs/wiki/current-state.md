@@ -1,6 +1,6 @@
 # Wiki — Current State Snapshot
 
-**Derived memory (Level 2) — last updated: 2026-05-18 (task 0452 harden inline preview button binding)**
+**Derived memory (Level 2) — planning note 2026-10-27; historical runtime snapshot last updated 2026-05-18. Runtime and legacy automation status were not verified live; do not restart automations from documentation alone.**
 **Posture:** V2.2.0 + 0428 in production (@57). Phone test PASS 2026-05-17. HEAD/dev: ExternalImportPreview.html + runtime diagnostic + inline route + diagnostic layer + normalized preview + hardened JS bindings - clasp sync pipeline working; Index.html unchanged at APP_BUILD='0428'; no deploy. Test: `/dev?route=external-import-preview-inline&t=0452`. Tags: v2.2.0-stable (@54/0427), v2.2.0-build0428-stable (@55/0428).
 **Keep below ~100 lines. Move history to `docs/history/` or `docs/sessions/`. This is a snapshot, not a log.**
 **Canonical sources win on conflict.**
