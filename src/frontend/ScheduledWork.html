@@ -3,7 +3,7 @@
    supplied through the private app configuration, never in source control. */
 Object.assign(I18N.it, {
   workplace: 'Lavoro', workplace_variable: 'Lavoro 1', workplace_scheduled: 'Lavoro 2',
-  choose_by_location: 'Scegli con la posizione', first_slot: 'Prima fascia',
+  workplace_hint: 'Tocca il posto di lavoro.', first_slot: 'Prima fascia',
   second_slot: 'Seconda fascia', scheduled_not_configured: 'Configura prima gli orari nelle impostazioni.',
   scheduled_not_started: 'Da iniziare', scheduled_open: 'In corso', scheduled_done: 'Completato',
   scheduled_cancelled: 'Annullato', scheduled_start: 'Inizia', scheduled_finish: 'Termina',
@@ -21,14 +21,14 @@ Object.assign(I18N.it, {
   scheduled_unfinished: 'Termina o annulla le fasce ancora in corso prima di preparare il registro.',
   scheduled_need_operator: 'Inserisci l’operatore nelle impostazioni.',
   scheduled_conflict: 'Errore di sincronizzazione: i dati locali restano in attesa.',
-  scheduled_locations: 'Posizione facoltativa', scheduled_locations_help: 'Salva la posizione mentre sei nella sede. Rimane solo su questo dispositivo.',
-  scheduled_save_location: 'Memorizza qui', scheduled_location_saved: 'Posizione salvata su questo dispositivo.',
-  scheduled_location_unavailable: 'Posizione non disponibile o incerta: scegli il lavoro manualmente.',
-  scheduled_month_hours: 'Ore completate', scheduled_month_days: 'Giorni lavorati'
+  scheduled_month_hours: 'Ore completate', scheduled_month_days: 'Giorni lavorati',
+  scheduled_edit_day: 'Modifica orari di un giorno', scheduled_edit_short: 'Modifica orari', scheduled_show_register: 'Registro presenze',
+  scheduled_entry: 'Entrata', scheduled_exit: 'Uscita', scheduled_not_yet: 'Da segnare',
+  scheduled_expected_exit: 'Uscita prevista', scheduled_duration: 'Ore registrate'
 });
 Object.assign(I18N.ru, {
   workplace: 'Работа', workplace_variable: 'Работа 1', workplace_scheduled: 'Работа 2',
-  choose_by_location: 'Выбрать по геопозиции', first_slot: 'Первая смена',
+  workplace_hint: 'Выберите место работы.', first_slot: 'Первая смена',
   second_slot: 'Вторая смена', scheduled_not_configured: 'Сначала настройте время смен.',
   scheduled_not_started: 'Не начато', scheduled_open: 'В процессе', scheduled_done: 'Завершено',
   scheduled_cancelled: 'Отменено', scheduled_start: 'Начать', scheduled_finish: 'Закончить',
@@ -46,16 +46,19 @@ Object.assign(I18N.ru, {
   scheduled_unfinished: 'Перед подготовкой табеля завершите или отмените открытые смены.',
   scheduled_need_operator: 'Укажите сотрудника в настройках.',
   scheduled_conflict: 'Ошибка синхронизации: локальные данные сохранены в очереди.',
-  scheduled_locations: 'Необязательная геопозиция', scheduled_locations_help: 'Сохраните позицию на месте работы. Она останется только на этом устройстве.',
-  scheduled_save_location: 'Сохранить здесь', scheduled_location_saved: 'Позиция сохранена на этом устройстве.',
-  scheduled_location_unavailable: 'Позиция недоступна или неточна: выберите работу вручную.',
-  scheduled_month_hours: 'Завершённые часы', scheduled_month_days: 'Отработанные дни'
+  scheduled_month_hours: 'Завершённые часы', scheduled_month_days: 'Отработанные дни',
+  scheduled_edit_day: 'Изменить время на день', scheduled_edit_short: 'Изменить время', scheduled_show_register: 'Табель',
+  scheduled_entry: 'Начало', scheduled_exit: 'Окончание', scheduled_not_yet: 'Ещё не отмечено',
+  scheduled_expected_exit: 'Окончание по расписанию', scheduled_duration: 'Учтённые часы'
 });
 
 var SCHEDULED_WORKPLACE_KEY = 'alina_selected_workplace_v1';
-var SCHEDULED_LOCATION_KEY = 'alina_workplace_locations_v1';
 var scheduledSelectedWorkplace = 'variable';
 var scheduledSyncInFlight = false;
+var scheduledManualChoiceThisVisit = false;
+var scheduledManualChoiceVersion = 0;
+var scheduledLocationInFlight = false;
+var scheduledLocationTried = false;
 state.scheduledShifts = [];
 state.scheduledCapability = false;
 try {
@@ -67,15 +70,17 @@ function scheduledWorkplaceName_(kind) {
   return String(state.config[key] || t(kind === 'scheduled' ? 'workplace_scheduled' : 'workplace_variable'));
 }
 function scheduledSelectorHtml_() {
-  return '<section class="card"><div class="kicker">' + esc(t('workplace')) + '</div><div class="btn-row">' +
-    '<button type="button" class="' + (scheduledSelectedWorkplace === 'variable' ? 'secondary-btn' : 'ghost-btn') +
+  return '<section class="card"><div class="kicker">' + esc(t('workplace')) + '</div><div class="help">' + esc(t('workplace_hint')) + '</div><div class="workplace-grid">' +
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'variable') + '" class="workplace-button ' +
+    (scheduledSelectedWorkplace === 'variable' ? 'secondary-btn' : 'ghost-btn') +
     '" onclick="scheduledSelectWorkplace_(\'variable\')">' + esc(scheduledWorkplaceName_('variable')) + '</button>' +
-    '<button type="button" class="' + (scheduledSelectedWorkplace === 'scheduled' ? 'secondary-btn' : 'ghost-btn') +
-    '" onclick="scheduledSelectWorkplace_(\'scheduled\')">' + esc(scheduledWorkplaceName_('scheduled')) + '</button>' +
-    '<button type="button" class="ghost-btn" onclick="scheduledChooseByLocation_()">' + esc(t('choose_by_location')) + '</button></div></section>';
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'scheduled') + '" class="workplace-button ' +
+    (scheduledSelectedWorkplace === 'scheduled' ? 'secondary-btn' : 'ghost-btn') +
+    '" onclick="scheduledSelectWorkplace_(\'scheduled\')">' + esc(scheduledWorkplaceName_('scheduled')) + '</button></div></section>';
 }
-function scheduledSelectWorkplace_(kind) {
+function scheduledSelectWorkplace_(kind, source) {
   if (kind !== 'variable' && kind !== 'scheduled') return;
+  if (source !== 'automatic') { scheduledManualChoiceThisVisit = true; scheduledManualChoiceVersion++; }
   scheduledSelectedWorkplace = kind;
   try { localStorage.setItem(SCHEDULED_WORKPLACE_KEY, kind); } catch (_) {}
   monthsViewSig = ''; monthDetailSig = '';
@@ -180,7 +185,10 @@ function scheduledMonthTotals_(month) {
 }
 function renderScheduledHome_() {
   var html = scheduledSelectorHtml_() + '<section class="card"><div class="kicker">' +
-    esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' + esc(formatLongDate(today())) + '</div>';
+    esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' + esc(formatLongDate(today())) +
+    '</div><div class="scheduled-shortcuts"><button class="secondary-btn" onclick="scheduledOpenMonth_(\'' + currentMonth() + '\')">' +
+    esc(t('scheduled_show_register')) + '</button><button class="ghost-btn" onclick="scheduledOpenDayEditor_(\'' + today() + '\')">' +
+    esc(t('scheduled_edit_short')) + '</button></div>';
   ['1', '2'].forEach(function (slot) {
     var row = scheduledFind_(today(), slot), times = scheduledTimesForDay_(today(), slot);
     var status = row ? row.stato : 'planned';
@@ -190,8 +198,8 @@ function renderScheduledHome_() {
       esc(t(slot === '1' ? 'first_slot' : 'second_slot')) + '</strong><div>' +
       esc(times ? scheduledTime_(times.start) + '–' + scheduledTime_(times.end) : t('scheduled_not_configured')) +
       ' · ' + esc(t(statusKey)) + '</div><div class="btn-row">';
-    if (status === 'open') html += '<button class="danger-btn" onclick="scheduledFinish_(\'' + slot + '\')">' + esc(t('scheduled_finish')) + '</button>';
-    else if (status !== 'done') html += '<button class="secondary-btn" onclick="scheduledStart_(\'' + slot + '\')">' + esc(t('scheduled_start')) + '</button>';
+    if (status === 'open') html += '<button class="danger-btn scheduled-action" onclick="scheduledFinish_(\'' + slot + '\')">' + esc(t('scheduled_finish')) + '</button>';
+    else if (status !== 'done') html += '<button class="secondary-btn scheduled-action" onclick="scheduledStart_(\'' + slot + '\')">' + esc(t('scheduled_start')) + '</button>';
     if (status === 'open' || status === 'done') html += '<button class="ghost-btn" onclick="scheduledAskCancel_(\'' + slot + '\')">' + esc(t('scheduled_cancel')) + '</button>';
     html += '</div></div>';
   });
@@ -230,7 +238,8 @@ function renderScheduledMonthDetail_() {
     return String(row.data || '').slice(0, 7) === month && (row.stato === 'done' || row.stato === 'open');
   }).sort(function (a, b) { return String(a.data + '#' + a.fascia).localeCompare(String(b.data + '#' + b.fascia)); });
   var html = '<section class="card"><button class="ghost-btn" onclick="setPage(\'months\')">' + esc(t('back')) +
-    '</button><div class="status-title">' + esc(monthLabel(month)) + '</div><p>' +
+    '</button><div class="kicker">' + esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' +
+    esc(t('scheduled_report')) + ' · ' + esc(monthLabel(month)) + '</div><p>' +
     esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
     esc(minutesLabel(total.minutes)) + '</p><p class="help">' + esc(t('scheduled_report_info')) + '</p>' +
     '<button class="secondary-btn" onclick="scheduledDownloadReport_(\'' + month + '\')">' + esc(t('scheduled_report_data')) + '</button></section>';
@@ -238,10 +247,16 @@ function renderScheduledMonthDetail_() {
   rows.forEach(function (row) {
     html += '<section class="list-item"><strong>' + esc(formatShortDate(String(row.data))) + ' · ' +
       esc(t(String(row.fascia) === '1' ? 'first_slot' : 'second_slot')) + '</strong><div>' +
-      esc(scheduledTime_(row.minuto_inizio) + '–' + scheduledTime_(row.minuto_fine)) + ' · ' +
-      esc(t(row.stato === 'open' ? 'scheduled_open' : 'scheduled_done')) + '</div><div class="btn-row">';
+      esc(t(row.stato === 'open' ? 'scheduled_open' : 'scheduled_done')) + '</div><div class="scheduled-record-times">' +
+      '<div>' + esc(t('scheduled_entry')) + '<br><strong>' + esc(scheduledTime_(row.minuto_inizio)) + '</strong></div>' +
+      '<div>' + esc(t('scheduled_exit')) + '<br><strong>' +
+      esc(row.stato === 'done' ? scheduledTime_(row.minuto_fine) : t('scheduled_not_yet')) + '</strong></div></div>';
+    if (row.stato === 'open') html += '<p class="help">' + esc(t('scheduled_expected_exit')) + ': ' + esc(scheduledTime_(row.minuto_fine)) + '</p>';
+    if (row.stato === 'done') html += '<p class="help">' + esc(t('scheduled_duration')) + ': ' + esc(minutesLabel(Number(row.minuto_fine) - Number(row.minuto_inizio))) + '</p>';
+    html += '<div class="btn-row">';
     if (scheduledDateValid_(String(row.data)) && ['1', '2'].indexOf(String(row.fascia)) >= 0) {
       if (row.stato === 'open') html += '<button class="secondary-btn" onclick="scheduledFinishForDate_(\'' + row.data + '\',\'' + row.fascia + '\')">' + esc(t('scheduled_finish')) + '</button>';
+      html += '<button class="ghost-btn" onclick="scheduledOpenDayEditor_(\'' + row.data + '\')">' + esc(t('scheduled_edit_day')) + '</button>';
       html += '<button class="ghost-btn" onclick="scheduledAskCancelForDate_(\'' + row.data + '\',\'' + row.fascia + '\')">' + esc(t('scheduled_cancel')) + '</button>';
     }
     html += '</div></section>';
@@ -267,10 +282,19 @@ function scheduledSettingsHtml_() {
     '</label><input id="sch_date" type="date" value="' + esc(today()) + '" onchange="scheduledLoadDay_()"></div><div class="time-grid">' +
     field('sch_day_1_start', t('first_slot') + ' · ' + t('start'), '') + field('sch_day_1_end', t('first_slot') + ' · ' + t('end'), '') +
     field('sch_day_2_start', t('second_slot') + ' · ' + t('start'), '') + field('sch_day_2_end', t('second_slot') + ' · ' + t('end'), '') +
-    '</div><button class="secondary-btn" onclick="scheduledSaveDay_()">' + esc(t('scheduled_save_day')) + '</button>' +
-    '<hr><div class="kicker">' + esc(t('scheduled_locations')) + '</div><p class="help">' + esc(t('scheduled_locations_help')) + '</p><div class="btn-row">' +
-    '<button class="ghost-btn" onclick="scheduledSaveLocation_(\'variable\')">' + esc(t('scheduled_save_location')) + ': ' + esc(scheduledWorkplaceName_('variable')) + '</button>' +
-    '<button class="ghost-btn" onclick="scheduledSaveLocation_(\'scheduled\')">' + esc(t('scheduled_save_location')) + ': ' + esc(scheduledWorkplaceName_('scheduled')) + '</button></div></section>';
+    '</div><button class="secondary-btn" onclick="scheduledSaveDay_()">' + esc(t('scheduled_save_day')) + '</button></section>';
+}
+function scheduledOpenDayEditor_(date) {
+  if (!scheduledDateValid_(date)) return;
+  function field(id, label) {
+    return '<div class="field"><label>' + esc(label) + '</label><input type="time" step="1800" id="' + id + '"></div>';
+  }
+  openModal(t('scheduled_edit_day'), '<div class="field"><label>' + esc(t('date')) +
+    '</label><input id="sch_date" type="date" value="' + date + '" onchange="scheduledLoadDay_()"></div><div class="time-grid">' +
+    field('sch_day_1_start', t('first_slot') + ' · ' + t('start')) + field('sch_day_1_end', t('first_slot') + ' · ' + t('end')) +
+    field('sch_day_2_start', t('second_slot') + ' · ' + t('start')) + field('sch_day_2_end', t('second_slot') + ' · ' + t('end')) +
+    '</div><button class="main-action" onclick="scheduledSaveDay_(true)">' + esc(t('scheduled_save_day')) + '</button>');
+  scheduledLoadDay_();
 }
 function scheduledReadFour_(prefix) {
   var values = ['1_start', '1_end', '2_start', '2_end'].map(function (key) { return scheduledParseTime_(val(prefix + key)); });
@@ -300,7 +324,7 @@ function scheduledLoadDay_() {
     setVal('sch_day_' + slot + '_end', times ? scheduledTime_(times.end) : '');
   });
 }
-function scheduledSaveDay_() {
+function scheduledSaveDay_(closeAfter) {
   var date = val('sch_date'), values = scheduledReadFour_('sch_day_');
   if (!scheduledDateValid_(date) || !values) return toast(t('scheduled_invalid'));
   try {
@@ -309,7 +333,10 @@ function scheduledSaveDay_() {
       if (old && Number(old.minuto_inizio) === start && Number(old.minuto_fine) === end) return;
       scheduledSaveLocal_(date, slot, start, end, old ? String(old.stato) : 'planned');
     });
-    toast(t('scheduled_day_saved')); render(); flushQueue();
+    if (closeAfter) closeModal();
+    toast(t('scheduled_day_saved')); render();
+    if (!closeAfter && document.getElementById('sch_date')) { setVal('sch_date', date); scheduledLoadDay_(); }
+    flushQueue();
   } catch (err) { toast(err.message); }
 }
 
@@ -347,37 +374,69 @@ function scheduledDownloadReport_(month) {
   } catch (err) { toast(err.message); }
 }
 
-// Coordinates are local to the current device and never enter the Sheet.
-function scheduledLocations_() {
-  try { return JSON.parse(localStorage.getItem(SCHEDULED_LOCATION_KEY) || '{}') || {}; } catch (_) { return {}; }
-}
-function scheduledSaveLocation_(kind) {
-  if (!navigator.geolocation) return toast(t('scheduled_location_unavailable'));
-  navigator.geolocation.getCurrentPosition(function (pos) {
-    var locations = scheduledLocations_();
-    locations[kind] = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
-    try { localStorage.setItem(SCHEDULED_LOCATION_KEY, JSON.stringify(locations)); toast(t('scheduled_location_saved')); }
-    catch (_) { toast(t('scheduled_location_unavailable')); }
-  }, function () { toast(t('scheduled_location_unavailable')); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+// Area centers and radii come from private configuration. The device's
+// observed position is used transiently and is never written to the Sheet.
+function scheduledAreas_(kind) {
+  var key = kind === 'scheduled' ? 'aree_programmata_json' : 'aree_variabile_json';
+  var raw = state.config[key];
+  if (raw === '' || raw === null || raw === undefined) return [];
+  try {
+    var entries = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (!Array.isArray(entries)) return null;
+    var result = entries.map(function (entry) {
+      if (!entry || entry.latitude === '' || entry.longitude === '' || entry.radius === '' ||
+          entry.latitude === null || entry.longitude === null || entry.radius === null) return null;
+      var lat = Number(entry.latitude), lon = Number(entry.longitude), radius = Number(entry.radius);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon) || !Number.isFinite(radius) ||
+          Math.abs(lat) > 90 || Math.abs(lon) > 180 || radius <= 0) return null;
+      return { latitude: lat, longitude: lon, radius: radius };
+    });
+    return result.some(function (area) { return !area; }) ? null : result;
+  } catch (_) { return null; }
 }
 function scheduledDistance_(a, b) {
   var radians = Math.PI / 180, dLat = (a.latitude - b.latitude) * radians, dLon = (a.longitude - b.longitude) * radians;
   var x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.latitude * radians) * Math.cos(b.latitude * radians) *
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  x = Math.max(0, Math.min(1, x));
   return 12742000 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 }
-function scheduledChooseByLocation_() {
-  var sites = scheduledLocations_();
-  if (!navigator.geolocation || !sites.variable || !sites.scheduled) return toast(t('scheduled_location_unavailable'));
-  navigator.geolocation.getCurrentPosition(function (pos) {
-    var point = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }, accuracy = Number(pos.coords.accuracy || 0);
-    var matches = ['variable', 'scheduled'].filter(function (kind) {
-      return scheduledDistance_(point, sites[kind]) + accuracy <= 120;
-    });
-    if (matches.length !== 1) return toast(t('scheduled_location_unavailable'));
-    scheduledSelectWorkplace_(matches[0]);
-  }, function () { toast(t('scheduled_location_unavailable')); }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+function scheduledTryAutoLocation_() {
+  var areas = { variable: scheduledAreas_('variable'), scheduled: scheduledAreas_('scheduled') };
+  if (scheduledManualChoiceThisVisit || scheduledLocationTried || scheduledLocationInFlight ||
+      !navigator.geolocation || !areas.variable || !areas.scheduled || (!areas.variable.length && !areas.scheduled.length)) return;
+  scheduledLocationTried = true;
+  scheduledLocationInFlight = true;
+  var choiceVersion = scheduledManualChoiceVersion;
+  try {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      scheduledLocationInFlight = false;
+      if (scheduledManualChoiceThisVisit || scheduledManualChoiceVersion !== choiceVersion || !pos || !pos.coords) return;
+      if (pos.coords.latitude == null || pos.coords.longitude == null || pos.coords.accuracy == null) return;
+      var point = { latitude: Number(pos.coords.latitude), longitude: Number(pos.coords.longitude) };
+      var accuracy = Number(pos.coords.accuracy);
+      if (!Number.isFinite(point.latitude) || !Number.isFinite(point.longitude) ||
+          Math.abs(point.latitude) > 90 || Math.abs(point.longitude) > 180 ||
+          !Number.isFinite(accuracy) || accuracy < 0) return;
+      var possible = ['variable', 'scheduled'].filter(function (kind) {
+        return areas[kind].some(function (area) { return scheduledDistance_(point, area) - accuracy <= area.radius; });
+      });
+      if (possible.length !== 1) return;
+      var kind = possible[0];
+      if (areas[kind].some(function (area) { return scheduledDistance_(point, area) + accuracy <= area.radius; })) {
+        scheduledSelectWorkplace_(kind, 'automatic');
+      }
+    }, function () { scheduledLocationInFlight = false; },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  } catch (_) { scheduledLocationInFlight = false; }
 }
+document.addEventListener('DOMContentLoaded', function () { scheduledTryAutoLocation_(); });
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState !== 'visible') return;
+  scheduledLocationTried = false;
+  scheduledManualChoiceThisVisit = false;
+  scheduledTryAutoLocation_();
+});
 
 var scheduledBaseHome = renderHome, scheduledBaseMonths = renderMonths;
 var scheduledBaseMonthDetail = renderMonthDetail, scheduledBaseSettings = renderSettings;
@@ -398,7 +457,7 @@ renderMonthDetail = function () {
 };
 renderSettings = function () {
   scheduledBaseSettings();
-  document.getElementById('content').insertAdjacentHTML('beforeend', scheduledSettingsHtml_());
+  document.getElementById('content').insertAdjacentHTML('afterbegin', scheduledSettingsHtml_());
   scheduledLoadDay_();
 };
 
@@ -461,7 +520,7 @@ initBackground_ = async function () {
     if (!res || !res.success || !res.data) return;
     if (state._localMutationAt >= started || getQueue().length) scheduledMergeDuringLocalChanges_(res.data);
     else mergeServerData(res.data);
-    applyThemeLang(); state.serverOk = true; saveCache(); render();
+    applyThemeLang(); state.serverOk = true; saveCache(); render(); scheduledTryAutoLocation_();
     if (state.config.setup_completato !== 'yes') openSetupModal();
     await flushQueue();
   } catch (_) { state.serverOk = false; render(); }

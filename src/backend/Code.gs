@@ -948,7 +948,8 @@ function saveConfig(accessCode, configPatch) {
     'setup_completato',
     'codice_accesso',
     'nome_lavoro_variabile', 'nome_lavoro_programmato', 'operatore_registro',
-    'programma_1_inizio', 'programma_1_fine', 'programma_2_inizio', 'programma_2_fine'
+    'programma_1_inizio', 'programma_1_fine', 'programma_2_inizio', 'programma_2_fine',
+    'aree_variabile_json', 'aree_programmata_json'
   ];
 
   allowed.forEach(function (key) {

@@ -10,7 +10,7 @@ function createFrontend() {
     constructor(...args) { super(...(args.length ? args : [clock])); }
     static now() { return clock; }
   }
-  const storage = new Map(), elements = new Map();
+  const storage = new Map(), elements = new Map(), listeners = new Map();
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
       id, value: '', innerHTML: '', textContent: '', dataset: {}, children: [],
@@ -22,7 +22,9 @@ function createFrontend() {
   }
   const document = {
     documentElement: { dataset: {}, style: { setProperty() {} }, lang: '' },
-    addEventListener() {}, querySelectorAll() { return []; }, getElementById: element,
+    visibilityState: 'visible',
+    addEventListener(name, callback) { if (!listeners.has(name)) listeners.set(name, []); listeners.get(name).push(callback); },
+    querySelectorAll() { return []; }, getElementById: element,
     createElement() { return element('created'); }, createDocumentFragment() { return element('fragment'); }
   };
   const localStorage = {
@@ -52,7 +54,7 @@ function createFrontend() {
     "state.summaries = [{mese:'2026-03', minuti:120, ore:2, giorni:1, ore_label:'2 h 00 min', stimato:20, tariffa_media:10}];",
     "scheduledSelectedWorkplace = 'scheduled'; state.scheduledCapability = true;"
   ].join('\n'), context);
-  return { context, storage, elements, navigator, setClock(value) { clock = Date.parse(value); } };
+  return { context, storage, elements, navigator, listeners, setClock(value) { clock = Date.parse(value); } };
 }
 
 test('recording two scheduled shifts keeps the existing workplace untouched', () => {
@@ -89,6 +91,20 @@ test('a per-day override changes that day only and does not invent attendance', 
   assert.equal(app.scheduledTimesForDay_('2026-03-05', '1').start, 420);
 });
 
+test('the date editor updates a completed shift without creating attendance for another slot', () => {
+  const { context: app, elements } = createFrontend();
+  app.scheduledStart_('1'); app.scheduledFinish_('1');
+  for (const [id, value] of Object.entries({
+    sch_date: '2026-03-03', sch_day_1_start: '06:30', sch_day_1_end: '10:00',
+    sch_day_2_start: '14:00', sch_day_2_end: '15:30'
+  })) elements.set(id, { id, value });
+  app.scheduledSaveDay_();
+  assert.equal(app.scheduledFind_('2026-03-03', '1').stato, 'done');
+  assert.equal(app.scheduledMonthTotals_('2026-03').minutes, 210);
+  assert.equal(app.scheduledFind_('2026-03-03', '2').stato, 'planned');
+  assert.equal(app.scheduledTimesForDay_('2026-03-04', '1').start, 420);
+});
+
 test('a later tap still records the configured beginning of the chosen slot', () => {
   const { context: app, setClock } = createFrontend();
   setClock('2026-03-04T07:05:00Z');
@@ -119,20 +135,107 @@ test('monthly report rejects unsynced and unfinished data and includes only comp
   assert.equal(report.operatore, 'Operatore di prova');
 });
 
-test('the location helper falls back safely when saved sites are absent', () => {
-  const { context: app } = createFrontend();
-  assert.doesNotThrow(() => app.scheduledChooseByLocation_());
+function configureTestAreas(app) {
+  vm.runInContext("state.config.aree_variabile_json = JSON.stringify([{latitude:40,longitude:10,radius:500},{latitude:40.001,longitude:10,radius:500}]);" +
+    "state.config.aree_programmata_json = JSON.stringify([{latitude:41,longitude:11,radius:500}]);", app);
+}
+
+test('the two workplaces have large manual controls and shortcuts to the register and date editor', () => {
+  const { context: app, elements } = createFrontend();
+  app.renderScheduledHome_();
+  const html = elements.get('content').innerHTML;
+  assert.match(html, /workplace-button/);
+  assert.match(html, /scheduled-action/);
+  assert.match(html, /Registro presenze/);
+  assert.match(html, /Modifica orari/);
+  assert.doesNotMatch(html, /Scegli con la posizione/);
+});
+
+test('the register distinguishes a completed exit from an open shift', () => {
+  const { context: app, elements } = createFrontend();
+  app.scheduledStart_('1');
+  vm.runInContext("state.detailMonth = '2026-03'", app);
+  app.renderScheduledMonthDetail_();
+  let html = elements.get('content').innerHTML;
+  assert.match(html, /Entrata/);
+  assert.match(html, /Uscita prevista/);
+  assert.match(html, /Da segnare/);
+  assert.doesNotMatch(html, /Ore registrate/);
+  app.scheduledFinish_('1');
+  app.renderScheduledMonthDetail_();
+  html = elements.get('content').innerHTML;
+  assert.match(html, /Uscita/);
+  assert.match(html, /Ore registrate/);
+  assert.doesNotMatch(html, /Da segnare/);
+});
+
+test('an automatic location match selects the scheduled workplace without recording attendance', () => {
+  const { context: app, navigator, storage } = createFrontend();
+  configureTestAreas(app);
+  vm.runInContext("scheduledSelectedWorkplace='variable'", app);
+  navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: { latitude: 41, longitude: 11, accuracy: 10 } }); } };
+  app.scheduledTryAutoLocation_();
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+  assert.equal(vm.runInContext('state.scheduledShifts.length', app), 0);
+  assert.equal(storage.has('alina_workplace_locations_v1'), false);
+});
+
+test('overlapping areas belonging to the same workplace identify the same workplace', () => {
+  const { context: app, navigator } = createFrontend();
+  configureTestAreas(app);
+  navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: { latitude: 40.0005, longitude: 10, accuracy: 10 } }); } };
+  app.scheduledTryAutoLocation_();
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
+});
+
+test('unavailable, inaccurate or ambiguous location leaves the manual choice available', () => {
+  for (const kind of ['denied', 'uncertain', 'overlap']) {
+    const { context: app, navigator } = createFrontend();
+    configureTestAreas(app);
+    if (kind === 'overlap') vm.runInContext("state.config.aree_programmata_json=JSON.stringify([{latitude:40,longitude:10,radius:500}])", app);
+    navigator.geolocation = { getCurrentPosition(ok, fail) {
+      if (kind === 'denied') fail({ code: 1 });
+      else ok({ coords: { latitude: 40, longitude: 10, accuracy: kind === 'uncertain' ? 1000 : 10 } });
+    } };
+    app.scheduledTryAutoLocation_();
+    assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+    app.scheduledSelectWorkplace_('variable');
+    assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
+  }
+});
+
+test('a delayed position result cannot override a manual workplace choice', () => {
+  const { context: app, navigator } = createFrontend();
+  configureTestAreas(app);
+  let resolvePosition;
+  navigator.geolocation = { getCurrentPosition(callback) { resolvePosition = callback; } };
+  app.scheduledTryAutoLocation_();
+  app.scheduledSelectWorkplace_('scheduled');
+  resolvePosition({ coords: { latitude: 40, longitude: 10, accuracy: 10 } });
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
 });
 
-test('location can select a uniquely matching site without saving the observed position', () => {
-  const { context: app, navigator, storage } = createFrontend();
-  const sites = JSON.stringify({ variable: { latitude: 40, longitude: 10 }, scheduled: { latitude: 41, longitude: 11 } });
-  storage.set('alina_workplace_locations_v1', sites);
-  navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: { latitude: 40, longitude: 10, accuracy: 10 } }); } };
-  app.scheduledChooseByLocation_();
+test('location is checked again when the app returns to the foreground', () => {
+  const { context: app, navigator, listeners } = createFrontend();
+  configureTestAreas(app);
+  let point = { latitude: 40, longitude: 10, accuracy: 10 };
+  navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: point }); } };
+  app.scheduledTryAutoLocation_();
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
-  assert.equal(storage.get('alina_workplace_locations_v1'), sites);
+  point = { latitude: 41, longitude: 11, accuracy: 10 };
+  listeners.get('visibilitychange').forEach(callback => callback());
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+  assert.equal(vm.runInContext('state.scheduledShifts.length', app), 0);
+});
+
+test('invalid area configuration never attempts an automatic location', () => {
+  const { context: app, navigator } = createFrontend();
+  let requested = false;
+  navigator.geolocation = { getCurrentPosition() { requested = true; } };
+  vm.runInContext("state.config.aree_variabile_json = 'invalid'; state.config.aree_programmata_json = '[]'", app);
+  app.scheduledTryAutoLocation_();
+  assert.equal(requested, false);
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
 });
 
 test('an older server cannot acknowledge and discard scheduled work', async () => {

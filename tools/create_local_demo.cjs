@@ -12,6 +12,8 @@ const config = configPath ? JSON.parse(fs.readFileSync(configPath, 'utf8').repla
   programma_1_inizio: '07:00', programma_1_fine: '09:30',
   programma_2_inizio: '14:00', programma_2_fine: '15:30'
 };
+const oldScheduledNames = Array.isArray(config._preview_previous_scheduled_names) ? config._preview_previous_scheduled_names : [];
+delete config._preview_previous_scheduled_names;
 const project = path.join(__dirname, '..');
 let index = fs.readFileSync(path.join(project, 'src/frontend/Index.html'), 'utf8');
 const moduleHtml = fs.readFileSync(path.join(project, 'src/frontend/ScheduledWork.html'), 'utf8');
@@ -28,12 +30,18 @@ const oldCall = "function serverCall(fn,args=[]){return new Promise((resolve,rej
 if (index.split(oldCall).length !== 2) throw new Error('The expected serverCall function was not found');
 index = index.replace(oldCall, 'function serverCall(fn,args=[]){return localDemoServerCall_(fn,args)}');
 const seed = JSON.stringify(config).replace(/</g, '\\u003c');
+const oldNames = JSON.stringify(oldScheduledNames).replace(/</g, '\\u003c');
 const mock = [
   '<script>',
   'var localDemoSeed_ = ' + seed + ';',
+  'var localDemoOldScheduledNames_ = ' + oldNames + ';',
   "var localDemoKey_ = 'alina_demo_backend_v2';",
   'function localDemoRead_(){',
-  "  try { var s=JSON.parse(localStorage.getItem(localDemoKey_)||'null'); if(s)return s; } catch(_){}",
+  "  try { var s=JSON.parse(localStorage.getItem(localDemoKey_)||'null'); if(s){",
+  "    var changed=false; s.config=s.config||{};",
+  "    if(localDemoOldScheduledNames_.indexOf(s.config.nome_lavoro_programmato)>=0){s.config.nome_lavoro_programmato=localDemoSeed_.nome_lavoro_programmato;changed=true;}",
+  "    ['aree_variabile_json','aree_programmata_json'].forEach(function(k){if(Object.prototype.hasOwnProperty.call(localDemoSeed_,k)&&s.config[k]!==localDemoSeed_[k]){s.config[k]=localDemoSeed_[k];changed=true;}});",
+  "    if(changed)localStorage.setItem(localDemoKey_,JSON.stringify(s));return s; } } catch(_){}",
   "  return {config:Object.assign({lingua:'it',tema:'light',stile:'modern',giorno_busta:'10',media_mesi:'6',tariffa_media_default:'10',setup_completato:'yes'},localDemoSeed_),shifts:[],scheduledShifts:[],salaries:[],notes:[],summaries:[],reminder:{active:false},capabilities:{scheduledWork:1},operations:{}};",
   '}',
   'function localDemoUpsert_(rows,row){var i=rows.findIndex(function(x){return String(x.id)===String(row.id)});if(i<0)rows.push(row);else rows[i]=row;}',

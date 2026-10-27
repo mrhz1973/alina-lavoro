@@ -9,7 +9,7 @@
 
 ## App
 
-**Isolated candidate:** `codex/multi-lavoro-registro` contains separate scheduled shifts, date-specific overrides, a simulated local preview and a PDF generator; see `docs/roadmap.md`. Automated checks use synthetic data. No production or Apps Script deployment was performed; actual phone/GPS, cross-device synchronization and unattended monthly PDF generation remain unverified. Keep personal data and templates outside this repository. The historical baseline below describes `main`, not a verified current runtime.
+**Isolated candidate:** `codex/multi-lavoro-registro` contains separate scheduled shifts, date-specific overrides, automatic workplace selection from privately configured areas, a simulated local preview and a PDF generator; see `docs/roadmap.md`. Automatic selection never records attendance and manual selection remains available. Automated checks use synthetic data. No production or Apps Script deployment was performed; actual phone/GPS, cross-device synchronization and unattended monthly PDF generation remain unverified. Keep personal data, locations and templates outside this repository. The historical baseline below describes `main`, not a verified current runtime.
 
 | Field | Value |
 |---|---|
