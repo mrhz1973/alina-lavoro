@@ -23,6 +23,8 @@
 
 ## Current App State
 
+The deployment and legacy automation descriptions below are historical; live runtime status was not verified on 2026-10-27. Do not restart legacy automations based on documentation alone.
+
 | Field | Value |
 |---|---|
 | Source version | **V2.2.0 + 0406–0428** (HEAD/dev: build 0428, restored from stable tag; production: build 0428) |
@@ -189,7 +191,7 @@ Provider APIs are out of scope by default. ChatGPT operates via available tools;
 | ChatGPT | Operatore principale e orchestratore | Solo strumenti direttamente disponibili e autorizzati nella sessione |
 | Cursor | Supporto eventuale, non attivo di default | Richiede incarico esplicito dell'utente, verifica del workspace e gate |
 
-Cursor-first decision: `docs/automation/dual-cli-orchestrator-lite-design.md` §1c · CLI capability matrix: §1b
+Historical reference only: `docs/automation/dual-cli-orchestrator-lite-design.md` §1c; Cursor remains optional and requires explicit delegation.
 
 ---
 
