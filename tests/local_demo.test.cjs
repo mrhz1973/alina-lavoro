@@ -51,6 +51,7 @@ test('the generated standalone preview starts and saves two shifts using only it
   }
   const document = {
     documentElement: { dataset: {}, style: { setProperty() {} }, lang: '' },
+    visibilityState: 'visible',
     addEventListener(name, callback) { if (!events.has(name)) events.set(name, []); events.get(name).push(callback); },
     querySelectorAll() { return []; }, getElementById: element,
     createElement() { return element('created'); }, createDocumentFragment() { return element('fragment'); }
@@ -60,8 +61,11 @@ test('the generated standalone preview starts and saves two shifts using only it
     setItem(key, value) { store.set(key, String(value)); },
     removeItem(key) { store.delete(key); }
   };
+  let locationRequests = 0;
+  const navigator = { onLine: true, permissions: { query: async () => ({ state: 'prompt' }) },
+    geolocation: { getCurrentPosition(_ok, fail) { locationRequests++; fail({ code: 1 }); } } };
   const context = vm.createContext({
-    document, localStorage, navigator: { onLine: true }, Date, Math, JSON, Number, String, Object,
+    document, localStorage, navigator, Date, Math, JSON, Number, String, Object,
     Array, RegExp, Set, isNaN, Blob, URL, console, setTimeout() { return 1; }, clearTimeout() {},
     window: { addEventListener() {}, visualViewport: null }
   });
@@ -72,6 +76,12 @@ test('the generated standalone preview starts and saves two shifts using only it
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(vm.runInContext('state.scheduledCapability', context), true);
   assert.match(elements.get('content').innerHTML, /Attivita A/);
+  assert.equal(locationRequests, 1);
+  assert.equal(store.get('demo_alina_geolocation_prompted_v1'), 'yes');
+  assert.equal(store.has('alina_geolocation_prompted_v1'), false);
+  (events.get('visibilitychange') || []).forEach(callback => callback());
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(locationRequests, 1);
   context.scheduledSelectWorkplace_('scheduled');
   assert.match(elements.get('content').innerHTML, /Attivita B/);
   context.scheduledStart_('1');

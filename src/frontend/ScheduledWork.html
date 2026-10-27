@@ -3,7 +3,7 @@
    supplied through the private app configuration, never in source control. */
 Object.assign(I18N.it, {
   workplace: 'Lavoro', workplace_variable: 'Lavoro 1', workplace_scheduled: 'Lavoro 2',
-  workplace_hint: 'Tocca il posto di lavoro.', first_slot: 'Prima fascia',
+  workplace_hint: 'La sede viene riconosciuta automaticamente, quando possibile. Puoi anche sceglierla qui.', first_slot: 'Prima fascia',
   second_slot: 'Seconda fascia', scheduled_not_configured: 'Configura prima gli orari nelle impostazioni.',
   scheduled_not_started: 'Da iniziare', scheduled_open: 'In corso', scheduled_done: 'Completato',
   scheduled_cancelled: 'Annullato', scheduled_start: 'Inizia', scheduled_finish: 'Termina',
@@ -24,11 +24,14 @@ Object.assign(I18N.it, {
   scheduled_month_hours: 'Ore completate', scheduled_month_days: 'Giorni lavorati',
   scheduled_edit_day: 'Modifica orari di un giorno', scheduled_edit_short: 'Modifica orari', scheduled_show_register: 'Registro presenze',
   scheduled_entry: 'Entrata', scheduled_exit: 'Uscita', scheduled_not_yet: 'Da segnare',
-  scheduled_expected_exit: 'Uscita prevista', scheduled_duration: 'Ore registrate'
+  scheduled_expected_exit: 'Uscita prevista', scheduled_duration: 'Ore registrate',
+  scheduled_location_setup: 'Posizione automatica',
+  scheduled_location_setup_help: 'Usa il permesso permanente del browser. Se la posizione è bloccata, abilitala nelle autorizzazioni del sito.',
+  scheduled_location_retry: 'Riprova autorizzazione posizione'
 });
 Object.assign(I18N.ru, {
   workplace: 'Работа', workplace_variable: 'Работа 1', workplace_scheduled: 'Работа 2',
-  workplace_hint: 'Выберите место работы.', first_slot: 'Первая смена',
+  workplace_hint: 'Место работы определяется автоматически, если это возможно. Его также можно выбрать здесь.', first_slot: 'Первая смена',
   second_slot: 'Вторая смена', scheduled_not_configured: 'Сначала настройте время смен.',
   scheduled_not_started: 'Не начато', scheduled_open: 'В процессе', scheduled_done: 'Завершено',
   scheduled_cancelled: 'Отменено', scheduled_start: 'Начать', scheduled_finish: 'Закончить',
@@ -49,10 +52,14 @@ Object.assign(I18N.ru, {
   scheduled_month_hours: 'Завершённые часы', scheduled_month_days: 'Отработанные дни',
   scheduled_edit_day: 'Изменить время на день', scheduled_edit_short: 'Изменить время', scheduled_show_register: 'Табель',
   scheduled_entry: 'Начало', scheduled_exit: 'Окончание', scheduled_not_yet: 'Ещё не отмечено',
-  scheduled_expected_exit: 'Окончание по расписанию', scheduled_duration: 'Учтённые часы'
+  scheduled_expected_exit: 'Окончание по расписанию', scheduled_duration: 'Учтённые часы',
+  scheduled_location_setup: 'Автоматическая геопозиция',
+  scheduled_location_setup_help: 'Используйте постоянное разрешение браузера. Если доступ заблокирован, включите его в настройках сайта.',
+  scheduled_location_retry: 'Повторить запрос геопозиции'
 });
 
 var SCHEDULED_WORKPLACE_KEY = 'alina_selected_workplace_v1';
+var SCHEDULED_GEO_PROMPT_KEY = 'alina_geolocation_prompted_v1';
 var scheduledSelectedWorkplace = 'variable';
 var scheduledSyncInFlight = false;
 var scheduledManualChoiceThisVisit = false;
@@ -282,7 +289,10 @@ function scheduledSettingsHtml_() {
     '</label><input id="sch_date" type="date" value="' + esc(today()) + '" onchange="scheduledLoadDay_()"></div><div class="time-grid">' +
     field('sch_day_1_start', t('first_slot') + ' · ' + t('start'), '') + field('sch_day_1_end', t('first_slot') + ' · ' + t('end'), '') +
     field('sch_day_2_start', t('second_slot') + ' · ' + t('start'), '') + field('sch_day_2_end', t('second_slot') + ' · ' + t('end'), '') +
-    '</div><button class="secondary-btn" onclick="scheduledSaveDay_()">' + esc(t('scheduled_save_day')) + '</button></section>';
+    '</div><button class="secondary-btn" onclick="scheduledSaveDay_()">' + esc(t('scheduled_save_day')) + '</button>' +
+    '<hr><div class="kicker">' + esc(t('scheduled_location_setup')) + '</div><p class="help">' +
+    esc(t('scheduled_location_setup_help')) + '</p><button class="ghost-btn" onclick="scheduledRetryLocationPermission_()">' +
+    esc(t('scheduled_location_retry')) + '</button></section>';
 }
 function scheduledOpenDayEditor_(date) {
   if (!scheduledDateValid_(date)) return;
@@ -401,7 +411,22 @@ function scheduledDistance_(a, b) {
   x = Math.max(0, Math.min(1, x));
   return 12742000 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 }
-function scheduledTryAutoLocation_() {
+function scheduledPermissionState_() {
+  if (!navigator.permissions || typeof navigator.permissions.query !== 'function') return Promise.resolve('unknown');
+  try {
+    return Promise.resolve(navigator.permissions.query({ name: 'geolocation' })).then(function (status) {
+      return status && ['granted', 'denied', 'prompt'].indexOf(status.state) >= 0 ? status.state : 'unknown';
+    }, function () { return 'unknown'; });
+  } catch (_) { return Promise.resolve('unknown'); }
+}
+function scheduledMarkFirstPrompt_() {
+  try {
+    if (localStorage.getItem(SCHEDULED_GEO_PROMPT_KEY) === 'yes') return false;
+    localStorage.setItem(SCHEDULED_GEO_PROMPT_KEY, 'yes');
+    return true;
+  } catch (_) { return false; }
+}
+async function scheduledTryAutoLocation_() {
   var areas = { variable: scheduledAreas_('variable'), scheduled: scheduledAreas_('scheduled') };
   if (scheduledManualChoiceThisVisit || scheduledLocationTried || scheduledLocationInFlight ||
       !navigator.geolocation || !areas.variable || !areas.scheduled || (!areas.variable.length && !areas.scheduled.length)) return;
@@ -409,6 +434,17 @@ function scheduledTryAutoLocation_() {
   scheduledLocationInFlight = true;
   var choiceVersion = scheduledManualChoiceVersion;
   try {
+    var permission = await scheduledPermissionState_();
+    if (document.visibilityState && document.visibilityState !== 'visible') {
+      scheduledLocationInFlight = false;
+      scheduledLocationTried = false;
+      return;
+    }
+    if (scheduledManualChoiceThisVisit || scheduledManualChoiceVersion !== choiceVersion || permission === 'denied' ||
+        (permission !== 'granted' && !scheduledMarkFirstPrompt_())) {
+      scheduledLocationInFlight = false;
+      return;
+    }
     navigator.geolocation.getCurrentPosition(function (pos) {
       scheduledLocationInFlight = false;
       if (scheduledManualChoiceThisVisit || scheduledManualChoiceVersion !== choiceVersion || !pos || !pos.coords) return;
@@ -429,6 +465,12 @@ function scheduledTryAutoLocation_() {
     }, function () { scheduledLocationInFlight = false; },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
   } catch (_) { scheduledLocationInFlight = false; }
+}
+function scheduledRetryLocationPermission_() {
+  try { localStorage.removeItem(SCHEDULED_GEO_PROMPT_KEY); } catch (_) { return; }
+  scheduledManualChoiceThisVisit = false;
+  scheduledLocationTried = false;
+  scheduledTryAutoLocation_();
 }
 document.addEventListener('DOMContentLoaded', function () { scheduledTryAutoLocation_(); });
 document.addEventListener('visibilitychange', function () {

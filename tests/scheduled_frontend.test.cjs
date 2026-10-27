@@ -4,13 +4,13 @@ const path = require('node:path');
 const vm = require('node:vm');
 const test = require('node:test');
 
-function createFrontend() {
+function createFrontend(sharedStorage) {
   let clock = Date.parse('2026-03-03T06:45:00Z');
   class FakeDate extends Date {
     constructor(...args) { super(...(args.length ? args : [clock])); }
     static now() { return clock; }
   }
-  const storage = new Map(), elements = new Map(), listeners = new Map();
+  const storage = sharedStorage || new Map(), elements = new Map(), listeners = new Map();
   function element(id) {
     if (!elements.has(id)) elements.set(id, {
       id, value: '', innerHTML: '', textContent: '', dataset: {}, children: [],
@@ -149,6 +149,8 @@ test('the two workplaces have large manual controls and shortcuts to the registe
   assert.match(html, /Registro presenze/);
   assert.match(html, /Modifica orari/);
   assert.doesNotMatch(html, /Scegli con la posizione/);
+  assert.doesNotMatch(html, /Riprova autorizzazione posizione/);
+  assert.match(app.scheduledSettingsHtml_(), /Riprova autorizzazione posizione/);
 });
 
 test('the register distinguishes a completed exit from an open shift', () => {
@@ -169,26 +171,26 @@ test('the register distinguishes a completed exit from an open shift', () => {
   assert.doesNotMatch(html, /Da segnare/);
 });
 
-test('an automatic location match selects the scheduled workplace without recording attendance', () => {
+test('an automatic location match selects the scheduled workplace without recording attendance', async () => {
   const { context: app, navigator, storage } = createFrontend();
   configureTestAreas(app);
   vm.runInContext("scheduledSelectedWorkplace='variable'", app);
   navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: { latitude: 41, longitude: 11, accuracy: 10 } }); } };
-  app.scheduledTryAutoLocation_();
+  await app.scheduledTryAutoLocation_();
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
   assert.equal(vm.runInContext('state.scheduledShifts.length', app), 0);
   assert.equal(storage.has('alina_workplace_locations_v1'), false);
 });
 
-test('overlapping areas belonging to the same workplace identify the same workplace', () => {
+test('overlapping areas belonging to the same workplace identify the same workplace', async () => {
   const { context: app, navigator } = createFrontend();
   configureTestAreas(app);
   navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: { latitude: 40.0005, longitude: 10, accuracy: 10 } }); } };
-  app.scheduledTryAutoLocation_();
+  await app.scheduledTryAutoLocation_();
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
 });
 
-test('unavailable, inaccurate or ambiguous location leaves the manual choice available', () => {
+test('unavailable, inaccurate or ambiguous location leaves the manual choice available', async () => {
   for (const kind of ['denied', 'uncertain', 'overlap']) {
     const { context: app, navigator } = createFrontend();
     configureTestAreas(app);
@@ -197,45 +199,173 @@ test('unavailable, inaccurate or ambiguous location leaves the manual choice ava
       if (kind === 'denied') fail({ code: 1 });
       else ok({ coords: { latitude: 40, longitude: 10, accuracy: kind === 'uncertain' ? 1000 : 10 } });
     } };
-    app.scheduledTryAutoLocation_();
+    await app.scheduledTryAutoLocation_();
     assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
     app.scheduledSelectWorkplace_('variable');
     assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
   }
 });
 
-test('a delayed position result cannot override a manual workplace choice', () => {
+test('a delayed position result cannot override a manual workplace choice', async () => {
   const { context: app, navigator } = createFrontend();
   configureTestAreas(app);
   let resolvePosition;
   navigator.geolocation = { getCurrentPosition(callback) { resolvePosition = callback; } };
-  app.scheduledTryAutoLocation_();
+  await app.scheduledTryAutoLocation_();
   app.scheduledSelectWorkplace_('scheduled');
   resolvePosition({ coords: { latitude: 40, longitude: 10, accuracy: 10 } });
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
 });
 
-test('location is checked again when the app returns to the foreground', () => {
+test('location is checked again when the app returns to the foreground with a granted permission', async () => {
   const { context: app, navigator, listeners } = createFrontend();
   configureTestAreas(app);
   let point = { latitude: 40, longitude: 10, accuracy: 10 };
+  navigator.permissions = { query: async () => ({ state: 'granted' }) };
   navigator.geolocation = { getCurrentPosition(callback) { callback({ coords: point }); } };
-  app.scheduledTryAutoLocation_();
+  await app.scheduledTryAutoLocation_();
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
   point = { latitude: 41, longitude: 11, accuracy: 10 };
   listeners.get('visibilitychange').forEach(callback => callback());
+  await new Promise(resolve => setImmediate(resolve));
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
   assert.equal(vm.runInContext('state.scheduledShifts.length', app), 0);
 });
 
-test('invalid area configuration never attempts an automatic location', () => {
+test('invalid area configuration never attempts an automatic location', async () => {
   const { context: app, navigator } = createFrontend();
   let requested = false;
   navigator.geolocation = { getCurrentPosition() { requested = true; } };
   vm.runInContext("state.config.aree_variabile_json = 'invalid'; state.config.aree_programmata_json = '[]'", app);
-  app.scheduledTryAutoLocation_();
+  await app.scheduledTryAutoLocation_();
   assert.equal(requested, false);
   assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+});
+
+test('a permission prompt is attempted once and is not repeated on later foreground visits', async () => {
+  const { context: app, navigator, listeners, storage } = createFrontend();
+  configureTestAreas(app);
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  navigator.geolocation = { getCurrentPosition(_ok, fail) { calls++; fail({ code: 1 }); } };
+  await app.scheduledTryAutoLocation_();
+  assert.equal(calls, 1);
+  assert.equal(storage.get('alina_geolocation_prompted_v1'), 'yes');
+  listeners.get('visibilitychange').forEach(callback => callback());
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(calls, 1);
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'scheduled');
+});
+
+test('a temporary grant that has expired does not trigger a new prompt on page reload', async () => {
+  const first = createFrontend();
+  configureTestAreas(first.context);
+  first.navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  first.navigator.geolocation = { getCurrentPosition(ok) { ok({ coords: { latitude: 40, longitude: 10, accuracy: 10 } }); } };
+  await first.context.scheduledTryAutoLocation_();
+  const reloaded = createFrontend(first.storage);
+  configureTestAreas(reloaded.context);
+  let calls = 0;
+  reloaded.navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  reloaded.navigator.geolocation = { getCurrentPosition() { calls++; } };
+  await reloaded.context.scheduledTryAutoLocation_();
+  assert.equal(calls, 0);
+  reloaded.context.scheduledSelectWorkplace_('variable');
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', reloaded.context), 'variable');
+});
+
+test('a remembered browser grant allows automatic location without another permission request', async () => {
+  const { context: app, navigator, listeners, storage } = createFrontend();
+  configureTestAreas(app);
+  storage.set('alina_geolocation_prompted_v1', 'yes');
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'granted' }) };
+  navigator.geolocation = { getCurrentPosition(ok) { calls++; ok({ coords: { latitude: 40, longitude: 10, accuracy: 10 } }); } };
+  await app.scheduledTryAutoLocation_();
+  listeners.get('visibilitychange').forEach(callback => callback());
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(calls, 2);
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
+});
+
+test('a blocked permission never calls geolocation', async () => {
+  const { context: app, navigator } = createFrontend();
+  configureTestAreas(app);
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'denied' }) };
+  navigator.geolocation = { getCurrentPosition() { calls++; } };
+  await app.scheduledTryAutoLocation_();
+  assert.equal(calls, 0);
+});
+
+test('without permission-state support the app avoids repeating an automatic request', async () => {
+  for (const variant of ['missing', 'unsupported']) {
+    const { context: app, navigator, listeners } = createFrontend();
+    configureTestAreas(app);
+    let calls = 0;
+    if (variant === 'unsupported') navigator.permissions = { query: async () => { throw new TypeError('unsupported'); } };
+    navigator.geolocation = { getCurrentPosition(_ok, fail) { calls++; fail({ code: 1 }); } };
+    await app.scheduledTryAutoLocation_();
+    listeners.get('visibilitychange').forEach(callback => callback());
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(calls, 1);
+  }
+});
+
+test('without usable browser storage no automatic prompt is issued repeatedly', async () => {
+  const { context: app, navigator } = createFrontend();
+  configureTestAreas(app);
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  navigator.geolocation = { getCurrentPosition() { calls++; } };
+  app.localStorage.setItem = () => { throw new Error('storage unavailable'); };
+  await app.scheduledTryAutoLocation_();
+  assert.equal(calls, 0);
+});
+
+test('manual workplace selection while permission is being checked wins', async () => {
+  const { context: app, navigator, storage } = createFrontend();
+  configureTestAreas(app);
+  let resolvePermission, calls = 0;
+  navigator.permissions = { query: () => new Promise(resolve => { resolvePermission = resolve; }) };
+  navigator.geolocation = { getCurrentPosition() { calls++; } };
+  const pending = app.scheduledTryAutoLocation_();
+  app.scheduledSelectWorkplace_('variable');
+  resolvePermission({ state: 'prompt' });
+  await pending;
+  assert.equal(calls, 0);
+  assert.equal(storage.has('alina_geolocation_prompted_v1'), false);
+  assert.equal(vm.runInContext('scheduledSelectedWorkplace', app), 'variable');
+});
+
+test('a permission prompt is never initiated while the app is in the background', async () => {
+  const { context: app, navigator, listeners } = createFrontend();
+  configureTestAreas(app);
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  navigator.geolocation = { getCurrentPosition(_ok, fail) { calls++; fail({ code: 1 }); } };
+  app.document.visibilityState = 'hidden';
+  await app.scheduledTryAutoLocation_();
+  assert.equal(calls, 0);
+  app.document.visibilityState = 'visible';
+  listeners.get('visibilitychange').forEach(callback => callback());
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(calls, 1);
+});
+
+test('the settings retry permits one intentional request without clearing attendance', async () => {
+  const { context: app, navigator, storage } = createFrontend();
+  configureTestAreas(app);
+  app.scheduledStart_('1');
+  let calls = 0;
+  navigator.permissions = { query: async () => ({ state: 'prompt' }) };
+  navigator.geolocation = { getCurrentPosition(_ok, fail) { calls++; fail({ code: 1 }); } };
+  await app.scheduledTryAutoLocation_();
+  app.scheduledRetryLocationPermission_();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(calls, 2);
+  assert.equal(storage.get('alina_geolocation_prompted_v1'), 'yes');
+  assert.equal(app.scheduledFind_('2026-03-03', '1').stato, 'open');
 });
 
 test('an older server cannot acknowledge and discard scheduled work', async () => {

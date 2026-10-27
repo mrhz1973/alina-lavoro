@@ -23,7 +23,7 @@ index = index.replace(marker, moduleHtml);
 [
   'alina_lavoro_cache_v1', 'alina_lavoro_queue_v1', 'alina_lavoro_access_v1',
   'alina_lavoro_salary_reminder_snooze_until_v1', 'alina_selected_workplace_v1',
-  'alina_workplace_locations_v1'
+  'alina_workplace_locations_v1', 'alina_geolocation_prompted_v1'
 ].forEach(key => { index = index.split(key).join('demo_' + key); });
 
 const oldCall = "function serverCall(fn,args=[]){return new Promise((resolve,reject)=>{if(typeof google==='undefined'||!google.script||!google.script.run){reject(new Error('google.script.run non disponibile'));return}google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn](...args)})}";
