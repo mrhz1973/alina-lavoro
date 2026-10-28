@@ -20,7 +20,7 @@ Object.assign(I18N.it, {
   scheduled_pdf_print: 'Stampa', scheduled_pdf_print_error: 'Impossibile aprire la schermata di stampa.',
   scheduled_report_info: 'Nel PDF le fasce aperte mostrano solo l’entrata; il totale include le fasce concluse.',
   scheduled_no_records: 'Nessuna fascia completata nel mese.',
-  scheduled_pending: 'Sincronizza i dati prima di preparare il registro.',
+  scheduled_pending: 'Sincronizza i dati prima di preparare il registro.', scheduled_sync_button: 'Sincronizza',
   scheduled_server_old: 'La versione del server non supporta ancora questo lavoro. Nessun turno è stato inviato.',
   scheduled_unfinished: 'Termina o annulla le fasce ancora in corso prima di preparare il registro.',
   scheduled_need_operator: 'Inserisci l’operatore nelle impostazioni.',
@@ -52,7 +52,7 @@ Object.assign(I18N.ru, {
   scheduled_pdf_print: 'Печать', scheduled_pdf_print_error: 'Не удалось открыть окно печати.',
   scheduled_report_info: 'В PDF для незавершённой смены указано только начало; итог учитывает завершённые смены.',
   scheduled_no_records: 'За этот месяц нет завершённых смен.',
-  scheduled_pending: 'Сначала синхронизируйте данные.',
+  scheduled_pending: 'Сначала синхронизируйте данные.', scheduled_sync_button: 'Синхронизировать',
   scheduled_server_old: 'Версия сервера пока не поддерживает эту работу. Смена не отправлена.',
   scheduled_unfinished: 'Перед подготовкой табеля завершите или отмените открытые смены.',
   scheduled_need_operator: 'Укажите сотрудника в настройках.',
@@ -227,7 +227,8 @@ function renderScheduledHome_() {
     esc(minutesLabel(total.minutes)) + '</p><span class="pill">' +
     esc(!navigator.onLine ? t('offline') : getQueue().length ? getQueue().length + ' ' + t('pending') :
       !scheduledBootstrapComplete ? t('loading') : !state.serverOk ? t('sync_error') : t('synced')) +
-    '</span><button class="secondary-btn" style="width:100%;margin-top:14px" onclick="scheduledViewPdf_(\'' + currentMonth() + '\')">' + esc(t('scheduled_pdf_title')) + '</button></section>';
+    '</span><div class="btn-row"><button class="ghost-btn" type="button" onclick="scheduledRetrySync_()">' + esc(t('scheduled_sync_button')) + '</button></div>' +
+    '<button class="secondary-btn" style="width:100%;margin-top:14px" onclick="scheduledViewPdf_(\'' + currentMonth() + '\')">' + esc(t('scheduled_pdf_title')) + '</button></section>';
   document.getElementById('content').innerHTML = html;
 }
 function renderScheduledMonths_() {
@@ -600,6 +601,12 @@ function scheduledMergeDuringLocalChanges_(data) {
   if (pending.some(function (action) { return action.type === 'saveShift' || action.type === 'saveSalary' || action.type === 'saveConfig'; })) recomputeLocalSummaries();
   else state.summaries = data.summaries || [];
   state.reminder = data.reminder || { active: false };
+}
+function scheduledRetrySync_() {
+  if (!navigator.onLine) return toast(t('offline'));
+  if (scheduledSyncInFlight) return;
+  if (getQueue().length) return flushQueue();
+  return initBackground_();
 }
 initBackground_ = async function () {
   var started = Date.now();

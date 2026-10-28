@@ -101,6 +101,24 @@ test('the scheduled workplace offers a current-month PDF button', () => {
   app.renderScheduledHome_();
   assert.match(elements.get('content').innerHTML, /scheduledViewPdf_\('2026-03'\)/);
   assert.match(elements.get('content').innerHTML, /Visualizza PDF/);
+  assert.match(elements.get('content').innerHTML, /scheduledRetrySync_\(\)/);
+  assert.match(elements.get('content').innerHTML, /Sincronizza/);
+});
+
+test('manual sync retries queued changes or reconnects when the queue is empty', async () => {
+  const { context: app, navigator } = createFrontend();
+  navigator.onLine = true;
+  let syncs = 0, reconnects = 0;
+  app.flushQueue = async () => { syncs++; };
+  app.initBackground_ = async () => { reconnects++; };
+  await app.scheduledRetrySync_();
+  assert.equal(reconnects, 1);
+  app.enqueue({ type: 'saveScheduledShift', payload: { id: 'test' } });
+  await app.scheduledRetrySync_();
+  assert.equal(syncs, 1);
+  navigator.onLine = false;
+  await app.scheduledRetrySync_();
+  assert.equal(syncs, 1);
 });
 
 test('the scheduled home does not claim synchronization before server data loads', () => {
