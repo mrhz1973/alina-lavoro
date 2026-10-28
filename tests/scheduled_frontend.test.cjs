@@ -56,11 +56,13 @@ function createFrontend(sharedStorage) {
   });
   const index = fs.readFileSync(path.join(__dirname, '../src/frontend/Index.html'), 'utf8');
   const module = fs.readFileSync(path.join(__dirname, '../src/frontend/ScheduledWork.html'), 'utf8');
+  const pdfModule = fs.readFileSync(path.join(__dirname, '../src/frontend/ScheduledPdf.html'), 'utf8');
   const first = index.match(/<script>([\s\S]*?)<\/script>/);
   const second = module.match(/<script>([\s\S]*?)<\/script>/);
   if (!first || !second) throw new Error('Missing app script');
   vm.runInContext(first[1], context);
   vm.runInContext(second[1], context);
+  vm.runInContext(pdfModule.match(/<script>([\s\S]*?)<\/script>/)[1], context);
   vm.runInContext([
     "state.config = Object.assign({}, state.config, {",
     "nome_lavoro_variabile:'Attivita A', nome_lavoro_programmato:'Attivita B',",
@@ -92,6 +94,25 @@ test('recording two scheduled shifts keeps the existing workplace untouched', ()
   assert.equal(state.shifts[0].minuti_lavorati, 120);
   assert.equal(state.summaries[0].minuti, 120);
   assert.equal(app.scheduledMonthTotals_('2026-03').minutes, 240);
+});
+
+test('the scheduled workplace offers a current-month PDF button', () => {
+  const { context: app, elements } = createFrontend();
+  app.renderScheduledHome_();
+  assert.match(elements.get('content').innerHTML, /scheduledViewPdf_\('2026-03'\)/);
+  assert.match(elements.get('content').innerHTML, /Visualizza PDF/);
+});
+
+test('the scheduled home does not claim synchronization before server data loads', () => {
+  const { context: app, elements, navigator } = createFrontend();
+  navigator.onLine = true;
+  vm.runInContext('state.serverOk = false; scheduledBootstrapComplete = false', app);
+  app.renderScheduledHome_();
+  assert.match(elements.get('content').innerHTML, /Caricamento/);
+  assert.doesNotMatch(elements.get('content').innerHTML, /Tutto sincronizzato/);
+  vm.runInContext('state.serverOk = true; scheduledBootstrapComplete = true', app);
+  app.renderScheduledHome_();
+  assert.match(elements.get('content').innerHTML, /Tutto sincronizzato/);
 });
 
 test('a per-day override changes that day only and does not invent attendance', () => {

@@ -173,6 +173,24 @@ test('monthly reports include only finished shifts and respect per-day changes',
   assert.throws(() => app.buildScheduledReport_([days[0], record('2026-03-02', 2, 540, 600, 'done', 2)], '2026-03', 'Operatore', 'Sede'), /sovrapposti/);
 });
 
+test('a current PDF preview includes only recorded shifts and leaves an open exit blank', () => {
+  const { context: app } = createApp();
+  const rows = [
+    record('2026-03-02', 1, 420, 570, 'done', 2),
+    record('2026-03-02', 2, 840, 930, 'open', 1),
+    record('2026-03-03', 1, 420, 570, 'planned', 1),
+    record('2026-03-04', 1, 420, 570, 'done', 2),
+    record('2026-03-01', 1, 420, 570, 'cancelled', 2)
+  ];
+  const preview = JSON.parse(JSON.stringify(app.buildScheduledPdfPreview_(rows, '2026-03', 'Operatore di prova', 'Sede di prova', '2026-03-03')));
+  assert.deepEqual(preview.giorni, [{ data: '2026-03-02', turni: [
+    { inizio: '07:00', fine: '09:30', stato: 'done' },
+    { inizio: '14:00', fine: '', stato: 'open' }
+  ] }]);
+  assert.equal(app.buildScheduledPdfPreview_([], '2026-03', 'Operatore', 'Sede', '2026-03-03').giorni.length, 0);
+  assert.throws(() => app.buildScheduledPdfPreview_([rows[0], { ...rows[1], minuto_inizio: 540 }], '2026-03', 'Operatore', 'Sede', '2026-03-03'), /sovrapposti/);
+});
+
 test('JSON backup and import preview include scheduled shifts', () => {
   const { context: app } = createApp();
   const row = record('2026-03-03', 1, 420, 570, 'open', 1);

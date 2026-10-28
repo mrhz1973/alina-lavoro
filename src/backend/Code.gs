@@ -168,8 +168,11 @@ function doGet(e) {
   const marker = '<!-- SCHEDULED_WORK_MODULE -->';
   if (indexHtml.indexOf(marker) < 0) throw new Error('Modulo turni programmati non configurato');
   const moduleHtml = HtmlService.createTemplateFromFile('ScheduledWork').getRawContent();
+  const pdfPreviewHtml = HtmlService.createTemplateFromFile('ScheduledPdf').getRawContent();
+  let pdfLibraryHtml = '';
+  try { pdfLibraryHtml = HtmlService.createTemplateFromFile('PdfLib').getRawContent(); } catch (_) {}
   return HtmlService
-    .createHtmlOutput(indexHtml.replace(marker, moduleHtml))
+    .createHtmlOutput(indexHtml.replace(marker, moduleHtml + '\n' + pdfLibraryHtml + '\n' + pdfPreviewHtml))
     .setTitle('Alina Lavoro')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -1227,6 +1230,50 @@ function getScheduledReportData(accessCode, month) {
   requireAccess_(accessCode);
   const config = getConfigRaw_();
   return { success: true, data: buildScheduledReport_(getRecords_(SHEETS.TURNI_PROGRAMMATI), String(month || ''), config.operatore_registro, config.nome_lavoro_programmato) };
+}
+
+// A preview may show an open shift's entry, but must not invent its exit or
+// include planned, cancelled, or future attendance.
+function buildScheduledPdfPreview_(shifts, month, operator, site, throughDate) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || '')) || !validScheduledDate_(String(throughDate || ''))) throw new Error('Data non valida');
+  operator = String(operator || '').trim(); site = String(site || '').trim();
+  if (!operator || operator.length > 35 || !site || site.length > 20) throw new Error('Operatore o sede mancanti');
+  const days = {};
+  (shifts || []).filter(function (shift) {
+    const date = String(shift.data || '');
+    return date.slice(0, 7) === month && date <= throughDate && (shift.stato === 'done' || shift.stato === 'open');
+  }).forEach(function (shift) {
+    const errors = validateScheduledShift_(shift);
+    if (errors.length) throw new Error('Turno non valido: ' + errors.join(', '));
+    const date = String(shift.data);
+    if (!days[date]) days[date] = [];
+    days[date].push({ inizio: scheduledTimeLabel_(Number(shift.minuto_inizio)),
+      fine: shift.stato === 'done' ? scheduledTimeLabel_(Number(shift.minuto_fine)) : '',
+      previstoFine: scheduledTimeLabel_(Number(shift.minuto_fine)), stato: String(shift.stato) });
+  });
+  const entries = Object.keys(days).sort().map(function (date) {
+    const turns = days[date].sort(function (a, b) { return a.inizio.localeCompare(b.inizio); });
+    if (turns.length > 3) throw new Error('Troppe fasce: ' + date);
+    for (let i = 1; i < turns.length; i++) {
+      if (turns[i - 1].previstoFine > turns[i].inizio) throw new Error('Turni sovrapposti: ' + date);
+    }
+    return { data: date, turni: turns.map(function (turn) { return { inizio: turn.inizio, fine: turn.fine, stato: turn.stato }; }) };
+  });
+  return { anno: Number(month.slice(0, 4)), mese: Number(month.slice(5, 7)), operatore: operator, cantiere: site, giorni: entries };
+}
+
+function getScheduledPdfPreview(accessCode, month) {
+  setupAlinaLavoro();
+  requireAccess_(accessCode);
+  const config = getConfigRaw_();
+  const today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  const report = buildScheduledPdfPreview_(getRecords_(SHEETS.TURNI_PROGRAMMATI), String(month || ''),
+    config.operatore_registro, config.nome_lavoro_programmato, today);
+  let template;
+  try { template = HtmlService.createTemplateFromFile('ScheduledPdfTemplate').getRawContent().replace(/\s/g, ''); }
+  catch (_) { throw new Error('Il modello PDF non è configurato.'); }
+  if (!template || !/^[A-Za-z0-9+/]+={0,2}$/.test(template)) throw new Error('Il modello PDF non è valido.');
+  return { success: true, report: report, templateBase64: template };
 }
 
 function saveSalaryDirect_(salary) {

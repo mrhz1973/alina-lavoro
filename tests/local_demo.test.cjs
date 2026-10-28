@@ -70,7 +70,7 @@ test('the generated standalone preview starts and saves two shifts using only it
     window: { addEventListener() {}, visualViewport: null }
   });
   const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
-  assert.equal(scripts.length, 3);
+  assert.equal(scripts.length, 4);
   scripts.forEach((script, index) => vm.runInContext(script[1], context, { filename: `preview-script-${index}.js` }));
   events.get('DOMContentLoaded').forEach(callback => callback());
   await new Promise(resolve => setImmediate(resolve));

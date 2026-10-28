@@ -4,8 +4,8 @@
   "description": "APP per lavoro di Alina",
   "main": "index.js",
   "scripts": {
-    "test": "node --test tests/local_demo.test.cjs tests/scheduled_frontend.test.cjs tests/scheduled_work.test.cjs",
-    "sync": "if [ ! -d .gas ]; then mkdir .gas; fi && rm -f .gas/Code.gs .gas/Code.js && cp src/backend/Code.gs .gas/Code.js && cp src/frontend/Index.html .gas/Index.html && cp src/frontend/ScheduledWork.html .gas/ScheduledWork.html && cp src/frontend/ExternalImportPreview.html .gas/ExternalImportPreview.html && cp appsscript.json .gas/appsscript.json",
+    "test": "node --test tests/local_demo.test.cjs tests/scheduled_frontend.test.cjs tests/scheduled_work.test.cjs tests/scheduled_pdf.test.cjs",
+    "sync": "if [ ! -d .gas ]; then mkdir .gas; fi && rm -f .gas/Code.gs .gas/Code.js && cp src/backend/Code.gs .gas/Code.js && cp src/frontend/Index.html .gas/Index.html && cp src/frontend/ScheduledWork.html .gas/ScheduledWork.html && cp src/frontend/ScheduledPdf.html .gas/ScheduledPdf.html && cp src/frontend/ExternalImportPreview.html .gas/ExternalImportPreview.html && cp appsscript.json .gas/appsscript.json && node tools/build_pdf_resources.cjs .gas",
     "push": "npm run sync && clasp push",
     "deploy": "npm run sync && clasp push && clasp deploy",
     "aggio": "bash tools/aggio.sh",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/mrhz1973/alina-lavoro#readme",
   "devDependencies": {
-    "@google/clasp": "^3.3.0"
+    "@google/clasp": "^3.3.0",
+    "pdf-lib": "1.17.1"
   }
 }

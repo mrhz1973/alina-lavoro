@@ -17,9 +17,10 @@ delete config._preview_previous_scheduled_names;
 const project = path.join(__dirname, '..');
 let index = fs.readFileSync(path.join(project, 'src/frontend/Index.html'), 'utf8');
 const moduleHtml = fs.readFileSync(path.join(project, 'src/frontend/ScheduledWork.html'), 'utf8');
+const pdfModuleHtml = fs.readFileSync(path.join(project, 'src/frontend/ScheduledPdf.html'), 'utf8');
 const marker = '<!-- SCHEDULED_WORK_MODULE -->';
 if (index.split(marker).length !== 2) throw new Error('The module marker is missing or duplicated');
-index = index.replace(marker, moduleHtml);
+index = index.replace(marker, moduleHtml + '\n' + pdfModuleHtml);
 [
   'alina_lavoro_cache_v1', 'alina_lavoro_queue_v1', 'alina_lavoro_access_v1',
   'alina_lavoro_salary_reminder_snooze_until_v1', 'alina_selected_workplace_v1',

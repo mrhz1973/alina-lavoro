@@ -14,7 +14,10 @@ Object.assign(I18N.it, {
   scheduled_day: 'Variazione per un giorno', scheduled_save_day: 'Salva orari del giorno',
   scheduled_day_saved: 'Orari del giorno salvati.', scheduled_invalid: 'Controlla data e orari: usa solo ore intere o mezz’ora, senza sovrapposizioni.',
   scheduled_report: 'Registro mensile', scheduled_report_data: 'Scarica dati per il registro',
-  scheduled_report_info: 'Il PDF mensile usa il modello originale e soltanto le fasce completate.',
+  scheduled_pdf_title: 'Visualizza PDF', scheduled_pdf_loading: 'Preparazione del PDF…',
+  scheduled_pdf_unavailable: 'Il PDF non è disponibile. Controlla il modello e riprova.',
+  scheduled_pdf_popup: 'Consenti l’apertura di nuove schede per visualizzare il PDF.',
+  scheduled_report_info: 'Nel PDF le fasce aperte mostrano solo l’entrata; il totale include le fasce concluse.',
   scheduled_no_records: 'Nessuna fascia completata nel mese.',
   scheduled_pending: 'Sincronizza i dati prima di preparare il registro.',
   scheduled_server_old: 'La versione del server non supporta ancora questo lavoro. Nessun turno è stato inviato.',
@@ -42,7 +45,10 @@ Object.assign(I18N.ru, {
   scheduled_day: 'Изменить время на дату', scheduled_save_day: 'Сохранить время на дату',
   scheduled_day_saved: 'Время на эту дату сохранено.', scheduled_invalid: 'Проверьте дату и время: только полные часы или полчаса, без пересечений.',
   scheduled_report: 'Табель за месяц', scheduled_report_data: 'Скачать данные для табеля',
-  scheduled_report_info: 'Ежемесячный PDF использует исходный шаблон и только завершённые смены.',
+  scheduled_pdf_title: 'Открыть PDF', scheduled_pdf_loading: 'Подготовка PDF…',
+  scheduled_pdf_unavailable: 'PDF недоступен. Проверьте шаблон и повторите попытку.',
+  scheduled_pdf_popup: 'Разрешите открытие новых вкладок для просмотра PDF.',
+  scheduled_report_info: 'В PDF для незавершённой смены указано только начало; итог учитывает завершённые смены.',
   scheduled_no_records: 'За этот месяц нет завершённых смен.',
   scheduled_pending: 'Сначала синхронизируйте данные.',
   scheduled_server_old: 'Версия сервера пока не поддерживает эту работу. Смена не отправлена.',
@@ -62,6 +68,7 @@ var SCHEDULED_WORKPLACE_KEY = 'alina_selected_workplace_v1';
 var SCHEDULED_GEO_PROMPT_KEY = 'alina_geolocation_prompted_v1';
 var scheduledSelectedWorkplace = 'variable';
 var scheduledSyncInFlight = false;
+var scheduledBootstrapComplete = false;
 var scheduledManualChoiceThisVisit = false;
 var scheduledManualChoiceVersion = 0;
 var scheduledLocationInFlight = false;
@@ -216,8 +223,9 @@ function renderScheduledHome_() {
   html += '</section><section id="scheduledSummary" class="card"><div class="kicker">' + esc(t('home_summary')) + '</div><p>' +
     esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
     esc(minutesLabel(total.minutes)) + '</p><span class="pill">' +
-    esc(!navigator.onLine ? t('offline') : getQueue().length ? getQueue().length + ' ' + t('pending') : t('synced')) +
-    '</span></section>';
+    esc(!navigator.onLine ? t('offline') : getQueue().length ? getQueue().length + ' ' + t('pending') :
+      !scheduledBootstrapComplete ? t('loading') : !state.serverOk ? t('sync_error') : t('synced')) +
+    '</span><button class="secondary-btn" style="width:100%;margin-top:14px" onclick="scheduledViewPdf_(\'' + currentMonth() + '\')">' + esc(t('scheduled_pdf_title')) + '</button></section>';
   document.getElementById('content').innerHTML = html;
 }
 function renderScheduledMonths_() {
@@ -252,7 +260,8 @@ function renderScheduledMonthDetail_() {
     esc(t('scheduled_report')) + ' · ' + esc(monthLabel(month)) + '</div><p>' +
     esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
     esc(minutesLabel(total.minutes)) + '</p><p class="help">' + esc(t('scheduled_report_info')) + '</p>' +
-    '<button class="secondary-btn" onclick="scheduledDownloadReport_(\'' + month + '\')">' + esc(t('scheduled_report_data')) + '</button></section>';
+    '<button class="secondary-btn" onclick="scheduledViewPdf_(\'' + month + '\')">' + esc(t('scheduled_pdf_title')) + '</button>' +
+    '<button class="ghost-btn" onclick="scheduledDownloadReport_(\'' + month + '\')">' + esc(t('scheduled_report_data')) + '</button></section>';
   if (!rows.length) html += '<section class="card">' + esc(t('scheduled_no_records')) + '</section>';
   rows.forEach(function (row) {
     html += '<section class="list-item"><strong>' + esc(formatShortDate(String(row.data))) + ' · ' +
@@ -594,13 +603,13 @@ initBackground_ = async function () {
   var started = Date.now();
   try {
     var res = await serverCall('getBootstrap', []);
-    if (!res || !res.success || !res.data) return;
+    if (!res || !res.success || !res.data) throw new Error(t('sync_error'));
     if (state._localMutationAt >= started || getQueue().length) scheduledMergeDuringLocalChanges_(res.data);
     else mergeServerData(res.data);
-    applyThemeLang(); state.serverOk = true; saveCache(); render(); scheduledTryAutoLocation_();
+    applyThemeLang(); state.serverOk = true; scheduledBootstrapComplete = true; saveCache(); render(); scheduledTryAutoLocation_();
     if (state.config.setup_completato !== 'yes') openSetupModal();
     await flushQueue();
-  } catch (_) { state.serverOk = false; render(); }
+  } catch (_) { scheduledBootstrapComplete = true; state.serverOk = false; render(); }
 };
 flushQueue = async function () {
   var q = getQueue();

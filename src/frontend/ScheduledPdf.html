@@ -1,0 +1,66 @@
+<script>
+// The template is private and arrives from the configured Apps Script project.
+// Only explicitly recorded entries are drawn; open shifts have no exit.
+async function scheduledCreatePdf_(templateBase64, report) {
+  if (typeof PDFLib === 'undefined') throw new Error(t('scheduled_pdf_unavailable'));
+  if (!report || !Number.isInteger(report.anno) || !Number.isInteger(report.mese) ||
+      report.mese < 1 || report.mese > 12 || !Array.isArray(report.giorni)) throw new Error(t('scheduled_invalid'));
+  var operator = String(report.operatore || '').trim(), site = String(report.cantiere || '').trim();
+  if (!operator || operator.length > 35 || !site || site.length > 20) throw new Error(t('scheduled_invalid'));
+  var raw = atob(String(templateBase64 || '')), template = new Uint8Array(raw.length);
+  for (var i = 0; i < raw.length; i++) template[i] = raw.charCodeAt(i);
+  var pdf = await PDFLib.PDFDocument.load(template), pages = pdf.getPages();
+  if (pages.length !== 1) throw new Error(t('scheduled_pdf_unavailable'));
+  var page = pages[0], width = page.getWidth(), height = page.getHeight();
+  if (Math.abs(width - 595) > 1 || Math.abs(height - 841) > 1 || page.getRotation().angle !== 0) throw new Error(t('scheduled_pdf_unavailable'));
+  var font = await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+  var months = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO','LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
+  var centers = [127, 179.8, 232.6, 285.4, 338.2, 391], sites = [153.4, 259, 364.6], seen = {};
+  function textAt(text, x, y, size) { page.drawText(String(text), { x: x, y: y, size: size, font: font, color: PDFLib.rgb(0, 0, 0) }); }
+  function centered(text, center, y, size) { textAt(text, center - font.widthOfTextAtSize(String(text), size) / 2, y, size); }
+  textAt(operator, 289, height - 74, 10);
+  textAt(months[report.mese - 1] + ' ' + report.anno, 201, height - 112, 10);
+  var maxSlots = Math.max(2, report.giorni.reduce(function (max, day) { return Math.max(max, Array.isArray(day.turni) ? day.turni.length : 0); }, 0));
+  if (maxSlots > 3) throw new Error(t('scheduled_invalid'));
+  sites.slice(0, maxSlots).forEach(function (center) { centered(site, center, height - 156, 8); });
+  report.giorni.forEach(function (day) {
+    var date = String(day.data || ''), turns = day.turni;
+    if (!scheduledDateValid_(date) || Number(date.slice(0, 4)) !== report.anno || Number(date.slice(5, 7)) !== report.mese ||
+        seen[date] || !Array.isArray(turns) || !turns.length || turns.length > 3) throw new Error(t('scheduled_invalid'));
+    seen[date] = true;
+    var baseline = height - (199.2 + (Number(date.slice(8, 10)) - 1) * 19.445), total = 0, completed = 0, previousEnd = -1;
+    turns.forEach(function (turn, index) {
+      var start = scheduledParseTime_(turn.inizio), end = turn.fine ? scheduledParseTime_(turn.fine) : null;
+      if (start === null || start < previousEnd || (turn.stato !== 'open' && turn.stato !== 'done') ||
+          (turn.stato === 'done' && (end === null || start >= end)) || (turn.stato === 'open' && (end !== null || index !== turns.length - 1))) throw new Error(t('scheduled_invalid'));
+      centered(turn.inizio, centers[index * 2], baseline, 8);
+      if (end !== null) { centered(turn.fine, centers[index * 2 + 1], baseline, 8); total += end - start; completed++; previousEnd = end; }
+    });
+    if (completed) centered(String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0'), 456, baseline, 8);
+  });
+  return pdf.save();
+}
+
+async function scheduledViewPdf_(month) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) return toast(t('scheduled_invalid'));
+  if (!state.scheduledCapability || !navigator.onLine || !state.serverOk || getQueue().length || scheduledSyncInFlight) return toast(t('scheduled_pending'));
+  if (typeof PDFLib === 'undefined') return toast(t('scheduled_pdf_unavailable'));
+  var viewer = window.open('about:blank', '_blank');
+  if (!viewer) return toast(t('scheduled_pdf_popup'));
+  try {
+    viewer.document.title = t('scheduled_pdf_title');
+    viewer.document.body.textContent = t('scheduled_pdf_loading');
+    var response = await serverCall('getScheduledPdfPreview', [state.accessCode, month]);
+    if (!response || !response.success || !response.report || !response.templateBase64) throw new Error(t('scheduled_pdf_unavailable'));
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    var bytes = await scheduledCreatePdf_(response.templateBase64, response.report);
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    var objectUrl = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+    viewer.location.href = objectUrl;
+    setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 600000);
+  } catch (err) {
+    try { viewer.close(); } catch (_) {}
+    toast(err && err.message ? err.message : t('scheduled_pdf_unavailable'));
+  }
+}
+</script>
