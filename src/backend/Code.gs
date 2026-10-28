@@ -1262,7 +1262,7 @@ function buildScheduledPdfPreview_(shifts, month, operator, site, throughDate) {
   return { anno: Number(month.slice(0, 4)), mese: Number(month.slice(5, 7)), operatore: operator, cantiere: site, giorni: entries };
 }
 
-function getScheduledPdfPreview(accessCode, month) {
+function getScheduledPdfPreview(accessCode, month, includeRenderer) {
   setupAlinaLavoro();
   requireAccess_(accessCode);
   const config = getConfigRaw_();
@@ -1273,7 +1273,15 @@ function getScheduledPdfPreview(accessCode, month) {
   try { template = HtmlService.createTemplateFromFile('ScheduledPdfTemplate').getRawContent().replace(/\s/g, ''); }
   catch (_) { throw new Error('Il modello PDF non è configurato.'); }
   if (!template || !/^[A-Za-z0-9+/]+={0,2}$/.test(template)) throw new Error('Il modello PDF non è valido.');
-  return { success: true, report: report, templateBase64: template };
+  let rendererScripts = null;
+  if (includeRenderer) {
+    try { rendererScripts = JSON.parse(HtmlService.createTemplateFromFile('PdfRenderer').getRawContent()); }
+    catch (_) { throw new Error('Il visualizzatore PDF non è configurato.'); }
+    if (!Array.isArray(rendererScripts) || rendererScripts.length !== 2 || rendererScripts.some(function (s) { return typeof s !== 'string' || !s; })) {
+      throw new Error('Il visualizzatore PDF non è valido.');
+    }
+  }
+  return { success: true, report: report, templateBase64: template, rendererScripts: rendererScripts };
 }
 
 function saveSalaryDirect_(salary) {

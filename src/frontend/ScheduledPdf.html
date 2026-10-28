@@ -45,22 +45,61 @@ async function scheduledViewPdf_(month) {
   if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) return toast(t('scheduled_invalid'));
   if (!state.scheduledCapability || !navigator.onLine || !state.serverOk || getQueue().length || scheduledSyncInFlight) return toast(t('scheduled_pending'));
   if (typeof PDFLib === 'undefined') return toast(t('scheduled_pdf_unavailable'));
-  var viewer = window.open('about:blank', '_blank');
-  if (!viewer) return toast(t('scheduled_pdf_popup'));
+  openModal(t('scheduled_pdf_title') + ' · ' + monthLabel(month),
+    '<p id="scheduledPdfStatus" role="status">' + esc(t('scheduled_pdf_loading')) + '</p>' +
+    '<div class="btn-row"><button id="scheduledPdfZoom" class="secondary-btn hidden" type="button" onclick="scheduledPdfZoom_()">' + esc(t('scheduled_pdf_zoom_in')) + '</button>' +
+    '<button class="ghost-btn" type="button" onclick="closeModal()">' + esc(t('scheduled_pdf_close')) + '</button></div>' +
+    '<div style="overflow:auto;margin-top:14px;-webkit-overflow-scrolling:touch"><canvas id="scheduledPdfCanvas" style="display:none;width:100%;height:auto;background:#fff" aria-label="PDF"></canvas></div>');
+  var canvas = document.getElementById('scheduledPdfCanvas');
+  var status = document.getElementById('scheduledPdfStatus');
+  var loadingTask;
+  function currentViewer() { return document.getElementById('scheduledPdfCanvas') === canvas && document.getElementById('modalBackdrop').classList.contains('show'); }
   try {
-    viewer.document.title = t('scheduled_pdf_title');
-    viewer.document.body.textContent = t('scheduled_pdf_loading');
-    var response = await serverCall('getScheduledPdfPreview', [state.accessCode, month]);
+    var needsRenderer = typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined';
+    var response = await serverCall('getScheduledPdfPreview', [state.accessCode, month, needsRenderer]);
+    if (!currentViewer()) return;
     if (!response || !response.success || !response.report || !response.templateBase64) throw new Error(t('scheduled_pdf_unavailable'));
     if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    if (needsRenderer && (typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined')) {
+      if (!Array.isArray(response.rendererScripts) || response.rendererScripts.length !== 2) throw new Error(t('scheduled_pdf_unavailable'));
+      response.rendererScripts.forEach(function (code) {
+        if (typeof code !== 'string' || !code) throw new Error(t('scheduled_pdf_unavailable'));
+        var script = document.createElement('script');
+        script.textContent = code;
+        document.head.appendChild(script);
+        script.remove();
+      });
+      if (typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined') throw new Error(t('scheduled_pdf_unavailable'));
+    }
     var bytes = await scheduledCreatePdf_(response.templateBase64, response.report);
     if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
-    var objectUrl = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
-    viewer.location.href = objectUrl;
-    setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 600000);
+    if (!currentViewer()) return;
+    loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(bytes), isEvalSupported: false, useSystemFonts: true });
+    var pdf = await loadingTask.promise;
+    if (pdf.numPages !== 1) throw new Error(t('scheduled_pdf_unavailable'));
+    var page = await pdf.getPage(1), viewport = page.getViewport({ scale: 2 });
+    canvas.width = Math.ceil(viewport.width); canvas.height = Math.ceil(viewport.height);
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
+    if (!currentViewer()) return;
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    status.textContent = t('scheduled_report_info');
+    canvas.style.display = 'block';
+    document.getElementById('scheduledPdfZoom').classList.remove('hidden');
   } catch (err) {
-    try { viewer.close(); } catch (_) {}
-    toast(err && err.message ? err.message : t('scheduled_pdf_unavailable'));
+    if (currentViewer()) {
+      canvas.style.display = 'none';
+      status.textContent = err && err.message ? err.message : t('scheduled_pdf_unavailable');
+    }
+  } finally {
+    if (loadingTask) try { await loadingTask.destroy(); } catch (_) {}
   }
+}
+
+function scheduledPdfZoom_() {
+  var canvas = document.getElementById('scheduledPdfCanvas'), button = document.getElementById('scheduledPdfZoom');
+  if (!canvas || !button) return;
+  var zoomed = canvas.style.width === '200%';
+  canvas.style.width = zoomed ? '100%' : '200%';
+  button.textContent = t(zoomed ? 'scheduled_pdf_zoom_in' : 'scheduled_pdf_zoom_out');
 }
 </script>

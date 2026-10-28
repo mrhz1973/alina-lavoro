@@ -61,3 +61,74 @@ test('a real generated PDF preserves the supplied template and supports an empty
   assert.equal(document.getPage(0).getWidth(), 595);
   assert.deepEqual(Buffer.from(original), copy);
 });
+
+function viewerContext() {
+  const app = context({}), pending = [], elements = new Map();
+  const canvas = { style: { display: 'none', width: '100%' }, getContext: () => ({}) };
+  const status = { textContent: '' }, zoom = { classList: { remove: () => {} }, textContent: '' };
+  const backdrop = { classList: { contains: () => true } };
+  elements.set('scheduledPdfCanvas', canvas); elements.set('scheduledPdfStatus', status);
+  elements.set('scheduledPdfZoom', zoom); elements.set('modalBackdrop', backdrop);
+  app.document = { getElementById: id => elements.get(id) };
+  app.state = { scheduledCapability: true, serverOk: true, accessCode: 'test' };
+  app.navigator = { onLine: true }; app.getQueue = () => pending; app.scheduledSyncInFlight = false;
+  app.monthLabel = value => value; app.esc = value => value;
+  app.openModal = (title, html) => { app.modalTitle = title; app.modalHtml = html; };
+  app.toast = value => { app.lastToast = value; };
+  app.serverCall = async () => ({ success: true, report: report([]), templateBase64: 'JVBERi0=' });
+  app.scheduledCreatePdf_ = async () => new Uint8Array([1, 2, 3]);
+  app.pdfjsWorker = {};
+  app.pdfjsLib = { getDocument: options => {
+    assert.deepEqual(Array.from(options.data), [1, 2, 3]);
+    assert.equal(options.isEvalSupported, false);
+    return { promise: Promise.resolve({ numPages: 1, getPage: async () => ({
+      getViewport: () => ({ width: 1190, height: 1682 }),
+      render: () => ({ promise: Promise.resolve().then(() => { app.rendered = true; }) })
+    }) }), destroy: async () => { app.destroyed = true; } };
+  } };
+  app.window = { open: () => { throw new Error('The preview must not open another tab'); } };
+  return { app, canvas, status, zoom, pending };
+}
+
+test('PDF button renders inside the app and offers a larger view', async () => {
+  const { app, canvas, status, zoom } = viewerContext();
+  await app.scheduledViewPdf_('2026-03');
+  assert.ok(app.rendered && app.destroyed);
+  assert.equal(canvas.style.display, 'block');
+  assert.equal(canvas.width, 1190); assert.equal(canvas.height, 1682);
+  assert.equal(status.textContent, 'scheduled_report_info');
+  assert.match(app.modalHtml, /scheduledPdfCanvas/);
+  app.scheduledPdfZoom_();
+  assert.equal(canvas.style.width, '200%');
+  assert.equal(zoom.textContent, 'scheduled_pdf_zoom_out');
+  app.scheduledPdfZoom_();
+  assert.equal(canvas.style.width, '100%');
+});
+
+test('the renderer is loaded only when the PDF is opened and reused afterwards', async () => {
+  const { app } = viewerContext(), renderer = app.pdfjsLib, requests = [], scripts = [];
+  delete app.pdfjsLib; delete app.pdfjsWorker;
+  app.document.createElement = () => ({ textContent: '', remove() {} });
+  app.document.head = { appendChild(script) {
+    scripts.push(script.textContent);
+    if (script.textContent === 'worker code') app.pdfjsWorker = {};
+    if (script.textContent === 'renderer code') app.pdfjsLib = renderer;
+  } };
+  app.serverCall = async (_fn, args) => {
+    requests.push(args[2]);
+    return { success: true, report: report([]), templateBase64: 'JVBERi0=', rendererScripts: ['worker code', 'renderer code'] };
+  };
+  await app.scheduledViewPdf_('2026-03');
+  await app.scheduledViewPdf_('2026-03');
+  assert.deepEqual(requests, [true, false]);
+  assert.deepEqual(scripts, ['worker code', 'renderer code']);
+});
+
+test('PDF preview does not show stale records if a change is pending', async () => {
+  const { app, canvas, status, pending } = viewerContext();
+  app.serverCall = async () => { pending.push({}); return { success: true, report: report([]), templateBase64: 'JVBERi0=' }; };
+  await app.scheduledViewPdf_('2026-03');
+  assert.equal(canvas.style.display, 'none');
+  assert.equal(status.textContent, 'scheduled_pending');
+  assert.equal(app.rendered, undefined);
+});

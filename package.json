@@ -27,6 +27,8 @@
   "homepage": "https://github.com/mrhz1973/alina-lavoro#readme",
   "devDependencies": {
     "@google/clasp": "^3.3.0",
-    "pdf-lib": "1.17.1"
+    "esbuild": "0.25.12",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "4.10.38"
   }
 }

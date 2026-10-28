@@ -3,6 +3,7 @@
    Never add the generated private template to the public repository. */
 const fs = require('node:fs');
 const path = require('node:path');
+const esbuild = require('esbuild');
 
 const target = process.argv[2];
 if (!target) throw new Error('A staging directory is required');
@@ -11,6 +12,18 @@ const libraryPath = require.resolve('pdf-lib/dist/pdf-lib.min.js');
 const library = fs.readFileSync(libraryPath, 'utf8').replace(/<\/script/gi, '<\\/script');
 fs.mkdirSync(destination, { recursive: true });
 fs.writeFileSync(path.join(destination, 'PdfLib.html'), '<script>\n' + library + '\n</script>\n', 'utf8');
+
+// Keep the bundled code as data until the user opens the preview. HtmlService
+// cannot safely sanitize all of PDF.js as inline HTML, and the PDF never has
+// to be sent to a third-party viewer or opened via a browser-specific blob URL.
+const renderBundles = [
+  ['pdfjs-dist/legacy/build/pdf.worker.mjs', 'pdfjsWorker'],
+  ['pdfjs-dist/legacy/build/pdf.mjs', 'pdfjsLib']
+].map(([entry, globalName]) => esbuild.buildSync({
+  entryPoints: [require.resolve(entry)], bundle: true, write: false,
+  format: 'iife', globalName, minify: true, target: 'es2022', logLevel: 'silent'
+}).outputFiles[0].text);
+fs.writeFileSync(path.join(destination, 'PdfRenderer.html'), JSON.stringify(renderBundles), 'utf8');
 
 const templatePath = process.argv[3] || process.env.ALINA_PDF_TEMPLATE;
 if (templatePath) {
