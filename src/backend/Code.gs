@@ -1399,10 +1399,18 @@ function minutesFromImport_(inizio, fine, ore) {
 }
 
 function getSpreadsheet_() {
+  // A web app has no active spreadsheet context. Configure the target on the
+  // individual Apps Script project, never in this public source repository.
+  const spreadsheetId = PropertiesService.getScriptProperties().getProperty('ALINA_SPREADSHEET_ID');
+  if (spreadsheetId) {
+    // Do not fall back to another sheet when opening the configured one fails.
+    return SpreadsheetApp.openById(spreadsheetId);
+  }
+
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
   if (!ss) {
-    throw new Error('Nessun Google Sheet attivo. Apri lo script dal foglio Google corretto.');
+    throw new Error('Foglio non configurato. Imposta ALINA_SPREADSHEET_ID nelle proprietà dello script.');
   }
 
   return ss;

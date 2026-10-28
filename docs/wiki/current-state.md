@@ -9,7 +9,7 @@
 
 ## App
 
-**Isolated candidate:** `codex/multi-lavoro-registro` contains separate scheduled shifts, date-specific overrides, one shared navigation bar with context-sensitive middle controls, automatic workplace selection from privately configured areas, a simulated local preview and a PDF generator; see `docs/roadmap.md`. Automatic selection never records attendance and manual selection remains available. Permission state is checked to avoid repeated location prompts; unknown or expired permission falls back to manual selection. Automated checks use synthetic data. No production or Apps Script deployment was performed; actual phone/GPS and durable browser permission, cross-device synchronization and unattended monthly PDF generation remain unverified. Keep personal data, locations and templates outside this repository. The historical baseline below describes `main`, not a verified current runtime.
+**Isolated candidate:** `codex/multi-lavoro-registro` contains separate scheduled shifts, date-specific overrides, one shared navigation bar, automatic workplace selection, a local preview and a PDF generator; see `docs/roadmap.md`. A new Apps Script project and private Sheet were created separately from the daily app, and version 1 was deployed only for the deploying account. Authorization, actual startup and durable save/sync still need verification; historical production data are not in the new Sheet. The target Sheet is selected by script property. Phone/GPS, cross-device synchronization and unattended monthly PDF generation remain unverified. Keep IDs, personal data, locations and templates outside this repository. The historical baseline below describes `main`, not a verified current runtime.
 
 | Field | Value |
 |---|---|

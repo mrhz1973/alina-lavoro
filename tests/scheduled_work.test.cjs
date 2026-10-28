@@ -39,11 +39,17 @@ class FakeSpreadsheet {
   getName() { return 'Synthetic test'; }
 }
 
-function createApp() {
+function createApp(options = {}) {
   const spreadsheet = new FakeSpreadsheet();
+  const activeSpreadsheet = Object.hasOwn(options, 'activeSpreadsheet') ? options.activeSpreadsheet : spreadsheet;
   const context = vm.createContext({
     console, Date, Math, JSON, Number, String, Object, Array, RegExp, Set, isNaN,
-    SpreadsheetApp: { getActiveSpreadsheet: () => spreadsheet, flush() {} },
+    SpreadsheetApp: {
+      getActiveSpreadsheet: () => activeSpreadsheet,
+      openById: options.openById || (() => spreadsheet),
+      flush() {}
+    },
+    PropertiesService: { getScriptProperties: () => ({ getProperty: () => options.spreadsheetId || null }) },
     Session: { getScriptTimeZone: () => 'Europe/Rome' },
     Utilities: { formatDate: (date, _zone, fmt) => fmt === 'yyyy-MM' ? date.toISOString().slice(0, 7) : date.toISOString().slice(0, 10) },
     LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) }
@@ -54,6 +60,34 @@ function createApp() {
   context.setupAlinaLavoro();
   return { context, spreadsheet };
 }
+
+test('a web app uses the explicitly configured sheet and never silently falls back to another one', () => {
+  const selected = new FakeSpreadsheet();
+  const active = new FakeSpreadsheet();
+  const ids = [];
+  const { context: app } = createApp({
+    spreadsheetId: 'synthetic-sheet-id',
+    activeSpreadsheet: active,
+    openById(id) { ids.push(id); return selected; }
+  });
+  assert.equal(app.getSpreadsheet_(), selected);
+  assert.ok(ids.length > 0);
+  assert.ok(ids.every(id => id === 'synthetic-sheet-id'));
+  assert.equal(active.getSheets().length, 0);
+
+  app.SpreadsheetApp.openById = () => { throw new Error('access denied'); };
+  assert.throws(() => app.getSpreadsheet_(), /access denied/);
+  app.PropertiesService.getScriptProperties = () => ({ getProperty: () => null });
+  app.SpreadsheetApp.getActiveSpreadsheet = () => null;
+  assert.throws(() => app.getSpreadsheet_(), /ALINA_SPREADSHEET_ID/);
+});
+
+test('the isolated candidate requires the deploying account and can open its configured sheet', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../appsscript.json'), 'utf8'));
+  assert.equal(manifest.webapp.access, 'MYSELF');
+  assert.equal(manifest.webapp.executeAs, 'USER_DEPLOYING');
+  assert.ok(manifest.oauthScopes.includes('https://www.googleapis.com/auth/spreadsheets'));
+});
 
 function record(date, slot, start, end, state, revision) {
   return { id: `${date}#${slot}`, data: date, fascia: String(slot), minuto_inizio: start,
