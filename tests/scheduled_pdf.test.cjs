@@ -66,10 +66,13 @@ function viewerContext() {
   const app = context({}), pending = [], elements = new Map();
   const canvas = { style: { display: 'none', width: '100%' }, getContext: () => ({}) };
   const status = { textContent: '' }, zoom = { classList: { remove: () => {} }, textContent: '' };
+  const print = { classList: { remove: () => {} } }, bodyClasses = new Set(), events = new Map();
   const backdrop = { classList: { contains: () => true } };
   elements.set('scheduledPdfCanvas', canvas); elements.set('scheduledPdfStatus', status);
-  elements.set('scheduledPdfZoom', zoom); elements.set('modalBackdrop', backdrop);
-  app.document = { getElementById: id => elements.get(id) };
+  elements.set('scheduledPdfZoom', zoom); elements.set('scheduledPdfPrint', print); elements.set('modalBackdrop', backdrop);
+  app.document = { getElementById: id => elements.get(id), body: { classList: {
+    add: name => bodyClasses.add(name), remove: name => bodyClasses.delete(name)
+  } } };
   app.state = { scheduledCapability: true, serverOk: true, accessCode: 'test' };
   app.navigator = { onLine: true }; app.getQueue = () => pending; app.scheduledSyncInFlight = false;
   app.monthLabel = value => value; app.esc = value => value;
@@ -86,8 +89,10 @@ function viewerContext() {
       render: () => ({ promise: Promise.resolve().then(() => { app.rendered = true; }) })
     }) }), destroy: async () => { app.destroyed = true; } };
   } };
-  app.window = { open: () => { throw new Error('The preview must not open another tab'); } };
-  return { app, canvas, status, zoom, pending };
+  app.window = { open: () => { throw new Error('The preview must not open another tab'); },
+    addEventListener: (name, fn) => events.set(name, fn), removeEventListener: name => events.delete(name),
+    print: () => { app.printCalled = true; } };
+  return { app, canvas, status, zoom, pending, bodyClasses, events };
 }
 
 test('PDF button renders inside the app and offers a larger view', async () => {
@@ -131,4 +136,24 @@ test('PDF preview does not show stale records if a change is pending', async () 
   assert.equal(canvas.style.display, 'none');
   assert.equal(status.textContent, 'scheduled_pending');
   assert.equal(app.rendered, undefined);
+});
+
+test('printing opens the system dialog only for a visible synchronized preview', async () => {
+  const { app, canvas, pending, bodyClasses, events } = viewerContext();
+  app.scheduledPrintPdf_();
+  assert.equal(app.printCalled, undefined);
+  await app.scheduledViewPdf_('2026-03');
+  pending.push({});
+  app.scheduledPrintPdf_();
+  assert.equal(app.lastToast, 'scheduled_pending');
+  assert.equal(app.printCalled, undefined);
+  pending.pop();
+  app.scheduledPrintPdf_();
+  assert.equal(app.printCalled, true);
+  assert.ok(bodyClasses.has('scheduled-pdf-printing'));
+  events.get('afterprint')();
+  assert.equal(bodyClasses.has('scheduled-pdf-printing'), false);
+  app.scheduledReleasePdf_();
+  assert.equal(canvas.width, 1); assert.equal(canvas.height, 1);
+  assert.equal(canvas.style.display, 'none');
 });
