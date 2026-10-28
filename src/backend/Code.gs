@@ -162,10 +162,12 @@ function doGet(e) {
 
   setupAlinaLavoro();
 
-  const indexHtml = HtmlService.createHtmlOutputFromFile('Index').getContent();
+  // HtmlOutput can normalize the document and remove the insertion comment.
+  // Read the source as a template so the marker survives before assembly.
+  const indexHtml = HtmlService.createTemplateFromFile('Index').getRawContent();
   const marker = '<!-- SCHEDULED_WORK_MODULE -->';
   if (indexHtml.indexOf(marker) < 0) throw new Error('Modulo turni programmati non configurato');
-  const moduleHtml = HtmlService.createHtmlOutputFromFile('ScheduledWork').getContent();
+  const moduleHtml = HtmlService.createTemplateFromFile('ScheduledWork').getRawContent();
   return HtmlService
     .createHtmlOutput(indexHtml.replace(marker, moduleHtml))
     .setTitle('Alina Lavoro')

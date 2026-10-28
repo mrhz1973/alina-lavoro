@@ -102,7 +102,14 @@ test('the app page includes the scheduled module while keeping the legacy route 
       addMetaTag() { return this; }, setXFrameOptionsMode() { return this; } };
   }
   app.HtmlService = {
-    createHtmlOutputFromFile(name) { return output(fs.readFileSync(path.join(frontend, name + '.html'), 'utf8')); },
+    // HtmlOutput may remove comments; the assembly marker must come from the
+    // raw template rather than a normalized output document.
+    createHtmlOutputFromFile(name) {
+      return output(fs.readFileSync(path.join(frontend, name + '.html'), 'utf8').replace(/<!--[^]*?-->/g, ''));
+    },
+    createTemplateFromFile(name) {
+      return { getRawContent() { return fs.readFileSync(path.join(frontend, name + '.html'), 'utf8'); } };
+    },
     createHtmlOutput(content) { return output(content); }, XFrameOptionsMode: { ALLOWALL: 'allow' }
   };
   const page = app.doGet({ parameter: {} }).getContent();
