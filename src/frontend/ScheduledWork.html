@@ -1,0 +1,648 @@
+<script>
+/* Separate scheduled-work records. Personal labels, hours and operator are
+   supplied through the private app configuration, never in source control. */
+Object.assign(I18N.it, {
+  workplace: 'Lavoro', workplace_variable: 'Lavoro 1', workplace_scheduled: 'Lavoro 2',
+  workplace_hint: 'La sede viene riconosciuta automaticamente, quando possibile. Puoi anche sceglierla qui.', first_slot: 'Prima fascia',
+  second_slot: 'Seconda fascia', scheduled_not_configured: 'Configura prima gli orari nelle impostazioni.',
+  scheduled_not_started: 'Da iniziare', scheduled_open: 'In corso', scheduled_done: 'Completato',
+  scheduled_cancelled: 'Annullato', scheduled_start: 'Inizia', scheduled_finish: 'Termina',
+  scheduled_cancel: 'Annulla registrazione', scheduled_cancel_question: 'Annullare la registrazione di questa fascia?',
+  scheduled_other_open: 'Termina prima la fascia già in corso.', scheduled_config: 'Lavori e orari programmati',
+  variable_label: 'Nome del primo lavoro', scheduled_label: 'Nome del secondo lavoro',
+  report_operator: 'Operatore del registro', scheduled_defaults: 'Orari predefiniti',
+  scheduled_day: 'Variazione per un giorno', scheduled_save_day: 'Salva orari del giorno',
+  scheduled_day_saved: 'Orari del giorno salvati.', scheduled_invalid: 'Controlla data e orari: usa solo ore intere o mezz’ora, senza sovrapposizioni.',
+  scheduled_report: 'Registro mensile', scheduled_report_data: 'Scarica dati per il registro',
+  scheduled_pdf_title: 'Visualizza PDF', scheduled_pdf_loading: 'Preparazione del PDF…',
+  scheduled_pdf_unavailable: 'Il PDF non è disponibile. Controlla il modello e riprova.',
+  scheduled_pdf_zoom_in: 'Ingrandisci', scheduled_pdf_zoom_out: 'Riduci', scheduled_pdf_close: 'Chiudi',
+  scheduled_pdf_print: 'Stampa', scheduled_pdf_print_error: 'Impossibile aprire la schermata di stampa.',
+  scheduled_report_info: 'Nel PDF le fasce aperte mostrano solo l’entrata; il totale include le fasce concluse.',
+  scheduled_no_records: 'Nessuna fascia completata nel mese.',
+  scheduled_pending: 'Sincronizza i dati prima di preparare il registro.', scheduled_sync_button: 'Sincronizza',
+  scheduled_server_old: 'La versione del server non supporta ancora questo lavoro. Nessun turno è stato inviato.',
+  scheduled_unfinished: 'Termina o annulla le fasce ancora in corso prima di preparare il registro.',
+  scheduled_need_operator: 'Inserisci l’operatore nelle impostazioni.',
+  scheduled_conflict: 'Errore di sincronizzazione: i dati locali restano in attesa.',
+  scheduled_month_hours: 'Ore completate', scheduled_month_days: 'Giorni lavorati',
+  scheduled_edit_day: 'Modifica orari di un giorno', scheduled_edit_short: 'Modifica orari', scheduled_show_register: 'Registro presenze',
+  scheduled_entry: 'Entrata', scheduled_exit: 'Uscita', scheduled_not_yet: 'Da segnare',
+  scheduled_expected_exit: 'Uscita prevista', scheduled_duration: 'Ore registrate',
+  scheduled_location_setup: 'Posizione automatica',
+  scheduled_location_setup_help: 'Usa il permesso permanente del browser. Se la posizione è bloccata, abilitala nelle autorizzazioni del sito.',
+  scheduled_location_retry: 'Riprova autorizzazione posizione'
+});
+Object.assign(I18N.ru, {
+  workplace: 'Работа', workplace_variable: 'Работа 1', workplace_scheduled: 'Работа 2',
+  workplace_hint: 'Место работы определяется автоматически, если это возможно. Его также можно выбрать здесь.', first_slot: 'Первая смена',
+  second_slot: 'Вторая смена', scheduled_not_configured: 'Сначала настройте время смен.',
+  scheduled_not_started: 'Не начато', scheduled_open: 'В процессе', scheduled_done: 'Завершено',
+  scheduled_cancelled: 'Отменено', scheduled_start: 'Начать', scheduled_finish: 'Закончить',
+  scheduled_cancel: 'Отменить запись', scheduled_cancel_question: 'Отменить запись этой смены?',
+  scheduled_other_open: 'Сначала завершите текущую смену.', scheduled_config: 'Работы и расписание',
+  variable_label: 'Название первой работы', scheduled_label: 'Название второй работы',
+  report_operator: 'Сотрудник для табеля', scheduled_defaults: 'Стандартное время',
+  scheduled_day: 'Изменить время на дату', scheduled_save_day: 'Сохранить время на дату',
+  scheduled_day_saved: 'Время на эту дату сохранено.', scheduled_invalid: 'Проверьте дату и время: только полные часы или полчаса, без пересечений.',
+  scheduled_report: 'Табель за месяц', scheduled_report_data: 'Скачать данные для табеля',
+  scheduled_pdf_title: 'Открыть PDF', scheduled_pdf_loading: 'Подготовка PDF…',
+  scheduled_pdf_unavailable: 'PDF недоступен. Проверьте шаблон и повторите попытку.',
+  scheduled_pdf_zoom_in: 'Увеличить', scheduled_pdf_zoom_out: 'Уменьшить', scheduled_pdf_close: 'Закрыть',
+  scheduled_pdf_print: 'Печать', scheduled_pdf_print_error: 'Не удалось открыть окно печати.',
+  scheduled_report_info: 'В PDF для незавершённой смены указано только начало; итог учитывает завершённые смены.',
+  scheduled_no_records: 'За этот месяц нет завершённых смен.',
+  scheduled_pending: 'Сначала синхронизируйте данные.', scheduled_sync_button: 'Синхронизировать',
+  scheduled_server_old: 'Версия сервера пока не поддерживает эту работу. Смена не отправлена.',
+  scheduled_unfinished: 'Перед подготовкой табеля завершите или отмените открытые смены.',
+  scheduled_need_operator: 'Укажите сотрудника в настройках.',
+  scheduled_conflict: 'Ошибка синхронизации: локальные данные сохранены в очереди.',
+  scheduled_month_hours: 'Завершённые часы', scheduled_month_days: 'Отработанные дни',
+  scheduled_edit_day: 'Изменить время на день', scheduled_edit_short: 'Изменить время', scheduled_show_register: 'Табель',
+  scheduled_entry: 'Начало', scheduled_exit: 'Окончание', scheduled_not_yet: 'Ещё не отмечено',
+  scheduled_expected_exit: 'Окончание по расписанию', scheduled_duration: 'Учтённые часы',
+  scheduled_location_setup: 'Автоматическая геопозиция',
+  scheduled_location_setup_help: 'Используйте постоянное разрешение браузера. Если доступ заблокирован, включите его в настройках сайта.',
+  scheduled_location_retry: 'Повторить запрос геопозиции'
+});
+
+var SCHEDULED_WORKPLACE_KEY = 'alina_selected_workplace_v1';
+var SCHEDULED_GEO_PROMPT_KEY = 'alina_geolocation_prompted_v1';
+var scheduledSelectedWorkplace = 'variable';
+var scheduledSyncInFlight = false;
+var scheduledBootstrapComplete = false;
+var scheduledManualChoiceThisVisit = false;
+var scheduledManualChoiceVersion = 0;
+var scheduledLocationInFlight = false;
+var scheduledLocationTried = false;
+var scheduledEditorOpen = false;
+state.scheduledShifts = [];
+state.scheduledCapability = false;
+try {
+  if (localStorage.getItem(SCHEDULED_WORKPLACE_KEY) === 'scheduled') scheduledSelectedWorkplace = 'scheduled';
+} catch (_) {}
+
+function scheduledWorkplaceName_(kind) {
+  var key = kind === 'scheduled' ? 'nome_lavoro_programmato' : 'nome_lavoro_variabile';
+  return String(state.config[key] || t(kind === 'scheduled' ? 'workplace_scheduled' : 'workplace_variable'));
+}
+function scheduledSelectorHtml_() {
+  return '<section class="card"><div class="kicker">' + esc(t('workplace')) + '</div><div class="help">' + esc(t('workplace_hint')) + '</div><div class="workplace-grid">' +
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'variable') + '" class="workplace-button ' +
+    (scheduledSelectedWorkplace === 'variable' ? 'secondary-btn' : 'ghost-btn') +
+    '" onclick="scheduledSelectWorkplace_(\'variable\')">' + esc(scheduledWorkplaceName_('variable')) + '</button>' +
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'scheduled') + '" class="workplace-button ' +
+    (scheduledSelectedWorkplace === 'scheduled' ? 'secondary-btn' : 'ghost-btn') +
+    '" onclick="scheduledSelectWorkplace_(\'scheduled\')">' + esc(scheduledWorkplaceName_('scheduled')) + '</button></div></section>';
+}
+function scheduledSelectWorkplace_(kind, source) {
+  if (kind !== 'variable' && kind !== 'scheduled') return;
+  if (source !== 'automatic') scheduledMarkManualInteraction_();
+  scheduledSelectedWorkplace = kind;
+  try { localStorage.setItem(SCHEDULED_WORKPLACE_KEY, kind); } catch (_) {}
+  monthsViewSig = ''; monthDetailSig = '';
+  if (state.page === 'monthDetail') state.page = 'months';
+  render();
+}
+function scheduledMarkManualInteraction_() {
+  scheduledManualChoiceThisVisit = true;
+  scheduledManualChoiceVersion++;
+}
+function scheduledParseTime_(value) {
+  var match = /^([01]\d|2[0-3]):(00|30)$/.exec(String(value || ''));
+  return match ? Number(match[1]) * 60 + Number(match[2]) : null;
+}
+function scheduledTime_(minute) {
+  minute = Number(minute);
+  return String(Math.floor(minute / 60)).padStart(2, '0') + ':' + String(minute % 60).padStart(2, '0');
+}
+function scheduledDateValid_(date) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date || ''))) return false;
+  var d = new Date(date + 'T00:00:00Z');
+  return !isNaN(d.getTime()) && d.toISOString().slice(0, 10) === date;
+}
+function scheduledFind_(date, slot) {
+  return (state.scheduledShifts || []).find(function (row) {
+    return String(row.id) === String(date) + '#' + String(slot);
+  }) || null;
+}
+function scheduledConfiguredTimes_(slot) {
+  var start = scheduledParseTime_(state.config['programma_' + slot + '_inizio']);
+  var end = scheduledParseTime_(state.config['programma_' + slot + '_fine']);
+  return start !== null && end !== null && start < end ? { start: start, end: end } : null;
+}
+function scheduledTimesForDay_(date, slot) {
+  var row = scheduledFind_(date, slot);
+  return row ? { start: Number(row.minuto_inizio), end: Number(row.minuto_fine) } : scheduledConfiguredTimes_(slot);
+}
+function scheduledSaveLocal_(date, slot, start, end, status) {
+  if (!state.scheduledCapability) throw new Error(t('scheduled_server_old'));
+  if (!scheduledDateValid_(date) || (slot !== '1' && slot !== '2') ||
+      !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end >= 1440 ||
+      start >= end || start % 30 || end % 30) throw new Error(t('scheduled_invalid'));
+  var prior = scheduledFind_(date, slot), now = new Date().toISOString();
+  var row = {
+    id: date + '#' + slot, data: date, fascia: slot, minuto_inizio: start, minuto_fine: end,
+    stato: status, revisione: prior ? Number(prior.revisione) + 1 : 1,
+    creato_il: prior && prior.creato_il ? prior.creato_il : now, aggiornato_il: now
+  };
+  var index = state.scheduledShifts.findIndex(function (item) { return String(item.id) === row.id; });
+  if (index >= 0) state.scheduledShifts[index] = row; else state.scheduledShifts.push(row);
+  state._localMutationAt = Date.now();
+  enqueue({ type: 'saveScheduledShift', operationId: uid('scheduled_op'), payload: row });
+  return row;
+}
+function scheduledStart_(slot) {
+  var date = today(), row = scheduledFind_(date, slot), times = scheduledTimesForDay_(date, slot);
+  if (!times) return toast(t('scheduled_not_configured'));
+  if (row && (row.stato === 'open' || row.stato === 'done')) return;
+  if ((state.scheduledShifts || []).some(function (item) {
+    return String(item.data) === date && item.stato === 'open' && String(item.fascia) !== slot;
+  })) return toast(t('scheduled_other_open'));
+  try {
+    scheduledSaveLocal_(date, slot, times.start, times.end, 'open');
+    render(); toast(t('started_at') + ' ' + scheduledTime_(times.start)); flushQueue();
+  } catch (err) { toast(err.message); }
+}
+function scheduledFinish_(slot) {
+  scheduledFinishForDate_(today(), slot);
+}
+function scheduledFinishForDate_(date, slot) {
+  var row = scheduledFind_(date, slot);
+  if (!row || row.stato !== 'open') return;
+  try {
+    scheduledSaveLocal_(row.data, slot, Number(row.minuto_inizio), Number(row.minuto_fine), 'done');
+    render(); toast(t('saved')); flushQueue();
+  } catch (err) { toast(err.message); }
+}
+function scheduledAskCancel_(slot) {
+  scheduledAskCancelForDate_(today(), slot);
+}
+function scheduledAskCancelForDate_(date, slot) {
+  if (!scheduledDateValid_(date) || (slot !== '1' && slot !== '2')) return;
+  openModal(t('scheduled_cancel'), '<p>' + esc(t('scheduled_cancel_question')) + '</p>' +
+    '<button class="danger-btn" onclick="scheduledConfirmCancelForDate_(\'' + date + '\',\'' + slot + '\')">' + esc(t('scheduled_cancel')) + '</button>' +
+    '<button class="ghost-btn" onclick="closeModal()">' + esc(t('back')) + '</button>');
+}
+function scheduledConfirmCancel_(slot) {
+  scheduledConfirmCancelForDate_(today(), slot);
+}
+function scheduledConfirmCancelForDate_(date, slot) {
+  var row = scheduledFind_(date, slot);
+  if (!row || (row.stato !== 'open' && row.stato !== 'done')) return closeModal();
+  try {
+    scheduledSaveLocal_(row.data, slot, Number(row.minuto_inizio), Number(row.minuto_fine), 'cancelled');
+    closeModal(); render(); toast(t('saved')); flushQueue();
+  } catch (err) { toast(err.message); }
+}
+function scheduledMonthTotals_(month) {
+  var mins = 0, dates = {};
+  (state.scheduledShifts || []).forEach(function (row) {
+    if (String(row.data || '').slice(0, 7) !== month || row.stato !== 'done') return;
+    mins += Math.max(0, Number(row.minuto_fine) - Number(row.minuto_inizio));
+    dates[String(row.data)] = true;
+  });
+  return { minutes: mins, days: Object.keys(dates).length };
+}
+function renderScheduledHome_() {
+  var html = scheduledSelectorHtml_() + '<section class="card"><div class="kicker">' +
+    esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' + esc(formatLongDate(today())) + '</div>';
+  ['1', '2'].forEach(function (slot) {
+    var row = scheduledFind_(today(), slot), times = scheduledTimesForDay_(today(), slot);
+    var status = row ? row.stato : 'planned';
+    var statusKey = status === 'open' ? 'scheduled_open' : status === 'done' ? 'scheduled_done' :
+      status === 'cancelled' ? 'scheduled_cancelled' : 'scheduled_not_started';
+    html += '<div class="list-item" style="margin-top:12px"><strong>' +
+      esc(t(slot === '1' ? 'first_slot' : 'second_slot')) + '</strong><div>' +
+      esc(times ? scheduledTime_(times.start) + '–' + scheduledTime_(times.end) : t('scheduled_not_configured')) +
+      ' · ' + esc(t(statusKey)) + '</div><div class="btn-row">';
+    if (status === 'open') html += '<button class="danger-btn scheduled-action" onclick="scheduledFinish_(\'' + slot + '\')">' + esc(t('scheduled_finish')) + '</button>';
+    else if (status !== 'done') html += '<button class="secondary-btn scheduled-action" onclick="scheduledStart_(\'' + slot + '\')">' + esc(t('scheduled_start')) + '</button>';
+    if (status === 'open' || status === 'done') html += '<button class="ghost-btn" onclick="scheduledAskCancel_(\'' + slot + '\')">' + esc(t('scheduled_cancel')) + '</button>';
+    html += '</div></div>';
+  });
+  var total = scheduledMonthTotals_(currentMonth());
+  html += '</section><section id="scheduledSummary" class="card"><div class="kicker">' + esc(t('home_summary')) + '</div><p>' +
+    esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
+    esc(minutesLabel(total.minutes)) + '</p><span class="pill">' +
+    esc(!navigator.onLine ? t('offline') : getQueue().length ? getQueue().length + ' ' + t('pending') :
+      !scheduledBootstrapComplete ? t('loading') : !state.serverOk ? t('sync_error') : t('synced')) +
+    '</span><div class="btn-row"><button class="ghost-btn" type="button" onclick="scheduledRetrySync_()">' + esc(t('scheduled_sync_button')) + '</button></div>' +
+    '<button class="secondary-btn" style="width:100%;margin-top:14px" onclick="scheduledViewPdf_(\'' + currentMonth() + '\')">' + esc(t('scheduled_pdf_title')) + '</button></section>';
+  document.getElementById('content').innerHTML = html;
+}
+function renderScheduledMonths_() {
+  var keys = {};
+  (state.scheduledShifts || []).forEach(function (row) {
+    if (row.data && (row.stato === 'done' || row.stato === 'open')) keys[String(row.data).slice(0, 7)] = true;
+  });
+  keys[currentMonth()] = true;
+  var html = '<section class="card"><div class="kicker">' + esc(scheduledWorkplaceName_('scheduled')) +
+    '</div><div class="status-title">' + esc(t('months_title')) + '</div><div class="list">';
+  Object.keys(keys).sort().reverse().forEach(function (month) {
+    var total = scheduledMonthTotals_(month);
+    html += '<button class="secondary-btn" onclick="scheduledOpenMonth_(\'' + month + '\')">' +
+      esc(monthLabel(month)) + ' · ' + esc(minutesLabel(total.minutes)) + '</button>';
+  });
+  html += '</div></section>';
+  var root = document.getElementById('content'); root.dataset.alDetailMonth = ''; root.innerHTML = html;
+}
+function scheduledOpenMonth_(month) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) return;
+  if (scheduledSelectedWorkplace === 'scheduled') scheduledMarkManualInteraction_();
+  state.detailMonth = month; setPage('monthDetail');
+}
+function renderScheduledMonthDetail_() {
+  var month = String(state.detailMonth || ''), total = scheduledMonthTotals_(month);
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) return setPage('months');
+  var rows = (state.scheduledShifts || []).filter(function (row) {
+    return String(row.data || '').slice(0, 7) === month && (row.stato === 'done' || row.stato === 'open');
+  }).sort(function (a, b) { return String(a.data + '#' + a.fascia).localeCompare(String(b.data + '#' + b.fascia)); });
+  var html = '<section class="card"><button class="ghost-btn" onclick="setPage(\'months\')">' + esc(t('back')) +
+    '</button><div class="kicker">' + esc(scheduledWorkplaceName_('scheduled')) + '</div><div class="status-title">' +
+    esc(t('scheduled_report')) + ' · ' + esc(monthLabel(month)) + '</div><p>' +
+    esc(t('scheduled_month_days')) + ': ' + total.days + ' · ' + esc(t('scheduled_month_hours')) + ': ' +
+    esc(minutesLabel(total.minutes)) + '</p><p class="help">' + esc(t('scheduled_report_info')) + '</p>' +
+    '<button class="secondary-btn" onclick="scheduledViewPdf_(\'' + month + '\')">' + esc(t('scheduled_pdf_title')) + '</button>' +
+    '<button class="ghost-btn" onclick="scheduledDownloadReport_(\'' + month + '\')">' + esc(t('scheduled_report_data')) + '</button></section>';
+  if (!rows.length) html += '<section class="card">' + esc(t('scheduled_no_records')) + '</section>';
+  rows.forEach(function (row) {
+    html += '<section class="list-item"><strong>' + esc(formatShortDate(String(row.data))) + ' · ' +
+      esc(t(String(row.fascia) === '1' ? 'first_slot' : 'second_slot')) + '</strong><div>' +
+      esc(t(row.stato === 'open' ? 'scheduled_open' : 'scheduled_done')) + '</div><div class="scheduled-record-times">' +
+      '<div>' + esc(t('scheduled_entry')) + '<br><strong>' + esc(scheduledTime_(row.minuto_inizio)) + '</strong></div>' +
+      '<div>' + esc(t('scheduled_exit')) + '<br><strong>' +
+      esc(row.stato === 'done' ? scheduledTime_(row.minuto_fine) : t('scheduled_not_yet')) + '</strong></div></div>';
+    if (row.stato === 'open') html += '<p class="help">' + esc(t('scheduled_expected_exit')) + ': ' + esc(scheduledTime_(row.minuto_fine)) + '</p>';
+    if (row.stato === 'done') html += '<p class="help">' + esc(t('scheduled_duration')) + ': ' + esc(minutesLabel(Number(row.minuto_fine) - Number(row.minuto_inizio))) + '</p>';
+    html += '<div class="btn-row">';
+    if (scheduledDateValid_(String(row.data)) && ['1', '2'].indexOf(String(row.fascia)) >= 0) {
+      if (row.stato === 'open') html += '<button class="secondary-btn" onclick="scheduledFinishForDate_(\'' + row.data + '\',\'' + row.fascia + '\')">' + esc(t('scheduled_finish')) + '</button>';
+      html += '<button class="ghost-btn" onclick="scheduledOpenDayEditor_(\'' + row.data + '\')">' + esc(t('scheduled_edit_day')) + '</button>';
+      html += '<button class="ghost-btn" onclick="scheduledAskCancelForDate_(\'' + row.data + '\',\'' + row.fascia + '\')">' + esc(t('scheduled_cancel')) + '</button>';
+    }
+    html += '</div></section>';
+  });
+  var root = document.getElementById('content'); root.dataset.alDetailMonth = ''; root.innerHTML = html;
+}
+
+function scheduledSettingsHtml_() {
+  function field(id, label, value) {
+    return '<div class="field"><label>' + esc(label) + '</label><input type="time" step="1800" id="' + id + '" value="' + esc(value || '') + '"></div>';
+  }
+  return '<section class="card"><div class="status-title">' + esc(t('scheduled_config')) + '</div>' +
+    '<div class="field"><label>' + esc(t('variable_label')) + '</label><input id="sch_name_variable" value="' + esc(state.config.nome_lavoro_variabile || '') + '"></div>' +
+    '<div class="field"><label>' + esc(t('scheduled_label')) + '</label><input id="sch_name_scheduled" value="' + esc(state.config.nome_lavoro_programmato || '') + '"></div>' +
+    '<div class="field"><label>' + esc(t('report_operator')) + '</label><input id="sch_operator" value="' + esc(state.config.operatore_registro || '') + '"></div>' +
+    '<div class="kicker">' + esc(t('scheduled_defaults')) + '</div><div class="time-grid">' +
+    field('sch_default_1_start', t('first_slot') + ' · ' + t('start'), state.config.programma_1_inizio) +
+    field('sch_default_1_end', t('first_slot') + ' · ' + t('end'), state.config.programma_1_fine) +
+    field('sch_default_2_start', t('second_slot') + ' · ' + t('start'), state.config.programma_2_inizio) +
+    field('sch_default_2_end', t('second_slot') + ' · ' + t('end'), state.config.programma_2_fine) +
+    '</div><button class="secondary-btn" onclick="scheduledSaveDefaults_()">' + esc(t('save')) + '</button>' +
+    '<hr><div class="kicker">' + esc(t('scheduled_day')) + '</div><div class="field"><label>' + esc(t('date')) +
+    '</label><input id="sch_date" type="date" value="' + esc(today()) + '" onchange="scheduledLoadDay_()"></div><div class="time-grid">' +
+    field('sch_day_1_start', t('first_slot') + ' · ' + t('start'), '') + field('sch_day_1_end', t('first_slot') + ' · ' + t('end'), '') +
+    field('sch_day_2_start', t('second_slot') + ' · ' + t('start'), '') + field('sch_day_2_end', t('second_slot') + ' · ' + t('end'), '') +
+    '</div><button class="secondary-btn" onclick="scheduledSaveDay_()">' + esc(t('scheduled_save_day')) + '</button>' +
+    '<hr><div class="kicker">' + esc(t('scheduled_location_setup')) + '</div><p class="help">' +
+    esc(t('scheduled_location_setup_help')) + '</p><button class="ghost-btn" onclick="scheduledRetryLocationPermission_()">' +
+    esc(t('scheduled_location_retry')) + '</button></section>';
+}
+function scheduledOpenDayEditor_(date) {
+  if (!scheduledDateValid_(date)) return;
+  if (scheduledSelectedWorkplace === 'scheduled') scheduledMarkManualInteraction_();
+  function field(id, label) {
+    return '<div class="field"><label>' + esc(label) + '</label><input type="time" step="1800" id="' + id + '"></div>';
+  }
+  scheduledEditorOpen = true;
+  openModal(t('scheduled_edit_day'), '<div class="field"><label>' + esc(t('date')) +
+    '</label><input id="sch_modal_date" type="date" value="' + date + '" onchange="scheduledLoadDay_(true)"></div><div class="time-grid">' +
+    field('sch_modal_day_1_start', t('first_slot') + ' · ' + t('start')) + field('sch_modal_day_1_end', t('first_slot') + ' · ' + t('end')) +
+    field('sch_modal_day_2_start', t('second_slot') + ' · ' + t('start')) + field('sch_modal_day_2_end', t('second_slot') + ' · ' + t('end')) +
+    '</div><button class="main-action" onclick="scheduledSaveDay_(true)">' + esc(t('scheduled_save_day')) + '</button>');
+  scheduledLoadDay_(true);
+  scheduledUpdateNav_();
+}
+function scheduledReadFour_(prefix) {
+  var values = ['1_start', '1_end', '2_start', '2_end'].map(function (key) { return scheduledParseTime_(val(prefix + key)); });
+  if (values.some(function (value) { return value === null; }) || values[0] >= values[1] ||
+      values[2] >= values[3] || values[1] > values[2]) return null;
+  return values;
+}
+function scheduledSaveDefaults_() {
+  var values = scheduledReadFour_('sch_default_');
+  if (!values) return toast(t('scheduled_invalid'));
+  var variableName = val('sch_name_variable').trim(), scheduledName = val('sch_name_scheduled').trim();
+  var operator = val('sch_operator').trim();
+  if (!variableName || !scheduledName || variableName.length > 40 || scheduledName.length > 20 || operator.length > 35) return toast(t('scheduled_invalid'));
+  var patch = {
+    nome_lavoro_variabile: variableName, nome_lavoro_programmato: scheduledName, operatore_registro: operator,
+    programma_1_inizio: scheduledTime_(values[0]), programma_1_fine: scheduledTime_(values[1]),
+    programma_2_inizio: scheduledTime_(values[2]), programma_2_fine: scheduledTime_(values[3])
+  };
+  state._localMutationAt = Date.now(); state.config = Object.assign({}, state.config, patch);
+  enqueue({ type: 'saveConfig', payload: patch }); toast(t('saved')); render(); flushQueue();
+}
+function scheduledLoadDay_(isModal) {
+  var prefix = isModal ? 'sch_modal_' : 'sch_';
+  var date = val(prefix + 'date');
+  ['1', '2'].forEach(function (slot) {
+    var times = scheduledTimesForDay_(date, slot);
+    setVal(prefix + 'day_' + slot + '_start', times ? scheduledTime_(times.start) : '');
+    setVal(prefix + 'day_' + slot + '_end', times ? scheduledTime_(times.end) : '');
+  });
+}
+function scheduledSaveDay_(closeAfter) {
+  var prefix = closeAfter ? 'sch_modal_' : 'sch_';
+  var date = val(prefix + 'date'), values = scheduledReadFour_(prefix + 'day_');
+  if (!scheduledDateValid_(date) || !values) return toast(t('scheduled_invalid'));
+  try {
+    ['1', '2'].forEach(function (slot, index) {
+      var old = scheduledFind_(date, slot), start = values[index * 2], end = values[index * 2 + 1];
+      if (old && Number(old.minuto_inizio) === start && Number(old.minuto_fine) === end) return;
+      scheduledSaveLocal_(date, slot, start, end, old ? String(old.stato) : 'planned');
+    });
+    if (closeAfter) closeModal();
+    toast(t('scheduled_day_saved')); render();
+    if (!closeAfter && document.getElementById('sch_date')) { setVal('sch_date', date); scheduledLoadDay_(); }
+    flushQueue();
+  } catch (err) { toast(err.message); }
+}
+
+function scheduledBuildReport_(month) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) throw new Error(t('scheduled_invalid'));
+  if (!state.scheduledCapability || !navigator.onLine || !state.serverOk || getQueue().length) throw new Error(t('scheduled_pending'));
+  var operator = String(state.config.operatore_registro || '').trim();
+  if (!operator) throw new Error(t('scheduled_need_operator'));
+  var selected = (state.scheduledShifts || []).filter(function (row) { return String(row.data || '').slice(0, 7) === month; });
+  if (selected.some(function (row) { return row.stato === 'open'; })) throw new Error(t('scheduled_unfinished'));
+  var days = {};
+  selected.filter(function (row) { return row.stato === 'done'; }).forEach(function (row) {
+    var start = Number(row.minuto_inizio), end = Number(row.minuto_fine), date = String(row.data);
+    if (!scheduledDateValid_(date) || !Number.isInteger(start) || !Number.isInteger(end) ||
+        start < 0 || end >= 1440 || start >= end || start % 30 || end % 30) throw new Error(t('scheduled_invalid'));
+    if (!days[date]) days[date] = [];
+    days[date].push({ inizio: scheduledTime_(start), fine: scheduledTime_(end) });
+  });
+  var entries = Object.keys(days).sort().map(function (date) {
+    var turns = days[date].sort(function (a, b) { return a.inizio.localeCompare(b.inizio); });
+    for (var i = 1; i < turns.length; i++) if (turns[i - 1].fine > turns[i].inizio) throw new Error(t('scheduled_invalid'));
+    return { data: date, turni: turns };
+  });
+  if (!entries.length) throw new Error(t('scheduled_no_records'));
+  return { anno: Number(month.slice(0, 4)), mese: Number(month.slice(5, 7)), operatore: operator,
+    cantiere: scheduledWorkplaceName_('scheduled'), giorni: entries };
+}
+function scheduledDownloadReport_(month) {
+  try {
+    var report = scheduledBuildReport_(month);
+    var blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    var link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+    link.download = 'registro-' + month + '.json'; link.click();
+    setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
+  } catch (err) { toast(err.message); }
+}
+
+// Area centers and radii come from private configuration. The device's
+// observed position is used transiently and is never written to the Sheet.
+function scheduledAreas_(kind) {
+  var key = kind === 'scheduled' ? 'aree_programmata_json' : 'aree_variabile_json';
+  var raw = state.config[key];
+  if (raw === '' || raw === null || raw === undefined) return [];
+  try {
+    var entries = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (!Array.isArray(entries)) return null;
+    var result = entries.map(function (entry) {
+      if (!entry || entry.latitude === '' || entry.longitude === '' || entry.radius === '' ||
+          entry.latitude === null || entry.longitude === null || entry.radius === null) return null;
+      var lat = Number(entry.latitude), lon = Number(entry.longitude), radius = Number(entry.radius);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon) || !Number.isFinite(radius) ||
+          Math.abs(lat) > 90 || Math.abs(lon) > 180 || radius <= 0) return null;
+      return { latitude: lat, longitude: lon, radius: radius };
+    });
+    return result.some(function (area) { return !area; }) ? null : result;
+  } catch (_) { return null; }
+}
+function scheduledDistance_(a, b) {
+  var radians = Math.PI / 180, dLat = (a.latitude - b.latitude) * radians, dLon = (a.longitude - b.longitude) * radians;
+  var x = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(a.latitude * radians) * Math.cos(b.latitude * radians) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  x = Math.max(0, Math.min(1, x));
+  return 12742000 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+}
+function scheduledPermissionState_() {
+  if (!navigator.permissions || typeof navigator.permissions.query !== 'function') return Promise.resolve('unknown');
+  try {
+    return Promise.resolve(navigator.permissions.query({ name: 'geolocation' })).then(function (status) {
+      return status && ['granted', 'denied', 'prompt'].indexOf(status.state) >= 0 ? status.state : 'unknown';
+    }, function () { return 'unknown'; });
+  } catch (_) { return Promise.resolve('unknown'); }
+}
+function scheduledMarkFirstPrompt_() {
+  try {
+    if (localStorage.getItem(SCHEDULED_GEO_PROMPT_KEY) === 'yes') return false;
+    localStorage.setItem(SCHEDULED_GEO_PROMPT_KEY, 'yes');
+    return true;
+  } catch (_) { return false; }
+}
+async function scheduledTryAutoLocation_() {
+  var areas = { variable: scheduledAreas_('variable'), scheduled: scheduledAreas_('scheduled') };
+  if (scheduledManualChoiceThisVisit || scheduledLocationTried || scheduledLocationInFlight ||
+      !navigator.geolocation || !areas.variable || !areas.scheduled || (!areas.variable.length && !areas.scheduled.length)) return;
+  scheduledLocationTried = true;
+  scheduledLocationInFlight = true;
+  var choiceVersion = scheduledManualChoiceVersion;
+  try {
+    var permission = await scheduledPermissionState_();
+    if (document.visibilityState && document.visibilityState !== 'visible') {
+      scheduledLocationInFlight = false;
+      scheduledLocationTried = false;
+      return;
+    }
+    if (scheduledManualChoiceThisVisit || scheduledManualChoiceVersion !== choiceVersion || permission === 'denied' ||
+        (permission !== 'granted' && !scheduledMarkFirstPrompt_())) {
+      scheduledLocationInFlight = false;
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      scheduledLocationInFlight = false;
+      if (scheduledManualChoiceThisVisit || scheduledManualChoiceVersion !== choiceVersion || !pos || !pos.coords) return;
+      if (pos.coords.latitude == null || pos.coords.longitude == null || pos.coords.accuracy == null) return;
+      var point = { latitude: Number(pos.coords.latitude), longitude: Number(pos.coords.longitude) };
+      var accuracy = Number(pos.coords.accuracy);
+      if (!Number.isFinite(point.latitude) || !Number.isFinite(point.longitude) ||
+          Math.abs(point.latitude) > 90 || Math.abs(point.longitude) > 180 ||
+          !Number.isFinite(accuracy) || accuracy < 0) return;
+      var possible = ['variable', 'scheduled'].filter(function (kind) {
+        return areas[kind].some(function (area) { return scheduledDistance_(point, area) - accuracy <= area.radius; });
+      });
+      if (possible.length !== 1) return;
+      var kind = possible[0];
+      if (areas[kind].some(function (area) { return scheduledDistance_(point, area) + accuracy <= area.radius; })) {
+        scheduledSelectWorkplace_(kind, 'automatic');
+      }
+    }, function () { scheduledLocationInFlight = false; },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  } catch (_) { scheduledLocationInFlight = false; }
+}
+function scheduledRetryLocationPermission_() {
+  try { localStorage.removeItem(SCHEDULED_GEO_PROMPT_KEY); } catch (_) { return; }
+  scheduledManualChoiceThisVisit = false;
+  scheduledLocationTried = false;
+  scheduledTryAutoLocation_();
+}
+document.addEventListener('DOMContentLoaded', function () { scheduledTryAutoLocation_(); });
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState !== 'visible') return;
+  scheduledLocationTried = false;
+  scheduledManualChoiceThisVisit = false;
+  scheduledTryAutoLocation_();
+});
+
+function scheduledUpdateNav_() {
+  var nav = document.getElementById('nav'), isScheduled = scheduledSelectedWorkplace === 'scheduled';
+  var variableMonths = document.getElementById('navVariableMonths');
+  var register = document.getElementById('navScheduledRegister');
+  var editor = document.getElementById('navScheduledEdit');
+  if (nav) nav.classList.toggle('nav-scheduled', isScheduled);
+  if (variableMonths) variableMonths.classList.toggle('hidden', isScheduled);
+  if (register) register.classList.toggle('hidden', !isScheduled);
+  if (editor) editor.classList.toggle('hidden', !isScheduled);
+  var page = scheduledEditorOpen ? 'scheduledEdit' : state.page === 'monthDetail' ? 'months' : state.page;
+  document.querySelectorAll('#nav button[data-page]').forEach(function (button) {
+    button.classList.toggle('active', button.dataset.page === page);
+  });
+}
+var scheduledBaseCloseModal = closeModal;
+closeModal = function () {
+  var wasEditor = scheduledEditorOpen;
+  scheduledEditorOpen = false;
+  scheduledBaseCloseModal();
+  if (wasEditor) scheduledUpdateNav_();
+};
+var scheduledBaseRender = render;
+render = function () {
+  scheduledBaseRender();
+  scheduledUpdateNav_();
+};
+
+var scheduledBaseHome = renderHome, scheduledBaseMonths = renderMonths;
+var scheduledBaseMonthDetail = renderMonthDetail, scheduledBaseSettings = renderSettings;
+function doExportScheduledShiftsCsv_() {
+  doExportCsv_('exportScheduledShiftsCsv', 'Turni programmati — CSV', 'turni-programmati.csv');
+}
+renderHome = function () {
+  if (scheduledSelectedWorkplace === 'scheduled') return renderScheduledHome_();
+  scheduledBaseHome(); document.getElementById('content').insertAdjacentHTML('afterbegin', scheduledSelectorHtml_());
+};
+renderMonths = function () {
+  if (scheduledSelectedWorkplace === 'scheduled') return renderScheduledMonths_();
+  return scheduledBaseMonths();
+};
+renderMonthDetail = function () {
+  if (scheduledSelectedWorkplace === 'scheduled') return renderScheduledMonthDetail_();
+  return scheduledBaseMonthDetail();
+};
+renderSettings = function () {
+  scheduledBaseSettings();
+  document.getElementById('content').insertAdjacentHTML('afterbegin', scheduledSettingsHtml_());
+  scheduledLoadDay_();
+};
+
+function scheduledMergeFromServer_(serverRows) {
+  var pending = {};
+  getQueue().forEach(function (action) {
+    if (action.type === 'saveScheduledShift' && action.payload) pending[String(action.payload.id)] = true;
+  });
+  var local = state.scheduledShifts || [], merged = (serverRows || []).slice();
+  local.forEach(function (row) {
+    if (!pending[String(row.id)]) return;
+    var index = merged.findIndex(function (item) { return String(item.id) === String(row.id); });
+    if (index >= 0) merged[index] = row; else merged.push(row);
+  });
+  state.scheduledShifts = merged;
+}
+var scheduledBaseMergeServer = mergeServerData;
+mergeServerData = function (data) {
+  scheduledBaseMergeServer(data);
+  state.scheduledCapability = !!(data.capabilities && data.capabilities.scheduledWork === 1 && Array.isArray(data.scheduledShifts));
+  if (state.scheduledCapability) scheduledMergeFromServer_(data.scheduledShifts);
+};
+saveCache = function () {
+  localStorage.setItem(LS_CACHE, JSON.stringify({
+    accessCode: state.accessCode, config: state.config, shifts: state.shifts, scheduledShifts: state.scheduledShifts, scheduledCapability: state.scheduledCapability,
+    salaries: state.salaries, notes: state.notes, summaries: state.summaries, reminder: state.reminder
+  }));
+};
+function scheduledMergeDuringLocalChanges_(data) {
+  var pending = getQueue();
+  state.config = Object.assign({}, state.config, data.config || {});
+  pending.forEach(function (action) {
+    if (action.type === 'saveConfig') Object.assign(state.config, action.payload || {});
+  });
+  function overlay(serverRows, saveType, deleteType) {
+    var rows = (serverRows || []).slice();
+    pending.forEach(function (action) {
+      if (!action.payload || (action.type !== saveType && action.type !== deleteType)) return;
+      var id = String(action.payload.id || '');
+      var index = rows.findIndex(function (row) { return String(row.id) === id; });
+      if (action.type === deleteType) { if (index >= 0) rows.splice(index, 1); }
+      else if (index >= 0) rows[index] = action.payload;
+      else rows.push(action.payload);
+    });
+    return rows;
+  }
+  state.shifts = overlay(data.shifts, 'saveShift');
+  state.salaries = overlay(data.salaries, 'saveSalary');
+  state.notes = overlay(data.notes, 'saveNote', 'deleteNote');
+  state.scheduledCapability = !!(data.capabilities && data.capabilities.scheduledWork === 1 && Array.isArray(data.scheduledShifts));
+  if (state.scheduledCapability) scheduledMergeFromServer_(data.scheduledShifts);
+  if (pending.some(function (action) { return action.type === 'saveShift' || action.type === 'saveSalary' || action.type === 'saveConfig'; })) recomputeLocalSummaries();
+  else state.summaries = data.summaries || [];
+  state.reminder = data.reminder || { active: false };
+}
+function scheduledRetrySync_() {
+  if (!navigator.onLine) return toast(t('offline'));
+  if (scheduledSyncInFlight) return;
+  if (getQueue().length) return flushQueue();
+  return initBackground_();
+}
+initBackground_ = async function () {
+  var started = Date.now();
+  try {
+    var res = await serverCall('getBootstrap', []);
+    if (!res || !res.success || !res.data) throw new Error(t('sync_error'));
+    if (state._localMutationAt >= started || getQueue().length) scheduledMergeDuringLocalChanges_(res.data);
+    else mergeServerData(res.data);
+    applyThemeLang(); state.serverOk = true; scheduledBootstrapComplete = true; saveCache(); render(); scheduledTryAutoLocation_();
+    if (state.config.setup_completato !== 'yes') openSetupModal();
+    await flushQueue();
+  } catch (_) { scheduledBootstrapComplete = true; state.serverOk = false; render(); }
+};
+flushQueue = async function () {
+  var q = getQueue();
+  if (!q.length || scheduledSyncInFlight) return;
+  if (!navigator.onLine) return render();
+  var started = Date.now(), success = false;
+  scheduledSyncInFlight = true;
+  try {
+    var res = await serverCall('syncBatch', [state.accessCode, q]);
+    if (!res || !res.success || !res.data) throw new Error('Risposta di sincronizzazione non valida');
+    if (q.some(function (action) { return action.type === 'saveScheduledShift'; }) &&
+        !(res.data.capabilities && res.data.capabilities.scheduledWork === 1 && Array.isArray(res.data.scheduledShifts))) {
+      throw new Error(t('scheduled_server_old'));
+    }
+    var current = getQueue();
+    if (current.length < q.length || q.some(function (action, i) { return JSON.stringify(action) !== JSON.stringify(current[i]); })) {
+      throw new Error('Coda locale modificata durante la sincronizzazione');
+    }
+    localStorage.setItem(LS_QUEUE, JSON.stringify(current.slice(q.length)));
+    if (state._localMutationAt >= started || getQueue().length) scheduledMergeDuringLocalChanges_(res.data);
+    else mergeServerData(res.data);
+    applyThemeLang(); state.serverOk = true; saveCache(); render(); toast(t('synced')); success = true;
+  } catch (_) { state.serverOk = false; toast(t('scheduled_conflict')); render(); }
+  finally { scheduledSyncInFlight = false; }
+  if (success && getQueue().length) setTimeout(function () { flushQueue(); }, 0);
+};
+</script>

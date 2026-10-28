@@ -4,6 +4,8 @@ node_modules/
 .clasp.json
 .clasprc.json
 .gas/
+__pycache__/
+*.py[cod]
 
 # Local workspace / personal notes
 .obsidian/
