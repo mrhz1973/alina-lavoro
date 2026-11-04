@@ -76,6 +76,8 @@ var scheduledManualChoiceVersion = 0;
 var scheduledLocationInFlight = false;
 var scheduledLocationTried = false;
 var scheduledEditorOpen = false;
+I18N.it.nav_calendar = 'Calendario';
+I18N.ru.nav_calendar = 'Календарь';
 state.scheduledShifts = [];
 state.scheduledCapability = false;
 try {
@@ -88,10 +90,10 @@ function scheduledWorkplaceName_(kind) {
 }
 function scheduledSelectorHtml_() {
   return '<section class="card"><div class="kicker">' + esc(t('workplace')) + '</div><div class="help">' + esc(t('workplace_hint')) + '</div><div class="workplace-grid">' +
-    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'variable') + '" class="workplace-button ' +
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'variable') + '" class="workplace-button workplace-variable ' +
     (scheduledSelectedWorkplace === 'variable' ? 'secondary-btn' : 'ghost-btn') +
     '" onclick="scheduledSelectWorkplace_(\'variable\')">' + esc(scheduledWorkplaceName_('variable')) + '</button>' +
-    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'scheduled') + '" class="workplace-button ' +
+    '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'scheduled') + '" class="workplace-button workplace-scheduled ' +
     (scheduledSelectedWorkplace === 'scheduled' ? 'secondary-btn' : 'ghost-btn') +
     '" onclick="scheduledSelectWorkplace_(\'scheduled\')">' + esc(scheduledWorkplaceName_('scheduled')) + '</button></div></section>';
 }
@@ -506,7 +508,7 @@ function scheduledUpdateNav_() {
   var register = document.getElementById('navScheduledRegister');
   var editor = document.getElementById('navScheduledEdit');
   if (nav) nav.classList.toggle('nav-scheduled', isScheduled);
-  if (variableMonths) variableMonths.classList.toggle('hidden', isScheduled);
+  if (variableMonths) variableMonths.classList.remove('hidden');
   if (register) register.classList.toggle('hidden', !isScheduled);
   if (editor) editor.classList.toggle('hidden', !isScheduled);
   var page = scheduledEditorOpen ? 'scheduledEdit' : state.page === 'monthDetail' ? 'months' : state.page;
@@ -644,5 +646,74 @@ flushQueue = async function () {
   } catch (_) { state.serverOk = false; toast(t('scheduled_conflict')); render(); }
   finally { scheduledSyncInFlight = false; }
   if (success && getQueue().length) setTimeout(function () { flushQueue(); }, 0);
+};
+// Calendar markers represent actual started or completed work, never a planned shift.
+var workplaceCalendarMonth_ = '';
+function workplaceColor_(kind) {
+  var value = state.config[kind === 'scheduled' ? 'colore_lavoro_programmato' : 'colore_lavoro_variabile'];
+  return /^#[0-9a-f]{6}$/i.test(String(value || '')) ? String(value) : (kind === 'scheduled' ? '#efb8cd' : '#a8ddbd');
+}
+function workplaceColorParts_(hex) {
+  return [parseInt(hex.slice(1,3),16), parseInt(hex.slice(3,5),16), parseInt(hex.slice(5,7),16)];
+}
+function workplaceApplyColors_() {
+  var root = document.documentElement;
+  ['variable','scheduled'].forEach(function(kind) {
+    var color = workplaceColor_(kind), rgb = workplaceColorParts_(color);
+    var light = (rgb[0]*299 + rgb[1]*587 + rgb[2]*114) / 1000 > 150;
+    root.style.setProperty('--work-' + kind, color);
+    root.style.setProperty('--work-' + kind + '-text', light ? '#142019' : '#ffffff');
+  });
+  var rgb = workplaceColorParts_(workplaceColor_(scheduledSelectedWorkplace));
+  root.style.setProperty('--work-bg', 'rgba(' + rgb.join(',') + ',' + (state.config.tema === 'dark' ? '0.12' : '0.22') + ')');
+  root.dataset.workplace = scheduledSelectedWorkplace;
+}
+function workplaceDays_(month) {
+  var days = {};
+  (state.shifts || []).forEach(function(row) {
+    if (String(row.data || '').slice(0,7) === month && row.inizio) (days[row.data] || (days[row.data] = {})).variable = true;
+  });
+  (state.scheduledShifts || []).forEach(function(row) {
+    if (String(row.data || '').slice(0,7) === month && (row.stato === 'open' || row.stato === 'done')) (days[row.data] || (days[row.data] = {})).scheduled = true;
+  });
+  return days;
+}
+function workplaceCalendarHtml_() {
+  var month = workplaceCalendarMonth_ || currentMonth(), parts = month.split('-'), year = Number(parts[0]), m = Number(parts[1]);
+  var first = new Date(year, m - 1, 1), count = new Date(year, m, 0).getDate(), offset = (first.getDay() + 6) % 7;
+  var days = workplaceDays_(month), ru = state.config.lingua === 'ru';
+  var weekdays = ru ? ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'] : ['Lu','Ma','Me','Gi','Ve','Sa','Do'];
+  var html = '<section class="card"><div class="calendar-header"><button type="button" class="ghost-btn" aria-label="' + (ru?'Предыдущий месяц':'Mese precedente') + '" onclick="workplaceCalendarMove_(-1)">‹</button><strong>' + esc(monthLabel(month)) + '</strong><button type="button" class="ghost-btn" aria-label="' + (ru?'Следующий месяц':'Mese successivo') + '" onclick="workplaceCalendarMove_(1)">›</button></div><div class="calendar-grid">';
+  weekdays.forEach(function(d) { html += '<div class="calendar-weekday">' + d + '</div>'; });
+  for (var i=0;i<offset;i++) html += '<div></div>';
+  for (var day=1;day<=count;day++) {
+    var date = month + '-' + String(day).padStart(2,'0'), marker = days[date] || {}, names = [];
+    if (marker.variable) names.push(scheduledWorkplaceName_('variable'));
+    if (marker.scheduled) names.push(scheduledWorkplaceName_('scheduled'));
+    html += '<div class="calendar-day' + (date === today() ? ' is-today' : '') + '" aria-label="' + esc(date + (names.length ? ': ' + names.join(', ') : '')) + '">' + day + '<div class="calendar-dots">' + (marker.variable ? '<span class="calendar-dot variable"></span>' : '') + (marker.scheduled ? '<span class="calendar-dot scheduled"></span>' : '') + '</div></div>';
+  }
+  return html + '</div><div class="calendar-legend"><span><i class="calendar-dot variable"></i>' + esc(scheduledWorkplaceName_('variable')) + '</span><span><i class="calendar-dot scheduled"></i>' + esc(scheduledWorkplaceName_('scheduled')) + '</span></div></section>';
+}
+function workplaceCalendarMove_(delta) {
+  var parts = (workplaceCalendarMonth_ || currentMonth()).split('-'), date = new Date(Number(parts[0]), Number(parts[1]) - 1 + delta, 1);
+  workplaceCalendarMonth_ = date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0');
+  render();
+}
+function workplaceSaveColors_() {
+  var patch = {colore_lavoro_variabile:val('cfg_colore_variabile'), colore_lavoro_programmato:val('cfg_colore_programmato')};
+  if (!/^#[0-9a-f]{6}$/i.test(patch.colore_lavoro_variabile) || !/^#[0-9a-f]{6}$/i.test(patch.colore_lavoro_programmato)) return;
+  state._localMutationAt = Date.now(); state.config = Object.assign({},state.config,patch);
+  workplaceApplyColors_(); saveCache(); enqueue({type:'saveConfig',payload:patch}); toast(t('saved')); render(); flushQueue();
+}
+var workplaceBaseRender_ = render;
+render = function() {
+  workplaceApplyColors_(); workplaceBaseRender_();
+  if (state.page === 'calendar') document.getElementById('content').innerHTML = workplaceCalendarHtml_() + '<button class="secondary-btn" style="width:100%" onclick="setPage(\'months\')">' + esc(t('nav_months')) + '</button>';
+};
+var workplaceBaseSettings_ = renderSettings;
+renderSettings = function() {
+  workplaceBaseSettings_();
+  var ru = state.config.lingua === 'ru';
+  document.getElementById('content').insertAdjacentHTML('afterbegin', '<section class="card"><div class="status-title">' + (ru?'Цвета работы':'Colori dei lavori') + '</div><p class="help">' + (ru?'Цвета страниц, кнопок и календаря':'Colori delle pagine, dei pulsanti e del calendario') + '</p><div class="time-grid"><div class="field"><label for="cfg_colore_variabile">' + esc(scheduledWorkplaceName_('variable')) + '</label><input class="work-color-input" type="color" id="cfg_colore_variabile" value="' + workplaceColor_('variable') + '"></div><div class="field"><label for="cfg_colore_programmato">' + esc(scheduledWorkplaceName_('scheduled')) + '</label><input class="work-color-input" type="color" id="cfg_colore_programmato" value="' + workplaceColor_('scheduled') + '"></div></div><button class="secondary-btn" onclick="workplaceSaveColors_()">' + esc(t('save')) + '</button></section>');
 };
 </script>

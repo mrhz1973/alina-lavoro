@@ -30,7 +30,7 @@ function createFrontend(sharedStorage) {
     return elements.get(id);
   }
   const navButtons = [
-    ['navHome', 'home'], ['navVariableMonths', 'months'], ['navScheduledRegister', 'months'],
+    ['navHome', 'home'], ['navVariableMonths', 'calendar'], ['navScheduledRegister', 'months'],
     ['navScheduledEdit', 'scheduledEdit'], ['navNotes', 'notes']
   ].map(([id, page]) => { const button = element(id); button.dataset.page = page; return button; });
   const document = {
@@ -94,6 +94,39 @@ test('recording two scheduled shifts keeps the existing workplace untouched', ()
   assert.equal(state.shifts[0].minuti_lavorati, 120);
   assert.equal(state.summaries[0].minuti, 120);
   assert.equal(app.scheduledMonthTotals_('2026-03').minutes, 240);
+});
+
+test('calendar marks recorded workplaces independently and ignores planned or cancelled shifts', () => {
+  const { context: app } = createFrontend();
+  vm.runInContext(`state.scheduledShifts = [
+    {data:'2026-03-03', stato:'done'},
+    {data:'2026-03-04', stato:'planned'},
+    {data:'2026-03-05', stato:'cancelled'},
+    {data:'2026-03-06', stato:'open'}
+  ]; state.shifts.push({data:'2026-03-07', inizio:''});`, app);
+  const days = app.workplaceDays_('2026-03');
+  assert.equal(days['2026-03-03'].variable, true);
+  assert.equal(days['2026-03-03'].scheduled, true);
+  assert.equal(days['2026-03-06'].scheduled, true);
+  assert.equal(days['2026-03-04'], undefined);
+  assert.equal(days['2026-03-05'], undefined);
+  assert.equal(days['2026-03-07'], undefined);
+  assert.match(app.workplaceCalendarHtml_(), /calendar-dot variable/);
+  assert.match(app.workplaceCalendarHtml_(), /calendar-dot scheduled/);
+  app.workplaceCalendarMove_(-1);
+  assert.match(app.workplaceCalendarHtml_(), /febbraio 2026/i);
+});
+
+test('workplace colors are saved through the existing synchronization queue', () => {
+  const { context: app, elements } = createFrontend();
+  app.document.getElementById('cfg_colore_variabile').value = '#abcdef';
+  app.document.getElementById('cfg_colore_programmato').value = '#123456';
+  app.workplaceSaveColors_();
+  const queue = app.getQueue();
+  assert.equal(queue.length, 1);
+  assert.equal(queue[0].type, 'saveConfig');
+  assert.equal(queue[0].payload.colore_lavoro_variabile, '#abcdef');
+  assert.equal(queue[0].payload.colore_lavoro_programmato, '#123456');
 });
 
 test('the scheduled workplace offers a current-month PDF button', () => {
@@ -215,7 +248,7 @@ test('the scheduled home keeps both shifts prominent and retains one shared navi
   assert.ok(bar.indexOf('nav_home') < bar.indexOf('scheduled_show_register'));
   assert.ok(bar.indexOf('scheduled_show_register') < bar.indexOf('scheduled_edit_short'));
   assert.ok(bar.indexOf('scheduled_edit_short') < bar.indexOf('nav_notes'));
-  assert.match(source, /\.nav\.nav-scheduled\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+  assert.match(source, /\.nav\.nav-scheduled\{grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
   assert.doesNotMatch(source, /\.nav\.scheduled-nav\{position:fixed/);
 });
 
@@ -223,12 +256,15 @@ test('the shared bar keeps Home and Notes while its middle controls change by wo
   const { context: app, elements } = createFrontend();
   app.render();
   assert.equal(elements.get('nav').classList.contains('nav-scheduled'), true);
-  assert.equal(elements.get('navVariableMonths').classList.contains('hidden'), true);
+  assert.equal(elements.get('navVariableMonths').classList.contains('hidden'), false);
   assert.equal(elements.get('navScheduledRegister').classList.contains('hidden'), false);
   assert.equal(elements.get('navScheduledEdit').classList.contains('hidden'), false);
   assert.equal(elements.get('navHome').classList.contains('hidden'), false);
   assert.equal(elements.get('navNotes').classList.contains('hidden'), false);
   assert.equal(elements.get('navHome').classList.contains('active'), true);
+  app.setPage('calendar');
+  assert.equal(elements.get('navVariableMonths').classList.contains('active'), true);
+  assert.match(elements.get('content').innerHTML, /setPage\('months'\)/);
   app.scheduledOpenMonth_('2026-03');
   assert.equal(vm.runInContext('state.page', app), 'monthDetail');
   assert.equal(elements.get('navScheduledRegister').classList.contains('active'), true);
