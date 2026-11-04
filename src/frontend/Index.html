@@ -292,14 +292,35 @@
     .nav.nav-scheduled{grid-template-columns:repeat(5,minmax(0,1fr))}
     .nav.nav-scheduled button span:last-child{text-align:center;line-height:1.1;white-space:normal}
     .workplace-variable{background:var(--work-variable,#a8ddbd)!important;color:var(--work-variable-text,#173b29)!important;border-color:var(--work-variable,#a8ddbd)!important}
-    html[data-workplace] body{background:linear-gradient(var(--work-bg),var(--work-bg)),var(--bg)}
+    .app{position:relative;z-index:1}
+    .workplace-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--bg)}
+    .workplace-photo,.workplace-wash{position:absolute;left:0;right:0;pointer-events:none}
+    .workplace-photo{background-position:center;background-size:cover;background-repeat:no-repeat}
+    .workplace-photo-first{top:0;bottom:50%}.workplace-photo-second{top:50%;bottom:0}
+    html[data-workplace="variable"] .workplace-photo-first{background-image:var(--work-variable-photo-1,none)}
+    html[data-workplace="variable"] .workplace-photo-second{background-image:var(--work-variable-photo-2,var(--work-variable-photo-1,none))}
+    html[data-workplace="scheduled"] .workplace-photo-first{bottom:0;background-image:var(--work-scheduled-photo,none)}
+    html[data-workplace="scheduled"] .workplace-photo-second{display:none}
+    .workplace-wash{inset:0;background:linear-gradient(var(--work-bg,transparent),var(--work-bg,transparent)),linear-gradient(var(--work-photo-scrim,transparent),var(--work-photo-scrim,transparent))}
+    html[data-workplace] .brand{background:var(--surface2);padding:8px 10px;border-radius:12px;box-shadow:var(--shadow-soft)}
+    .workplace-selector-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .workplace-logo{display:none;width:86px;height:38px;background-color:#fff;border:4px solid #fff;border-radius:8px;background-position:center;background-size:contain;background-repeat:no-repeat;flex:0 0 auto}
+    html[data-workplace="scheduled"] .workplace-logo{display:var(--work-scheduled-logo-display,none);background-image:var(--work-scheduled-logo,none)}
+    .workplace-scene{display:var(--work-photo-strip-display,none);height:76px;overflow:hidden;border-radius:12px;margin-top:10px;gap:2px}
+    .workplace-scene-photo{flex:1;background-position:center;background-size:cover;background-repeat:no-repeat}
+    html[data-workplace="variable"] .workplace-scene-photo:first-child{background-image:linear-gradient(var(--work-bg),var(--work-bg)),var(--work-variable-photo-1,none)}
+    html[data-workplace="variable"] .workplace-scene-photo:last-child{background-image:linear-gradient(var(--work-bg),var(--work-bg)),var(--work-variable-photo-2,var(--work-variable-photo-1,none))}
+    html[data-workplace="scheduled"] .workplace-scene-photo:first-child{background-image:linear-gradient(var(--work-bg),var(--work-bg)),var(--work-scheduled-photo,none)}
+    html[data-workplace="scheduled"] .workplace-scene-photo:last-child{display:none}
     .workplace-scheduled{background:var(--work-scheduled,#efb8cd)!important;color:var(--work-scheduled-text,#4a2031)!important;border-color:var(--work-scheduled,#efb8cd)!important}
     .workplace-button[aria-pressed="true"]{outline:3px solid var(--text);outline-offset:2px}
     .calendar-header{display:flex;align-items:center;justify-content:space-between;gap:8px}.calendar-header strong{text-align:center;text-transform:capitalize}.calendar-header button{min-width:44px;min-height:44px}
     .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}.calendar-weekday{font-size:12px;color:var(--muted);font-weight:800;padding:8px 0}.calendar-day{min-height:50px;border-radius:10px;padding:5px 0;font-weight:700}.calendar-day.is-today{border:1px solid var(--text)}.calendar-dots{display:flex;justify-content:center;gap:4px;margin-top:5px;min-height:10px}.calendar-dot{display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}.calendar-dot.variable{background:var(--work-variable,#a8ddbd)}.calendar-dot.scheduled{background:var(--work-scheduled,#efb8cd)}.calendar-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:13px}.calendar-legend span{display:inline-flex;align-items:center;gap:6px}.work-color-input{max-width:100px;padding:5px}
   </style>
+  <!-- WORKPLACE_MEDIA -->
 </head>
 <body>
+  <div class="workplace-backdrop" aria-hidden="true"><div class="workplace-photo workplace-photo-first"></div><div class="workplace-photo workplace-photo-second"></div><div class="workplace-wash"></div></div>
   <div id="appView" class="app"><header class="topbar"><div class="brand"><div><h1 data-i18n="hello">Ciao Alina</h1></div></div><div class="top-actions"><button id="themeToggleBtn" class="icon-btn" onclick="toggleTheme()" title="Tema">☀️</button><button id="langToggleBtn" class="icon-btn" onclick="toggleLang()" title="Lingua">IT</button><button class="icon-btn" onclick="setPage('settings')" title="Impostazioni">⚙️</button></div></header><main id="content"><section class="card boot-card" id="bootPlaceholder"><div class="kicker">Alina Lavoro</div><div class="status-title">Apertura app…</div><p class="status-subtitle">Caricamento</p></section></main></div>
   <nav id="nav" class="nav"><button onclick="setPage('home')" data-page="home" class="active"><span class="ico">🏠</span><span data-i18n="nav_home">Home</span></button><button id="navVariableMonths" onclick="setPage('calendar')" data-page="calendar"><span class="ico">📅</span><span data-i18n="nav_calendar">Calendario</span></button><button id="navScheduledRegister" class="hidden" onclick="scheduledOpenMonth_(currentMonth())" data-page="months"><span class="ico">📋</span><span data-i18n="scheduled_show_register">Registro presenze</span></button><button id="navScheduledEdit" class="hidden" onclick="scheduledOpenDayEditor_(today())" data-page="scheduledEdit"><span class="ico">🕒</span><span data-i18n="scheduled_edit_short">Modifica orari</span></button><button onclick="setPage('notes')" data-page="notes"><span class="ico">📝</span><span data-i18n="nav_notes">Note</span></button></nav>
   <div id="modalBackdrop" class="modal-backdrop"><div class="modal"><div class="modal-header"><h2 id="modalTitle" class="modal-title"></h2><button class="icon-btn" onclick="closeModal()">✕</button></div><div id="modalBody" class="modal-body"></div></div></div><div id="toast" class="toast"></div>

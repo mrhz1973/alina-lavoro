@@ -89,7 +89,7 @@ function scheduledWorkplaceName_(kind) {
   return String(state.config[key] || t(kind === 'scheduled' ? 'workplace_scheduled' : 'workplace_variable'));
 }
 function scheduledSelectorHtml_() {
-  return '<section class="card"><div class="kicker">' + esc(t('workplace')) + '</div><div class="help">' + esc(t('workplace_hint')) + '</div><div class="workplace-grid">' +
+  return '<section class="card"><div class="workplace-selector-title"><div class="kicker">' + esc(t('workplace')) + '</div><span class="workplace-logo" aria-hidden="true"></span></div><div class="help">' + esc(t('workplace_hint')) + '</div><div class="workplace-scene" aria-hidden="true"><div class="workplace-scene-photo"></div><div class="workplace-scene-photo"></div></div><div class="workplace-grid">' +
     '<button type="button" aria-pressed="' + (scheduledSelectedWorkplace === 'variable') + '" class="workplace-button workplace-variable ' +
     (scheduledSelectedWorkplace === 'variable' ? 'secondary-btn' : 'ghost-btn') +
     '" onclick="scheduledSelectWorkplace_(\'variable\')">' + esc(scheduledWorkplaceName_('variable')) + '</button>' +
@@ -665,7 +665,8 @@ function workplaceApplyColors_() {
     root.style.setProperty('--work-' + kind + '-text', light ? '#142019' : '#ffffff');
   });
   var rgb = workplaceColorParts_(workplaceColor_(scheduledSelectedWorkplace));
-  root.style.setProperty('--work-bg', 'rgba(' + rgb.join(',') + ',' + (state.config.tema === 'dark' ? '0.12' : '0.22') + ')');
+  root.style.setProperty('--work-bg', 'rgba(' + rgb.join(',') + ',' + (state.config.tema === 'dark' ? '0.20' : '0.34') + ')');
+  root.style.setProperty('--work-photo-scrim', state.config.tema === 'dark' ? 'rgba(0,0,0,0.62)' : 'rgba(255,255,255,0.32)');
   root.dataset.workplace = scheduledSelectedWorkplace;
 }
 function workplaceDays_(month) {

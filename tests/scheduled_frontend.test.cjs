@@ -34,7 +34,7 @@ function createFrontend(sharedStorage) {
     ['navScheduledEdit', 'scheduledEdit'], ['navNotes', 'notes']
   ].map(([id, page]) => { const button = element(id); button.dataset.page = page; return button; });
   const document = {
-    documentElement: { dataset: {}, style: { setProperty() {} }, lang: '' },
+    documentElement: { dataset: {}, style: { setProperty(name, value) { this[name] = value; } }, lang: '' },
     visibilityState: 'visible',
     addEventListener(name, callback) { if (!listeners.has(name)) listeners.set(name, []); listeners.get(name).push(callback); },
     querySelectorAll(selector) {
@@ -127,6 +127,36 @@ test('workplace colors are saved through the existing synchronization queue', ()
   assert.equal(queue[0].type, 'saveConfig');
   assert.equal(queue[0].payload.colore_lavoro_variabile, '#abcdef');
   assert.equal(queue[0].payload.colore_lavoro_programmato, '#123456');
+});
+
+test('background tint follows workplace and theme without changing recorded attendance', () => {
+  const { context: app } = createFrontend();
+  vm.runInContext("state.config.colore_lavoro_variabile='#a8ddbd'; state.config.colore_lavoro_programmato='#efb8cd'; state.config.tema='light';", app);
+  app.workplaceApplyColors_();
+  assert.equal(app.document.documentElement.style['--work-bg'], 'rgba(239,184,205,0.34)');
+  assert.equal(app.document.documentElement.dataset.workplace, 'scheduled');
+  app.scheduledSelectWorkplace_('variable');
+  assert.equal(app.document.documentElement.style['--work-bg'], 'rgba(168,221,189,0.34)');
+  assert.equal(app.document.documentElement.dataset.workplace, 'variable');
+  vm.runInContext("state.config.tema='dark'", app);
+  app.workplaceApplyColors_();
+  assert.equal(app.document.documentElement.style['--work-bg'], 'rgba(168,221,189,0.20)');
+  assert.equal(vm.runInContext('state.shifts.length', app), 1);
+  assert.equal(app.getQueue().length, 0);
+});
+
+test('photo and logo slots are decorative and support a no-image fallback', () => {
+  const { context: app } = createFrontend();
+  const selector = app.scheduledSelectorHtml_();
+  assert.match(selector, /workplace-logo" aria-hidden="true"/);
+  assert.match(selector, /workplace-scene" aria-hidden="true"/);
+  assert.equal((selector.match(/class="workplace-scene-photo"/g) || []).length, 2);
+  const source = fs.readFileSync(path.join(__dirname, '../src/frontend/Index.html'), 'utf8');
+  assert.match(source, /<!-- WORKPLACE_MEDIA -->/);
+  assert.match(source, /--work-variable-photo-1,none/);
+  assert.match(source, /--work-scheduled-photo,none/);
+  assert.match(source, /--work-photo-strip-display,none/);
+  assert.match(source, /--work-scheduled-logo-display,none/);
 });
 
 test('the scheduled workplace offers a current-month PDF button', () => {
