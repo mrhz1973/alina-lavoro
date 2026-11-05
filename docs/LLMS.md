@@ -23,6 +23,8 @@
 
 ## Current App State
 
+**Version label (2026-11-06):** Source `2a5edf1` shows the Apps Script release number. Version 17 has been verified in the private preview, while the usual deployment remains on version 16. Automatic approval review rejected promoting version 17 pending explicit owner consent. For every future release, update the displayed constant to match the immutable Apps Script version.
+
 **Startup names fix (2026-11-06):** With explicit owner authorization, version 16 (source `16f26f6`) was published on the usual link. Google confirmed the deployment, and the browser showed the configured names while data loaded and the correct heading for each workplace. See `docs/wiki/current-state.md` for test scope and open device checks.
 
 **Release (2026-11-05)** — With the owner approval, the usual attendance link was updated from version 13 to the tested version 15. Google confirmed the target version. The home screen, calendar and monthly scheduled-work PDF opened on that link. See `docs/wiki/current-state.md` for test scope and open device checks.
