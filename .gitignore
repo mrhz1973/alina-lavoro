@@ -9,3 +9,6 @@ __pycache__/
 
 # Local workspace / personal notes
 .obsidian/
+
+.versioned-release.json
+.versioned-release.lock

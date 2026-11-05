@@ -23,7 +23,7 @@
 
 ## Current App State
 
-**Version label (2026-11-06):** With explicit owner authorization, version 17 (source `2a5edf1`) is published on the usual link. Google confirmed the deployment. The browser showed Versione: 17 after a page refresh. For every future release, update the displayed constant to match the immutable Apps Script version.
+**Version label (2026-11-06):** With explicit owner authorization, version 17 (source `2a5edf1`) is published on the usual link. Google confirmed the deployment. The browser showed Versione: 17 after a page refresh. For every release of the separate app, use the automatic versioned workflow in `docs/COMMANDS.md`; it stamps and verifies the release number before promotion.
 
 **Startup names fix (2026-11-06):** With explicit owner authorization, version 16 (source `16f26f6`) was published on the usual link. Google confirmed the deployment, and the browser showed the configured names while data loaded and the correct heading for each workplace. See `docs/wiki/current-state.md` for test scope and open device checks.
 
