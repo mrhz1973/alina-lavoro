@@ -23,7 +23,7 @@
 
 ## Current App State
 
-**Release assessment (2026-11-05):** The owner enters all attendance on one phone. The reviewed version 15 is ready to publish for this workflow after 58 passing checks. The usual link serves version 13. See `docs/wiki/current-state.md` for test scope and open device checks.
+**Release (2026-11-05)** — With the owner approval, the usual attendance link was updated from version 13 to the tested version 15. Google confirmed the target version. The home screen, calendar and monthly scheduled-work PDF opened on that link. See `docs/wiki/current-state.md` for test scope and open device checks.
 
 **Isolated candidate (2026-10-28):** `codex/multi-lavoro-registro` adds separate scheduled work, per-day overrides, optional location selection and an on-demand PDF preview of the current register. Completed shifts show both times; an open shift shows only its entry. The PDF uses an externally held private template. An owner-only deployment runs against a separate private Sheet; a settings change and a user-entered variable-work shift were verified there, while scheduled-work saving and the real PDF viewer remain unverified. With specific user approval, a historical attendance snapshot and payslip summaries were copied and checked; the two apps do not synchronize later changes. A private script property selects the target Sheet and requires the broader spreadsheets scope. Phone/GPS and unattended monthly PDF automation remain unverified; see `docs/roadmap.md`. Keep configuration values, actual locations, real attendance, templates, IDs and personal documents outside this public repository.
 
