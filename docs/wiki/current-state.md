@@ -9,6 +9,8 @@
 
 ## App
 
+**Functional review (2026-11-05):** Development candidate protects completed variable-work shifts from accidental restart, preserves the original record when editing a different date, reports synchronization failures accurately, and improves custom-color contrast. Simulated B&B and Ekom journeys and read-only browser checks passed. **Release remains on hold:** a stale variable-work edit from another device can still overwrite a newer one; synthetic backend reproduction confirms this pre-existing risk. No real-device, printer or multi-device production validation has been completed.
+
 **Color adjustment (2026-11-05):** A more saturated workplace background, derived from the user's chosen color, was tested in the isolated preview with 53 JavaScript checks and a narrow browser viewport. The usual deployment still serves the previous version; release of the adjustment awaits explicit approval. Image files remain outside this repository.
 
 **Isolated UI update (2026-11-04):** Workplace colors are configurable; calendar markers distinguish recorded workplaces. Optional backgrounds and a logo are injected only into private staging: `node tools/inject_workplace_media.cjs INPUT OUTPUT VARIABLE1 VARIABLE2 SCHEDULED LOGO`. Keep the image files outside this public repository. The isolated deployment's browser and a narrow viewport were checked; real Android performance is unverified.

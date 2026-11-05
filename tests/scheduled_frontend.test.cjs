@@ -151,6 +151,34 @@ test('background tint follows workplace and theme without changing recorded atte
   assert.equal(app.getQueue().length, 0);
 });
 
+test('workplace button labels remain legible for strong custom colors', () => {
+  const { context: app } = createFrontend();
+  vm.runInContext("state.config.colore_lavoro_variabile='#00b400'; state.config.colore_lavoro_programmato='#ff0000';", app);
+  app.workplaceApplyColors_();
+  assert.equal(app.document.documentElement.style['--work-variable-text'], '#000000');
+  assert.equal(app.document.documentElement.style['--work-scheduled-text'], '#000000');
+  vm.runInContext("state.config.colore_lavoro_variabile='#100060'", app);
+  app.workplaceApplyColors_();
+  assert.equal(app.document.documentElement.style['--work-variable-text'], '#ffffff');
+});
+
+test('B&B synchronization status does not claim success while connection is unverified or failed', () => {
+  const { context: app, elements, navigator } = createFrontend();
+  navigator.onLine = true;
+  vm.runInContext("scheduledSelectedWorkplace = 'variable'; scheduledBootstrapComplete = false; state.serverOk = false", app);
+  app.renderHome();
+  assert.match(elements.get('content').innerHTML, /Caricamento/);
+  assert.doesNotMatch(elements.get('content').innerHTML, /Tutto sincronizzato/);
+  vm.runInContext('scheduledBootstrapComplete = true; state.serverOk = false', app);
+  app.renderHome();
+  assert.match(elements.get('content').innerHTML, /Errore sincronizzazione/);
+  assert.doesNotMatch(elements.get('content').innerHTML, /Tutto sincronizzato/);
+  let reconnects = 0;
+  app.initBackground_ = () => { reconnects++; };
+  app.retrySyncFromHome_();
+  assert.equal(reconnects, 1);
+});
+
 test('photo and logo slots are decorative and support a no-image fallback', () => {
   const { context: app } = createFrontend();
   const selector = app.scheduledSelectorHtml_();
