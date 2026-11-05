@@ -328,6 +328,7 @@
     /* Alina Lavoro frontend — V1.8A: Mesi DOM; V1.8B: firma renderMonths; V1.8.6: griglia Mesi + navbar; V1.8.7: Mesi per anno; V1.8.8: anni collassabili (disclosure); V1.8.9: toggle anni via classe collapsed + toggleMonthsYear_ (fix WebView hidden/display); V1.8.10: snooze locale 24h promemoria stipendio; V1.9.0: Dettaglio mese MVP lista; V1.9.1: Stipendio nascosto mese corrente (Mesi); V1.9.2: Dettaglio mese metriche + card + barre ore; V1.6.2 viewport; issue #5; V2.0.1: quick resume from cache; V2.1.0: analytics/charts collapsible card on Mesi; V2.1.1: quick resume persistence fix; V2.2.0: no-login direct start; 0417: home header cleanup + per-month 3-bar analytics + clickable single-column months; 0418: compact month tabs with inline 3-bar mini chart + clickable day cards opening shift modal with note indicator; 0427: compact months summary — inline stats in month tab head, compact annual strip, no duplicate per-month chart, accordion highlight */
     const LS_CACHE='alina_lavoro_cache_v1',LS_QUEUE='alina_lavoro_queue_v1',LS_ACCESS='alina_lavoro_access_v1',LS_SALARY_REMINDER_SNOOZE='alina_lavoro_salary_reminder_snooze_until_v1';
     const SALARY_REMINDER_SNOOZE_MS=86400000;
+    const INITIAL_WORKPLACE_LABELS = /* WORKPLACE_INITIAL_LABELS */ null;
     /* Versione UI: allineare a package.json (release) ad ogni bump semver. */
     const APP_VERSION='2.2.0';
     const APP_BUILD='0428';
@@ -338,7 +339,18 @@
     I18N.it.manual_multiple='Ci sono più turni per questa data. Apri il turno dal riepilogo.'; I18N.ru.manual_multiple='На эту дату записано несколько смен. Откройте нужную смену из сводки.';
     let state={accessCode:'',page:'home',detailMonth:'',config:{lingua:'it',tema:'light',stile:'modern',giorno_busta:'10',promemoria_busta:'0',media_mesi:'6',tariffa_media_default:'10',setup_completato:'no'},shifts:[],salaries:[],notes:[],summaries:[],reminder:{active:false},serverOk:false,_localMutationAt:0};
     var monthsViewSig='';var monthDetailSig='';
-    document.addEventListener('DOMContentLoaded',()=>{const c=loadCache();if(c)state={...state,...c};applyThemeLang();showApp();window.addEventListener('online',flushQueue);setupMobileUi_();initBackground_()});
+    document.addEventListener('DOMContentLoaded',()=>{const c=loadCache();if(c)state={...state,...c};restoreInitialWorkplaceLabels_();applyThemeLang();showApp();window.addEventListener('online',flushQueue);setupMobileUi_();initBackground_()});
+    function restoreInitialWorkplaceLabels_(){
+      if(!INITIAL_WORKPLACE_LABELS)return;
+      const keys=['nome_lavoro_variabile','nome_lavoro_programmato'];
+      state.config={...state.config,...INITIAL_WORKPLACE_LABELS};
+      getQueue().forEach(function(action){
+        if(!action||action.type!=='saveConfig'||!action.payload)return;
+        keys.forEach(function(key){
+          if(Object.prototype.hasOwnProperty.call(action.payload,key))state.config[key]=action.payload[key];
+        });
+      });
+    }
     function setupMobileUi_(){if(window.visualViewport){window.visualViewport.addEventListener('resize',function(){var bd=document.getElementById('modalBackdrop');if(bd&&bd.classList.contains('show'))updateKbPad_()})}document.addEventListener('focusin',function(ev){var t=ev.target;if(!t||typeof t.closest!=='function')return;if(t.tagName!=='INPUT'&&t.tagName!=='TEXTAREA'&&t.tagName!=='SELECT')return;var bd=document.getElementById('modalBackdrop');if(bd&&bd.classList.contains('show')&&t.closest('#modalBody')){updateKbPad_();setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){t.scrollIntoView(true)}},280)}var lv=document.getElementById('loginView');if(lv&&!lv.classList.contains('hidden')&&t.closest('.login')){setTimeout(function(){try{t.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){t.scrollIntoView(true)}},280)}},false)}
     function updateKbPad_(){var vv=window.visualViewport;if(!vv)return;var inv=window.innerHeight-vv.height-vv.offsetTop;document.documentElement.style.setProperty('--kb-pad',Math.max(0,Math.round(inv))+'px')}
     function t(k){var l=state.config.lingua||'it';var pack=I18N[l];if(!pack)pack=I18N.it;var v=pack[k];if(v===undefined||v==='')v=I18N.it[k];return v||k}function serverCall(fn,args=[]){return new Promise((resolve,reject)=>{if(typeof google==='undefined'||!google.script||!google.script.run){reject(new Error('google.script.run non disponibile'));return}google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[fn](...args)})}

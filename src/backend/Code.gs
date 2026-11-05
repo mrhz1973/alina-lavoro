@@ -167,12 +167,27 @@ function doGet(e) {
   const indexHtml = HtmlService.createTemplateFromFile('Index').getRawContent();
   const marker = '<!-- SCHEDULED_WORK_MODULE -->';
   if (indexHtml.indexOf(marker) < 0) throw new Error('Modulo turni programmati non configurato');
+  const labelsMarker = '/* WORKPLACE_INITIAL_LABELS */ null';
+  if (indexHtml.indexOf(labelsMarker) < 0) throw new Error('Nomi lavori iniziali non configurati');
+  const initialLabels = {};
+  try {
+    const config = getConfigRaw_();
+    ['nome_lavoro_variabile', 'nome_lavoro_programmato'].forEach(function (key) {
+      if (config[key]) initialLabels[key] = String(config[key]);
+    });
+  } catch (_) {
+    // The saved browser copy remains available if the extra read fails.
+  }
+  const labelsJson = JSON.stringify(initialLabels)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
   const moduleHtml = HtmlService.createTemplateFromFile('ScheduledWork').getRawContent();
   const pdfPreviewHtml = HtmlService.createTemplateFromFile('ScheduledPdf').getRawContent();
   let pdfLibraryHtml = '';
   try { pdfLibraryHtml = HtmlService.createTemplateFromFile('PdfLib').getRawContent(); } catch (_) {}
   return HtmlService
-    .createHtmlOutput(indexHtml.replace(marker, moduleHtml + '\n' + pdfLibraryHtml + '\n' + pdfPreviewHtml))
+    .createHtmlOutput(indexHtml.replace(labelsMarker, function () { return labelsJson; }).replace(marker, moduleHtml + '\n' + pdfLibraryHtml + '\n' + pdfPreviewHtml))
     .setTitle('Alina Lavoro')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, viewport-fit=cover')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);

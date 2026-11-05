@@ -116,6 +116,17 @@ test('the app page includes the scheduled module while keeping the legacy route 
   assert.match(page, /function scheduledStart_/);
   assert.match(page, /function renderHome/);
   assert.doesNotMatch(page, /SCHEDULED_WORK_MODULE/);
+  const hostileName = "Attività </script><script>unexpected()</script> & A $& $' $`";
+  app.setConfigValue_('nome_lavoro_variabile', hostileName);
+  app.setConfigValue_('nome_lavoro_programmato', 'Attività B');
+  const configuredPage = app.doGet({ parameter: {} }).getContent();
+  const initial = configuredPage.match(/const INITIAL_WORKPLACE_LABELS = ([^\r\n]+);/);
+  assert.ok(initial);
+  assert.doesNotMatch(initial[1], /<\/script/i);
+  assert.deepEqual(JSON.parse(initial[1]), {
+    nome_lavoro_variabile: hostileName, nome_lavoro_programmato: 'Attività B'
+  });
+  assert.doesNotMatch(configuredPage, /WORKPLACE_INITIAL_LABELS/);
   const diagnostic = app.doGet({ parameter: { route: 'runtime-forensic-0448' } }).getContent();
   assert.match(diagnostic, /0448-runtime-forensic/);
   assert.doesNotMatch(diagnostic, /function scheduledStart_/);

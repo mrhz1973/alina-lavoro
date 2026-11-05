@@ -4,7 +4,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const test = require('node:test');
 
-function createFrontend(sharedStorage) {
+function createFrontend(sharedStorage, initialLabels) {
   let clock = Date.parse('2026-03-03T06:45:00Z');
   class FakeDate extends Date {
     constructor(...args) { super(...(args.length ? args : [clock])); }
@@ -60,7 +60,9 @@ function createFrontend(sharedStorage) {
   const first = index.match(/<script>([\s\S]*?)<\/script>/);
   const second = module.match(/<script>([\s\S]*?)<\/script>/);
   if (!first || !second) throw new Error('Missing app script');
-  vm.runInContext(first[1], context);
+  const initialScript = initialLabels === undefined ? first[1] :
+    first[1].replace('/* WORKPLACE_INITIAL_LABELS */ null', JSON.stringify(initialLabels));
+  vm.runInContext(initialScript, context);
   vm.runInContext(second[1], context);
   vm.runInContext(pdfModule.match(/<script>([\s\S]*?)<\/script>/)[1], context);
   vm.runInContext([
@@ -74,6 +76,41 @@ function createFrontend(sharedStorage) {
   ].join('\n'), context);
   return { context, storage, elements, navigator, listeners, navButtons, setClock(value) { clock = Date.parse(value); } };
 }
+
+test('workplace names are shown before the first server response and the title follows selection', () => {
+  const labels = { nome_lavoro_variabile: 'Attività A', nome_lavoro_programmato: 'Attività B' };
+  const { context: app, listeners } = createFrontend(undefined, labels);
+  vm.runInContext("delete state.config.nome_lavoro_variabile; delete state.config.nome_lavoro_programmato; scheduledSelectedWorkplace = 'variable';", app);
+  app.initBackground_ = () => new Promise(() => {});
+  listeners.get('DOMContentLoaded')[0]();
+  let home = app.document.getElementById('content').innerHTML;
+  assert.match(home, /<div class="kicker">Attività A<\/div>/);
+  assert.match(home, /Attività B/);
+  assert.doesNotMatch(home, /Lavoro [12]/);
+  app.scheduledSelectWorkplace_('scheduled');
+  home = app.document.getElementById('content').innerHTML;
+  assert.match(home, /<div class="kicker">Attività B<\/div>/);
+});
+
+test('startup keeps a pending local workplace name and does not remove queued work', () => {
+  const labels = { nome_lavoro_variabile: 'Vecchia attività A', nome_lavoro_programmato: 'Attività B' };
+  const { context: app, storage, listeners } = createFrontend(undefined, labels);
+  app.enqueue({ type: 'saveConfig', payload: { nome_lavoro_variabile: 'Nuova attività A' } });
+  app.enqueue({ type: 'saveShift', payload: { id: 'test-shift', data: '2026-03-03' } });
+  const queueBefore = storage.get('alina_lavoro_queue_v1');
+  app.initBackground_ = () => new Promise(() => {});
+  listeners.get('DOMContentLoaded')[0]();
+  assert.equal(vm.runInContext('state.config.nome_lavoro_variabile', app), 'Nuova attività A');
+  assert.equal(vm.runInContext('state.config.nome_lavoro_programmato', app), 'Attività B');
+  assert.equal(storage.get('alina_lavoro_queue_v1'), queueBefore);
+});
+
+test('a missing initial workplace name preserves the browser cache', () => {
+  const { context: app } = createFrontend(undefined, {});
+  app.restoreInitialWorkplaceLabels_();
+  assert.equal(vm.runInContext('state.config.nome_lavoro_variabile', app), 'Attivita A');
+  assert.equal(vm.runInContext('state.config.nome_lavoro_programmato', app), 'Attivita B');
+});
 
 test('recording two scheduled shifts keeps the existing workplace untouched', () => {
   const { context: app, setClock } = createFrontend();
