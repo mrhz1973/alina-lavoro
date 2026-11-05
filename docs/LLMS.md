@@ -23,6 +23,14 @@
 
 ## Current App State
 
+**Version label (2026-11-06):** With explicit owner authorization, version 17 (source `2a5edf1`) is published on the usual link. Google confirmed the deployment. The browser showed Versione: 17 after a page refresh. For every release of the separate app, use the automatic versioned workflow in `docs/COMMANDS.md`; it stamps and verifies the release number before promotion.
+
+**Startup names fix (2026-11-06):** With explicit owner authorization, version 16 (source `16f26f6`) was published on the usual link. Google confirmed the deployment, and the browser showed the configured names while data loaded and the correct heading for each workplace. See `docs/wiki/current-state.md` for test scope and open device checks.
+
+**Release (2026-11-05)** — With the owner approval, the usual attendance link was updated from version 13 to the tested version 15. Google confirmed the target version. The home screen, calendar and monthly scheduled-work PDF opened on that link. See `docs/wiki/current-state.md` for test scope and open device checks.
+
+**Isolated candidate (2026-10-28):** `codex/multi-lavoro-registro` adds separate scheduled work, per-day overrides, optional location selection and an on-demand PDF preview of the current register. Completed shifts show both times; an open shift shows only its entry. The PDF uses an externally held private template. An owner-only deployment runs against a separate private Sheet; a settings change and a user-entered variable-work shift were verified there, while scheduled-work saving and the real PDF viewer remain unverified. With specific user approval, a historical attendance snapshot and payslip summaries were copied and checked; the two apps do not synchronize later changes. A private script property selects the target Sheet and requires the broader spreadsheets scope. Phone/GPS and unattended monthly PDF automation remain unverified; see `docs/roadmap.md`. Keep configuration values, actual locations, real attendance, templates, IDs and personal documents outside this public repository.
+
 The deployment and legacy automation descriptions below are historical; live runtime status was not verified on 2026-10-27. Do not restart legacy automations based on documentation alone.
 
 | Field | Value |
