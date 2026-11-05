@@ -23,7 +23,7 @@
 
 ## Current App State
 
-**Startup names fix (2026-11-06):** Candidate source `16f26f6` loads configured workplace names before the full data response and updates the selector heading. The private preview runs version 16. The usual deployment remains on version 15. Publishing version 16 was rejected by automatic approval review pending explicit owner consent. The preview shares the real data store.
+**Startup names fix (2026-11-06):** With explicit owner authorization, version 16 (source `16f26f6`) was published on the usual link. Google confirmed the deployment, and the browser showed the configured names while data loaded and the correct heading for each workplace. See `docs/wiki/current-state.md` for test scope and open device checks.
 
 **Release (2026-11-05)** — With the owner approval, the usual attendance link was updated from version 13 to the tested version 15. Google confirmed the target version. The home screen, calendar and monthly scheduled-work PDF opened on that link. See `docs/wiki/current-state.md` for test scope and open device checks.
 
