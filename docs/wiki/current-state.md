@@ -9,7 +9,7 @@
 
 ## App
 
-**Version label (2026-11-06):** Candidate source `2a5edf1` replaces the inherited 2.2.0 / 0428 label with the deployment version. All 61 existing automated checks passed. Google created version 17 and the private preview, which shares real data, showed Versione: 17 in settings after refresh. The usual link remains on version 16. Automatic approval review rejected promoting version 17 because prior explicit authorization covered version 16. Owner consent is required for this promotion. Before each future release, update the source version constant and verify the immutable Apps Script version before deployment.
+**Version label (2026-11-06):** Source `2a5edf1` replaces the inherited 2.2.0 / 0428 label with the deployment version. All 61 existing automated checks passed. After explicit owner authorization, Google confirmed version 17 on the usual link. On a first load immediately after publication the browser still showed the previous label. After synchronization and refresh, settings showed Versione: 17. The phone itself was not checked. Before each future release, update the source version constant and verify the immutable Apps Script version before deployment.
 
 **Startup names fix (2026-11-06):** Version 16 supplies the configured workplace names with the initial page and uses the selected name as the heading. Pending local name changes take priority and queued work is preserved. Sixty-one automated tests passed. After the owner explicitly approved publication, Google confirmed version 16 on the usual link. The browser showed both names before data loading finished, the correct heading for each workplace and synchronized status. No attendance records were added in the verification. Android behavior has not been verified.
 
