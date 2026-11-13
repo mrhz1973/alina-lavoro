@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="it"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="referrer" content="no-referrer"><base target="_top"><title>Alina Lavoro</title>
+  <style>
+    body{font:16px system-ui,sans-serif;max-width:34rem;margin:3rem auto;padding:1rem;line-height:1.5;color:#1f2430}
+    a,button{display:inline-block;border:0;border-radius:.7rem;padding:.9rem 1.1rem;background:#3159d6;color:white;text-decoration:none;font:inherit;cursor:pointer}
+    [hidden]{display:none!important}
+  </style>
+</head><body>
+  <h1>Alina Lavoro</h1>
+  <p id="status" aria-live="polite">Verifica dell'accesso in corso…</p>
+  <a id="login" hidden>Continua con Google</a>
+  <button id="retry" type="button" hidden>Riprova</button>
+  <script>
+  (function () {
+    'use strict';
+    var bootstrap = /* AUTH_BOOTSTRAP */ null;
+    var secretKey = 'alina_lavoro_identity_secret_v1';
+    var handledKey = 'alina_lavoro_identity_handled_state_v1';
+    var status = document.getElementById('status');
+    var login = document.getElementById('login');
+    var retry = document.getElementById('retry');
+    function randomValue() {
+      var bytes = new Uint8Array(32), binary = '';
+      if (!window.crypto || !window.crypto.getRandomValues) throw new Error('Browser non supportato');
+      window.crypto.getRandomValues(bytes);
+      for (var i=0; i<bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    }
+    function call(name,args) {
+      return new Promise(function (resolve,reject) {
+        if (typeof google === 'undefined' || !google.script || !google.script.run) return reject(new Error('Servizio non disponibile'));
+        var runner = google.script.run.withSuccessHandler(resolve).withFailureHandler(reject);
+        runner[name].apply(runner,args);
+      });
+    }
+    function denied(error) { return /Accesso negato/.test(String(error && error.message || error || '')); }
+    function showError(message, fn) {
+      login.hidden = true;
+      status.textContent = message;
+      retry.hidden = false;
+      retry.onclick = function () { retry.hidden = true; fn(); };
+    }
+    async function prepareLogin(secret) {
+      try {
+        status.textContent = 'Preparazione dell’accesso…';
+        var result = await call('beginIdentityLogin',[secret,randomValue(),randomValue(),randomValue()]);
+        if (!result || !/^https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?/.test(result.authorizationUrl)) throw new Error('Indirizzo non valido');
+        login.href = result.authorizationUrl;
+        login.hidden = false;
+        status.textContent = 'Accedi con un account autorizzato.';
+      } catch (_) { showError('Accesso non disponibile. Controlla la connessione e riprova.', function () { prepareLogin(secret); }); }
+    }
+    async function openApplication(secret) {
+      var html = await call('callApi',[secret,'getAppDocument',[]]);
+      if (typeof html !== 'string' || html.indexOf('<!DOCTYPE html>') !== 0) throw new Error('Pagina non disponibile');
+      document.open(); document.write(html); document.close();
+    }
+    async function start() {
+      var secret;
+      try {
+        secret = localStorage.getItem(secretKey);
+        if (!secret) { secret = randomValue(); localStorage.setItem(secretKey,secret); }
+        if (!/^[A-Za-z0-9_-]{43}$/.test(secret)) throw new Error('Browser non supportato');
+      } catch (_) { showError('Il browser non permette di preparare l’accesso.', start); return; }
+      if (bootstrap.oauthError || Boolean(bootstrap.code) !== Boolean(bootstrap.state)) {
+        showError('Accesso non completato.', function () { prepareLogin(secret); }); return;
+      }
+      if (bootstrap.code && bootstrap.state) {
+        try {
+          status.textContent = 'Verifica dell’identità in corso…';
+          if (localStorage.getItem(handledKey) !== bootstrap.state) {
+            await call('completeIdentityLogin',[secret,bootstrap.state,bootstrap.code]);
+            localStorage.setItem(handledKey,bootstrap.state);
+          }
+          await openApplication(secret);
+        } catch (_) { showError('Accesso non completato o pagina non disponibile.', function () { prepareLogin(secret); }); }
+        return;
+      }
+      try { await openApplication(secret); }
+      catch (error) {
+        if (denied(error)) await prepareLogin(secret);
+        else showError('Pagina non disponibile. Controlla la connessione e riprova.', start);
+      }
+    }
+    document.addEventListener('DOMContentLoaded',start);
+  })();
+  </script>
+</body></html>

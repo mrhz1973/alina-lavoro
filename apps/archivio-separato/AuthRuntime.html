@@ -1,0 +1,56 @@
+<script>
+(function () {
+  'use strict';
+  var secretKey = 'alina_lavoro_identity_secret_v1';
+  var shown = false;
+  function randomValue() {
+    var bytes = new Uint8Array(32), binary = '';
+    if (!window.crypto || !window.crypto.getRandomValues) throw new Error('Browser non supportato');
+    window.crypto.getRandomValues(bytes);
+    for (var i=0; i<bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function identityExpired(secret) {
+    if (shown) return;
+    shown = true;
+    var bar = document.createElement('div');
+    bar.setAttribute('role','status');
+    bar.style.cssText = 'position:fixed;z-index:9999;top:0;left:0;right:0;padding:10px;background:#fff4d6;color:#332a13;text-align:center;font:14px system-ui;box-shadow:0 2px 8px #0003';
+    var message = document.createElement('span');
+    message.textContent = 'Accesso scaduto. Le modifiche in attesa restano salvate su questo dispositivo. ';
+    var link = document.createElement('a');
+    link.textContent = 'Accedi di nuovo'; link.target = '_top'; link.style.cssText = 'font-weight:700;color:#274bbb;cursor:pointer';
+    link.addEventListener('click',function (event) {
+      if (link.href) return;
+      event.preventDefault();
+      message.textContent = 'Preparazione dell’accesso… ';
+      try {
+        google.script.run.withSuccessHandler(function (result) {
+          if (!result || !/^https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?/.test(result.authorizationUrl)) {
+            message.textContent = 'Accesso non disponibile. '; return;
+          }
+          link.href = result.authorizationUrl;
+          message.textContent = 'Accesso pronto. ';
+          link.textContent = 'Continua con Google';
+        }).withFailureHandler(function () { message.textContent = 'Accesso non disponibile. Riprova. '; })
+          .beginIdentityLogin(secret,randomValue(),randomValue(),randomValue());
+      } catch (_) { message.textContent = 'Accesso non disponibile. Riprova. '; }
+    });
+    bar.appendChild(message); bar.appendChild(link); document.body.appendChild(bar);
+  }
+  serverCall = function (fn,args) {
+    var forwarded = Array.isArray(args) ? args.slice() : [];
+    if (forwarded.length && typeof state !== 'undefined' && forwarded[0] === state.accessCode) forwarded.shift();
+    return new Promise(function (resolve,reject) {
+      try {
+        if (typeof google === 'undefined' || !google.script || !google.script.run) throw new Error('Servizio non disponibile');
+        var secret = localStorage.getItem(secretKey) || '';
+        google.script.run.withSuccessHandler(resolve).withFailureHandler(function (error) {
+          if (/Accesso negato/.test(String(error && error.message || error || ''))) identityExpired(secret);
+          reject(error);
+        }).callApi(secret,fn,forwarded);
+      } catch (error) { reject(error); }
+    });
+  };
+})();
+</script>

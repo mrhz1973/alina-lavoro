@@ -4,7 +4,13 @@ Web app personale per la registrazione delle ore di lavoro di Alina.
 
 Stack: **Google Apps Script** (backend) · **Google Sheet** (database) · **HTML/CSS/JavaScript** (frontend in `src/`).
 
-**Versione corrente:** V2.0.1 stabile (`@28`, tag `v2.0.1-stable`). Branch operativo: **`main`** (`dev` legacy/inattivo).
+**App operativa corrente (verificata 2026-11-13): Alina Lavoro -
+archivio separato V35.** Sorgenti in
+[apps/archivio-separato/](apps/archivio-separato/), icona condivisa in
+[assets/icona.png](assets/icona.png).
+Il progetto V2.2.0/build 0428 nelle cartelle src/ e gas-current/ e
+storico e ha un ID Apps Script differente. Entrambi sono ora nello
+stesso repository GitHub, senza sostituire il progetto storico.
 
 ## Uso app
 

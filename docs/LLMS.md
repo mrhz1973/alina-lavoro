@@ -21,6 +21,13 @@
 
 ---
 
+**STATO 2026-11-13:** app attiva Alina Lavoro - archivio separato
+**V35**, codice in apps/archivio-separato/. La V2.2.0/build 0428
+descritta sotto si riferisce al progetto Apps Script storico,
+non al deployment dell'app corrente. Il sorgente GitHub della
+V35 oscura i due account autorizzati e non e direttamente
+distribuibile senza la configurazione privata.
+
 ## Current App State
 
 The deployment and legacy automation descriptions below are historical; live runtime status was not verified on 2026-10-27. Do not restart legacy automations based on documentation alone.

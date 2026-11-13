@@ -7,6 +7,11 @@
 
 ---
 
+**NOTA 2026-11-13:** la nuova app operativa archivio separato e
+alla V35; codice in apps/archivio-separato/. Il documento sotto
+e uno snapshot STORICO del precedente progetto V2.2.0/build 0428.
+Il repository pubblico conserva gli account ammessi oscurati.
+
 ## App
 
 **Planned:** multi-workplace shifts, date-specific scheduled-time overrides, and a monthly PDF report; see `docs/roadmap.md`. Not implemented or deployed. Keep personal documents outside this repository.
