@@ -328,6 +328,22 @@ npm run deploy
 
 Esegue `sync` + `clasp push` + `clasp deploy`. **Non** lanciare in CI o in batch senza consenso.
 
+
+### Separate multi-workplace app — automatic release number
+
+For every release of the separate multi-workplace app, use the versioned release workflow below. The historical deploy command above and direct clasp deployment do not stamp or check the displayed number.
+
+Prepare a private, flat staging directory containing the intended Apps Script files, the matching .clasp.json and the private image/template resources. Keep this directory, its .versioned-release.json receipt and all personal assets outside Git. The specified base must be the immutable version matching the current remote HEAD. Check and reconcile any independent project changes first.
+
+```bash
+npm run release:prepare -- --stage "<PRIVATE_STAGING>" --project "<EXPECTED_SCRIPT_ID>" --base <REMOTE_HEAD_VERSION> --description "<RELEASE_DESCRIPTION>"
+npm run release:promote -- --stage "<PRIVATE_STAGING>" --project "<EXPECTED_SCRIPT_ID>" --deployment "<PREVIEW_DEPLOYMENT_ID>" --current <PREVIEW_CURRENT_VERSION> --description "<PREVIEW_DESCRIPTION>"
+# After preview verification and the applicable production authorization:
+npm run release:promote -- --stage "<PRIVATE_STAGING>" --project "<EXPECTED_SCRIPT_ID>" --deployment "<USUAL_DEPLOYMENT_ID>" --current <USUAL_CURRENT_VERSION> --description "<RELEASE_DESCRIPTION>"
+```
+
+Preparation chooses and stamps the next version, creates it and checks the saved snapshot. If the number changes concurrently it retries safely. Promotion reads the private receipt, checks the exact snapshot and the target version, then verifies the deployment. A mismatch or an interrupted preparation must be investigated before retrying. The preview and usual deployments may have different current version numbers; check each target. The preview uses the real separate data store, so use read-only navigation there.
+
 ## Rollback concettuale a `v1.5-stable`
 
 Il tag **`v1.5-stable`** è ancoraggio di sicurezza. Esempi **non automatici** — valutare sempre backup Sheet/Apps Script:

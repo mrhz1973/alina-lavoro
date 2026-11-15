@@ -1,0 +1,146 @@
+<style>
+@media print {
+  @page { size: A4 portrait; margin: 4mm; }
+  body.scheduled-pdf-printing { min-height: 0 !important; background: #fff !important; }
+  body.scheduled-pdf-printing > :not(#modalBackdrop) { display: none !important; }
+  body.scheduled-pdf-printing #modalBackdrop { display: block !important; position: static !important; padding: 0 !important; background: #fff !important; }
+  body.scheduled-pdf-printing #modalBackdrop .modal { display: block !important; width: 100% !important; max-height: none !important; overflow: visible !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+  body.scheduled-pdf-printing #modalBackdrop .modal-header,
+  body.scheduled-pdf-printing #scheduledPdfStatus,
+  body.scheduled-pdf-printing #scheduledPdfControls { display: none !important; }
+  body.scheduled-pdf-printing #modalBody { display: block !important; overflow: visible !important; padding: 0 !important; }
+  body.scheduled-pdf-printing #scheduledPdfViewport { overflow: visible !important; margin: 0 !important; }
+  body.scheduled-pdf-printing #scheduledPdfCanvas { display: block !important; width: 100% !important; height: auto !important; }
+}
+</style>
+<script>
+// The template is private and arrives from the configured Apps Script project.
+// Only explicitly recorded entries are drawn; open shifts have no exit.
+async function scheduledCreatePdf_(templateBase64, report) {
+  if (typeof PDFLib === 'undefined') throw new Error(t('scheduled_pdf_unavailable'));
+  if (!report || !Number.isInteger(report.anno) || !Number.isInteger(report.mese) ||
+      report.mese < 1 || report.mese > 12 || !Array.isArray(report.giorni)) throw new Error(t('scheduled_invalid'));
+  var operator = String(report.operatore || '').trim(), site = String(report.cantiere || '').trim();
+  if (!operator || operator.length > 35 || !site || site.length > 20) throw new Error(t('scheduled_invalid'));
+  var raw = atob(String(templateBase64 || '')), template = new Uint8Array(raw.length);
+  for (var i = 0; i < raw.length; i++) template[i] = raw.charCodeAt(i);
+  var pdf = await PDFLib.PDFDocument.load(template), pages = pdf.getPages();
+  if (pages.length !== 1) throw new Error(t('scheduled_pdf_unavailable'));
+  var page = pages[0], width = page.getWidth(), height = page.getHeight();
+  if (Math.abs(width - 595) > 1 || Math.abs(height - 841) > 1 || page.getRotation().angle !== 0) throw new Error(t('scheduled_pdf_unavailable'));
+  var font = await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
+  var months = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO','LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
+  var centers = [127, 179.8, 232.6, 285.4, 338.2, 391], sites = [153.4, 259, 364.6], seen = {};
+  function textAt(text, x, y, size) { page.drawText(String(text), { x: x, y: y, size: size, font: font, color: PDFLib.rgb(0, 0, 0) }); }
+  function centered(text, center, y, size) { textAt(text, center - font.widthOfTextAtSize(String(text), size) / 2, y, size); }
+  textAt(operator, 289, height - 74, 10);
+  textAt(months[report.mese - 1] + ' ' + report.anno, 201, height - 112, 10);
+  var maxSlots = Math.max(2, report.giorni.reduce(function (max, day) { return Math.max(max, Array.isArray(day.turni) ? day.turni.length : 0); }, 0));
+  if (maxSlots > 3) throw new Error(t('scheduled_invalid'));
+  sites.slice(0, maxSlots).forEach(function (center) { centered(site, center, height - 156, 8); });
+  report.giorni.forEach(function (day) {
+    var date = String(day.data || ''), turns = day.turni;
+    if (!scheduledDateValid_(date) || Number(date.slice(0, 4)) !== report.anno || Number(date.slice(5, 7)) !== report.mese ||
+        seen[date] || !Array.isArray(turns) || !turns.length || turns.length > 3) throw new Error(t('scheduled_invalid'));
+    seen[date] = true;
+    var baseline = height - (199.2 + (Number(date.slice(8, 10)) - 1) * 19.445), total = 0, completed = 0, previousEnd = -1;
+    turns.forEach(function (turn, index) {
+      var start = scheduledParseTime_(turn.inizio), end = turn.fine ? scheduledParseTime_(turn.fine) : null;
+      if (start === null || start < previousEnd || (turn.stato !== 'open' && turn.stato !== 'done') ||
+          (turn.stato === 'done' && (end === null || start >= end)) || (turn.stato === 'open' && (end !== null || index !== turns.length - 1))) throw new Error(t('scheduled_invalid'));
+      centered(turn.inizio, centers[index * 2], baseline, 8);
+      if (end !== null) { centered(turn.fine, centers[index * 2 + 1], baseline, 8); total += end - start; completed++; previousEnd = end; }
+    });
+    if (completed) centered(String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0'), 456, baseline, 8);
+  });
+  return pdf.save();
+}
+
+async function scheduledViewPdf_(month) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(String(month || ''))) return toast(t('scheduled_invalid'));
+  if (!state.scheduledCapability || !navigator.onLine || !state.serverOk || getQueue().length || scheduledSyncInFlight) return toast(t('scheduled_pending'));
+  if (typeof PDFLib === 'undefined') return toast(t('scheduled_pdf_unavailable'));
+  openModal(t('scheduled_pdf_title') + ' · ' + monthLabel(month),
+    '<p id="scheduledPdfStatus" role="status">' + esc(t('scheduled_pdf_loading')) + '</p>' +
+    '<div id="scheduledPdfControls" class="btn-row"><button id="scheduledPdfZoom" class="secondary-btn hidden" type="button" onclick="scheduledPdfZoom_()">' + esc(t('scheduled_pdf_zoom_in')) + '</button>' +
+    '<button id="scheduledPdfPrint" class="secondary-btn hidden" type="button" onclick="scheduledPrintPdf_()">' + esc(t('scheduled_pdf_print')) + '</button>' +
+    '<button class="ghost-btn" type="button" onclick="closeModal()">' + esc(t('scheduled_pdf_close')) + '</button></div>' +
+    '<div id="scheduledPdfViewport" style="overflow:auto;margin-top:14px;-webkit-overflow-scrolling:touch"><canvas id="scheduledPdfCanvas" style="display:none;width:100%;height:auto;background:#fff" aria-label="PDF"></canvas></div>');
+  var canvas = document.getElementById('scheduledPdfCanvas');
+  var status = document.getElementById('scheduledPdfStatus');
+  var loadingTask;
+  function currentViewer() { return document.getElementById('scheduledPdfCanvas') === canvas && document.getElementById('modalBackdrop').classList.contains('show'); }
+  try {
+    var needsRenderer = typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined';
+    var response = await serverCall('getScheduledPdfPreview', [state.accessCode, month, needsRenderer]);
+    if (!currentViewer()) return;
+    if (!response || !response.success || !response.report || !response.templateBase64) throw new Error(t('scheduled_pdf_unavailable'));
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    if (needsRenderer && (typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined')) {
+      if (!Array.isArray(response.rendererScripts) || response.rendererScripts.length !== 2) throw new Error(t('scheduled_pdf_unavailable'));
+      response.rendererScripts.forEach(function (code) {
+        if (typeof code !== 'string' || !code) throw new Error(t('scheduled_pdf_unavailable'));
+        var script = document.createElement('script');
+        script.textContent = code;
+        document.head.appendChild(script);
+        script.remove();
+      });
+      if (typeof pdfjsLib === 'undefined' || typeof pdfjsWorker === 'undefined') throw new Error(t('scheduled_pdf_unavailable'));
+    }
+    var bytes = await scheduledCreatePdf_(response.templateBase64, response.report);
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    if (!currentViewer()) return;
+    loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(bytes), isEvalSupported: false, useSystemFonts: true });
+    var pdf = await loadingTask.promise;
+    if (pdf.numPages !== 1) throw new Error(t('scheduled_pdf_unavailable'));
+    var page = await pdf.getPage(1), viewport = page.getViewport({ scale: 2 });
+    canvas.width = Math.ceil(viewport.width); canvas.height = Math.ceil(viewport.height);
+    await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
+    if (!currentViewer()) return;
+    if (getQueue().length || scheduledSyncInFlight) throw new Error(t('scheduled_pending'));
+    status.textContent = t('scheduled_report_info');
+    canvas.style.display = 'block';
+    document.getElementById('scheduledPdfZoom').classList.remove('hidden');
+    document.getElementById('scheduledPdfPrint').classList.remove('hidden');
+  } catch (err) {
+    if (currentViewer()) {
+      canvas.style.display = 'none';
+      status.textContent = err && err.message ? err.message : t('scheduled_pdf_unavailable');
+    }
+  } finally {
+    if (loadingTask) try { await loadingTask.destroy(); } catch (_) {}
+  }
+}
+
+function scheduledPdfZoom_() {
+  var canvas = document.getElementById('scheduledPdfCanvas'), button = document.getElementById('scheduledPdfZoom');
+  if (!canvas || !button) return;
+  var zoomed = canvas.style.width === '200%';
+  canvas.style.width = zoomed ? '100%' : '200%';
+  button.textContent = t(zoomed ? 'scheduled_pdf_zoom_in' : 'scheduled_pdf_zoom_out');
+}
+
+var scheduledPdfAfterPrint_ = null;
+function scheduledPrintPdf_() {
+  var canvas = document.getElementById('scheduledPdfCanvas');
+  if (!canvas || canvas.style.display === 'none') return;
+  if (getQueue().length || scheduledSyncInFlight) return toast(t('scheduled_pending'));
+  document.body.classList.add('scheduled-pdf-printing');
+  if (scheduledPdfAfterPrint_) window.removeEventListener('afterprint', scheduledPdfAfterPrint_);
+  scheduledPdfAfterPrint_ = function () { document.body.classList.remove('scheduled-pdf-printing'); scheduledPdfAfterPrint_ = null; };
+  window.addEventListener('afterprint', scheduledPdfAfterPrint_, { once: true });
+  try { window.print(); }
+  catch (_) { scheduledPdfFinishPrint_(); toast(t('scheduled_pdf_print_error')); }
+}
+
+function scheduledPdfFinishPrint_() {
+  if (scheduledPdfAfterPrint_) window.removeEventListener('afterprint', scheduledPdfAfterPrint_);
+  scheduledPdfAfterPrint_ = null;
+  if (document.body && document.body.classList) document.body.classList.remove('scheduled-pdf-printing');
+}
+function scheduledReleasePdf_() {
+  scheduledPdfFinishPrint_();
+  var canvas = document.getElementById('scheduledPdfCanvas');
+  if (canvas && canvas.style) { canvas.width = 1; canvas.height = 1; canvas.style.display = 'none'; }
+}
+</script>
